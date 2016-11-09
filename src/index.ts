@@ -1,5 +1,5 @@
-import USERDIVE from './api'
-export default USERDIVE
+import api from './api'
+export default api
 
 declare var USERDIVEObject: string
 
@@ -7,7 +7,7 @@ function execute () {
   const r = []
   r.push.apply(r, arguments)
   const f = r.shift()
-  USERDIVE[f].apply(this, r)
+  api[f].apply(this, r)
 }
 
 if (USERDIVEObject && window[USERDIVEObject]) {

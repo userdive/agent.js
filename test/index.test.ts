@@ -1,5 +1,7 @@
+import assert from 'power-assert'
+
 describe('api test', function () {
   it('load test', function () {
-    require('../src/api')
+    assert(require('../src/api'))
   })
 })
