@@ -1,5 +1,6 @@
 {
   "name": "@userdive/agent",
+  "description": "webpage tracking agent",
   "version": "0.0.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
@@ -25,6 +26,9 @@
   "directories": {
     "test": "dist/test"
   },
+  "engine": {
+    "node": "> 4"
+  },
   "homepage": "https://github.com/userdive/agent.js#readme",
   "keywords": [
     "userdive"
@@ -34,9 +38,6 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
-  },
-  "engine": {
-    "node": "> 4"
   },
   "scripts": {
     "build": "npm run clean && tsc",
@@ -48,8 +49,9 @@
     "lint": "npm-run-all -p lint:*",
     "lint:ts": "tslint src/*.ts test/*.ts",
     "posttest": "npm run cover",
+    "pretest": "npm run build",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
-    "test:mocha": "npm run build && istanbul cover _mocha --opts=test/mocha.opts -- dist/test"
+    "test:mocha": "istanbul cover _mocha --opts=test/mocha.opts -- dist/test"
   }
 }
