@@ -1,0 +1,11 @@
+codecov:
+  bot: userdivebot
+
+coverage:
+  precision: 2
+  round: down
+  range: "80...100"
+
+comment:
+  layout: "header, diff, changes, sunburst, uncovered, tree"
+  behavior: default

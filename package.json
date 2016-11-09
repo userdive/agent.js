@@ -5,37 +5,51 @@
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
+  "devDependencies": {
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.0.46",
+    "@types/power-assert": "^1.4.29",
+    "@uncovertruth/tslint-config": "0.0.1",
+    "codecov": "^1.0.1",
+    "intelli-espower-loader": "^1.0.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.2",
+    "npm-run-all": "^3.1.1",
+    "power-assert": "^1.4.1",
+    "remap-istanbul": "^0.7.0",
+    "rimraf": "^2.5.4",
+    "ts-node": "^1.7.0",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.8"
+  },
+  "directories": {
+    "test": "dist/test"
+  },
   "homepage": "https://github.com/userdive/agent.js#readme",
+  "keywords": [
+    "userdive"
+  ],
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
-  "directories": {
-    "test": "dist/test"
+  "engine": {
+    "node": "> 4"
   },
   "scripts": {
-    "clean": "rimraf dist coverage",
     "build": "npm run clean && tsc",
-    "lint:ts": "tslint src/*.ts test/*.ts",
+    "clean": "rimraf dist coverage",
+    "codecov": "npm run cover && codecov -f coverage/coverage-remapped.json -t $CODECOV_TOKEN",
+    "cover": "npm-run-all -p cover:*",
+    "cover:html": "cd coverage && remap-istanbul -i coverage.json -o html-report -t html",
+    "cover:json": "cd coverage && cat coverage.json | remap-istanbul -o coverage-remapped.json",
     "lint": "npm-run-all -p lint:*",
-    "test:mocha": "npm run build && mocha --opts test/mocha.opts -- dist/test",
+    "lint:ts": "tslint src/*.ts test/*.ts",
+    "posttest": "npm run cover",
+    "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
-    "test": "npm-run-all -p test:*"
-  },
-  "devDependencies": {
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.46",
-    "@types/power-assert": "^1.4.29",
-    "@uncovertruth/tslint-config": "0.0.1",
-    "intelli-espower-loader": "^1.0.1",
-    "mocha": "^3.1.2",
-    "npm-run-all": "^3.1.1",
-    "power-assert": "^1.4.1",
-    "rimraf": "^2.5.4",
-    "ts-node": "^1.7.0",
-    "tslint": "^3.15.1",
-    "typescript": "^2.0.8"
+    "test:mocha": "npm run build && istanbul cover _mocha --opts=test/mocha.opts -- dist/test"
   }
 }
