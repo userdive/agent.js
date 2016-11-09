@@ -1,0 +1,35 @@
+{
+  "name": "userdive.js",
+  "version": "0.0.0",
+  "author": "UNCOVER TRUTH Inc.",
+  "bugs": {
+    "url": "https://github.com/uncovertruth/userdive.js/pulls"
+  },
+  "homepage": "https://github.com/uncovertruth/userdive.js#readme",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/uncovertruth/userdive.js.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist coverage",
+    "build": "npm run clean && tsc",
+    "lint:ts": "tslint src/*.ts test/*.ts",
+    "lint": "npm-run-all -p lint:*",
+    "test:mocha": "npm run build && mocha --opts test/mocha.opts -- dist/test",
+    "test:lint": "npm run lint",
+    "test": "npm-run-all -p test:*"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.0.46",
+    "@uncovertruth/tslint-config": "0.0.1",
+    "mocha": "^3.1.2",
+    "npm-run-all": "^3.1.1",
+    "rimraf": "^2.5.4",
+    "ts-node": "^1.7.0",
+    "tslint": "^3.15.1",
+    "typescript": "^2.0.8"
+  }
+}
