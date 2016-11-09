@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
+  "directories": {
+    "test": "dist/test"
+  },
   "scripts": {
     "clean": "rimraf dist coverage",
     "build": "npm run clean && tsc",
