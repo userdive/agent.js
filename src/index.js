@@ -8,10 +8,10 @@ declare var window: {
 type TaskQueue = any[]
 
 function execute (): void {
-  const r = []
-  r.push.apply(r, arguments)
-  const f = r.shift()
-  api[f].apply(this, r)
+  const taskQueue = []
+  taskQueue.push.apply(taskQueue, arguments)
+  const apiName = taskQueue.shift()
+  api[apiName].apply(this, taskQueue)
 }
 
 if (window.USERDIVEObject && window[window.USERDIVEObject]) {
