@@ -7,24 +7,22 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.46",
-    "@types/power-assert": "^1.4.29",
-    "@uncovertruth/tslint-config": "0.0.1",
+    "@uncovertruth/eslint-config-flowtype": "0.0.1",
+    "babel": "^6.5.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-flow-strip-types": "^6.18.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-register": "^6.18.0",
     "codecov": "^1.0.1",
-    "intelli-espower-loader": "^1.0.1",
-    "istanbul": "^0.4.5",
+    "cross-env": "^3.1.3",
+    "eslint": "^3.10.0",
+    "flow-bin": "^0.35.0",
+    "flow-typed": "^2.0.0",
     "mocha": "^3.1.2",
     "npm-run-all": "^3.1.1",
-    "power-assert": "^1.4.1",
-    "remap-istanbul": "^0.7.0",
-    "rimraf": "^2.5.4",
-    "ts-node": "^1.7.0",
-    "tslint": "^3.15.1",
-    "typescript": "^2.0.8"
-  },
-  "directories": {
-    "test": "dist/test"
+    "nyc": "^8.4.0",
+    "power-assert": "^1.4.2",
+    "rimraf": "^2.5.4"
   },
   "engine": {
     "node": "> 4"
@@ -40,18 +38,14 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
-    "build": "npm run clean && tsc",
     "clean": "rimraf dist coverage",
-    "codecov": "npm run cover && codecov -f coverage/coverage-remapped.json -t $CODECOV_TOKEN",
-    "cover": "npm-run-all -p cover:*",
-    "cover:html": "cd coverage && remap-istanbul -i coverage.json -o html-report -t html",
-    "cover:json": "cd coverage && cat coverage.json | remap-istanbul -o coverage-remapped.json",
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",
-    "lint:ts": "tslint src/*.ts test/*.ts",
-    "posttest": "npm run cover",
-    "pretest": "npm run build",
+    "lint:es": "eslint .",
+    "lint:flow": "flow",
+    "pretest": "npm run clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
-    "test:mocha": "istanbul cover _mocha --opts=test/mocha.opts -- dist/test"
+    "test:mocha": "nyc mocha -- test"
   }
 }

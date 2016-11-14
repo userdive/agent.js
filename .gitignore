@@ -1,3 +1,5 @@
+.nyc_output/
+flow-typed/
 dist/
 
 # Logs

@@ -1,2 +1,2 @@
---require intelli-espower-loader
+--require babel-register
 --recursive

@@ -1,3 +1,4 @@
+/* @flow */
 export default class Api {
   create (id: string, options: any): void {
     // TODO
