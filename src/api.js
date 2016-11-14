@@ -1,5 +1,10 @@
 /* @flow */
-export default class Api {
+
+module.exports = class Api {
+  domain: string
+  constructor (domain: string = 'localhost:8080') {
+    this.domain = domain
+  }
   create (id: string, options: any): void {
     // TODO
   }

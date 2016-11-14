@@ -9,6 +9,7 @@
   "devDependencies": {
     "@uncovertruth/eslint-config-flowtype": "0.0.1",
     "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-preset-power-assert": "^1.0.0",
@@ -18,6 +19,8 @@
     "eslint": "^3.10.0",
     "flow-bin": "^0.35.0",
     "flow-typed": "^2.0.0",
+    "jsdom": "^9.8.3",
+    "jsdom-global": "^2.1.0",
     "mocha": "^3.1.2",
     "npm-run-all": "^3.1.1",
     "nyc": "^8.4.0",
@@ -38,6 +41,7 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
+    "build": " npm run clean && babel src -d dist",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",

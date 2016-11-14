@@ -1,10 +1,8 @@
 /* @flow */
-import Api from './api'
-export default Api
+import api from './api'
+module.exports = api
 
-const api = new Api()
-
-console.log(api)
+declare var window: any;
 
 function execute (): void {
   const r = []

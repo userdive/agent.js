@@ -1,18 +1,14 @@
 import assert from 'assert'
 
-describe('api', () => {
+describe('index', () => {
   let Api
   before(() => {
-    Api = require('../src/api')
+    Api = require('../src')
   })
 
-  it('create', () => {
+  it('404 global', () => {
     const api = new Api()
     assert(typeof api.create === 'function')
-  })
-
-  it('send', () => {
-    const api = new Api()
     assert(typeof api.send === 'function')
   })
 })

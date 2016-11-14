@@ -1,2 +1,4 @@
 --require babel-register
+--require jsdom-global/register
+--require test/setup.js
 --recursive
