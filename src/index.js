@@ -2,7 +2,11 @@
 import api from './api'
 module.exports = api
 
-declare var window: any;
+declare var window: {
+  USERDIVEObject: string;
+};
+
+type Queue = any[]
 
 function execute (): void {
   const r = []
@@ -12,8 +16,8 @@ function execute (): void {
 }
 
 if (window.USERDIVEObject && window[window.USERDIVEObject]) {
-  const queue = window[window.USERDIVEObject].q
-  for (const args in queue) {
+  const queue: Array<Queue> = window[window.USERDIVEObject].q
+  for (const args of queue) {
     execute.apply(this, args)
   }
   window[window.USERDIVEObject] = execute
