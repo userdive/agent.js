@@ -1,3 +1,4 @@
+/* @flow */
 const jsdom = require('jsdom').jsdom
 
 global.document = jsdom('')
