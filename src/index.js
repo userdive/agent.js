@@ -1,12 +1,11 @@
 /* @flow */
 import api from './api'
-module.exports = api
 
 declare var window: {
   USERDIVEObject: string;
 };
 
-type Queue = any[]
+type TaskQueue = any[]
 
 function execute (): void {
   const r = []
@@ -16,9 +15,11 @@ function execute (): void {
 }
 
 if (window.USERDIVEObject && window[window.USERDIVEObject]) {
-  const queue: Array<Queue> = window[window.USERDIVEObject].q
+  const queue: Array<TaskQueue> = window[window.USERDIVEObject].q
   for (const args of queue) {
     execute.apply(this, args)
   }
   window[window.USERDIVEObject] = execute
 }
+
+module.exports = api
