@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { internet } from 'faker'
 
 describe('index', () => {
   function createEntry (global, name) {
@@ -23,11 +24,12 @@ describe('index', () => {
     assert(window.ud)
     assert(window.ud.q === undefined)
 
-    window.ud('create')
+    window.ud('create', {}, internet.url())
+
     assert(window.ud.q.length)
 
     const api = require('../src')
-    assert(typeof api.create === 'function')
+    assert(window.ud('create', {}, internet.url()))
     assert(typeof api.send === 'function')
     assert(window.ud.q === undefined)
   })

@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { random, internet } from 'faker'
 
 describe('api', () => {
   let api
@@ -7,7 +8,7 @@ describe('api', () => {
   })
 
   it('create', () => {
-    assert(typeof api.create === 'function')
+    assert(api.create(random.uuid(), {}, internet.url()))
   })
 
   it('send', () => {

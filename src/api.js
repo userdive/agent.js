@@ -1,7 +1,12 @@
 /* @flow */
 
-const create = (id: string, options: any): void => {
-  // TODO
+import Core from './core'
+
+type Options = {}
+
+const create = (id: string, options: Options, baseUrl: string): Core => {
+  const core = new Core(id, baseUrl) // TODO cache
+  return core
 }
 const send = (type: string): void => {
   // TODO

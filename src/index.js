@@ -11,7 +11,7 @@ function execute (): void {
   const tasks = []
   tasks.push.apply(tasks, arguments)
   const apiName = tasks.shift()
-  api[apiName].apply(this, tasks)
+  return api[apiName].apply(this, tasks)
 }
 
 ((global) => {
