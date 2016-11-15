@@ -49,7 +49,6 @@
     "pretest": "npm run clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
-    "test:mocha": "nyc mocha -- test",
-    "mocha": "nyc mocha -w -- test"
+    "test:mocha": "nyc mocha -- test"
   }
 }
