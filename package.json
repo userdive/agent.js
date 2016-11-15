@@ -40,12 +40,13 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
-    "build": " npm run clean && babel src -d dist",
+    "build": "babel src -d dist",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint .",
     "lint:flow": "flow",
+    "prebuild": "npm run clean",
     "pretest": "npm run clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
