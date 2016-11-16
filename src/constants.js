@@ -1,5 +1,5 @@
 /* @flow */
 module.exports = {
-  VERSION: 'v1',
-  CLIENT_VERSION: 1
+  VERSION: 1,
+  API_VERSION: 'v1'
 }
