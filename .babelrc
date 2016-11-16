@@ -4,6 +4,7 @@
   ],
   "plugins": [
     "transform-async-to-generator",
+    "transform-object-assign",
     "transform-flow-strip-types"
   ],
   "env": {

@@ -10,10 +10,11 @@ const create = (id: string, options: Options, baseUrl: string): Core => {
   return core
 }
 
-const send = (type: string): void => {
+const send = (args: any): void => {
   if (!core) {
     return
   }
+  core.send(args[0], args[1])
 }
 
 module.exports = {
