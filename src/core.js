@@ -1,8 +1,8 @@
 /* @flow */
-import { project } from './store'
+import { setup } from './store'
 
 module.exports = class Core {
   constructor (projectId: string, baseUrl: string): void {
-    project(projectId, baseUrl)
+    setup(projectId, baseUrl)
   }
 }

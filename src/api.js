@@ -10,7 +10,7 @@ const create = (id: string, options: Options, baseUrl: string): Core => {
   return core
 }
 
-const send = (args: any): void => {
+const send = (type: string): void => {
   if (!core) {
     return
   }

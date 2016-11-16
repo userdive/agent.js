@@ -18,7 +18,7 @@ const getBaseUrl = () => {
   return `${baseUrl}/${VERSION}/${projectId}/${clientId}/${loadTime}/`
 }
 
-const project = (id: string, url: string) => {
+const setup = (id: string, url: string) => {
   projectId = id
   baseUrl = url
   clientId = uniqueId()  // TODO store cookie? storage
@@ -37,7 +37,7 @@ const getEnv = (): ClientEnvironments => {
 }
 
 module.exports = {
-  project,
+  setup,
   getBaseUrl,
   getEnv
 }

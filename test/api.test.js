@@ -12,6 +12,6 @@ describe('api', () => {
   })
 
   it('send', () => {
-    assert(typeof api.send === 'function')
+    api.send('pageviews')
   })
 })
