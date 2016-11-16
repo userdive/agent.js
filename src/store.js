@@ -7,7 +7,8 @@ import {
   innerHeight,
   innerWidth,
   screenHeight,
-  screenWidth
+  screenWidth,
+  timestamp
 } from './alias'
 import type { ClientEnvironments } from './types'
 
@@ -26,7 +27,18 @@ let sw: number
 let wh: number
 let ww: number
 
+// TODO Stop trackihng
+const nullValidate = hash => {
+  for (const d in hash) {
+    if (!d) {
+      throw new Error('Empty')
+    }
+  }
+  return hash
+}
+
 const getBaseUrl = () => {
+  // TODO validation
   return `${baseUrl}/${projectId}/${clientId}/${loadTime}/`
 }
 
@@ -37,6 +49,7 @@ const setup = (id: string, url: string) => {
 }
 
 const size = () => {
+  loadTime = timestamp()
   h = clientHeight()
   w = clientWidth()
   sh = screenHeight()
@@ -47,7 +60,8 @@ const size = () => {
 
 const getEnv = (): ClientEnvironments => {
   // TODO validation
-  return { v, sh, sw, wh, ww, h, w }
+  const data = { v, sh, sw, wh, ww, h, w }
+  return nullValidate(data)
 }
 
 module.exports = {
