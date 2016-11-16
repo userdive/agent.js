@@ -1,7 +1,7 @@
 /* @flow */
 import { uniqueId } from './utilities'
 import { VERSION, CLIENT_VERSION } from './constants'
-import type { UserEnvironments } from './types'
+import type { ClientEnvironments } from './types'
 
 let baseUrl: string
 let clientId: string
@@ -21,10 +21,10 @@ const getBaseUrl = () => {
 const project = (id: string, url: string) => {
   projectId = id
   baseUrl = url
-  clientId = uniqueId()
+  clientId = uniqueId()  // TODO store cookie? storage
 }
 
-const getEnv = (): UserEnvironments => {
+const getEnv = (): ClientEnvironments => {
   return {
     v: CLIENT_VERSION,
     wh: windowHeight,

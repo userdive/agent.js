@@ -1,5 +1,5 @@
 /* @flow */
-export type UserEnvironments = {
+export type ClientEnvironments = {
   v: number;
   uid?: number;
   l?: number;
