@@ -1,6 +1,6 @@
 /* @flow */
 import { uniqueId } from './utilities'
-import { VERSION, API_VERSION } from './constants'
+import { VERSION } from './constants'
 import type { ClientEnvironments } from './types'
 
 let baseUrl: string
@@ -15,7 +15,7 @@ let windowHeight: number
 let windowWidth: number
 
 const getBaseUrl = () => {
-  return `${baseUrl}/${API_VERSION}/${projectId}/${clientId}/${loadTime}/`
+  return `${baseUrl}/${projectId}/${clientId}/${loadTime}/`
 }
 
 const setup = (id: string, url: string) => {
