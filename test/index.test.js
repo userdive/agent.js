@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { internet } from 'faker'
+import { random, internet } from 'faker'
 
 describe('index', () => {
   function createEntry (global, name) {
@@ -13,8 +13,8 @@ describe('index', () => {
   })
 
   afterEach(() => {
+    window[window.USERDIVEObject] = undefined
     window.USERDIVEObject = undefined
-    window.ud = undefined
   })
 
   it('find global', () => {
@@ -24,12 +24,12 @@ describe('index', () => {
     assert(window.ud)
     assert(window.ud.q === undefined)
 
-    window.ud('create', {}, internet.url())
+    window.ud('create', random.uuid(), {}, internet.url())
 
     assert(window.ud.q.length)
 
     const api = require('../src')
-    assert(window.ud('create', {}, internet.url()))
+    assert(window.ud('create', random.uuid(), {}, internet.url()))
     assert(typeof api.send === 'function')
     assert(window.ud.q === undefined)
   })

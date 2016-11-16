@@ -7,7 +7,7 @@ declare var window: {
 
 type TaskQueue = any[]
 
-function execute (): void {
+function execute (): any {
   const tasks = []
   tasks.push.apply(tasks, arguments)
   const apiName = tasks.shift()
