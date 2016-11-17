@@ -6,22 +6,22 @@ describe('alist', () => {
     assert(alias.timestamp())
   })
 
-  it.skip('navigator', () => {
-    assert(alias.sendBeacon())
+  it('navigator', () => {
+    assert(typeof alias.sendBeacon === 'function')
   })
 
-  it.skip('body', () => {
-    assert(alias.h())
-    assert(alias.w())
+  it('body', () => {
+    assert(typeof alias.resourceWidth === 'function')
+    assert(typeof alias.resourceHeight === 'function')
   })
 
-  it.skip('screen', () => {
-    assert(alias.sw())
-    assert(alias.sh())
+  it('screen', () => {
+    assert(typeof alias.screenHeight === 'function')
+    assert(typeof alias.screenWidth === 'function')
   })
 
   it('window', () => {
-    assert(alias.wh())
-    assert(alias.ww())
+    assert(alias.windowHeight())
+    assert(alias.windowWidth())
   })
 })
