@@ -11,16 +11,16 @@ let baseUrl: string
 let clientId: string
 let projectId: string
 
-let clientHeight: number
-let clientWidth: number
+let H: number
+let W: number
 
 let loadTime: number
 
-let screenHeight: number
-let screenWidth: number
+let SH: number
+let SW: number
 
-let innerHeight: number
-let innerWidth: number
+let WH: number
+let WW: number
 
 const getBaseUrl = () => {
   // TODO validation
@@ -33,26 +33,26 @@ const setup = (id: string, url: string) => {
   clientId = uniqueId()  // TODO store cookie? storage
 }
 
-const initialView = () => {
+function initialView () {
   loadTime = timestamp()
-  clientHeight = h()
-  clientWidth = w()
-  screenHeight = sh()
-  screenWidth = sw()
-  innerHeight = wh()
-  innerWidth = ww()
+  H = h()
+  W = w()
+  SH = sh()
+  SW = sw()
+  WH = wh()
+  WW = ww()
 }
 
-const getEnv = (): ClientEnvironments => {
+function getEnv (): ClientEnvironments {
   // TODO validation
   return {
     v,
-    sh: screenHeight,
-    sw: screenWidth,
-    wh: innerHeight,
-    ww: innerWidth,
-    h: clientHeight,
-    w: clientWidth
+    sh: SH,
+    sw: SW,
+    wh: WH,
+    ww: WW,
+    h: H,
+    w: W
   }
 }
 
