@@ -12,14 +12,13 @@ import {
 } from './alias'
 import type { ClientEnvironments } from './types'
 
-let baseUrl: string
-let clientId: string
-let projectId: string
+let BASE_URL: string
+let CLIENT_ID: string
+let LOAD_TIME: number
+let PROJECT_ID: string
 
 let RESOURCE_HEIGHT: number
 let RESOURCE_WIDTH: number
-
-let loadTime: number
 
 let SCREEN_HEIGHT: number
 let SCREEN_WIDTH: number
@@ -29,17 +28,17 @@ let WINDOW_WIDTH: number
 
 const getBaseUrl = () => {
   // TODO validation
-  return `${baseUrl}/${projectId}/${clientId}/${loadTime}/`
+  return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}/`
 }
 
 const setup = (id: string, url: string) => {
-  projectId = id
-  baseUrl = url
-  clientId = uniqueId()  // TODO store cookie? storage
+  PROJECT_ID = id
+  BASE_URL = url
+  CLIENT_ID = uniqueId()  // TODO store cookie? storage
 }
 
 function initialView () {
-  loadTime = timestamp()
+  LOAD_TIME = timestamp()
   RESOURCE_HEIGHT = resourceHeight()
   RESOURCE_WIDTH = resourceWidth()
   SCREEN_HEIGHT = screenHeight()
