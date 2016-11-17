@@ -23,6 +23,7 @@
     "faker": "^3.1.0",
     "flow-bin": "^0.35.0",
     "flow-typed": "^2.0.0",
+    "ghpages": "0.0.8",
     "jsdom": "^9.8.3",
     "jsdom-global": "^2.1.0",
     "licensify": "^3.1.2",

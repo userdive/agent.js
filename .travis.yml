@@ -6,6 +6,8 @@ node_js:
 - 5
 after_success:
 - npm run codecov
+script:
+  - '[ "$TRAVIS_BRANCH" == master ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && npm run build:bundle && ghpages --path dist'
 notifications:
   email: false
   slack:
