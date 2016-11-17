@@ -1,5 +1,5 @@
 /* @flow */
-import { setup, size } from './store'
+import { setup } from './store'
 import { env } from './requests'
 
 module.exports = class Core {
@@ -9,7 +9,6 @@ module.exports = class Core {
   send (type: string, pathname: string) {
     switch (type) {
       case 'pageviews':
-        size()
         env()
     }
   }
