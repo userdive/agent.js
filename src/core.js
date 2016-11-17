@@ -1,6 +1,6 @@
 /* @flow */
 import { setup } from './store'
-import { env } from './requests'
+import { env as sendEnv } from './requests'
 
 module.exports = class Core {
   constructor (projectId: string, baseUrl: string): void {
@@ -9,7 +9,7 @@ module.exports = class Core {
   send (type: string, pathname: string) {
     switch (type) {
       case 'pageviews':
-        env()
+        sendEnv()
     }
   }
 }
