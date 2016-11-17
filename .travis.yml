@@ -8,7 +8,13 @@ after_success:
 - npm run codecov
 deploy:
   provider: script
-  script: npm run build:bundle && ghpages --path dist
+  script:
+    -|
+    $(npm bin)/update-branch --commands "npm run build" \
+                             --commit-message "[skip ci] build" \
+                             --directory "dist" \
+                             --distribution-branch "alpha" \
+                             --source-branch "master"
   on:
     branch: master
 notifications:
