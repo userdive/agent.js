@@ -2,7 +2,12 @@
 import { uniqueId } from './utilities'
 import { VERSION as v } from './constants'
 import {
-  sh, sw, wh, ww, h, w,
+  screenHeight,
+  screenWidth,
+  windowHeight,
+  windowWidth,
+  resourceHeight,
+  resourceWidth,
   timestamp
 } from './alias'
 import type { ClientEnvironments } from './types'
@@ -11,16 +16,16 @@ let baseUrl: string
 let clientId: string
 let projectId: string
 
-let H: number
-let W: number
+let RESOURCE_HEIGHT: number
+let RESOURCE_WIDTH: number
 
 let loadTime: number
 
-let SH: number
-let SW: number
+let SCREEN_HEIGHT: number
+let SCREEN_WIDTH: number
 
-let WH: number
-let WW: number
+let WINDOW_HEIGHT: number
+let WINDOW_WIDTH: number
 
 const getBaseUrl = () => {
   // TODO validation
@@ -35,24 +40,24 @@ const setup = (id: string, url: string) => {
 
 function initialView () {
   loadTime = timestamp()
-  H = h()
-  W = w()
-  SH = sh()
-  SW = sw()
-  WH = wh()
-  WW = ww()
+  RESOURCE_HEIGHT = resourceHeight()
+  RESOURCE_WIDTH = resourceWidth()
+  SCREEN_HEIGHT = screenHeight()
+  SCREEN_WIDTH = screenWidth()
+  WINDOW_WIDTH = windowWidth()
+  WINDOW_HEIGHT = windowHeight()
 }
 
 function getEnv (): ClientEnvironments {
   // TODO validation
   return {
     v,
-    sh: SH,
-    sw: SW,
-    wh: WH,
-    ww: WW,
-    h: H,
-    w: W
+    sh: SCREEN_HEIGHT,
+    sw: SCREEN_WIDTH,
+    wh: WINDOW_HEIGHT,
+    ww: WINDOW_WIDTH,
+    h: RESOURCE_HEIGHT,
+    w: RESOURCE_WIDTH
   }
 }
 

@@ -9,22 +9,22 @@ const sendBeacon = () => {
 
 const bodyAlias = (body => {
   return {
-    h: (): number => body.clientHeight,
-    w: (): number => body.clientWidth
+    resourceHeight: (): number => body.clientHeight,
+    resourceWidth: (): number => body.clientWidth
   }
 })(document.body)
 
 const screenAlias = (s => {
   return {
-    sh: (): number => s.height,
-    sw: (): number => s.width
+    screenHeight: (): number => s.height,
+    screenWidth: (): number => s.width
   }
 })(screen)
 
 const windowAlias = (w => {
   return {
-    wh: (): number => w.innerHeight,
-    ww: (): number => w.innerWidth
+    windowHeight: (): number => w.innerHeight,
+    windowWidth: (): number => w.innerWidth
   }
 })(window)
 
