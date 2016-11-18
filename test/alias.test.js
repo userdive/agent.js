@@ -6,10 +6,6 @@ describe('alist', () => {
     assert(alias.timestamp())
   })
 
-  it('navigator', () => {
-    assert(typeof alias.sendBeacon === 'function')
-  })
-
   it('body', () => {
     assert(typeof alias.resourceWidth === 'function')
     assert(typeof alias.resourceHeight === 'function')
