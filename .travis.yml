@@ -6,11 +6,13 @@ node_js:
 - 5
 after_success:
 - npm run codecov
-- $(npm bin)/update-branch --commands "npm run build" \
-                           --commit-message "[skip ci] build" \
-                           --directory "dist" \
-                           --distribution-branch "alpha" \
-                           --source-branch "master"
+- |
+
+    $(npm bin)/update-branch --commands "npm run build" \
+                             --commit-message "[skip ci] build" \
+                             --directory "dist" \
+                             --distribution-branch "alpha" \
+                             --source-branch "master"
 
 notifications:
   email: false
