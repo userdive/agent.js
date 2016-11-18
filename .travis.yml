@@ -4,14 +4,13 @@ node_js:
 - stable
 - 6
 - 5
-before_script:
-- git config --global user.email "develop@uncovertruth.jp"
-- git config --global user.name "USERDIVE bot"
 
 after_success:
 - npm run codecov
 - |
 
+    git config --global user.email "develop@uncovertruth.jp" && \
+    git config --global user.name "USERDIVE bot" && \
     $(npm bin)/update-branch --commands "npm run build" \
                              --commit-message "[skip ci] build :robot:" \
                              --directory "dist" \
