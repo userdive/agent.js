@@ -1,6 +1,7 @@
 /* @flow */
 import cookies from 'js-cookie'
-import { uniqueId } from './utilities'
+import { v4 as uuid } from 'uuid'
+
 import { VERSION as v, COOKIE } from './constants'
 import {
   screenHeight,
@@ -43,7 +44,7 @@ function findOrCreateClientId () {
     // TODO logger
     throw err
   }
-  return uniqueId()
+  return uuid()
 }
 
 function setup (id: string, url: string): void {
