@@ -1,9 +1,9 @@
 /* @flow */
-const timestamp = (): number => {
+function timestamp (): number {
   return Date.now()
 }
 
-const sendBeacon = () => {
+function sendBeacon () {
   return navigator.sendBeacon
 }
 
