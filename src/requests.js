@@ -1,10 +1,12 @@
 /* @flow */
 import { getBaseUrl, getEnv, initialView } from './store'
-import { sendBeacon } from './alias'
+import { xhr } from './alias'
 
-const env = () => {
+function env (): void {
   initialView()
-  sendBeacon(`${getBaseUrl()}/env`, getEnv())
+  const client = xhr()
+  client.open('GET', `${getBaseUrl()}/env.gif`, true)
+  client.send(getEnv())
 }
 
 module.exports = {

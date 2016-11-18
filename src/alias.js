@@ -8,27 +8,55 @@ const sendBeacon = () => {
 }
 
 const bodyAlias = (body => {
+  function resourceHeight (): number {
+    return body.clientHeight
+  }
+  function resourceWidth (): number {
+    return body.clientWidth
+  }
   return {
-    resourceHeight: (): number => body.clientHeight,
-    resourceWidth: (): number => body.clientWidth
+    resourceHeight,
+    resourceWidth
   }
 })(document.body)
 
 const screenAlias = (s => {
+  function screenHeight (): number {
+    return s.height
+  }
+  function screenWidth (): number {
+    return s.width
+  }
   return {
-    screenHeight: (): number => s.height,
-    screenWidth: (): number => s.width
+    screenHeight,
+    screenWidth
   }
 })(screen)
 
 const windowAlias = (w => {
+  function windowHeight (): number {
+    return w.innerHeight
+  }
+  function windowWidth (): number {
+    return w.innerWidth
+  }
   return {
-    windowHeight: (): number => w.innerHeight,
-    windowWidth: (): number => w.innerWidth
+    windowHeight,
+    windowWidth
   }
 })(window)
 
-module.exports = Object.assign({}, {
-  timestamp,
-  sendBeacon
-}, bodyAlias, screenAlias, windowAlias)
+function xhr () {
+  return new XMLHttpRequest()
+}
+
+module.exports = Object.assign({},
+  {
+    timestamp,
+    sendBeacon,
+    xhr
+  },
+  bodyAlias,
+  screenAlias,
+  windowAlias,
+)
