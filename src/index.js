@@ -1,10 +1,6 @@
 /* @flow */
 import api from './api'
 
-declare var window: {
-  USERDIVEObject: string;
-};
-
 type TaskQueue = any[]
 
 function execute (): any {
@@ -14,14 +10,14 @@ function execute (): any {
   return api[apiName].apply(this, tasks)
 }
 
-((global) => {
-  if (global.USERDIVEObject && global[global.USERDIVEObject]) {
-    const queue: Array<TaskQueue> = global[global.USERDIVEObject].q
+((global: any) => {
+  if (global && global.q) {
+    const queue = (global.q: Array<TaskQueue>)
     for (const args of queue) {
       execute.apply(this, args)
     }
-    global[global.USERDIVEObject] = execute
+    global = execute
   }
-})(window)
+})(window.USERDIVEObject)
 
 module.exports = api

@@ -14,29 +14,21 @@ import {
 } from './alias'
 import type { ClientEnvironments } from './types'
 
+let ENV: ClientEnvironments
+
 let BASE_URL: string
 let CLIENT_ID: string
 let LOAD_TIME: number
 let PROJECT_ID: string
 
-let RESOURCE_HEIGHT: number
-let RESOURCE_WIDTH: number
-
-let SCREEN_HEIGHT: number
-let SCREEN_WIDTH: number
-
-let WINDOW_HEIGHT: number
-let WINDOW_WIDTH: number
-
-function getBaseUrl (): string {
+function createBaseUrl (): string {
   // TODO validation
   return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}`
 }
 
-function findOrCreateClientId () {
-  let c
+function findOrCreateClientId (): string {
   try {
-    c = cookies.get(COOKIE)
+    const c = cookies.get(COOKIE)
     if (c) {
       return c
     }
@@ -44,7 +36,7 @@ function findOrCreateClientId () {
     // TODO logger
     throw err
   }
-  return uuid()
+  return uuid().replace(/-/g, '')
 }
 
 function setup (id: string, url: string): void {
@@ -53,32 +45,31 @@ function setup (id: string, url: string): void {
   CLIENT_ID = findOrCreateClientId()
 }
 
-function initialView (): void {
+function initialView (): ClientEnvironments {
   LOAD_TIME = timestamp()
-  RESOURCE_HEIGHT = resourceHeight()
-  RESOURCE_WIDTH = resourceWidth()
-  SCREEN_HEIGHT = screenHeight()
-  SCREEN_WIDTH = screenWidth()
-  WINDOW_WIDTH = windowWidth()
-  WINDOW_HEIGHT = windowHeight()
+  ENV = {
+    v,
+    sh: screenHeight(),
+    sw: screenWidth(),
+    wh: windowHeight(),
+    ww: windowWidth(),
+    h: resourceHeight(),
+    w: resourceWidth()
+  }
+  return ENV
 }
 
-function getEnv (): ClientEnvironments {
-  // TODO validation
-  return {
-    v,
-    sh: SCREEN_HEIGHT,
-    sw: SCREEN_WIDTH,
-    wh: WINDOW_HEIGHT,
-    ww: WINDOW_WIDTH,
-    h: RESOURCE_HEIGHT,
-    w: RESOURCE_WIDTH
+function createEnvRequestUrl (): string {
+  let query = '?'
+  for (const key in ENV) {
+    query += `${key}=${ENV[key]}`
   }
+  query.replace(/&$/, '')
+  return `${createBaseUrl()}${query}`
 }
 
 module.exports = {
   setup,
   initialView,
-  getBaseUrl,
-  getEnv
+  createEnvRequestUrl
 }
