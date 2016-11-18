@@ -1,6 +1,7 @@
 /* @flow */
+import cookies from 'js-cookie'
 import { uniqueId } from './utilities'
-import { VERSION as v } from './constants'
+import { VERSION as v, COOKIE } from './constants'
 import {
   screenHeight,
   screenWidth,
@@ -31,10 +32,24 @@ function getBaseUrl (): string {
   return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}/`
 }
 
+function findOrCreateClientId () {
+  let c
+  try {
+    c = cookies.get(COOKIE)
+    if (c) {
+      return c
+    }
+  } catch (err) {
+    // TODO logger
+    throw err
+  }
+  return uniqueId()
+}
+
 function setup (id: string, url: string): void {
   PROJECT_ID = id
   BASE_URL = url
-  CLIENT_ID = uniqueId()  // TODO store cookie? storage
+  CLIENT_ID = findOrCreateClientId()
 }
 
 function initialView (): void {
