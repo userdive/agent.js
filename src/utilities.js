@@ -1,5 +1,5 @@
 /* @flow */
-const uniqueId = (): string => {
+function uniqueId (): string {
   return '123'  // TODO
 }
 

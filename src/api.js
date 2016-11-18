@@ -5,12 +5,12 @@ type Options = {}
 
 let core
 
-const create = (id: string, options: Options, baseUrl: string): Core => {
+function create (id: string, options: Options, baseUrl: string): Core {
   core = new Core(id, baseUrl) // TODO cache
   return core
 }
 
-const send = (type: string, viewName: string): void => {
+function send (type: string, viewName: string): void {
   if (!core) {
     return
   }

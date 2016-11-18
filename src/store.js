@@ -26,18 +26,18 @@ let SCREEN_WIDTH: number
 let WINDOW_HEIGHT: number
 let WINDOW_WIDTH: number
 
-const getBaseUrl = () => {
+function getBaseUrl (): string {
   // TODO validation
   return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}/`
 }
 
-const setup = (id: string, url: string) => {
+function setup (id: string, url: string): void {
   PROJECT_ID = id
   BASE_URL = url
   CLIENT_ID = uniqueId()  // TODO store cookie? storage
 }
 
-function initialView () {
+function initialView (): void {
   LOAD_TIME = timestamp()
   RESOURCE_HEIGHT = resourceHeight()
   RESOURCE_WIDTH = resourceWidth()
