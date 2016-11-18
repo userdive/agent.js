@@ -8,13 +8,11 @@ after_success:
 - npm run codecov
 deploy:
   provider: script
-  script:
-    -|
-    $(npm bin)/update-branch --commands "npm run build" \
-                             --commit-message "[skip ci] build" \
-                             --directory "dist" \
-                             --distribution-branch "alpha" \
-                             --source-branch "master"
+  script: $(npm bin)/update-branch --commands "npm run build" \
+                                   --commit-message "[skip ci] build" \
+                                   --directory "dist" \
+                                   --distribution-branch "alpha" \
+                                   --source-branch "master"
   on:
     branch: master
 notifications:

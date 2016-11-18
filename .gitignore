@@ -1,6 +1,7 @@
-.nyc_output/
-dist/
-flow-typed/
+.nyc_output
+dist
+flow-typed
+*.lcov
 
 # Logs
 logs
