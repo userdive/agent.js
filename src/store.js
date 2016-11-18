@@ -30,7 +30,7 @@ let WINDOW_WIDTH: number
 
 function getBaseUrl (): string {
   // TODO validation
-  return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}/`
+  return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}`
 }
 
 function findOrCreateClientId () {
