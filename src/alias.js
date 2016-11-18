@@ -3,10 +3,6 @@ function timestamp (): number {
   return Date.now()
 }
 
-function sendBeacon () {
-  return navigator.sendBeacon
-}
-
 const bodyAlias = (body => {
   function resourceHeight (): number {
     return body.clientHeight
@@ -53,7 +49,6 @@ function xhr () {
 module.exports = Object.assign({},
   {
     timestamp,
-    sendBeacon,
     xhr
   },
   bodyAlias,
