@@ -3,10 +3,6 @@ function timestamp (): number {
   return Date.now()
 }
 
-function createElement (): Function {
-  return document.createElement
-}
-
 const bodyAlias = (body => {
   function resourceHeight (): number {
     return body.clientHeight
@@ -48,7 +44,6 @@ const windowAlias = (w => {
 
 module.exports = Object.assign({},
   {
-    createElement,
     timestamp
   },
   bodyAlias,
