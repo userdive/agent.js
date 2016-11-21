@@ -10,14 +10,14 @@ function execute (): any {
   return api[apiName].apply(this, tasks)
 }
 
-((global: any) => {
-  if (global && global.q) {
-    const queue = (global.q: Array<TaskQueue>)
+((global: any, name) => {
+  if (global[name] && global[name].q) {
+    const queue = (global[name].q: Array<TaskQueue>)
     for (const args of queue) {
       execute.apply(this, args)
     }
-    global = execute
+    global[name] = execute
   }
-})(window.USERDIVEObject)
+})(window, window.USERDIVEObject)
 
 module.exports = api

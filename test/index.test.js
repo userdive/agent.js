@@ -21,16 +21,17 @@ describe('index', () => {
     window.USERDIVEObject = 'ud'
     window[window.USERDIVEObject] = createEntry(window, window.USERDIVEObject)
 
-    assert(window.ud)
-    assert(window.ud.q === undefined)
+    assert(window[window.USERDIVEObject])
+    assert(window[window.USERDIVEObject]['q'] === undefined)
 
     window.ud('create', random.uuid(), {}, internet.url())
+    assert(window[window.USERDIVEObject]['q'])
 
-    assert(window.ud.q.length)
+    assert(window[window.USERDIVEObject].q.length)
 
-    const api = require('../src')
-    assert(window.ud('create', random.uuid(), {}, internet.url()))
-    assert(typeof api.send === 'function')
-    assert(window.ud.q === undefined)
+    require('../src')
+    const agent = window[window.USERDIVEObject]('create', random.uuid(), {}, internet.url())
+    assert(agent.send)
+    assert(window[window.USERDIVEObject]['q'] === undefined)
   })
 })

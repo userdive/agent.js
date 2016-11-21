@@ -1,30 +1,17 @@
 /* @flow */
 import cookies from 'js-cookie'
+
+import { timestamp } from './alias'
 import { v4 as uuid } from 'uuid'
+import { COOKIE } from './constants'
 
-import { VERSION as v, COOKIE } from './constants'
-import {
-  screenHeight,
-  screenWidth,
-  windowHeight,
-  windowWidth,
-  resourceHeight,
-  resourceWidth,
-  timestamp
-} from './alias'
-import type { ClientEnvironments } from './types'
+import type { ClientEnvironments, Setting } from './types'
 
-let ENV: ClientEnvironments
-
-let BASE_URL: string
-let CLIENT_ID: string
-let LOAD_TIME: number
-let PROJECT_ID: string
-
-function createBaseUrl (): string {
-  // TODO validation
-  return `${BASE_URL}/${PROJECT_ID}/${CLIENT_ID}/${LOAD_TIME}`
+type State = {
+  env?: ClientEnvironments,
+  setting?: Setting;
 }
+const state: State = {}
 
 function findOrCreateClientId (): string {
   try {
@@ -39,37 +26,19 @@ function findOrCreateClientId (): string {
   return uuid().replace(/-/g, '')
 }
 
-function setup (id: string, url: string): void {
-  PROJECT_ID = id
-  BASE_URL = url
-  CLIENT_ID = findOrCreateClientId()
-}
-
-function initialView (): ClientEnvironments {
-  LOAD_TIME = timestamp()
-  ENV = {
-    v,
-    sh: screenHeight(),
-    sw: screenWidth(),
-    wh: windowHeight(),
-    ww: windowWidth(),
-    h: resourceHeight(),
-    w: resourceWidth()
+module.exports = class Store {
+  baseUrl: string;
+  constructor (projectId: string, baseUrl: string): void {
+    // TODO valiadte
+    const clientId = findOrCreateClientId()
+    const loadTime = timestamp()
+    this.baseUrl = `${baseUrl}/${projectId}/${clientId}/${loadTime}`
   }
-  return ENV
-}
-
-function createEnvRequestUrl (): string {
-  let query = '?'
-  for (const key in ENV) {
-    query += `${key}=${ENV[key]}`
+  merge (type: string, data: Object): State {
+    switch (type) {
+      case 'env':
+        return Object.assign(state, {env: data})
+    }
+    return state
   }
-  query.replace(/&$/, '')
-  return `${createBaseUrl()}${query}`
-}
-
-module.exports = {
-  setup,
-  initialView,
-  createEnvRequestUrl
 }

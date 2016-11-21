@@ -42,14 +42,9 @@ const windowAlias = (w => {
   }
 })(window)
 
-function xhr () {
-  return new XMLHttpRequest()
-}
-
 module.exports = Object.assign({},
   {
-    timestamp,
-    xhr
+    timestamp
   },
   bodyAlias,
   screenAlias,

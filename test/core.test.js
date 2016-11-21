@@ -2,21 +2,21 @@ import assert from 'assert'
 import { random, internet } from 'faker'
 
 describe('core', () => {
-  const Core = require('../src/core')
+  const Agent = require('../src/core')
 
   it('instance', () => {
-    const core = new Core(
+    const agent = new Agent(
       random.uuid(),
       internet.url()
     )
-    assert(core)
+    assert(agent)
   })
 
   it('send', () => {
-    const core = new Core(
+    const agent = new Agent(
       random.uuid(),
       internet.url()
     )
-    core.send('pageviews', location.pathname)
+    agent.send('pageview', location.pathname)
   })
 })

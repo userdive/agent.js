@@ -3,18 +3,18 @@ import Core from './core'
 
 type Options = {}
 
-let core
+let agent
 
 function create (id: string, options: Options, baseUrl: string): Core {
-  core = new Core(id, baseUrl) // TODO cache
-  return core
+  agent = new Core(id, baseUrl) // TODO cache
+  return agent
 }
 
 function send (type: string, viewName: string): void {
-  if (!core) {
+  if (!agent) {
     return
   }
-  core.send(type, viewName)
+  agent.send(type, viewName)
 }
 
 module.exports = {
