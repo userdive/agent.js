@@ -24,13 +24,15 @@ describe('index', () => {
     assert(window[window.USERDIVEObject])
     assert(window[window.USERDIVEObject]['q'] === undefined)
 
-    window.ud('create', random.uuid(), {}, internet.url())
+    window.ud('create', random.alphaNumeric(), {}, internet.url())
     assert(window[window.USERDIVEObject]['q'])
 
     assert(window[window.USERDIVEObject].q.length)
 
     require('../src')
-    const agent = window[window.USERDIVEObject]('create', random.uuid(), {}, internet.url())
+    const agent = window[window.USERDIVEObject](
+      'create', random.alphaNumeric(), {}, internet.url()
+    )
     assert(agent.send)
     assert(window[window.USERDIVEObject]['q'] === undefined)
   })

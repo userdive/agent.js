@@ -15,9 +15,3 @@ export type ClientEnvironments = {
   cd?: number,
   cm?: number;
 }
-
-export type Setting = {
-  baseUrl: string,
-  clientId?: string,
-  id: string;
-}

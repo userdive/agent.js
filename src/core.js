@@ -7,10 +7,9 @@ import {
   windowHeight,
   windowWidth,
   resourceHeight,
-  resourceWidth,
-  timestamp
+  resourceWidth
 } from './alias'
-import { env as sendEnv } from './requests'
+import { get } from './requests'
 
 module.exports = class Agent {
   store: Store;
@@ -20,9 +19,8 @@ module.exports = class Agent {
   send (type: string, pathname: string) {
     switch (type) {
       case 'pageview':
-        this.store.merge('env', {
+        const state = this.store.merge('env', {
           v,
-          t: timestamp(),
           sh: screenHeight(),
           sw: screenWidth(),
           wh: windowHeight(),
@@ -30,7 +28,8 @@ module.exports = class Agent {
           h: resourceHeight(),
           w: resourceWidth()
         })
-        sendEnv()
+        console.log(state)
+        get(`${this.store.baseUrl}/env.gif`, {})
     }
   }
 }

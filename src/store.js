@@ -5,13 +5,11 @@ import { timestamp } from './alias'
 import { v4 as uuid } from 'uuid'
 import { COOKIE } from './constants'
 
-import type { ClientEnvironments, Setting } from './types'
+import type { ClientEnvironments } from './types'
 
 type State = {
-  env?: ClientEnvironments,
-  setting?: Setting;
+  env: ClientEnvironments
 }
-const state: State = {}
 
 function findOrCreateClientId (): string {
   try {
@@ -28,8 +26,13 @@ function findOrCreateClientId (): string {
 
 module.exports = class Store {
   baseUrl: string;
+  state: State;
   constructor (projectId: string, baseUrl: string): void {
     // TODO valiadte
+    if (!projectId || !baseUrl) {
+      throw new Error('need id & baseurl')
+    }
+
     const clientId = findOrCreateClientId()
     const loadTime = timestamp()
     this.baseUrl = `${baseUrl}/${projectId}/${clientId}/${loadTime}`
@@ -37,8 +40,8 @@ module.exports = class Store {
   merge (type: string, data: Object): State {
     switch (type) {
       case 'env':
-        return Object.assign(state, {env: data})
+        return Object.assign(this.state || {}, {env: data})
     }
-    return state
+    return this.state
   }
 }

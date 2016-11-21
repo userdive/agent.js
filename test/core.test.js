@@ -6,7 +6,7 @@ describe('core', () => {
 
   it('instance', () => {
     const agent = new Agent(
-      random.uuid(),
+      random.alphaNumeric(),
       internet.url()
     )
     assert(agent)
@@ -14,7 +14,7 @@ describe('core', () => {
 
   it('send', () => {
     const agent = new Agent(
-      random.uuid(),
+      random.alphaNumeric(),
       internet.url()
     )
     agent.send('pageview', location.pathname)
