@@ -2,7 +2,7 @@ import assert from 'assert'
 import { throws } from 'assert-exception'
 import { internet, random } from 'faker'
 
-describe.only('store', () => {
+describe('store', () => {
   const Store = require('../src/store')
 
   it('throw', () => {
@@ -22,6 +22,6 @@ describe.only('store', () => {
       random.alphaNumeric(),
       internet.url()
     )
-    assert(store.merge('undefined', {}) === 'undefined')
+    assert(store.merge('env', {}))
   })
 })

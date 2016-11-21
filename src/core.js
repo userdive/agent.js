@@ -16,7 +16,7 @@ module.exports = class Agent {
   constructor (id: string, baseUrl: string): void {
     this.store = new Store(id, baseUrl)
   }
-  send (type: string, pathname: string) {
+  send (type: string, pathname?: string) {
     switch (type) {
       case 'pageview':
         const state = this.store.merge('env', {
@@ -28,8 +28,7 @@ module.exports = class Agent {
           h: resourceHeight(),
           w: resourceWidth()
         })
-        console.log(state)
-        get(`${this.store.baseUrl}/env.gif`, {})
+        get(`${this.store.baseUrl}/env.gif`, state.env)
     }
   }
 }

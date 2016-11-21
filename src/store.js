@@ -28,7 +28,6 @@ module.exports = class Store {
   baseUrl: string;
   state: State;
   constructor (projectId: string, baseUrl: string): void {
-    // TODO valiadte
     if (!projectId || !baseUrl) {
       throw new Error('need id & baseurl')
     }
