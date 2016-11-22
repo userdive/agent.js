@@ -32,7 +32,7 @@ function windowSize (w): Size {
 module.exports = class Agent {
   store: Store;
   constructor (id: string, baseUrl: string): void {
-    this.store = new Store(id, baseUrl)
+    this.store = new Store(id, baseUrl, '_ud') // TODO FIX
   }
   send (type: string, pathname?: string) {
     switch (type) {
