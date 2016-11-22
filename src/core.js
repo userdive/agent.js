@@ -37,15 +37,17 @@ module.exports = class Agent {
   send (type: string, pathname?: string) {
     switch (type) {
       case 'pageview':
-        const state = this.store.merge('env', {
-          v,
-          sh: screenSize(screen).h,
-          sw: screenSize(screen).w,
-          wh: windowSize(window).h,
-          ww: windowSize(window).w,
-          h: resourceSize(document.body).h,
-          w: resourceSize(document.body).w
-        })
+        const state = this.store.merge('env', ((w, body, s) => {
+          return {
+            v,
+            sh: screenSize(s).h,
+            sw: screenSize(s).w,
+            wh: windowSize(w).h,
+            ww: windowSize(w).w,
+            h: resourceSize(body).h,
+            w: resourceSize(body).w
+          }
+        })(window, document.body, screen))
         get(`${this.store.baseUrl}/env.gif`, state.env)
     }
   }
