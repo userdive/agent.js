@@ -9,19 +9,12 @@ describe('store', () => {
     assert(throws(() => { return new Store() }).message === 'need id & baseurl')
   })
 
-  it('baseUrl', () => {
-    const store = new Store(
-      random.alphaNumeric(),
-      internet.url()
-    )
-    assert(store.baseUrl)
-  })
-
-  it('merge', () => {
+  it('env', () => {
     const store = new Store(
       random.alphaNumeric(),
       internet.url()
     )
     assert(store.merge('env', {}))
+    assert(store.baseUrl)
   })
 })
