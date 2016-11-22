@@ -37,7 +37,7 @@ module.exports = class Agent {
   send (type: string, pathname?: string) {
     switch (type) {
       case 'pageview':
-        const state = this.store.merge('env', ((windowSize, resourceSize, screenSize) => {
+        const state = this.store.set('env', ((windowSize, resourceSize, screenSize) => {
           return {
             v,
             sh: screenSize.h,

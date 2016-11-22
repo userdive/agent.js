@@ -1,6 +1,5 @@
 /* @flow */
 import cookies from 'js-cookie'
-
 import { v4 as uuid } from 'uuid'
 
 import type { ClientEnvironments } from './types'
@@ -36,7 +35,7 @@ module.exports = class Store {
     BASE_URL = baseUrl
     COOKIE_NAME = cookieName
   }
-  merge (type: string, data: Object): State {
+  set (type: string, data: Object): State {
     switch (type) {
       case 'env':
         const clientId = findOrCreateClientId(COOKIE_NAME)

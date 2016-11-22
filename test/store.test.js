@@ -15,7 +15,9 @@ describe('store', () => {
       internet.url(),
       random.alphaNumeric()
     )
-    assert(store.merge('env', {}))
+    const v = random.number()
+    assert(store.set('env', {v}).env.v === v)
+    assert(store.set('env', {}).env.v === undefined)
     assert(store.baseUrl)
   })
 })
