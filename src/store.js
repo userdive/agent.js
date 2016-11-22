@@ -2,6 +2,7 @@
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
+import logger from './logger'
 import type { ClientEnvironments } from './types'
 
 type State = {
@@ -15,8 +16,7 @@ function findOrCreateClientId (name: string): string {
       return c
     }
   } catch (err) {
-    // TODO logger
-    throw err
+    logger.captureException(err)
   }
   return uuid().replace(/-/g, '')
 }
