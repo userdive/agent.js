@@ -8,21 +8,21 @@ type Size = {
   w: number
 }
 
-function resourceSize (body): Size {
+function getResourceSize (body): Size {
   return {
     h: body.clientHeight,
     w: body.clientWidth
   }
 }
 
-function screenSize (s): Size {
+function getScreenSize (s): Size {
   return {
     h: s.height,
     w: s.width
   }
 }
 
-function windowSize (w): Size {
+function getWindowSize (w): Size {
   return {
     h: w.innerHeight,
     w: w.innerWidth
@@ -37,17 +37,17 @@ module.exports = class Agent {
   send (type: string, pathname?: string) {
     switch (type) {
       case 'pageview':
-        const state = this.store.merge('env', ((w, body, s) => {
+        const state = this.store.merge('env', ((screenSize, windowSize, resourceSize) => {
           return {
             v,
-            sh: screenSize(s).h,
-            sw: screenSize(s).w,
-            wh: windowSize(w).h,
-            ww: windowSize(w).w,
-            h: resourceSize(body).h,
-            w: resourceSize(body).w
+            sh: screenSize.h,
+            sw: screenSize.w,
+            wh: windowSize.h,
+            ww: windowSize.w,
+            h: resourceSize.h,
+            w: resourceSize.w
           }
-        })(window, document.body, screen))
+        })(getWindowSize(window), getResourceSize(document.body), getScreenSize(screen)))
         get(`${this.store.baseUrl}/env.gif`, state.env)
     }
   }
