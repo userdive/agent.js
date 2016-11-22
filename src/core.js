@@ -1,15 +1,33 @@
 /* @flow */
 import Store from './store'
 import { VERSION as v } from './constants'
-import {
-  screenHeight,
-  screenWidth,
-  windowHeight,
-  windowWidth,
-  resourceHeight,
-  resourceWidth
-} from './alias'
 import { get } from './requests'
+
+type Size = {
+  h: number,
+  w: number
+}
+
+function resourceSize (body): Size {
+  return {
+    h: body.clientHeight,
+    w: body.clientWidth
+  }
+}
+
+function screenSize (s): Size {
+  return {
+    h: s.height,
+    w: s.width
+  }
+}
+
+function windowSize (w): Size {
+  return {
+    h: w.innerHeight,
+    w: w.innerWidth
+  }
+}
 
 module.exports = class Agent {
   store: Store;
@@ -21,12 +39,12 @@ module.exports = class Agent {
       case 'pageview':
         const state = this.store.merge('env', {
           v,
-          sh: screenHeight(),
-          sw: screenWidth(),
-          wh: windowHeight(),
-          ww: windowWidth(),
-          h: resourceHeight(),
-          w: resourceWidth()
+          sh: screenSize(screen).h,
+          sw: screenSize(screen).w,
+          wh: windowSize(window).h,
+          ww: windowSize(window).w,
+          h: resourceSize(document.body).h,
+          w: resourceSize(document.body).w
         })
         get(`${this.store.baseUrl}/env.gif`, state.env)
     }
