@@ -13,7 +13,6 @@ function execute (): any {
 ((global: any, name: string) => {
   if (global[name] && global[name].q) {
     const queue = (global[name].q: Array<TaskQueue>)
-    console.log(queue)
     for (let i = 0; i < queue.length; i++) {
       execute.apply(this, queue[i])
     }
