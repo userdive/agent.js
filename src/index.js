@@ -10,11 +10,12 @@ function execute (): any {
   return api[apiName].apply(this, tasks)
 }
 
-((global: any, name) => {
+((global: any, name: string) => {
   if (global[name] && global[name].q) {
     const queue = (global[name].q: Array<TaskQueue>)
-    for (const args of queue) {
-      execute.apply(this, args)
+    console.log(queue)
+    for (let i = 0; i < queue.length; i++) {
+      execute.apply(this, queue[i])
     }
     global[name] = execute
   }
