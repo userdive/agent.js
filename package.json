@@ -63,6 +63,7 @@
     "lint:flow": "flow",
     "postbuild:bundle": "uglifyjs dist/agent.js -m --comments -o dist/agent.min.js",
     "prebuild": "npm run clean",
+    "prebuild:bundle": "mkdir dist",
     "pretest": "npm run clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
