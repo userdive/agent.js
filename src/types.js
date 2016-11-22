@@ -13,5 +13,5 @@ export type ClientEnvironments = {
   h: number,
   w: number,
   cd?: number,
-  cm?: number;
+  cm?: number
 }
