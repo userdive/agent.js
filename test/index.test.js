@@ -1,6 +1,8 @@
 import assert from 'assert'
 import { random, internet } from 'faker'
 
+import { GLOBAL } from '../src/constants'
+
 describe('index', () => {
   function createEntry (global, name) {
     return global[name] || function () {
@@ -13,27 +15,27 @@ describe('index', () => {
   })
 
   afterEach(() => {
-    window[window.USERDIVEObject] = undefined
-    window.USERDIVEObject = undefined
+    window[window[GLOBAL]] = undefined
+    window[GLOBAL] = undefined
   })
 
   it('find global', () => {
-    window.USERDIVEObject = 'ud'
-    window[window.USERDIVEObject] = createEntry(window, window.USERDIVEObject)
+    window[GLOBAL] = 'ud'
+    window[window[GLOBAL]] = createEntry(window, window[GLOBAL])
 
-    assert(window[window.USERDIVEObject])
-    assert(window[window.USERDIVEObject]['q'] === undefined)
+    assert(window[window[GLOBAL]])
+    assert(window[window[GLOBAL]]['q'] === undefined)
 
     window.ud('create', random.alphaNumeric(), {}, internet.url())
-    assert(window[window.USERDIVEObject]['q'])
+    assert(window[window[GLOBAL]]['q'])
 
-    assert(window[window.USERDIVEObject].q.length)
+    assert(window[window[GLOBAL]].q.length)
 
     require('../src')
-    const agent = window[window.USERDIVEObject](
+    const agent = window[window[GLOBAL]](
       'create', random.alphaNumeric(), {}, internet.url()
     )
     assert(agent.send)
-    assert(window[window.USERDIVEObject]['q'] === undefined)
+    assert(window[window[GLOBAL]]['q'] === undefined)
   })
 })
