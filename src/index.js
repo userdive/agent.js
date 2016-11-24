@@ -1,5 +1,6 @@
 /* @flow */
 import api from './api'
+import { GLOBAL } from './constants'
 
 type TaskQueue = any[]
 
@@ -18,6 +19,6 @@ function execute (): any {
     }
     global[name] = execute
   }
-})(window, window.USERDIVEObject)
+})(window, window[GLOBAL])
 
 module.exports = api

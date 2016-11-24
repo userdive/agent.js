@@ -2,6 +2,8 @@ import assert from 'assert'
 import { spy } from 'sinon'
 import { random } from 'faker'
 
+import { GLOBAL } from '../src/constants'
+
 describe('logger', () => {
   const Raven = require('raven-js')
   const logger = require('../src/logger')
@@ -14,8 +16,8 @@ describe('logger', () => {
   })
 
   afterEach(() => {
-    window[window.USERDIVEObject] = undefined
-    window.USERDIVEObject = undefined
+    window[window[GLOBAL]] = undefined
+    window[GLOBAL] = undefined
     captureMessage.restore()
     captureException.restore()
   })
@@ -26,8 +28,8 @@ describe('logger', () => {
     logger.error(random.word())
     assert(captureMessage.called === false)
 
-    window.USERDIVEObject = random.word()
-    window[window.USERDIVEObject] = function () {}
+    window[GLOBAL] = random.word()
+    window[window[GLOBAL]] = function () {}
 
     logger.error(new Error())
     assert(captureException.called === false)
@@ -36,16 +38,16 @@ describe('logger', () => {
   })
 
   it('defined', () => {
-    window.USERDIVEObject = random.word()
-    window[window.USERDIVEObject] = function () {}
-    window[window.USERDIVEObject].Raven = Raven
+    window[GLOBAL] = random.word()
+    window[window[GLOBAL]] = function () {}
+    window[window[GLOBAL]].Raven = Raven
 
     logger.error(new Error())
     assert(captureException.called === false)
     logger.error(random.word())
     assert(captureMessage.called === false)
 
-    window[window.USERDIVEObject].Raven.config(
+    window[window[GLOBAL]].Raven.config(
       `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
     ).install()
 
