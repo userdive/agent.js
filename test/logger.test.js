@@ -21,17 +21,17 @@ describe('logger', () => {
   })
 
   it('undefined', () => {
-    logger.captureException(new Error())
+    logger.error(new Error())
     assert(captureException.called === false)
-    logger.captureMessage(random.word())
+    logger.error(random.word())
     assert(captureMessage.called === false)
 
     window.USERDIVEObject = random.word()
     window[window.USERDIVEObject] = function () {}
 
-    logger.captureException(new Error())
+    logger.error(new Error())
     assert(captureException.called === false)
-    logger.captureMessage(random.word())
+    logger.error(random.word())
     assert(captureMessage.called === false)
   })
 
@@ -40,18 +40,18 @@ describe('logger', () => {
     window[window.USERDIVEObject] = function () {}
     window[window.USERDIVEObject].Raven = Raven
 
-    logger.captureException(new Error())
+    logger.error(new Error())
     assert(captureException.called === false)
-    logger.captureMessage(random.word())
+    logger.error(random.word())
     assert(captureMessage.called === false)
 
     window[window.USERDIVEObject].Raven.config(
       `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
     ).install()
 
-    logger.captureException(new Error())
+    logger.error(new Error())
     assert(captureException.called)
-    logger.captureMessage(random.word())
+    logger.error(random.word())
     assert(captureMessage.called)
   })
 })

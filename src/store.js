@@ -16,7 +16,7 @@ function findOrCreateClientId (name: string): string {
       return c
     }
   } catch (err) {
-    logger.captureException(err)
+    logger.error(err)
   }
   return uuid().replace(/-/g, '')
 }

@@ -18,10 +18,12 @@ function getRaven (global: any, name: string) {
 }
 
 module.exports = {
-  captureException: function (err: Error, options?: RavenOptions) {
-    getRaven(window, window.USERDIVEObject).captureException(err, options)
-  },
-  captureMessage: function (msg: string, options?: RavenOptions) {
-    getRaven(window, window.USERDIVEObject).captureMessage(msg, options)
+  error: function (err: string | Error, options?: RavenOptions): void {
+    const raven = getRaven(window, window.USERDIVEObject)
+    if (typeof err === 'string') {
+      raven.captureMessage(err, options)
+      return
+    }
+    raven.captureException(err, options)
   }
 }
