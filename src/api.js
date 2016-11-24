@@ -1,12 +1,11 @@
 /* @flow */
 import Core from './core'
-
-type Options = {}
+import type { Options } from './types'
 
 let agent
 
 function create (id: string, options: Options, baseUrl: string): Core {
-  agent = new Core(id, baseUrl) // TODO cache
+  agent = new Core(id, baseUrl, options || {}) // TODO cache
   return agent
 }
 

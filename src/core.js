@@ -1,7 +1,7 @@
 /* @flow */
 import Store from './store'
-import { VERSION as v } from './constants'
 import { get } from './requests'
+import type { Options } from './types'
 
 type Size = {
   h: number,
@@ -31,15 +31,14 @@ function getWindowSize (w): Size {
 
 module.exports = class Agent {
   store: Store;
-  constructor (id: string, baseUrl: string): void {
-    this.store = new Store(id, baseUrl, '_ud') // TODO FIX
+  constructor (id: string, baseUrl: string, options: Options): void {
+    this.store = new Store(id, baseUrl, options.cookieName || '_ud') // TODO FIX
   }
-  send (type: string, pathname?: string) {
+  send (type: string, pathname?: string): void {
     switch (type) {
       case 'pageview':
-        const state = this.store.set('env', ((windowSize, resourceSize, screenSize) => {
+        const state = this.store.merge('env', ((windowSize, resourceSize, screenSize) => {
           return {
-            v,
             sh: screenSize.h,
             sw: screenSize.w,
             wh: windowSize.h,
@@ -50,5 +49,11 @@ module.exports = class Agent {
         })(getWindowSize(window), getResourceSize(document.body), getScreenSize(screen)))
         get(`${this.store.baseUrl}/env.gif`, state.env)
     }
+  }
+  set (key: string | {}, value?: string) {
+
+    // 'dimension5': 'custom dimension data',
+    // 'metric5': 'custom metric data'
+
   }
 }

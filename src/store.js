@@ -2,10 +2,19 @@
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
-import type { ClientEnvironments } from './types'
+import { VERSION as v } from './constants'
+import type {
+  Dimension,
+  Metric,
+  ClientEnvironments
+} from './types'
+
+type StoreType = 'env' | 'metric' | 'dimension'
 
 type State = {
-  env: ClientEnvironments
+  env: ClientEnvironments,
+  dimension: Dimension,
+  metric: Metric
 }
 
 function findOrCreateClientId (name: string): string {
@@ -29,15 +38,42 @@ module.exports = class Store {
     PROJECT_ID = projectId
     BASE_URL = baseUrl
     COOKIE_NAME = cookieName
+    this.state = {
+      env: {
+        v,
+        h: 0,
+        w: 0,
+        sh: 0,
+        sw: 0,
+        wh: 0,
+        ww: 0
+      },
+      dimension: {},
+      metric: {}
+    }
   }
-  set (type: string, data: Object): State {
+  merge (type: StoreType, data: Object): State {
+    let prefix
     switch (type) {
       case 'env':
         const clientId = findOrCreateClientId(COOKIE_NAME)
         const loadTime = Date.now()
         this.baseUrl = `${BASE_URL}/${PROJECT_ID}/${clientId}/${loadTime}`
-        return Object.assign(this.state || {}, {env: data})
+        prefix = type
+        break
+      case 'dimension':
+        prefix = type
+        break
+      case 'metric':
+        prefix = type
+        break
     }
+    if (prefix) {
+      for (const key in data) {
+        this.state[prefix][key] = data[key]
+      }
+    }
+
     return this.state
   }
 }
