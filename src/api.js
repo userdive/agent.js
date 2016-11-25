@@ -1,7 +1,7 @@
 /* @flow */
 import Agent from './core'
 import { OPTIONS } from './constants'
-import type { Options } from './types'
+import type { Options, SendType } from './types'
 
 let agent: Agent
 let PROJECT_ID_CACHE: string
@@ -17,7 +17,7 @@ function create (projectId: string, options: Options): Agent {
   return agent
 }
 
-function send (type: string): void {
+function send (type: SendType): void {
   if (!agent) {
     return
   }

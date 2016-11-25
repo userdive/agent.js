@@ -5,6 +5,7 @@ import { VERSION as v } from './constants'
 import type {
   ClientEnvironments,
   CustomData,
+  SendType,
   Options
 } from './types'
 
@@ -34,13 +35,36 @@ function getWindowSize (w): Size {
   }
 }
 
+const customDataShortKeys = {
+  'dimension': 'cd',
+  'metric': 'cm'
+}
+
+function renameShortKey (key: string): string {
+  for (const prefix in customDataShortKeys) {
+    const data = key.split(prefix)
+    if (data.length > 1) {
+      return `${customDataShortKeys[prefix]}${data[1]}`
+    }
+  }
+  return ''
+}
+
+function parseCustomData (data: Object): CustomData {
+  const result = {}
+  for (const key:string in data) {
+    result[renameShortKey(key)] = data[key]
+  }
+  return result
+}
+
 module.exports = class Agent {
   store: Store;
   loaded: boolean;
   constructor (id: string, options: Options): void {
     this.store = new Store(id, options.baseUrl, options.cookieName)
   }
-  send (type: string): void {
+  send (type: SendType): void {
     switch (type) {
       case 'pageview':
         const state = this.store.merge(
@@ -61,20 +85,13 @@ module.exports = class Agent {
         this.loaded = true
     }
   }
-
-  set (key: string | {}, value?: string): void {
+  set (key: any, value?: string): void {
     if (arguments.length === 1) {
       this.store.merge(
         'custom',
-        ((data): CustomData => {
-          return {
-          }
-        })(key)
+        parseCustomData(key)
       )
     }
-
-    // 'dimension5': 'custom dimension data',
-    // 'metric5': 'custom metric data'
   }
   destory () {
     // TODO unbind

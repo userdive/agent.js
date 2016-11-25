@@ -1,4 +1,6 @@
 /* @flow */
+export type SendType = 'pageview'
+
 export type CustomData = {
   cd1?: string,
   cd2?: string,
