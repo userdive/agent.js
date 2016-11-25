@@ -1,7 +1,8 @@
 /* @flow */
 import type { CustomData } from './types'
 
-function get (url: string, query: Object, customData: CustomData): void {
+function get (url: string, data: Object, customData: CustomData): void {
+  const query = Object.assign(customData, data)
   const queryArray = []
   const img = document.createElement('img')
   img.onload = () => null
