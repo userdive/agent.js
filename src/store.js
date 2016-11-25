@@ -4,17 +4,14 @@ import { v4 as uuid } from 'uuid'
 
 import { VERSION as v } from './constants'
 import type {
-  Dimension,
-  Metric,
+  CustomData,
   ClientEnvironments
 } from './types'
-
-type StoreType = 'env' | 'metric' | 'dimension'
+type StoreType = 'env' | 'custom'
 
 type State = {
   env: ClientEnvironments,
-  dimension: Dimension,
-  metric: Metric
+  custom: CustomData
 }
 
 function findOrCreateClientId (name: string): string {
@@ -48,11 +45,10 @@ module.exports = class Store {
         wh: 0,
         ww: 0
       },
-      dimension: {},
-      metric: {}
+      custom: {}
     }
   }
-  merge (type: StoreType, data: Object): State {
+  merge (type: StoreType, data: ClientEnvironments | CustomData): State {
     let prefix
     switch (type) {
       case 'env':
@@ -61,10 +57,8 @@ module.exports = class Store {
         this.baseUrl = `${BASE_URL}/${PROJECT_ID}/${clientId}/${loadTime}`
         prefix = type
         break
-      case 'dimension':
-        prefix = type
-        break
-      case 'metric':
+      case 'custom':
+        // TODO validate
         prefix = type
         break
     }

@@ -1,12 +1,7 @@
 /* @flow */
-import type { Dimension, Metric } from './types'
+import type { CustomData } from './types'
 
-type CustomQuery = {
-  dimension?: Dimension,
-  metric?: Metric
-}
-
-function get (url: string, query: Object, customQuery?: CustomQuery): void {
+function get (url: string, query: Object, customData: CustomData): void {
   const queryArray = []
   const img = document.createElement('img')
   img.onload = () => null

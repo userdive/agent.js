@@ -7,8 +7,10 @@ describe('core', () => {
   it('instance', () => {
     const agent = new Agent(
       random.alphaNumeric(),
-      internet.url(),
-      {}
+      {
+        baseUrl: internet.url(),
+        cookieName: random.alphaNumeric()
+      }
     )
     assert(agent)
   })
@@ -16,8 +18,10 @@ describe('core', () => {
   it('send', () => {
     const agent = new Agent(
       random.alphaNumeric(),
-      internet.url(),
-      {}
+      {
+        baseUrl: internet.url(),
+        cookieName: random.alphaNumeric()
+      }
     )
     agent.send('pageview', location.pathname)
   })

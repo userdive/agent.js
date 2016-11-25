@@ -1,7 +1,12 @@
 /* @flow */
 import Store from './store'
 import { get } from './requests'
-import type { Options } from './types'
+import { VERSION as v } from './constants'
+import type {
+  ClientEnvironments,
+  CustomData,
+  Options
+} from './types'
 
 type Size = {
   h: number,
@@ -31,29 +36,47 @@ function getWindowSize (w): Size {
 
 module.exports = class Agent {
   store: Store;
-  constructor (id: string, baseUrl: string, options: Options): void {
-    this.store = new Store(id, baseUrl, options.cookieName || '_ud') // TODO FIX
+  loaded: boolean;
+  constructor (id: string, options: Options): void {
+    this.store = new Store(id, options.baseUrl, options.cookieName)
   }
-  send (type: string, pathname?: string): void {
+  send (type: string): void {
     switch (type) {
       case 'pageview':
-        const state = this.store.merge('env', ((windowSize, resourceSize, screenSize) => {
-          return {
-            sh: screenSize.h,
-            sw: screenSize.w,
-            wh: windowSize.h,
-            ww: windowSize.w,
-            h: resourceSize.h,
-            w: resourceSize.w
-          }
-        })(getWindowSize(window), getResourceSize(document.body), getScreenSize(screen)))
-        get(`${this.store.baseUrl}/env.gif`, state.env)
+        const state = this.store.merge(
+          'env',
+          ((windowSize, resourceSize, screenSize): ClientEnvironments => {
+            return {
+              v,
+              sh: screenSize.h,
+              sw: screenSize.w,
+              wh: windowSize.h,
+              ww: windowSize.w,
+              h: resourceSize.h,
+              w: resourceSize.w
+            }
+          })(getWindowSize(window), getResourceSize(document.body), getScreenSize(screen))
+        )
+        get(`${this.store.baseUrl}/env.gif`, state.env, state.custom)
+        this.loaded = true
     }
   }
-  set (key: string | {}, value?: string) {
+
+  set (key: string | {}, value?: string): void {
+    if (arguments.length === 1) {
+      this.store.merge(
+        'custom',
+        ((data): CustomData => {
+          return {
+          }
+        })(key)
+      )
+    }
 
     // 'dimension5': 'custom dimension data',
     // 'metric5': 'custom metric data'
-
+  }
+  destory () {
+    // TODO unbind
   }
 }

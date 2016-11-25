@@ -8,7 +8,7 @@ describe('api', () => {
   })
 
   it('create', () => {
-    assert(api.create(random.uuid(), {}, internet.url()))
+    assert(api.create(random.uuid(), {baseUrl: internet.url()}))
   })
 
   it('send', () => {

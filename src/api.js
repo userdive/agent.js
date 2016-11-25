@@ -1,19 +1,30 @@
 /* @flow */
-import Core from './core'
+import Agent from './core'
+import { OPTIONS } from './constants'
 import type { Options } from './types'
 
-let agent
+let agent: Agent
+let PROJECT_ID_CACHE: string
+let OPTIONS_CACHE: Options
 
-function create (id: string, options: Options, baseUrl: string): Core {
-  agent = new Core(id, baseUrl, options || {}) // TODO cache
+function create (projectId: string, options: Options): Agent {
+  if (agent && agent.loaded) {
+    agent.destory()
+  }
+  PROJECT_ID_CACHE = projectId
+  OPTIONS_CACHE = Object.assign(OPTIONS, options)
+  agent = new Agent(PROJECT_ID_CACHE, OPTIONS_CACHE)
   return agent
 }
 
-function send (type: string, viewName: string): void {
+function send (type: string): void {
   if (!agent) {
     return
   }
-  agent.send(type, viewName)
+  if (agent.loaded && PROJECT_ID_CACHE && OPTIONS_CACHE) {
+    create(PROJECT_ID_CACHE, OPTIONS_CACHE)
+  }
+  agent.send(type)
 }
 
 module.exports = {

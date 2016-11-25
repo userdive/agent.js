@@ -1,5 +1,10 @@
 /* @flow */
-export type Metric = {
+export type CustomData = {
+  cd1?: string,
+  cd2?: string,
+  cd3?: string,
+  cd4?: string,
+  cd5?: string,
   cm1?: number,
   cm2?: number,
   cm3?: number,
@@ -7,18 +12,11 @@ export type Metric = {
   cm5?: number
 }
 
-export type Dimension = {
-  cd1?: string,
-  cd2?: string,
-  cd3?: string,
-  cd4?: string,
-  cd5?: string
-}
-
 export type Options = {
+  baseUrl: string,
   cookieDomain?: string,
-  cookieExpires?: string,
-  cookieName?: string
+  cookieExpires: number,
+  cookieName: string
 }
 
 export type ClientEnvironments = {
