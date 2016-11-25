@@ -5,10 +5,12 @@ describe('core', () => {
   const Agent = require('../src/core')
   let agent
   beforeEach(() => {
-    agent = new Agent(random.alphaNumeric(), {
-      baseUrl: internet.url(),
-      cookieName: random.alphaNumeric()
-    }
+    agent = new Agent(
+      random.alphaNumeric(),
+      {
+        baseUrl: internet.url(),
+        cookieName: random.alphaNumeric()
+      }
     )
   })
 
