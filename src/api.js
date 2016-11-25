@@ -27,7 +27,16 @@ function send (type: SendType): void {
   agent.send(type)
 }
 
+function set (key: any, value?: string | number) {
+  if (!value) {
+    agent.setObject(key)
+  } else if (key && value) {
+    agent.set(key, value)
+  }
+}
+
 module.exports = {
   create,
-  send
+  send,
+  set
 }

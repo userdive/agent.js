@@ -5,8 +5,11 @@ import { VERSION as v } from './constants'
 import type {
   ClientEnvironments,
   CustomData,
+  Dimension,
+  Metric,
+  Options,
   SendType,
-  Options
+  SetType
 } from './types'
 
 type Size = {
@@ -35,27 +38,17 @@ function getWindowSize (w): Size {
   }
 }
 
-const customDataShortKeys = {
-  'dimension': 'cd',
-  'metric': 'cm'
-}
-
-function renameShortKey (key: string): string {
-  for (const prefix in customDataShortKeys) {
-    const data = key.split(prefix)
-    if (data.length > 1) {
-      return `${customDataShortKeys[prefix]}${data[1]}`
-    }
+function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
+  const data = {}
+  let splitedKey = key.split('dimention')
+  if (splitedKey.length > 1) {
+    data[`cd${splitedKey[1]}`] = value
   }
-  return ''
-}
-
-function parseCustomData (data: Object): CustomData {
-  const result = {}
-  for (const key:string in data) {
-    result[renameShortKey(key)] = data[key]
+  splitedKey = key.split('metric')
+  if (splitedKey.length > 1) {
+    data[`cm${splitedKey[1]}`] = value
   }
-  return result
+  return data
 }
 
 module.exports = class Agent {
@@ -85,13 +78,17 @@ module.exports = class Agent {
         this.loaded = true
     }
   }
-  set (key: any, value?: string): void {
-    if (arguments.length === 1) {
-      this.store.merge(
-        'custom',
-        parseCustomData(key)
-      )
+  set (type: SetType, value: string | number): void {
+    switch (type) {
+      case 'page':
+        this.store.merge('env', {l: value})
+        break
+      default:
+        this.store.merge('custom', parseCustomData(type, value))
     }
+  }
+  setObject (data: Object): void {
+
   }
   destory () {
     // TODO unbind

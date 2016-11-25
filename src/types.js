@@ -1,5 +1,8 @@
 /* @flow */
 export type SendType = 'pageview'
+export type Dimension = 'dimension1' | 'dimension2' | 'dimension3' | 'dimension4' | 'dimension5'
+export type Metric = 'metric1' | 'metric2' | 'metric3' | 'metric4' | 'metric5'
+export type SetType = 'page' | Dimension | Metric
 
 export type CustomData = {
   cd1?: string,
