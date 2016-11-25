@@ -9,7 +9,8 @@ import type {
   Metric,
   Options,
   SendType,
-  SetType
+  SetType,
+  State
 } from './types'
 
 type Size = {
@@ -39,8 +40,9 @@ function getWindowSize (w): Size {
 }
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
+  // TODO validate index, value.type
   const data = {}
-  let splitedKey = key.split('dimention')
+  let splitedKey = key.split('dimension')
   if (splitedKey.length > 1) {
     data[`cd${splitedKey[1]}`] = value
   }
@@ -78,17 +80,24 @@ module.exports = class Agent {
         this.loaded = true
     }
   }
-  set (type: SetType, value: string | number): void {
+  set (type: SetType, data: string | number): State {
     switch (type) {
       case 'page':
-        this.store.merge('env', {l: value})
-        break
+        return this.store.merge('env', {l: data})
       default:
-        this.store.merge('custom', parseCustomData(type, value))
+        return this.store.merge('custom', parseCustomData(type, data))
     }
   }
-  setObject (data: Object): void {
-
+  setObject (data: Object): State {
+    if (data.page) {
+      this.store.merge('env', {l: data.page})
+      delete data.page
+    }
+    let result = {}
+    for (const key in data) {
+      result = Object.assign(result, parseCustomData((key: any), data[key]))
+    }
+    return this.store.merge('custom', result)
   }
   destory () {
     // TODO unbind

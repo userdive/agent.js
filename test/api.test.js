@@ -14,4 +14,9 @@ describe('api', () => {
   it('send', () => {
     api.send('pageviews')
   })
+
+  it('set', () => {
+    assert(api.set('key', 'value'))
+    assert(api.set({'key': 'value'}))
+  })
 })

@@ -5,14 +5,10 @@ import { v4 as uuid } from 'uuid'
 import { VERSION as v } from './constants'
 import type {
   CustomData,
-  ClientEnvironments
+  ClientEnvironments,
+  State
 } from './types'
 type StoreType = 'env' | 'custom'
-
-type State = {
-  env: ClientEnvironments,
-  custom: CustomData
-}
 
 function findOrCreateClientId (name: string): string {
   const c = cookies.get(name)

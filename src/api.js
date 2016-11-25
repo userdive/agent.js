@@ -1,7 +1,7 @@
 /* @flow */
 import Agent from './core'
 import { OPTIONS } from './constants'
-import type { Options, SendType } from './types'
+import type { Options, SendType, State } from './types'
 
 let agent: Agent
 let PROJECT_ID_CACHE: string
@@ -27,12 +27,11 @@ function send (type: SendType): void {
   agent.send(type)
 }
 
-function set (key: any, value?: string | number) {
-  if (!value) {
-    agent.setObject(key)
-  } else if (key && value) {
-    agent.set(key, value)
+function set (key: any, value?: string | number): State {
+  if (key && value) {
+    return agent.set(key, value)
   }
+  return agent.setObject(key)
 }
 
 module.exports = {
