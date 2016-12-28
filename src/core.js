@@ -53,7 +53,7 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
   return data
 }
 
-module.exports = class Agent {
+export default class Agent {
   store: Store;
   loaded: boolean;
   constructor (id: string, options: Options): void {

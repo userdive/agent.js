@@ -34,7 +34,7 @@ function set (key: any, value?: string | number): State {
   return agent.setObject(key)
 }
 
-module.exports = {
+export default {
   create,
   send,
   set

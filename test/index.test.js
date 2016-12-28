@@ -31,7 +31,7 @@ describe('index', () => {
 
     assert(window[window[GLOBAL]].q.length)
 
-    require('../src')
+    require('../src').default
     const agent = window[window[GLOBAL]](
       'create', random.alphaNumeric(), {}, internet.url()
     )

@@ -4,7 +4,7 @@ import { random, internet } from 'faker'
 describe('api', () => {
   let api
   before(() => {
-    api = require('../src/api')
+    api = require('../src/api').default
   })
 
   it('create', () => {

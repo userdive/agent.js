@@ -3,7 +3,7 @@ import { throws } from 'assert-exception'
 import { internet, random } from 'faker'
 
 describe('store', () => {
-  const Store = require('../src/store')
+  const Store = require('../src/store').default
 
   it('throw', () => {
     assert(throws(() => { return new Store() }).message === 'need id & baseurl & cookieName')

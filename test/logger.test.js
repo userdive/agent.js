@@ -6,7 +6,7 @@ import { GLOBAL } from '../src/constants'
 
 describe('logger', () => {
   const Raven = require('raven-js')
-  const logger = require('../src/logger')
+  const error = require('../src/logger').error
   let captureException
   let captureMessage
 
@@ -23,17 +23,17 @@ describe('logger', () => {
   })
 
   it('undefined', () => {
-    logger.error(new Error())
+    error(new Error())
     assert(captureException.called === false)
-    logger.error(random.word())
+    error(random.word())
     assert(captureMessage.called === false)
 
     window[GLOBAL] = random.word()
     window[window[GLOBAL]] = function () {}
 
-    logger.error(new Error())
+    error(new Error())
     assert(captureException.called === false)
-    logger.error(random.word())
+    error(random.word())
     assert(captureMessage.called === false)
   })
 
@@ -42,18 +42,18 @@ describe('logger', () => {
     window[window[GLOBAL]] = function () {}
     window[window[GLOBAL]].Raven = Raven
 
-    logger.error(new Error())
+    error(new Error())
     assert(captureException.called === false)
-    logger.error(random.word())
+    error(random.word())
     assert(captureMessage.called === false)
 
     window[window[GLOBAL]].Raven.config(
       `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
     ).install()
 
-    logger.error(new Error())
+    error(new Error())
     assert(captureException.called)
-    logger.error(random.word())
+    error(random.word())
     assert(captureMessage.called)
   })
 })

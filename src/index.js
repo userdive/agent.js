@@ -21,4 +21,4 @@ function execute (): any {
   }
 })(window, window[GLOBAL])
 
-module.exports = api
+export default api

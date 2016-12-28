@@ -20,7 +20,7 @@ function findOrCreateClientId (name: string): string {
 
 let PROJECT_ID, BASE_URL, COOKIE_NAME
 
-module.exports = class Store {
+export default class Store {
   pid: string;
   baseUrl: string;
   state: State;

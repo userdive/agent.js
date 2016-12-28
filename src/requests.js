@@ -1,7 +1,7 @@
 /* @flow */
 import type { CustomData } from './types'
 
-function get (url: string, data: Object, customData: CustomData): void {
+export function get (url: string, data: Object, customData: CustomData): void {
   const query = Object.assign(customData, data)
   const queryArray = []
   const img = document.createElement('img')
@@ -11,8 +11,4 @@ function get (url: string, data: Object, customData: CustomData): void {
     queryArray.push(`${key}=${encodeURIComponent(query[key])}`)
   }
   img.src = `${url}?${queryArray.join('&')}`
-}
-
-module.exports = {
-  get
 }

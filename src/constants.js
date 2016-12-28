@@ -1,20 +1,10 @@
 /* @flow */
 import type { Options } from './types'
 
-type CONSTANTS = {
-  VERSION: number,
-  GLOBAL: string,
-  OPTIONS: Options
+export const VERSION = 1
+export const GLOBAL = 'USERDIVEObject'
+export const OPTIONS: Options = {
+  baseUrl: '',  // TODO
+  cookieName: '_ud',
+  cookieExpires: 0
 }
-
-const constants: CONSTANTS = {
-  VERSION: 1,
-  GLOBAL: 'USERDIVEObject',
-  OPTIONS: {
-    baseUrl: '',  // TODO
-    cookieName: '_ud',
-    cookieExpires: 0
-  }
-}
-
-module.exports = constants
