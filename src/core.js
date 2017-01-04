@@ -18,27 +18,6 @@ type Size = {
   w: number
 }
 
-function getResourceSize (body): Size {
-  return {
-    h: body.clientHeight,
-    w: body.clientWidth
-  }
-}
-
-function getScreenSize (s): Size {
-  return {
-    h: s.height,
-    w: s.width
-  }
-}
-
-function getWindowSize (w): Size {
-  return {
-    h: w.innerHeight,
-    w: w.innerWidth
-  }
-}
-
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
   // TODO validate index, value.type
   const data = {}
@@ -74,7 +53,7 @@ export default class Agent {
               h: resourceSize.h,
               w: resourceSize.w
             }
-          })(getWindowSize(window), getResourceSize(document.body), getScreenSize(screen))
+          })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
         )
         get(`${this.store.baseUrl}/env.gif`, state.env, state.custom)
         this.loaded = true
@@ -94,12 +73,30 @@ export default class Agent {
       delete data.page
     }
     let result = {}
-    for (const key in data) {
+    Object.keys(data).forEach(key => {
       result = Object.assign(result, parseCustomData((key: any), data[key]))
-    }
+    })
     return this.store.merge('custom', result)
   }
   destory () {
     // TODO unbind
+  }
+  getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
+    return {
+      h: w.innerHeight,
+      w: w.innerWidth
+    }
+  }
+  getResourceSize (body: HTMLElement): Size {
+    return {
+      h: body.clientHeight,
+      w: body.clientWidth
+    }
+  }
+  getScreenSize (s: {height: number, width: number}): Size {
+    return {
+      h: s.height,
+      w: s.width
+    }
   }
 }
