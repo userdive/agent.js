@@ -1,11 +1,20 @@
 /* @flow */
-import { describe, it, beforeEach, afterEach } from 'mocha'
+import { describe, it, before, beforeEach, afterEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
+import mountDOM from 'jsdom-mount'
 
-import { GLOBAL } from '../src/constants'
+import { NAMESPACE } from '../src/constants'
+const GLOBAL_NAME: string = 'ud'
 
 describe('index', () => {
+  before(() => {
+    const id = 'test'
+    mountDOM(`<script id="${id}"></script>`)
+    const element = document.getElementById(id)
+    element.setAttribute(NAMESPACE, GLOBAL_NAME)
+  })
+
   function createEntry (global, name) {
     return global[name] || function () {
       (global[name].q = global[name].q || []).push(arguments)
@@ -17,27 +26,25 @@ describe('index', () => {
   })
 
   afterEach(() => {
-    window[window[GLOBAL]] = undefined
-    window[GLOBAL] = undefined
+    window[GLOBAL_NAME] = undefined
   })
 
   it('find global', () => {
-    window[GLOBAL] = 'ud'
-    window[window[GLOBAL]] = createEntry(window, window[GLOBAL])
+    window[GLOBAL_NAME] = createEntry(window, GLOBAL_NAME)
 
-    assert(window[window[GLOBAL]])
-    assert(window[window[GLOBAL]]['q'] === undefined)
+    assert(window[GLOBAL_NAME])
+    assert(window[GLOBAL_NAME]['q'] === undefined)
 
     window.ud('create', random.alphaNumeric(), {}, internet.url())
-    assert(window[window[GLOBAL]]['q'])
+    assert(window[GLOBAL_NAME]['q'])
 
-    assert(window[window[GLOBAL]].q.length)
+    assert(window[GLOBAL_NAME]['q'].length)
 
     require('../src').default
-    const agent = window[window[GLOBAL]](
+    const agent = window[GLOBAL_NAME](
       'create', random.alphaNumeric(), {}, internet.url()
     )
     assert(agent.send)
-    assert(window[window[GLOBAL]]['q'] === undefined)
+    assert(window[GLOBAL_NAME]['q'] === undefined)
   })
 })

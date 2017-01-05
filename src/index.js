@@ -1,6 +1,6 @@
 /* @flow */
 import api from './api'
-import { GLOBAL } from './constants'
+import { NAMESPACE } from './constants'
 
 type TaskQueue = any[]
 
@@ -11,7 +11,12 @@ function execute (): any {
   return api[apiName].apply(this, tasks)
 }
 
-((global: any, name: string) => {
+((global: any) => {
+  const element: any = document.querySelector(`[${NAMESPACE}]`)
+  if (!element) {
+    return
+  }
+  const name: string = element.getAttribute(NAMESPACE)
   if (global[name] && global[name].q) {
     const queue = (global[name].q: Array<TaskQueue>)
     for (let i = 0; i < queue.length; i++) {
@@ -19,6 +24,6 @@ function execute (): any {
     }
     global[name] = execute
   }
-})(window, window[GLOBAL])
+})(window)
 
 export default api
