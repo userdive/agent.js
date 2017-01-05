@@ -6,7 +6,12 @@ export const OPTIONS: Options = {
   baseUrl: '',  // TODO
   cookieName: '_ud',
   cookieDomain: '',
-  cookieExpires: 0
+  cookieExpires: 0,
+  Raven: {
+    isSetup: () => false,
+    captureException: () => {},
+    captureMessage: () => {}
+  }
 }
 
 const product = 'userdive'

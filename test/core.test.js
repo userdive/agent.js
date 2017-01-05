@@ -2,6 +2,7 @@
 import { describe, it, beforeEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
+import Raven from 'raven-js'
 
 describe('core', () => {
   const Agent = require('../src/core').default
@@ -13,7 +14,8 @@ describe('core', () => {
         baseUrl: internet.url(),
         cookieName: random.alphaNumeric(),
         cookieDomain: random.alphaNumeric(),
-        cookieExpires: 0
+        cookieExpires: 0,
+        Raven: Raven
       }
     )
   })

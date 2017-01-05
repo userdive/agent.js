@@ -2,6 +2,7 @@
 import Store from './store'
 import { get } from './requests'
 import { VERSION as v } from './constants'
+import Logger from './logger'
 import type {
   ClientEnvironments,
   CustomData,
@@ -16,6 +17,11 @@ import type {
 type Size = {
   h: number,
   w: number
+}
+
+const SIZE: Size = {
+  h: 0,
+  w: 0
 }
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
@@ -33,10 +39,12 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
 }
 
 export default class Agent {
+  logger: Logger;
   store: Store;
   loaded: boolean;
   constructor (id: string, options: Options): void {
     this.store = new Store(id, options.baseUrl, options.cookieName)
+    this.logger = new Logger(options.Raven)
   }
   send (type: SendType): void {
     switch (type) {
@@ -82,21 +90,39 @@ export default class Agent {
     // TODO unbind
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
-    return {
-      h: w.innerHeight,
-      w: w.innerWidth
+    let data = SIZE
+    try {
+      data = {
+        h: w.innerHeight,
+        w: w.innerWidth
+      }
+    } catch (err) {
+      this.logger.error(err)
     }
+    return data
   }
   getResourceSize (body: HTMLElement): Size {
-    return {
-      h: body.clientHeight,
-      w: body.clientWidth
+    let data = SIZE
+    try {
+      data = {
+        h: body.clientHeight,
+        w: body.clientWidth
+      }
+    } catch (err) {
+      this.logger.error(err)
     }
+    return data
   }
   getScreenSize (s: {height: number, width: number}): Size {
-    return {
-      h: s.height,
-      w: s.width
+    let data = SIZE
+    try {
+      data = {
+        h: s.height,
+        w: s.width
+      }
+    } catch (err) {
+      this.logger.error(err)
     }
+    return data
   }
 }

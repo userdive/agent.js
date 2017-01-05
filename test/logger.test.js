@@ -1,0 +1,26 @@
+/* @flow */
+import { describe, it } from 'mocha'
+import assert from 'assert'
+import { random } from 'faker'
+
+describe('logger', () => {
+  const Logger = require('../src/logger').default
+
+  it('mock', () => {
+    const Raven = require('../src/constants').OPTIONS.Raven
+    const logger = new Logger(Raven)
+    assert(typeof logger.error === 'function')
+    logger.error('msg')
+  })
+
+  it('ranve-js', () => {
+    const Raven = require('raven-js')
+    Raven.config(
+      `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
+    ).install()
+    const logger = new Logger(Raven)
+    assert(typeof logger.error === 'function')
+    logger.error('msg')
+    logger.error(new Error('msg'))
+  })
+})

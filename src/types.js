@@ -1,9 +1,16 @@
 /* @flow */
+export interface Raven {
+  isSetup(): boolean,
+  captureMessage(): void,
+  captureException(): void
+}
+
 export type Options = {
   baseUrl: string,
   cookieDomain: string,
   cookieExpires: number,
-  cookieName: string
+  cookieName: string,
+  Raven: Raven
 }
 
 export type SendType = 'pageview'
