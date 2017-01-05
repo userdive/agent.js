@@ -1,7 +1,7 @@
 /* @flow */
 export type Options = {
   baseUrl: string,
-  cookieDomain?: string,
+  cookieDomain: string,
   cookieExpires: number,
   cookieName: string
 }

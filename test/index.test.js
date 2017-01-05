@@ -1,3 +1,5 @@
+/* @flow */
+import { describe, it, beforeEach, afterEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
 

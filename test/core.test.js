@@ -1,3 +1,5 @@
+/* @flow */
+import { describe, it, beforeEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
 
@@ -9,7 +11,9 @@ describe('core', () => {
       random.alphaNumeric(),
       {
         baseUrl: internet.url(),
-        cookieName: random.alphaNumeric()
+        cookieName: random.alphaNumeric(),
+        cookieDomain: random.alphaNumeric(),
+        cookieExpires: 0
       }
     )
   })
@@ -27,10 +31,18 @@ describe('core', () => {
     const state = agent.set('page', url)
     assert(state.env.l === url)
 
+    agent.set(`dimension1`, random.alphaNumeric())
+    agent.set(`dimension2`, random.alphaNumeric())
+    agent.set(`dimension3`, random.alphaNumeric())
+    agent.set(`dimension4`, random.alphaNumeric())
+    agent.set(`dimension5`, random.alphaNumeric())
+    agent.set(`metric1`, random.alphaNumeric())
+    agent.set(`metric2`, random.alphaNumeric())
+    agent.set(`metric3`, random.alphaNumeric())
+    agent.set(`metric4`, random.alphaNumeric())
+    agent.set(`metric5`, random.alphaNumeric())
     for (let i = 1; i <= 5; i++) {
-      agent.set(`dimension${i}`, random.alphaNumeric())
       assert(state.custom[`cd${i}`])
-      agent.set(`metric${i}`, random.alphaNumeric())
       assert(state.custom[`cm${i}`])
     }
   })

@@ -13,8 +13,8 @@ function getRaven (global: any, name: string) {
     return raven
   }
   return {
-    captureException: function () {},
-    captureMessage: function () {}
+    captureException: () => {},
+    captureMessage: () => {}
   }
 }
 

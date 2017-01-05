@@ -74,7 +74,7 @@ export default class Agent {
     }
     let result = {}
     Object.keys(data).forEach(key => {
-      result = Object.assign(result, parseCustomData((key: any), data[key]))
+      result = Object.assign({}, result, parseCustomData((key: any), data[key]))
     })
     return this.store.merge('custom', result)
   }

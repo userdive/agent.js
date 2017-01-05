@@ -18,19 +18,17 @@ function findOrCreateClientId (name: string): string {
   return uuid().replace(/-/g, '')
 }
 
-let PROJECT_ID, BASE_URL, COOKIE_NAME
-
 export default class Store {
-  pid: string;
+  BASE_URL: string;
   baseUrl: string;
+  COOKIE_NAME: string;
+  pid: string;
+  PROJECT_ID: string;
   state: State;
   constructor (projectId: string, baseUrl: string, cookieName: string): void {
-    if (!projectId || !baseUrl || !cookieName) {
-      throw new Error('need id & baseurl & cookieName')
-    }
-    PROJECT_ID = projectId
-    BASE_URL = baseUrl
-    COOKIE_NAME = cookieName
+    this.PROJECT_ID = projectId
+    this.BASE_URL = baseUrl
+    this.COOKIE_NAME = cookieName
     this.state = {
       env: {
         v,
@@ -48,9 +46,9 @@ export default class Store {
     let prefix
     switch (type) {
       case 'env':
-        const clientId = findOrCreateClientId(COOKIE_NAME)
+        const clientId = findOrCreateClientId(this.COOKIE_NAME)
         const loadTime = Date.now()
-        this.baseUrl = `${BASE_URL}/${PROJECT_ID}/${clientId}/${loadTime}`
+        this.baseUrl = `${this.BASE_URL}/${this.PROJECT_ID}/${clientId}/${loadTime}`
         prefix = type
         break
       case 'custom':

@@ -7,12 +7,12 @@ let agent: Agent
 let PROJECT_ID_CACHE: string
 let OPTIONS_CACHE: Options
 
-function create (projectId: string, options: Options): Agent {
+function create (projectId: string, options: any): Agent {
   if (agent && agent.loaded) {
     agent.destory()
   }
   PROJECT_ID_CACHE = projectId
-  OPTIONS_CACHE = Object.assign(OPTIONS, options)
+  OPTIONS_CACHE = Object.assign({}, OPTIONS, options)
   agent = new Agent(PROJECT_ID_CACHE, OPTIONS_CACHE)
   return agent
 }

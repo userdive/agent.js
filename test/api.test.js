@@ -1,3 +1,5 @@
+/* @flow */
+import { describe, it, before } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
 
@@ -12,7 +14,7 @@ describe('api', () => {
   })
 
   it('send', () => {
-    api.send('pageviews')
+    api.send('pageview')
   })
 
   it('set', () => {
