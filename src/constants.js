@@ -1,6 +1,7 @@
 /* @flow */
 import type { Options } from './types'
 
+export const NAMESPACE = `data-userdive-namespace`
 export const VERSION = 1
 export const OPTIONS: Options = {
   baseUrl: '',  // TODO
@@ -13,7 +14,3 @@ export const OPTIONS: Options = {
     captureMessage: () => {}
   }
 }
-
-const product = 'userdive'
-export const NAMESPACE = `data-${product}-namespace`
-export const DATASET_KEY = `${product}Namespace`
