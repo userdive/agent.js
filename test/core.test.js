@@ -38,11 +38,11 @@ describe('core', () => {
     agent.set(`dimension3`, random.alphaNumeric())
     agent.set(`dimension4`, random.alphaNumeric())
     agent.set(`dimension5`, random.alphaNumeric())
-    agent.set(`metric1`, random.number(99))
-    agent.set(`metric2`, random.number(99))
-    agent.set(`metric3`, random.number(99))
-    agent.set(`metric4`, random.number(99))
-    agent.set(`metric5`, random.number(99))
+    agent.set(`metric1`, random.number({min: 1, max: 99}))
+    agent.set(`metric2`, random.number({min: 1, max: 99}))
+    agent.set(`metric3`, random.number({min: 1, max: 99}))
+    agent.set(`metric4`, random.number({min: 1, max: 99}))
+    agent.set(`metric5`, random.number({min: 1, max: 99}))
     for (let i = 1; i <= 5; i++) {
       assert(state.custom[`cd${i}`])
       assert(state.custom[`cm${i}`])
@@ -57,11 +57,11 @@ describe('core', () => {
       'dimension3': random.alphaNumeric(),
       'dimension4': random.alphaNumeric(),
       'dimension5': random.alphaNumeric(),
-      'metric1': random.alphaNumeric(),
-      'metric2': random.alphaNumeric(),
-      'metric3': random.alphaNumeric(),
-      'metric4': random.alphaNumeric(),
-      'metric5': random.alphaNumeric(),
+      'metric1': random.number({min: 1, max: 99}),
+      'metric2': random.number({min: 1, max: 99}),
+      'metric3': random.number({min: 1, max: 99}),
+      'metric4': random.number({min: 1, max: 99}),
+      'metric5': random.number({min: 1, max: 99}),
       'page': url,
       'undefined': random.word() // useless
     })
