@@ -5,7 +5,7 @@ import { random, internet } from 'faker'
 import mountDOM from 'jsdom-mount'
 
 import { NAMESPACE } from '../src/constants'
-const GLOBAL_NAME: string = 'ud'
+const GLOBAL_NAME: string = random.word()
 
 describe('index', () => {
   before(() => {
@@ -35,16 +35,20 @@ describe('index', () => {
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
 
-    window.ud('create', random.alphaNumeric(), {}, internet.url())
+    window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url())
     assert(window[GLOBAL_NAME]['q'])
 
     assert(window[GLOBAL_NAME]['q'].length)
 
     require('../src').default
+
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+
     const agent = window[GLOBAL_NAME](
       'create', random.alphaNumeric(), {}, internet.url()
     )
     assert(agent.send)
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
     assert(window[GLOBAL_NAME]['q'] === undefined)
   })
 })

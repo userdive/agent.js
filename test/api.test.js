@@ -1,12 +1,12 @@
 /* @flow */
-import { describe, it, before } from 'mocha'
+import { describe, it } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
 
 describe('api', () => {
-  let api
-  before(() => {
-    api = require('../src/api').default
+  const api = require('../src/api').default
+  it('send when before create', () => {
+    assert(api.send('pageview') === undefined)
   })
 
   it('create', () => {
@@ -14,7 +14,11 @@ describe('api', () => {
   })
 
   it('send', () => {
-    api.send('pageview')
+    assert(api.send('pageview') === undefined)
+  })
+
+  it('send take2', () => {
+    assert(api.send('pageview') === undefined)
   })
 
   it('set', () => {
