@@ -20,12 +20,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ClosureCompilerPlugin({
-      compiler: {
-        compilation_level: 'ADVANCED'
-      },
-      concurrency: 3
-    }),
+    new ClosureCompilerPlugin({}),
     new webpack.BannerPlugin(`@userdive/agent.js ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`)
   ]
 }
