@@ -15,7 +15,7 @@ function send (type: SendType): void {
     return
   }
   if (agent.loaded) {
-    agent.destory()
+    agent.destroy()
   }
   agent.send(type)
 }

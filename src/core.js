@@ -86,7 +86,7 @@ export default class Agent {
     })
     return this.store.merge('custom', result)
   }
-  destory () {
+  destroy () {
     // TODO unbind
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
