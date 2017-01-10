@@ -8,12 +8,13 @@ import type {
   CustomData,
   ClientEnvironments,
   State,
+  Events,
   Metric,
   SetType,
   Dimension
 } from './types'
 
-type StoreType = 'env' | 'custom'
+type StoreType = 'env' | 'custom' | 'events'
 
 function findOrCreateClientId (name: string): string {
   const c = cookies.get(name)
@@ -84,7 +85,7 @@ export default class Store {
     })
     return this.merge('custom', result)
   }
-  merge (type: StoreType, data: ClientEnvironments | CustomData): State {
+  merge (type: StoreType, data: ClientEnvironments | CustomData | {events: Class<Events>[]}): State {
     let prefix
     switch (type) {
       case 'env':
@@ -93,6 +94,16 @@ export default class Store {
         this.baseUrl = `${this.BASE_URL}/${this.PROJECT_ID}/${clientId}/${loadTime}`
         prefix = type
         break
+      case 'events':
+        if (!(data instanceof Array)) {
+          break
+        }
+        const instances: Events[] = []
+        data.forEach(C => {
+          instances.push(new C())
+        })
+        this.state.events = instances
+        return this.state
       case 'custom':
         // TODO validate
         prefix = type

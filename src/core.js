@@ -63,6 +63,9 @@ export default class Agent extends Store {
       throttle(() => {
       }, 2000) // FIXME
     })
+    this.state.events.forEach(e => {
+      e.bind()
+    })
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
     let data = SIZE

@@ -5,8 +5,9 @@ import { internet, random } from 'faker'
 
 describe('store', () => {
   const Store = require('../src/store').default
+  const Events = require('../src/events').default
 
-  it('env', () => {
+  it('merge env', () => {
     const store = new Store(
       random.alphaNumeric(),
       internet.url(),
@@ -16,6 +17,15 @@ describe('store', () => {
     assert(store.merge('env', {v}).env.v === v)
     assert(store.merge('env', {}).env.v === v)
     assert(store.baseUrl)
+  })
+
+  it('merge events', () => {
+    const store = new Store(
+      random.alphaNumeric(),
+      internet.url(),
+      random.alphaNumeric()
+    )
+    store.merge('events', {events: [Events]})
   })
 
   it('set', () => {
