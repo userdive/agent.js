@@ -6,8 +6,12 @@ import { VERSION as v } from './constants'
 import type {
   CustomData,
   ClientEnvironments,
-  State
+  State,
+  Metric,
+  SetType,
+  Dimension
 } from './types'
+
 type StoreType = 'env' | 'custom'
 
 function findOrCreateClientId (name: string): string {
@@ -16,6 +20,20 @@ function findOrCreateClientId (name: string): string {
     return c
   }
   return uuid().replace(/-/g, '')
+}
+
+function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
+  // TODO validate index, value.type
+  const data = {}
+  let splitedKey = key.split('dimension')
+  if (splitedKey.length > 1) {
+    data[`cd${splitedKey[1]}`] = value
+  }
+  splitedKey = key.split('metric')
+  if (splitedKey.length > 1) {
+    data[`cm${splitedKey[1]}`] = value
+  }
+  return data
 }
 
 export default class Store {
@@ -41,6 +59,25 @@ export default class Store {
       },
       custom: {}
     }
+  }
+  set (type: SetType, data: string | number): State {
+    switch (type) {
+      case 'page':
+        return this.merge('env', {l: data})
+      default:
+        return this.merge('custom', parseCustomData(type, data))
+    }
+  }
+  setObject (data: Object): State {
+    if (data.page) {
+      this.merge('env', {l: data.page})
+      delete data.page
+    }
+    let result = {}
+    Object.keys(data).forEach(key => {
+      result = Object.assign({}, result, parseCustomData((key: any), data[key]))
+    })
+    return this.merge('custom', result)
   }
   merge (type: StoreType, data: ClientEnvironments | CustomData): State {
     let prefix

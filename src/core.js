@@ -5,13 +5,8 @@ import { VERSION as v } from './constants'
 import Logger from './logger'
 import type {
   ClientEnvironments,
-  CustomData,
-  Dimension,
-  Metric,
   Options,
-  SendType,
-  SetType,
-  State
+  SendType
 } from './types'
 
 type Size = {
@@ -24,32 +19,17 @@ const SIZE: Size = {
   w: 0
 }
 
-function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
-  // TODO validate index, value.type
-  const data = {}
-  let splitedKey = key.split('dimension')
-  if (splitedKey.length > 1) {
-    data[`cd${splitedKey[1]}`] = value
-  }
-  splitedKey = key.split('metric')
-  if (splitedKey.length > 1) {
-    data[`cm${splitedKey[1]}`] = value
-  }
-  return data
-}
-
-export default class Agent {
+export default class Agent extends Store {
   logger: Logger;
-  store: Store;
   loaded: boolean;
   constructor (id: string, options: Options): void {
-    this.store = new Store(id, options.baseUrl, options.cookieName)
+    super(id, options.baseUrl, options.cookieName)
     this.logger = new Logger(options.Raven)
   }
   send (type: SendType): void {
     switch (type) {
       case 'pageview':
-        const state = this.store.merge(
+        const state = this.merge(
           'env',
           ((windowSize, resourceSize, screenSize): ClientEnvironments => {
             return {
@@ -63,30 +43,14 @@ export default class Agent {
             }
           })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
         )
-        get(`${this.store.baseUrl}/env.gif`, state.env, state.custom)
+        get(`${this.baseUrl}/env.gif`, state.env, state.custom)
         this.loaded = true
     }
   }
-  set (type: SetType, data: string | number): State {
-    switch (type) {
-      case 'page':
-        return this.store.merge('env', {l: data})
-      default:
-        return this.store.merge('custom', parseCustomData(type, data))
-    }
+  bind () {
+    // TODO bind
   }
-  setObject (data: Object): State {
-    if (data.page) {
-      this.store.merge('env', {l: data.page})
-      delete data.page
-    }
-    let result = {}
-    Object.keys(data).forEach(key => {
-      result = Object.assign({}, result, parseCustomData((key: any), data[key]))
-    })
-    return this.store.merge('custom', result)
-  }
-  destroy () {
+  unbind () {
     // TODO unbind
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
