@@ -15,7 +15,7 @@ function send (type: SendType): void {
     return
   }
   if (agent.loaded) {
-    agent.unbind()
+    agent.destroy()
   }
   agent.send(type)
 }
@@ -24,7 +24,7 @@ function set (key: any, value?: string | number): State {
   if (key && value) {
     return agent.set(key, value)
   }
-  return agent.setObject(key)
+  return agent.map(key)
 }
 
 export default {

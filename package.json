@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "js-cookie": "^2.1.3",
+    "lodash.throttle": "^4.1.1",
+    "ui-event-observer": "^1.1.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {

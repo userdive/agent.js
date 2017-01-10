@@ -1,7 +1,9 @@
 /* @flow */
+import throttle from 'lodash.throttle'
+
 import Store from './store'
 import { get } from './requests'
-import { VERSION as v } from './constants'
+import { POINT, VERSION as v } from './constants'
 import Logger from './logger'
 import type {
   ClientEnvironments,
@@ -20,8 +22,8 @@ const SIZE: Size = {
 }
 
 export default class Agent extends Store {
-  logger: Logger;
-  loaded: boolean;
+  logger: Logger
+  loaded: boolean
   constructor (id: string, options: Options): void {
     super(id, options.baseUrl, options.cookieName)
     this.logger = new Logger(options.Raven)
@@ -44,14 +46,23 @@ export default class Agent extends Store {
           })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
         )
         get(`${this.baseUrl}/env.gif`, state.env, state.custom)
+        this.listen()
         this.loaded = true
     }
   }
-  bind () {
-    // TODO bind
+  destroy () {
+    this.state.events.forEach(e => {
+      e.unbind()
+    })
   }
-  unbind () {
-    // TODO unbind
+  listen () {
+    if (this.loaded) {
+      return
+    }
+    this.emitter.on(POINT, data => {
+      throttle(() => {
+      }, 2000) // FIXME
+    })
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
     let data = SIZE

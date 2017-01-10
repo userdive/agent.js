@@ -1,4 +1,5 @@
 /* @flow */
+import events from 'events'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
@@ -37,13 +38,15 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
 }
 
 export default class Store {
-  BASE_URL: string;
-  baseUrl: string;
-  COOKIE_NAME: string;
-  pid: string;
-  PROJECT_ID: string;
-  state: State;
+  BASE_URL: string
+  baseUrl: string
+  COOKIE_NAME: string
+  emitter: events.EventEmitter
+  pid: string
+  PROJECT_ID: string
+  state: State
   constructor (projectId: string, baseUrl: string, cookieName: string): void {
+    this.emitter = new events.EventEmitter()
     this.PROJECT_ID = projectId
     this.BASE_URL = baseUrl
     this.COOKIE_NAME = cookieName
@@ -57,7 +60,9 @@ export default class Store {
         wh: 0,
         ww: 0
       },
-      custom: {}
+      custom: {},
+      interacts: [],
+      events: []
     }
   }
   set (type: SetType, data: string | number): State {
@@ -68,7 +73,7 @@ export default class Store {
         return this.merge('custom', parseCustomData(type, data))
     }
   }
-  setObject (data: Object): State {
+  map (data: Object): State {
     if (data.page) {
       this.merge('env', {l: data.page})
       delete data.page

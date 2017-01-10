@@ -44,14 +44,14 @@ describe('store', () => {
     }
   })
 
-  it('setObject', () => {
+  it('map', () => {
     const url = internet.url()
     const store = new Store(
       random.alphaNumeric(),
       internet.url(),
       random.alphaNumeric()
     )
-    const state = store.setObject({
+    const state = store.map({
       'dimension1': random.alphaNumeric(),
       'dimension2': random.alphaNumeric(),
       'dimension3': random.alphaNumeric(),

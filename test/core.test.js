@@ -27,4 +27,12 @@ describe('core', () => {
   it('send', () => {
     agent.send('pageview', location.pathname)
   })
+
+  it('destroy', () => {
+    agent.destroy()
+  })
+
+  it('listen', () => {
+    agent.listen()
+  })
 })
