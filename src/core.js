@@ -1,6 +1,4 @@
 /* @flow */
-import throttle from 'lodash.throttle'
-
 import Store from './store'
 import { get } from './requests'
 import { POINT, VERSION as v } from './constants'
@@ -24,7 +22,7 @@ const SIZE: Size = {
 export default class Agent extends Store {
   logger: Logger
   loaded: boolean
-  constructor (id: string, options: Options): void {
+  constructor (id: string, events: any[], options: Options): void {
     super(id, options.baseUrl, options.cookieName)
     this.logger = new Logger(options.Raven)
   }
@@ -60,8 +58,6 @@ export default class Agent extends Store {
       return
     }
     this.emitter.on(POINT, data => {
-      throttle(() => {
-      }, 2000) // FIXME
     })
     this.state.events.forEach(e => {
       e.bind()

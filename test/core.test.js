@@ -6,10 +6,12 @@ import Raven from 'raven-js'
 
 describe('core', () => {
   const Agent = require('../src/core').default
+  const Events = require('../src/events').default
   let agent
   beforeEach(() => {
     agent = new Agent(
       random.alphaNumeric(),
+      [Events],
       {
         baseUrl: internet.url(),
         cookieName: random.alphaNumeric(),

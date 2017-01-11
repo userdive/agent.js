@@ -5,11 +5,6 @@ export interface Raven {
   captureException(): void
 }
 
-export type Events = {
-  bind(): void,
-  unbind(): void
-}
-
 export type Options = {
   baseUrl: string,
   cookieDomain: string,
@@ -63,5 +58,5 @@ export type State = {
   env: ClientEnvironments,
   custom: CustomData,
   interacts: Interact[],
-  events: Events[]
+  events: any[]
 }

@@ -1,12 +1,19 @@
 /* @flow */
 import Agent from './core'
+import ClickEvent from './events/click'
 import { OPTIONS } from './constants'
 import type { SendType, State } from './types'
 
 let agent: Agent
 
 function create (projectId: string, options: any): Agent {
-  agent = new Agent(projectId, Object.assign({}, OPTIONS, options))
+  agent = new Agent(
+    projectId,
+    [
+      ClickEvent
+    ],
+    Object.assign({}, OPTIONS, options)
+  )
   return agent
 }
 

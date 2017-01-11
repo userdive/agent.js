@@ -6,23 +6,23 @@ import { POINT } from './constants'
 import type { Raven } from './types'
 
 export default class Events {
-  name: string
   logger: Raven
-  handler: Function
   emitter: events.EventEmitter
-  constructor (emitter: any, eventName: string, handler: Function, logger: Raven) {
+  constructor (emitter: any, logger: Raven) {
     this.emitter = emitter
-    this.handler = handler
     this.logger = logger
-    this.name = eventName
   }
   change (data: {x: number, y: number}) {
     this.emitter.emit(POINT, data)
   }
-  bind (global: any) {
-    eventObserver.subscribe(global, this.name, () => {
+  bind (global: any, eventName: string, handler: (e: MouseEvent) => void): void {
+    if (!global || !handler) {
+      throw new Error('please override bind')
+    }
+
+    eventObserver.subscribe(global, eventName, e => {
       try {
-        this.handler()
+        handler(e)
       } catch (err) {
         this.logger.captureException(err)
       }
