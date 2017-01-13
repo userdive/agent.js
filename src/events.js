@@ -3,12 +3,11 @@ import events from 'events'
 import eventObserver from 'ui-event-observer'
 
 import { POINT } from './constants'
-import type { Raven } from './types'
 
 export default class Events {
-  logger: Raven
+  logger: any // TODO type
   emitter: events.EventEmitter
-  constructor (emitter: any, logger: Raven) {
+  constructor (emitter: any, logger: any) {
     this.emitter = emitter
     this.logger = logger
   }
@@ -24,7 +23,7 @@ export default class Events {
       try {
         handler(e)
       } catch (err) {
-        this.logger.captureException(err)
+        this.logger.error(err)
       }
     })
   }
