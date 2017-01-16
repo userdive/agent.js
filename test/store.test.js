@@ -6,12 +6,16 @@ import { internet, random } from 'faker'
 describe('store', () => {
   const Store = require('../src/store').default
 
-  it('merge env', () => {
-    const store = new Store(
+  function createInstance () {
+    return new Store(
       random.alphaNumeric(),
       internet.url(),
       random.alphaNumeric()
     )
+  }
+
+  it('merge', () => {
+    const store = createInstance()
     const v = random.number()
     assert(store.merge('env', {v}).env.v === v)
     assert(store.merge('env', {}).env.v === v)
@@ -20,11 +24,7 @@ describe('store', () => {
 
   it('set', () => {
     const url = internet.url()
-    const store = new Store(
-      random.alphaNumeric(),
-      internet.url(),
-      random.alphaNumeric()
-    )
+    const store = createInstance()
     const state = store.set('page', url)
     assert(state.env.l === url)
 
@@ -44,14 +44,11 @@ describe('store', () => {
     }
   })
 
-  it('map', () => {
+  it('mergeDeep', () => {
     const url = internet.url()
-    const store = new Store(
-      random.alphaNumeric(),
-      internet.url(),
-      random.alphaNumeric()
-    )
-    const state = store.map({
+    const store = createInstance()
+
+    const state = store.mergeDeep({
       'dimension1': random.alphaNumeric(),
       'dimension2': random.alphaNumeric(),
       'dimension3': random.alphaNumeric(),

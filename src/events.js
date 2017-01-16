@@ -8,26 +8,30 @@ interface Logger {
   error(err: any): void
 }
 
+export const NAME = 'POINT'
+
 export default class Events {
-  name: string
   emitter: events.EventEmitter
   logger: Logger
-  constructor (emitter: any, logger: any) {
+  constructor (emitter: events.EventEmitter, logger: any): void {
     this.emitter = emitter
     this.logger = logger
-    this.name = 'POINT'
   }
-  change (data: {x: number, y: number}) {
-    this.emitter.emit(this.name, data)
+  change (data: {x: number, y: number}): void {
+    if (!data.x || !data.y) {
+      this.unbind()
+      return
+    }
+    this.emitter.emit(NAME, data)
   }
-  bind (global: any, eventName: EventType, handler: (e: MouseEvent) => void): void {
+  bind (global: any, eventName: EventType, handler: MouseEventHandler): void {
     if (!global || !handler) {
       throw new Error('please override bind')
     }
 
-    eventObserver.subscribe(global, eventName, () => {
+    eventObserver.subscribe(global, eventName, e => {
       try {
-        handler.apply(this, arguments)
+        handler(e)
       } catch (err) {
         this.logger.error(err)
       }

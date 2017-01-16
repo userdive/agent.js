@@ -12,7 +12,10 @@ describe('core', () => {
   beforeEach(() => {
     class Events extends Base {
       bind () {
-        super.bind(window, 'click', e => { console.log(e) })
+        super.bind(document, 'click', e => {
+          console.log('foo', e, e.pageX, e.pageY)
+          this.change({x: e.pageX, y: e.pageY})
+        })
       }
     }
 
@@ -35,6 +38,10 @@ describe('core', () => {
     assert(agent)
   })
 
+  it('before ', () => {
+    assert(agent.listen() === undefined, 'noting todo')
+  })
+
   it('send', () => {
     agent.send('pageview', location.pathname)
   })
@@ -44,6 +51,12 @@ describe('core', () => {
   })
 
   it('listen', () => {
+    assert(agent.listen() === undefined, 'noting todo when before load')
+
+    agent.loaded = true
     agent.listen()
+    const e = document.createEvent('MouseEvents')
+    e.initEvent('click', false, true)
+    document.dispatchEvent(e)
   })
 })

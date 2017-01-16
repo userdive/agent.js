@@ -5,10 +5,11 @@ import assert from 'assert'
 
 import { OPTIONS } from '../../src/constants'
 
-describe('click', () => {
+describe.only('click', () => {
   const EventEmitter = require('events').EventEmitter
   const ClickEvents = require('../../src/events/click').default
   const Logger = require('../../src/logger').default
+  const NAME = require('../../src/events').NAME
 
   let emitter, logger, instance, spy
 
@@ -17,7 +18,7 @@ describe('click', () => {
     logger = new Logger(OPTIONS.Raven)
     emitter = new EventEmitter()
     instance = new ClickEvents(emitter, logger)
-    emitter.on(instance.name, spy)
+    emitter.on(NAME, spy)
   })
 
   afterEach(() => {
@@ -27,8 +28,8 @@ describe('click', () => {
   it('bind', () => {
     instance.bind()
     const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    document.dispatchEvent(e)
+    e.initEvent('click', true, true)
+    document.body.dispatchEvent(e)
     assert(spy.called)
   })
 })

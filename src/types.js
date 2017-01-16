@@ -45,17 +45,7 @@ export type ClientEnvironments = {
   w: number
 }
 
-export type Interact = {
-  x: number,
-  y: number,
-  t: number,
-  type: 'l' | 'a',
-  left: number,
-  top: number
-}
-
 export type State = {
   env: ClientEnvironments,
-  custom: CustomData,
-  interacts: Interact[]
+  custom: CustomData
 }

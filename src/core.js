@@ -2,6 +2,7 @@
 import events from 'events'
 import throttle from 'throttle-debounce'
 
+import { NAME } from './events'
 import Store from './store'
 import { get } from './requests'
 import { VERSION as v } from './constants'
@@ -17,6 +18,15 @@ type Size = {
   w: number
 }
 
+type Interact = {
+  x: number,
+  y: number,
+  t: number,
+  type: 'l' | 'a',
+  left: number,
+  top: number
+}
+
 const SIZE: Size = {
   h: 0,
   w: 0
@@ -25,6 +35,7 @@ const SIZE: Size = {
 export default class Agent extends Store {
   logger: Logger
   events: []
+  interacts: Interact[]
   emitter: events.EventEmitter
   loaded: boolean
   constructor (id: string, eventsClass: any[], options: Options): void {
@@ -58,6 +69,9 @@ export default class Agent extends Store {
         this.loaded = true
     }
   }
+  _save (data: Interact) {
+    this.interacts.push(data)
+  }
   destroy () {
     this.events.forEach(e => {
       e.unbind()
@@ -65,11 +79,11 @@ export default class Agent extends Store {
     this.emitter.removeAllListeners()
   }
   listen () {
-    if (this.loaded) {
+    if (!this.loaded) {
       return
     }
-    this.emitter.on(this.events[0].name, data => {
-      throttle(0, console.log)
+    this.emitter.on(NAME, data => {
+      throttle(0, this._save)
     })
     this.events.forEach(e => {
       e.bind()

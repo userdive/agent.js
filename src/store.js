@@ -56,8 +56,7 @@ export default class Store {
         wh: 0,
         ww: 0
       },
-      custom: {},
-      interacts: []
+      custom: {}
     }
   }
   set (type: SetType, data: string | number): State {
@@ -68,7 +67,7 @@ export default class Store {
         return this.merge('custom', parseCustomData(type, data))
     }
   }
-  map (data: Object): State {
+  mergeDeep (data: Object): State {
     if (data.page) {
       this.merge('env', {l: data.page})
       delete data.page

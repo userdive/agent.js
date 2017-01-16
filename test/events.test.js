@@ -7,8 +7,12 @@ import assert from 'assert'
 import { OPTIONS } from '../src/constants'
 
 describe('events', () => {
-  const Events = require('../src/events').default
+  const events = require('../src/events')
+  const Events = events.default
+  const NAME = events.NAME
+
   const EventEmitter = require('events').EventEmitter
+
   const Logger = require('../src/logger').default
 
   let emitter, instance, spy, logger
@@ -18,7 +22,7 @@ describe('events', () => {
     emitter = new EventEmitter()
     logger = new Logger(OPTIONS.Raven)
     instance = new Events(emitter, logger)
-    emitter.on(instance.name, spy)
+    emitter.on(NAME, spy)
   })
 
   afterEach(() => {

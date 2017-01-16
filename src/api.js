@@ -28,7 +28,7 @@ function set (key: any, value?: string | number): State {
   if (key && value) {
     return agent.set(key, value)
   }
-  return agent.map(key)
+  return agent.mergeDeep(key)
 }
 
 export default {
