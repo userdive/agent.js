@@ -1,9 +1,10 @@
 /* @flow */
 import events from 'events'
+import throttle from 'throttle-debounce'
 
 import Store from './store'
 import { get } from './requests'
-import { POINT, VERSION as v } from './constants'
+import { VERSION as v } from './constants'
 import Logger from './logger'
 import type {
   ClientEnvironments,
@@ -61,13 +62,14 @@ export default class Agent extends Store {
     this.events.forEach(e => {
       e.unbind()
     })
+    this.emitter.removeAllListeners()
   }
   listen () {
     if (this.loaded) {
       return
     }
-    this.emitter.on(POINT, data => {
-      console.log(data)
+    this.emitter.on(this.events[0].name, data => {
+      throttle(0, console.log)
     })
     this.events.forEach(e => {
       e.bind()

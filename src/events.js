@@ -2,26 +2,32 @@
 import events from 'events'
 import eventObserver from 'ui-event-observer'
 
-import { POINT } from './constants'
+type EventType = 'click'
+
+interface Logger {
+  error(err: any): void
+}
 
 export default class Events {
-  logger: any // TODO type
+  name: string
   emitter: events.EventEmitter
+  logger: Logger
   constructor (emitter: any, logger: any) {
     this.emitter = emitter
     this.logger = logger
+    this.name = 'POINT'
   }
   change (data: {x: number, y: number}) {
-    this.emitter.emit(POINT, data)
+    this.emitter.emit(this.name, data)
   }
-  bind (global: any, eventName: string, handler: (e: MouseEvent) => void): void {
+  bind (global: any, eventName: EventType, handler: (e: MouseEvent) => void): void {
     if (!global || !handler) {
       throw new Error('please override bind')
     }
 
-    eventObserver.subscribe(global, eventName, e => {
+    eventObserver.subscribe(global, eventName, () => {
       try {
-        handler(e)
+        handler.apply(this, arguments)
       } catch (err) {
         this.logger.error(err)
       }

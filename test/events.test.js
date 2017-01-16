@@ -3,7 +3,8 @@ import { describe, it, beforeEach, afterEach } from 'mocha'
 import { random } from 'faker'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
-import { OPTIONS, POINT } from '../src/constants'
+
+import { OPTIONS } from '../src/constants'
 
 describe('events', () => {
   const Events = require('../src/events').default
@@ -15,10 +16,9 @@ describe('events', () => {
   beforeEach(() => {
     spy = sinonSpy()
     emitter = new EventEmitter()
-    emitter.on(POINT, spy)
     logger = new Logger(OPTIONS.Raven)
-
     instance = new Events(emitter, logger)
+    emitter.on(instance.name, spy)
   })
 
   afterEach(() => {

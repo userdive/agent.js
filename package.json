@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "js-cookie": "^2.1.3",
-    "lodash.throttle": "^4.1.1",
+    "throttle-debounce": "^1.0.1",
     "ui-event-observer": "^1.1.0",
     "uuid": "^3.0.1"
   },
@@ -16,6 +16,7 @@
     "@alrra/travis-scripts": "^3.0.1",
     "@uncovertruth/eslint-config-flowtype": "^0.0.2",
     "assert-exception": "^1.1.0",
+    "babel-cli": "^6.18.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-flow-strip-types": "^6.21.0",

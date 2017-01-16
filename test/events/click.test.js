@@ -3,7 +3,7 @@ import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
-import { OPTIONS, POINT } from '../../src/constants'
+import { OPTIONS } from '../../src/constants'
 
 describe('click', () => {
   const EventEmitter = require('events').EventEmitter
@@ -16,8 +16,8 @@ describe('click', () => {
     spy = sinonSpy()
     logger = new Logger(OPTIONS.Raven)
     emitter = new EventEmitter()
-    emitter.on(POINT, spy)
     instance = new ClickEvents(emitter, logger)
+    emitter.on(instance.name, spy)
   })
 
   afterEach(() => {
