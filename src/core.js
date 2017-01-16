@@ -1,4 +1,6 @@
 /* @flow */
+import events from 'events'
+
 import Store from './store'
 import { get } from './requests'
 import { POINT, VERSION as v } from './constants'
@@ -21,10 +23,17 @@ const SIZE: Size = {
 
 export default class Agent extends Store {
   logger: Logger
+  events: []
+  emitter: events.EventEmitter
   loaded: boolean
-  constructor (id: string, events: any[], options: Options): void {
+  constructor (id: string, eventsClass: any[], options: Options): void {
     super(id, options.baseUrl, options.cookieName)
+    this.emitter = new events.EventEmitter()
     this.logger = new Logger(options.Raven)
+    this.events = []
+    eventsClass.forEach(Class => {
+      this.events.push(new Class(this.emitter, this.logger))
+    })
   }
   send (type: SendType): void {
     switch (type) {
@@ -49,7 +58,7 @@ export default class Agent extends Store {
     }
   }
   destroy () {
-    this.state.events.forEach(e => {
+    this.events.forEach(e => {
       e.unbind()
     })
   }
@@ -58,8 +67,9 @@ export default class Agent extends Store {
       return
     }
     this.emitter.on(POINT, data => {
+      console.log(data)
     })
-    this.state.events.forEach(e => {
+    this.events.forEach(e => {
       e.bind()
     })
   }

@@ -1,19 +1,17 @@
 /* @flow */
-import events from 'events'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
 import { VERSION as v } from './constants'
 import type {
   CustomData,
-  ClientEnvironments,
-  State,
+  ClientEnvironments, State,
   Metric,
   SetType,
   Dimension
 } from './types'
 
-type StoreType = 'env' | 'custom' | 'events'
+type StoreType = 'env' | 'custom'
 
 function findOrCreateClientId (name: string): string {
   const c = cookies.get(name)
@@ -41,12 +39,10 @@ export default class Store {
   BASE_URL: string
   baseUrl: string
   COOKIE_NAME: string
-  emitter: events.EventEmitter
   pid: string
   PROJECT_ID: string
   state: State
   constructor (projectId: string, baseUrl: string, cookieName: string): void {
-    this.emitter = new events.EventEmitter()
     this.PROJECT_ID = projectId
     this.BASE_URL = baseUrl
     this.COOKIE_NAME = cookieName
@@ -61,8 +57,7 @@ export default class Store {
         ww: 0
       },
       custom: {},
-      interacts: [],
-      events: []
+      interacts: []
     }
   }
   set (type: SetType, data: string | number): State {

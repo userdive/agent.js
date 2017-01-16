@@ -57,6 +57,5 @@ export type Interact = {
 export type State = {
   env: ClientEnvironments,
   custom: CustomData,
-  interacts: Interact[],
-  events: any[]
+  interacts: Interact[]
 }

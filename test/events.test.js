@@ -1,5 +1,5 @@
 /* @flow */
-import { describe, it, beforeEach } from 'mocha'
+import { describe, it, beforeEach, afterEach } from 'mocha'
 import { random } from 'faker'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
@@ -21,6 +21,10 @@ describe('events', () => {
     instance = new Events(emitter, logger)
   })
 
+  afterEach(() => {
+    spy.reset()
+  })
+
   it('init', () => {
     assert(instance.change)
     assert(instance.bind)
@@ -29,7 +33,7 @@ describe('events', () => {
 
   it('change', () => {
     instance.change({x: random.number(), y: random.number()})
-    assert(spy.calledOnce)
+    assert(spy.called)
   })
 
   it('bind', () => {

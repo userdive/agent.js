@@ -18,9 +18,6 @@ function create (projectId: string, options: any): Agent {
 }
 
 function send (type: SendType): void {
-  if (!agent) {
-    return
-  }
   if (agent.loaded) {
     agent.destroy()
   }

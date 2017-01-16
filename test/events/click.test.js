@@ -1,5 +1,5 @@
 /* @flow */
-import { describe, it, beforeEach } from 'mocha'
+import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
@@ -20,11 +20,15 @@ describe('click', () => {
     instance = new ClickEvents(emitter, logger)
   })
 
+  afterEach(() => {
+    spy.reset()
+  })
+
   it('bind', () => {
     instance.bind()
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
     document.dispatchEvent(e)
-    assert(spy.calledOnce)
+    assert(spy.called)
   })
 })
