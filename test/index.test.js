@@ -1,8 +1,8 @@
 /* @flow */
-import { describe, it, before, beforeEach, afterEach } from 'mocha'
+import { describe, it, before, after, beforeEach, afterEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
-import mountDOM from 'jsdom-mount'
+import fixture from 'karma-fixture'
 
 import { NAMESPACE } from '../src/constants'
 const GLOBAL_NAME: string = random.word()
@@ -10,9 +10,13 @@ const GLOBAL_NAME: string = random.word()
 describe('index', () => {
   before(() => {
     const id = 'test'
-    mountDOM(`<script id="${id}"></script>`)
+    fixture.set(`<script id="${id}"></script>`)
     const element = document.getElementById(id)
     element.setAttribute(NAMESPACE, GLOBAL_NAME)
+  })
+
+  after(() => {
+    fixture.cleanup()
   })
 
   function createEntry (global, name) {
