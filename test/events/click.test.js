@@ -5,7 +5,7 @@ import assert from 'assert'
 
 import { OPTIONS } from '../../src/constants'
 
-describe.only('click', () => {
+describe('click', () => {
   const EventEmitter = require('events').EventEmitter
   const ClickEvents = require('../../src/events/click').default
   const Logger = require('../../src/logger').default

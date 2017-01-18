@@ -1,4 +1,4 @@
-const config = require('./webpack.config')
+const webpackConfig = require('./webpack.config')
 
 module.exports = function (config) {
   config.set({
@@ -7,10 +7,11 @@ module.exports = function (config) {
       'test/**/*.test.js'
     ],
     preprocessors: {
-      'test/**/*test.js': ['webpack']
+      'test/**/*.test.js': ['webpack']
     },
     webpack: {
-      module: config.module
+      module: webpackConfig.module,
+      node: { fs: 'empty' }
     },
     webpackMiddleware: {
       noInfo: true,
@@ -19,10 +20,8 @@ module.exports = function (config) {
         colors: true
       }
     },
-    reporters: ['progress', 'coverage'],
-    browsers: ['Chrome'],
-    coverageReporter: {
-      reporters: [{type: 'lcov'}]
-    }
+    singleRun: true,
+    reporters: ['mocha'],
+    browsers: ['Firefox']
   })
 }
