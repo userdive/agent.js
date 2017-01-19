@@ -66,7 +66,7 @@ export default class Store {
         this.state.env.l = l
         break
       default:
-        this.state.custom = parseCustomData(type, data)
+        this.state.custom = Object.assign({}, this.state.custom, parseCustomData(type, data))
     }
     return this.state
   }

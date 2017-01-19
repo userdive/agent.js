@@ -40,7 +40,7 @@ describe('store', () => {
     assert(store.baseUrl)
   })
 
-  it.skip('set', () => {
+  it('set', () => {
     const url = internet.url()
     const store = createInstance()
     const state = store.set('page', url)
