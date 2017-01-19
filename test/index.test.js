@@ -2,14 +2,16 @@
 import { describe, it, before, after, beforeEach, afterEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
-import fixture from 'karma-fixture'
 
 import { NAMESPACE } from '../src/constants'
 const GLOBAL_NAME: string = random.word()
 
-describe.skip('index', () => {
+declare var fixture: any
+
+describe('index', () => {
   before(() => {
     const id = 'test'
+
     fixture.set(`<script id="${id}"></script>`)
 
     function set (element: any) {

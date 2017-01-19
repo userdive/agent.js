@@ -11,7 +11,7 @@ const loaders = webpackConfig.module.loaders.concat([{
 
 module.exports = function (config) {
   config.set({
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'fixture'],
     files: [
       'test/**/*.test.js'
     ],
