@@ -19,6 +19,7 @@
     "assert-exception": "^1.1.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
+    "babel-istanbul-loader": "github:uncovertruth/babel-istanbul-loader#feature/dependencies",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-flow-strip-types": "^6.21.0",
