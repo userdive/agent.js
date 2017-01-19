@@ -70,16 +70,16 @@ export default class Store {
     }
     return this.state
   }
-  mergeDeep (data: Object): State {
-    if (data.page) {
-      this.state.env.l = data.page
-      delete data.page
+  mergeDeep (obj: Object): State {
+    if (obj.page) {
+      this.state.env.l = obj.page
+      delete obj.page
     }
-    let result = {}
-    Object.keys(data).forEach(key => {
-      result = Object.assign({}, result, parseCustomData((key: any), data[key]))
+    let data = {}
+    Object.keys(obj).forEach(key => {
+      data = Object.assign({}, data, parseCustomData((key: any), data[key]))
     })
-    return this.merge({type: 'custom', data: result})
+    return this.merge({type: 'custom', data})
   }
   merge (obj: ClientEnvironments | Custom): State {
     switch (obj.type) {

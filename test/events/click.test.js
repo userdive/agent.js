@@ -27,11 +27,13 @@ describe('click', () => {
 
   it('bind', () => {
     instance.bind()
-    const e = document.createEvent('MouseEvents')
+    const e: any = document.createEvent('MouseEvents')
     e.initEvent('click', true, true)
-    ((body: Element) => {
+
+    function dispatch ({ body }: any) {
       body.dispatchEvent(e)
-    })(document.body)
+    }
+    dispatch(document)
     assert(spy.called)
   })
 })

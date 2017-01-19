@@ -11,8 +11,11 @@ describe('index', () => {
   before(() => {
     const id = 'test'
     fixture.set(`<script id="${id}"></script>`)
-    const element = document.getElementById(id)
-    element.setAttribute(NAMESPACE, GLOBAL_NAME)
+
+    function set (element: any) {
+      element.setAttribute(NAMESPACE, GLOBAL_NAME)
+    }
+    set(document.getElementById(id))
   })
 
   after(() => {

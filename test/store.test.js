@@ -16,9 +16,27 @@ describe('store', () => {
 
   it('merge', () => {
     const store = createInstance()
-    const v = random.number()
-    assert(store.merge({type: 'env', data: {v}}).env.v === v)
-    assert(store.merge({type: 'env', data: {}}).env.v === v)
+    const env = {
+      v: random.number(),
+      uid: random.number(),
+      l: internet.url(),
+      n: random.word(),
+      r: internet.url(),
+      sw: random.number(),
+      sh: random.number(),
+      ww: random.number(),
+      wh: random.number(),
+      h: random.number(),
+      w: random.number()
+
+    }
+    assert(store.merge({
+      type: 'env',
+      data: env
+    }).env.v === env.v)
+    const before = env.uid
+    delete env.uid
+    assert(store.merge({type: 'env', data: env}).env.uid === before)
     assert(store.baseUrl)
   })
 

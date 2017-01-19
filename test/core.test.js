@@ -13,7 +13,6 @@ describe('core', () => {
     class Events extends Base {
       bind () {
         super.bind(document, 'click', e => {
-          console.log('foo', e, e.pageX, e.pageY)
           this.change({x: e.pageX, y: e.pageY})
         })
       }
