@@ -65,8 +65,8 @@
   "scripts": {
     "prepush": "npm test",
     "build": "webpack --profile --json | webpack-bundle-size-analyzer",
-    "clean": "rimraf dist",
-    "codecov": "codecov -f ./coverage/Chrome*/lcov.info -t $CODECOV_TOKEN",
+    "clean": "rimraf dist coverage",
+    "codecov": "codecov -f ./coverage/Firefox*/lcov.info -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint .",
     "lint:flow": "flow",

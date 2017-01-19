@@ -30,7 +30,7 @@ module.exports = function (config) {
       }
     },
     singleRun: true,
-    reporters: ['mocha'],
+    reporters: ['mocha', 'coverage'],
     browsers: ['Firefox']
   })
 }
