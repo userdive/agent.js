@@ -28,7 +28,8 @@
     "codecov": "^1.0.1",
     "eslint": "^3.13.1",
     "faker": "^3.1.0",
-    "flow-bin": "^0.37.4",
+    "flow-bin": "^0.38.0",
+    "husky": "^0.12.0",
     "json-loader": "^0.5.4",
     "karma": "^1.4.0",
     "karma-coverage": "^1.1.1",
@@ -62,6 +63,7 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
+    "prepush": "npm test",
     "build": "webpack --profile --json | webpack-bundle-size-analyzer",
     "clean": "rimraf dist",
     "codecov": "codecov -f ./coverage/Chrome*/lcov.info -t $CODECOV_TOKEN",

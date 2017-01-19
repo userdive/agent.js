@@ -17,8 +17,8 @@ describe('store', () => {
   it('merge', () => {
     const store = createInstance()
     const v = random.number()
-    assert(store.merge('env', {v}).env.v === v)
-    assert(store.merge('env', {}).env.v === v)
+    assert(store.merge({type: 'env', data: {v}}).env.v === v)
+    assert(store.merge({type: 'env', data: {}}).env.v === v)
     assert(store.baseUrl)
   })
 

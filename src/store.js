@@ -4,14 +4,14 @@ import { v4 as uuid } from 'uuid'
 
 import { VERSION as v } from './constants'
 import type {
+  Custom,
   CustomData,
-  ClientEnvironments, State,
+  ClientEnvironments,
+  State,
   Metric,
   SetType,
   Dimension
 } from './types'
-
-type StoreType = 'env' | 'custom'
 
 function findOrCreateClientId (name: string): string {
   const c = cookies.get(name)
@@ -59,43 +59,39 @@ export default class Store {
       custom: {}
     }
   }
-  set (type: SetType, data: string | number): State {
+  set (type: SetType, data: any): State {
     switch (type) {
       case 'page':
-        return this.merge('env', {l: data})
+        const l: string = data
+        this.state.env.l = l
+        break
       default:
-        return this.merge('custom', parseCustomData(type, data))
+        this.state.custom = parseCustomData(type, data)
     }
+    return this.state
   }
   mergeDeep (data: Object): State {
     if (data.page) {
-      this.merge('env', {l: data.page})
+      this.state.env.l = data.page
       delete data.page
     }
     let result = {}
     Object.keys(data).forEach(key => {
       result = Object.assign({}, result, parseCustomData((key: any), data[key]))
     })
-    return this.merge('custom', result)
+    return this.merge({type: 'custom', data: result})
   }
-  merge (type: StoreType, data: ClientEnvironments | CustomData): State {
-    let prefix
-    switch (type) {
+  merge (obj: ClientEnvironments | Custom): State {
+    switch (obj.type) {
       case 'env':
         const clientId = findOrCreateClientId(this.COOKIE_NAME)
         const loadTime = Date.now()
         this.baseUrl = `${this.BASE_URL}/${this.PROJECT_ID}/${clientId}/${loadTime}`
-        prefix = type
+        this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
         break
       case 'custom':
-        // TODO validate
-        prefix = type
+        this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
         break
-    }
-    if (prefix) {
-      for (const key in data) {
-        this.state[prefix][key] = data[key]
-      }
     }
 
     return this.state

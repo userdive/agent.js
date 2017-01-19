@@ -9,8 +9,6 @@ const loaders = webpackConfig.module.loaders.concat([{
   }
 }])
 
-console.log(loaders)
-
 module.exports = function (config) {
   config.set({
     frameworks: ['mocha'],

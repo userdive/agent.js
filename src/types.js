@@ -31,10 +31,15 @@ export type CustomData = {
   cm5?: number
 }
 
-export type ClientEnvironments = {
+export type Custom = {
+  type: 'custom',
+  data: CustomData
+}
+
+export type ClientEnvironmentsData = {
   v: number,
   uid?: number,
-  l?: number,
+  l?: string,
   n?: string,
   r?: string,
   sw: number,
@@ -45,7 +50,12 @@ export type ClientEnvironments = {
   w: number
 }
 
+export type ClientEnvironments = {
+  type: 'env',
+  data: ClientEnvironmentsData
+}
+
 export type State = {
-  env: ClientEnvironments,
+  env: ClientEnvironmentsData,
   custom: CustomData
 }

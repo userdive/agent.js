@@ -1,4 +1,3 @@
-/* @flow */
 import events from 'events'
 import throttle from 'throttle-debounce'
 
@@ -8,8 +7,9 @@ import { get } from './requests'
 import { VERSION as v } from './constants'
 import Logger from './logger'
 import type {
-  ClientEnvironments,
+  ClientEnvironmentsData,
   Options,
+  State,
   SendType
 } from './types'
 
@@ -42,17 +42,18 @@ export default class Agent extends Store {
     super(id, options.baseUrl, options.cookieName)
     this.emitter = new events.EventEmitter()
     this.logger = new Logger(options.Raven)
-    this.events = []
+    const eventInstances = []
     eventsClass.forEach(Class => {
-      this.events.push(new Class(this.emitter, this.logger))
+      eventInstances.push(new Class(this.emitter, this.logger))
     })
+    this.events = eventInstances
   }
   send (type: SendType): void {
     switch (type) {
       case 'pageview':
-        const state = this.merge(
-          'env',
-          ((windowSize, resourceSize, screenSize): ClientEnvironments => {
+        const state: State = this.merge({
+          type: 'env',
+          data: ((windowSize, resourceSize, screenSize): ClientEnvironmentsData => {
             return {
               v,
               sh: screenSize.h,
@@ -62,23 +63,23 @@ export default class Agent extends Store {
               h: resourceSize.h,
               w: resourceSize.w
             }
-          })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
-        )
+          })(this.getWindowSize(window), this.getResourceSize(document), this.getScreenSize(screen))
+        })
         get(`${this.baseUrl}/env.gif`, state.env, state.custom)
         this.listen()
         this.loaded = true
     }
   }
-  _save (data: Interact) {
+  _save (data: Interact): void {
     this.interacts.push(data)
   }
-  destroy () {
+  destroy (): void {
     this.events.forEach(e => {
       e.unbind()
     })
     this.emitter.removeAllListeners()
   }
-  listen () {
+  listen (): void {
     if (!this.loaded) {
       return
     }
@@ -90,39 +91,24 @@ export default class Agent extends Store {
     })
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
-    let data = SIZE
-    try {
-      data = {
-        h: w.innerHeight,
-        w: w.innerWidth
-      }
-    } catch (err) {
-      this.logger.error(err)
+    return {
+      h: w.innerHeight,
+      w: w.innerWidth
     }
-    return data
   }
-  getResourceSize (body: HTMLElement): Size {
-    let data = SIZE
-    try {
-      data = {
-        h: body.clientHeight,
-        w: body.clientWidth
-      }
-    } catch (err) {
-      this.logger.error(err)
+  getResourceSize ({ body }: Document): Size {
+    if (!body) {
+      return SIZE
     }
-    return data
+    return {
+      h: body.clientHeight,
+      w: body.clientWidth
+    }
   }
   getScreenSize (s: {height: number, width: number}): Size {
-    let data = SIZE
-    try {
-      data = {
-        h: s.height,
-        w: s.width
-      }
-    } catch (err) {
-      this.logger.error(err)
+    return {
+      h: s.height,
+      w: s.width
     }
-    return data
   }
 }
