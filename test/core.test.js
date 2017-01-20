@@ -2,11 +2,11 @@
 import { describe, it, beforeEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
-import Raven from 'raven-js'
 
 describe('core', () => {
   const Agent = require('../src/core').default
-  const Base = require('../src/events').default
+  const Base = require('@userdive/events').Base
+  const Raven = require('../src/constants').OPTIONS.Raven
 
   let agent
   beforeEach(() => {

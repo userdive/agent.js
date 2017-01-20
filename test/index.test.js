@@ -8,7 +8,7 @@ const GLOBAL_NAME: string = random.word()
 
 declare var fixture: any
 
-describe('index', () => {
+describe.skip('index', () => {
   before(() => {
     const id = 'test'
 

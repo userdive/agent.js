@@ -1,5 +1,5 @@
 /* @flow */
-export interface Raven {
+declare interface Raven {
   isSetup(): boolean,
   captureMessage(): void,
   captureException(): void

@@ -1,11 +1,10 @@
 import events from 'events'
-import throttle from 'throttle-debounce'
+import Logger from '@userdive/logger'
 
-import { NAME } from './events'
+import { NAME } from '@userdive/events'
 import Store from './store'
 import { get } from './requests'
 import { VERSION as v } from './constants'
-import Logger from './logger'
 import type {
   ClientEnvironmentsData,
   Options,
@@ -70,9 +69,6 @@ export default class Agent extends Store {
         this.loaded = true
     }
   }
-  _save (data: Interact): void {
-    this.interacts.push(data)
-  }
   destroy (): void {
     this.events.forEach(e => {
       e.unbind()
@@ -84,7 +80,6 @@ export default class Agent extends Store {
       return
     }
     this.emitter.on(NAME, data => {
-      throttle(0, this._save)
     })
     this.events.forEach(e => {
       e.bind()

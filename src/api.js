@@ -1,6 +1,6 @@
 /* @flow */
 import Agent from './core'
-import ClickEvent from './events/click'
+import { Click } from '@userdive/events'
 import { OPTIONS } from './constants'
 import type { SendType, State } from './types'
 
@@ -10,7 +10,7 @@ function create (projectId: string, options: any): Agent {
   agent = new Agent(
     projectId,
     [
-      ClickEvent
+      Click
     ],
     Object.assign({}, OPTIONS, options)
   )

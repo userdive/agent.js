@@ -1,3 +1,5 @@
+node_modules/
+@userdive/
 coverage/
 dist/
 flow-typed/
