@@ -35,7 +35,7 @@
   "keywords": [
     "userdive"
   ],
-  "license": "UNLICENCED",
+  "license": "UNLICENSED",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm-run-all -p build:*",
