@@ -3,9 +3,8 @@ machine:
     version: 6.1.0
 
 dependencies:
-  pre:
-    -  |
-      cd @userdive/logger && npm install
+  override:
+    - cd @userdive/logger && npm install
 
 test:
   override:
