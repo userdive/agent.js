@@ -1,0 +1,8 @@
+box: node
+build:
+  steps:
+    - script:
+        name: logger
+        code: |
+          cd @userdive/logger && npm install
+          npm test
