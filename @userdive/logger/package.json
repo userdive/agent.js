@@ -20,7 +20,8 @@
     "npm-run-all": "^4.0.1",
     "nyc": "^10.1.2",
     "power-assert": "^1.4.2",
-    "raven-js": "^3.9.1"
+    "raven-js": "^3.9.1",
+    "rimraf": "^2.5.4"
   },
   "directories": {
     "test": "test"
@@ -29,11 +30,15 @@
     "raven-js"
   ],
   "license": "UNLICENCED",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "npm-run-all -p build:*",
+    "build:babel": "mkdir -p dist && babel src -d dist",
+    "clean": "rimraf coverage dist",
     "lint": "npm-run-all lint:*",
     "lint:es": "eslint .",
     "lint:flow": "flow",
+    "prebuild": "npm run clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm-run-all -p lint",
     "test:mocha": "nyc mocha -- test"
