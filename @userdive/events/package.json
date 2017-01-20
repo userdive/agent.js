@@ -1,0 +1,51 @@
+{
+  "name": "@userdive/events",
+  "description": "bind browser events and dispatch tracking data",
+  "version": "0.0.1",
+  "author": "UNCOVER TRUTH Inc.",
+  "dependencies": {
+    "events": "^1.1.1",
+    "throttle-debounce": "^1.0.1",
+    "ui-event-observer": "^1.1.0"
+  },
+  "devDependencies": {
+    "@uncovertruth/eslint-config-flowtype": "0.0.2",
+    "@userdive/logger": "file:../logger",
+    "babel-cli": "^6.22.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-register": "^6.22.0",
+    "eslint": "^3.13.1",
+    "faker": "^3.1.0",
+    "flow-bin": "^0.38.0",
+    "npm-run-all": "^4.0.1",
+    "power-assert": "^1.4.2",
+    "raven-js": "^3.9.1",
+    "rimraf": "^2.5.4",
+    "selenium-standalone": "^5.11.1",
+    "sinon": "^1.17.7",
+    "wdio-mocha-framework": "^0.5.8",
+    "webdriverio": "^4.6.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "userdive"
+  ],
+  "license": "UNLICENCED",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm-run-all -p build:*",
+    "build:babel": "mkdir -p dist && babel src -d dist",
+    "clean": "rimraf coverage dist",
+    "lint": "npm-run-all -p lint:*",
+    "lint:es": "eslint . --cache",
+    "lint:flow": "flow",
+    "prebuild": "npm run clean",
+    "start": "selenium-standalone start",
+    "test": "wdio wdio.conf.js"
+  }
+}
