@@ -1,6 +1,8 @@
 box: node
 build:
   steps:
+    - install-packages:
+        packages: ocaml libelf-dev
     - script:
         name: logger
         code: |
