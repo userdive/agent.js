@@ -7,7 +7,6 @@ exports.config = {
   ],
   maxInstances: 10,
   capabilities: [{
-    maxInstances: 5,
     browserName: 'firefox'
   }],
   sync: true,
@@ -19,6 +18,7 @@ exports.config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
+  services: ['selenium-standalone'],
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',

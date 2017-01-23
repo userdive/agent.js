@@ -17,7 +17,7 @@
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.22.0",
-    "eslint": "^3.13.1",
+    "eslint": "^3.14.0",
     "faker": "^3.1.0",
     "flow-bin": "^0.38.0",
     "npm-run-all": "^4.0.1",
@@ -27,6 +27,7 @@
     "selenium-standalone": "^5.11.1",
     "sinon": "^1.17.7",
     "wdio-mocha-framework": "^0.5.8",
+    "wdio-selenium-standalone-service": "^0.0.7",
     "webdriverio": "^4.6.1"
   },
   "directories": {
@@ -45,7 +46,6 @@
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
     "prebuild": "npm run clean",
-    "start": "selenium-standalone start",
-    "test": "wdio wdio.conf.js"
+    "test": "wdio"
   }
 }

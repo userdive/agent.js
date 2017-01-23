@@ -8,8 +8,12 @@ env:
     secure: "S75SyqTXZ/SoW2DuyFeKSdnMjMcis7i6IHCBS3SRteO/VSObs6+2FdkofolBfI77n/34gX/UZBsGPqLtcVVJ+PFb54vj4QYNuVXep2OvTryeTeOnmr0PK7FicxQRDMtYNuSLvRgmly9XUDL0Zvhao7pk8PT1FEJjywfd8DrWdeBHR2Z6wJ+g4Al3VHV+1ypDAmMs2lkDys3dhqqAGYPMPTLJnTPPVOOqWlv+xVrd9N0o4JCm3y+ckGiOtecAOV4taI4J3JXpJ2r44Bb9BPKeZgdnHfnVg8S+ZRV5jr3oxLL+Qg6o6OvpjrKk2EhRQPJUVpDyq7LuIP1LUQwavt7weHYM+zAmxok04XhqXqMMAvjn9W++q3RryxDeaiwylUwcE/4eXtcd87dfUaOQnPdX/xlnqtMMGSfA8qsUNUZKdUORfRIO3oF/bxwCOPcePA1h83PuKd8qvc7w+nsBN4FwrhL9pqx8FI6n8Qa8NOA5xDG0r3Hnb3dB4iSoIZfKJUdRPWbkGk0DFrVMPPLeauGhGTJ9J0DyX1ZIzc5LkKmeFnyDV/Uv3hxSjLkfgHZyC+1+2fDtZNQeVLmNGmK5aM1M3oUmWKlZ5dCSjmqTzHip2G6Y1zyMLrmreNfR/KAwVFZ4P7aXvM8QH0cyHWIogn2w75CwtmIApDeFqwCUfpJJNJQ="
   matrix:
   - MODULE=@userdive/events
-  - MODULE=@userdive/core
+  - MODULE=@userdive/logger
   - MODULE=.
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
 install:
 - cd "$MODULE" && npm i
 scripts:
@@ -30,3 +34,6 @@ notifications:
   email: false
   slack:
     secure: UOrMogUpGMmIq5yB7OudUav7IHizCV0gkvMVAveAxF8U7tkC6WmkWS5mmNOQfesjmvPkIO7hMd3eM2xPfiumbb8R8sRzJNpVcIdN/33Rjr1Jle8Oj0hjbqmoI+uvBuGQ1htxQPTzF0RbyMjoHZ+xAe4Fwh1lsefE5l+LXPPVGz7oCykSEX+R+vda7D1wBFmcJtAwdORzrAHv7rSToatUx64dBmclQ0replnpCILLgtfjCxDfgSC+uw+6MqpVBdVWWNvLw60BzUMcWAGR8lhGYE8Fb1TC1kC8ODb12lgP3hobjQnUb5lgb3ZAZOmZ9XTSWKOkwi5sxArEoC+kpZeqJjPCcABYlNyYHEf5o4g6Ug33AfjqGLw4R+Iv4SVKY6v4Q83SeJibYKYOjBl82sjesJeizOdbhgHaozI2fjPBXNy5ujQ0eydtEbX6bBRwIkr08UA2Fopz+14lGD21rkS3wrqAOzb4PTf8WvqcIn4JUszJxix4W1DdY/q79ewMJUfIwDbrtR6nFP/tCCzBousZChZwIK0IwO1WA9WPtOPdCBY0lRhaWlWMA+7NWif5wZWUl8ZgpSDrKSCuXLdc18/xub5FGqDa64VwrSeHm3Vhu6UYbzvG472boMIZ2F7teiokvrrIiOMhocTsxwQXaxXCfgap4Ibxa2pB4Vx6VhiN72Y=
+matrix:
+  allow_failures:
+  - env: MODULE=@userdive/events
