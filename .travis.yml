@@ -11,7 +11,7 @@ env:
   - MODULE=@userdive/core
   - MODULE=.
 install:
-- cd "$MODULE" && yarn
+- cd "$MODULE" && npm i
 scripts:
 - cd "$MODULE" && npm t
 after_success:
