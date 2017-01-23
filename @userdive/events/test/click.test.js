@@ -1,38 +1,29 @@
 /* @flow */
-import { describe, it, beforeEach, afterEach } from 'mocha'
-import { spy as sinonSpy } from 'sinon'
+import { describe, it, beforeEach } from 'mocha'
 import assert from 'power-assert'
 
-describe.skip('click', () => {
+describe('click', () => {
   const Raven = require('raven-js')
-  const EventEmitter = require('events').EventEmitter
+  const mitt = require('mitt')
   const ClickEvents = require('../src/click').default
   const Logger = require('@userdive/logger').default
-  const NAME = require('../src/base').NAME
 
-  let emitter, logger, instance, spy
+  let emitter, logger, instance
 
   beforeEach(() => {
-    spy = sinonSpy()
     logger = new Logger(Raven)
-    emitter = new EventEmitter()
+    emitter = mitt()
     instance = new ClickEvents(emitter, logger)
-    emitter.on(NAME, spy)
-  })
-
-  afterEach(() => {
-    spy.reset()
   })
 
   it('bind', () => {
+    assert(instance.data === undefined)
     instance.bind()
-    const e: any = document.createEvent('MouseEvents')
-    e.initEvent('click', true, true)
 
-    function dispatch ({ body }: any) {
-      body.dispatchEvent(e)
-    }
-    dispatch(document)
-    assert(spy.called)
+    const e = document.createEvent('MouseEvents')
+    e.initEvent('click', false, true)
+    document.dispatchEvent(e)
+
+    assert(instance.data)
   })
 })

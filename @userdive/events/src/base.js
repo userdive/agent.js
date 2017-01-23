@@ -1,5 +1,5 @@
 /* @flow */
-import events from 'events'
+import mitt from 'mitt'
 import eventObserver from 'ui-event-observer'
 
 type EventType = 'click'
@@ -11,18 +11,18 @@ interface Logger {
 export const NAME = 'POINT'
 
 export default class Events {
-  emitter: events.EventEmitter
+  data: any // TODO type
+  emitter: mitt
   logger: Logger
-  constructor (emitter: events.EventEmitter, logger: any): void {
+  constructor (emitter: mitt, logger: any): void {
     this.emitter = emitter
     this.logger = logger
   }
   change (data: {x: number, y: number}): void {
-    if (!data.x || !data.y) {
-      this.unbind()
-      return
-    }
     this.emitter.emit(NAME, data)
+  }
+  save (data: {x: number, y: number}) {
+    this.data = data
   }
   bind (global: any, eventName: EventType, handler: MouseEventHandler): void {
     if (!global || !handler) {

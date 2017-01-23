@@ -9,7 +9,7 @@ describe('events', () => {
   const Events = events.default
   const NAME = events.NAME
 
-  const EventEmitter = require('events').EventEmitter
+  const mitt = require('mitt')
 
   const Raven = require('raven-js')
   const Logger = require('@userdive/logger').default
@@ -18,7 +18,7 @@ describe('events', () => {
 
   beforeEach(() => {
     spy = sinonSpy()
-    emitter = new EventEmitter()
+    emitter = mitt()
     logger = new Logger(Raven)
     instance = new Events(emitter, logger)
     emitter.on(NAME, spy)
