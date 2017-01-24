@@ -49,6 +49,7 @@
     "module": "npm-run-all -p module:*",
     "module:logger": "babel node_modules/@userdive/logger/src -d node_modules/@userdive/logger/dist",
     "prebuild": "npm run clean",
+    "pretest": "npm-run-all -p clean module",
     "test": "npm-run-all test:*",
     "test:lint": "npm run lint",
     "test:mocha": "nyc mocha -- test"
