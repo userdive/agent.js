@@ -1,27 +1,28 @@
 /* @flow */
-import { describe, it, before, after, beforeEach, afterEach } from 'mocha'
+import { describe, it, before, beforeEach, afterEach } from 'mocha'
 import assert from 'assert'
 import { random, internet } from 'faker'
 
 import { NAMESPACE } from '../src/constants'
 const GLOBAL_NAME: string = random.word()
 
-declare var fixture: any
-
-describe.skip('index', () => {
+describe('index', () => {
   before(() => {
-    const id = 'test'
+    const id = random.word()
 
-    fixture.set(`<script id="${id}"></script>`)
+    const script = document.createElement('script')
+    script.id = id
+
+    function append (body: any, element: HTMLElement) {
+      body.appendChild(element)
+    }
+
+    append(document.body, script)
 
     function set (element: any) {
       element.setAttribute(NAMESPACE, GLOBAL_NAME)
     }
     set(document.getElementById(id))
-  })
-
-  after(() => {
-    fixture.cleanup()
   })
 
   function createEntry (global, name) {
