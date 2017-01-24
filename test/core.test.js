@@ -41,7 +41,7 @@ describe('core', () => {
   })
 
   it('before ', () => {
-    assert(agent.listen() === undefined, 'noting todo')
+    assert(agent.listen() === undefined, 'nothing todo')
   })
 
   it('send', () => {
@@ -53,7 +53,7 @@ describe('core', () => {
   })
 
   it('listen', () => {
-    assert(agent.listen() === undefined, 'noting todo when before load')
+    assert(agent.listen() === undefined, 'nothing todo when before load')
 
     agent.loaded = true
     agent.listen()
