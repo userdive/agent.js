@@ -16,6 +16,8 @@ before_install:
 - sleep 3
 install:
 - cd "$MODULE" && npm i
+before_script:
+- pwd
 scripts:
 - cd "$MODULE" && npm t
 after_success:
