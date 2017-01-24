@@ -1,42 +1,48 @@
 /* @flow */
-import { describe, it, beforeEach, afterEach } from 'mocha'
-import { random } from 'faker'
+import { describe, it, beforeEach } from 'mocha'
 import { spy as sinonSpy } from 'sinon'
+import { random } from 'faker'
+import { throws } from 'assert-exception'
 import assert from 'power-assert'
 
 describe('events', () => {
   const events = require('../src/base')
   const Events = events.default
-  const NAME = events.NAME
 
   const mitt = require('mitt')
 
   const Raven = require('raven-js')
   const Logger = require('@userdive/logger').default
 
-  let emitter, instance, spy, logger
+  let emitter, instance, logger
 
   beforeEach(() => {
-    spy = sinonSpy()
     emitter = mitt()
     logger = new Logger(Raven)
-    instance = new Events(emitter, logger)
-    emitter.on(NAME, spy)
-  })
-
-  afterEach(() => {
-    spy.reset()
+    class DummyEvents extends Events {
+      validate () {
+        return true
+      }
+    }
+    instance = new DummyEvents(emitter, logger, [random.number()])
   })
 
   it('init', () => {
-    assert(instance.change)
+    assert(instance.save)
     assert(instance.bind)
     assert(instance.unbind)
   })
 
-  it('change', () => {
-    instance.change({x: random.number(), y: random.number()})
-    assert(spy.called)
+  it('must override func', () => {
+    const events = new Events(emitter, logger, [random.number()])
+    assert(throws(() => {
+      events.validate()
+    }).message === 'please override validate')
+  })
+
+  it('save', () => {
+    instance.save({x: random.number(), y: random.number()})
+    instance.save({x: -1, y: -1})
   })
 
   it('bind', () => {
@@ -49,7 +55,7 @@ describe('events', () => {
   })
 
   it('error', () => {
-    sinonSpy(logger, 'error')
+    const spy = sinonSpy(logger, 'error')
     const error = random.word()
     instance.bind(document, 'click', (e) => { throw new Error(error) })
     const e = document.createEvent('MouseEvents')
@@ -57,6 +63,7 @@ describe('events', () => {
     document.dispatchEvent(e)
 
     assert(logger.error.calledOnce)
+    spy.restore()
   })
 
   it('unbind', () => {
