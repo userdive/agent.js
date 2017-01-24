@@ -46,6 +46,8 @@
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
+    "module": "npm-run-all -p module:*",
+    "module:logger": "babel node_modules/@userdive/logger/src -d node_modules/@userdive/logger/dist",
     "prebuild": "npm run clean",
     "test": "npm-run-all test:*",
     "test:lint": "npm run lint",
