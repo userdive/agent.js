@@ -24,7 +24,7 @@ describe('events', () => {
         return true
       }
     }
-    instance = new DummyEvents(emitter, logger, [random.number()])
+    instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
   })
 
   it('init', () => {
@@ -34,7 +34,7 @@ describe('events', () => {
   })
 
   it('must override func', () => {
-    const events = new Events(emitter, logger, [random.number()])
+    const events = new Events(random.word(), emitter, logger, [random.number()])
     assert(throws(() => {
       events.validate()
     }).message === 'please override validate')

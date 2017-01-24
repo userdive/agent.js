@@ -1,6 +1,5 @@
 import mitt from 'mitt'
 import Logger from '@userdive/logger'
-import { NAME } from '@userdive/events'
 
 import Store from './store'
 import { get } from './requests'
@@ -30,6 +29,8 @@ const SIZE: Size = {
   h: 0,
   w: 0
 }
+
+const EMIT_NAME = 'POINT'
 
 let emitter
 
@@ -74,13 +75,15 @@ export default class Agent extends Store {
     this.events.forEach(e => {
       e.unbind()
     })
-    emitter.removeAllListeners()
+    emitter.off(EMIT_NAME, data => {
+
+    })
   }
   listen (): void {
     if (!this.loaded) {
       return
     }
-    emitter.on(NAME, data => {
+    emitter.on(EMIT_NAME, data => {
     })
     this.events.forEach(e => {
       e.bind()

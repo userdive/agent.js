@@ -9,9 +9,7 @@ interface Logger {
   error(err: any): void
 }
 
-export const NAME = 'POINT'
-
-let emitter, cache, delay, cachedDelayTime
+let emitter, cache, delay, cachedDelayTime, EMIT_NAME
 
 type Handler = MouseEventHandler
 
@@ -33,14 +31,15 @@ function getDelayTime (): number {
 function reduce (): void {
   setTimeout(() => {
     if (cacheValidator(cache)) {
-      emitter.emit(NAME, cache)
+      emitter.emit(EMIT_NAME, cache)
     }
   }, getDelayTime())
 }
 
 export default class Events {
   logger: Logger
-  constructor (eventEmitter: mitt, logger: Logger, delayTimes: number[]): void {
+  constructor (emitName: string, eventEmitter: mitt, logger: Logger, delayTimes: number[]): void {
+    EMIT_NAME = emitName
     emitter = eventEmitter
     delay = delayTimes
     this.logger = logger
