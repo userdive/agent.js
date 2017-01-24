@@ -1,7 +1,7 @@
-import events from 'events'
+import mitt from 'mitt'
 import Logger from '@userdive/logger'
-
 import { NAME } from '@userdive/events'
+
 import Store from './store'
 import { get } from './requests'
 import { VERSION as v } from './constants'
@@ -31,19 +31,20 @@ const SIZE: Size = {
   w: 0
 }
 
+let emitter
+
 export default class Agent extends Store {
   logger: Logger
   events: []
   interacts: Interact[]
-  emitter: events.EventEmitter
   loaded: boolean
   constructor (id: string, eventsClass: any[], options: Options): void {
     super(id, options.baseUrl, options.cookieName)
-    this.emitter = new events.EventEmitter()
+    emitter = mitt()
     this.logger = new Logger(options.Raven)
     const eventInstances = []
     eventsClass.forEach(Class => {
-      eventInstances.push(new Class(this.emitter, this.logger))
+      eventInstances.push(new Class(emitter, this.logger, [2000]))
     })
     this.events = eventInstances
   }
@@ -73,13 +74,13 @@ export default class Agent extends Store {
     this.events.forEach(e => {
       e.unbind()
     })
-    this.emitter.removeAllListeners()
+    emitter.removeAllListeners()
   }
   listen (): void {
     if (!this.loaded) {
       return
     }
-    this.emitter.on(NAME, data => {
+    emitter.on(NAME, data => {
     })
     this.events.forEach(e => {
       e.bind()

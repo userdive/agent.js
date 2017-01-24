@@ -10,7 +10,10 @@ describe('core', () => {
 
   let agent
   beforeEach(() => {
-    class Events extends Base {
+    class DummyEvents extends Base {
+      validate () {
+        return true
+      }
       bind () {
         super.bind(document, 'click', e => {
           this.change({x: e.pageX, y: e.pageY})
@@ -21,7 +24,7 @@ describe('core', () => {
     agent = new Agent(
       random.alphaNumeric(),
       [
-        Events
+        DummyEvents
       ],
       {
         baseUrl: internet.url(),
