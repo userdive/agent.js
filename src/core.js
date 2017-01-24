@@ -45,7 +45,7 @@ export default class Agent extends Store {
     this.logger = new Logger(options.Raven)
     const eventInstances = []
     eventsClass.forEach(Class => {
-      eventInstances.push(new Class(emitter, this.logger, [2000]))
+      eventInstances.push(new Class(EMIT_NAME, emitter, this.logger, [2000]))
     })
     this.events = eventInstances
   }
