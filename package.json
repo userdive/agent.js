@@ -24,6 +24,7 @@
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.22.0",
     "codecov": "^1.0.1",
+    "cross-env": "^3.1.4",
     "eslint": "^3.14.0",
     "faker": "^3.1.0",
     "flow-bin": "^0.38.0",
@@ -56,7 +57,7 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
-    "build": "webpack --profile --json | webpack-bundle-size-analyzer",
+    "build": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",
