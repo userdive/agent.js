@@ -3,6 +3,8 @@ import mitt from 'mitt'
 import eventObserver from 'ui-event-observer'
 import throttle from 'throttle-debounce/throttle'
 
+import warning from './warning'
+
 type EventType = 'click'
 
 interface Logger {
@@ -45,9 +47,7 @@ export default class Events {
     this.logger = logger
   }
   validate (): boolean {
-    if (process.env.NODE_ENV !== 'production') {
-      throw new Error('please override validate')
-    }
+    warning('please override validate')
     return false
   }
   save (data: {x: number, y: number}): {x: number, y: number } {
@@ -57,10 +57,8 @@ export default class Events {
     return cache
   }
   bind (global: Document | window, eventName: EventType, handler: Handler): void {
-    if (!global || !handler) {
-      if (process.env.NODE_ENV !== 'production') {
-        throw new Error('please override bind')
-      }
+    if (!global || typeof handler !== 'function') {
+      warning('please override bind')
       return
     }
 

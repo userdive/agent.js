@@ -11,11 +11,8 @@ function execute (): any {
   return api[apiName].apply(this, tasks)
 }
 
-((global: any) => {
+((global: window) => {
   const element: any = document.querySelector(`[${NAMESPACE}]`)
-  if (!element) {
-    return
-  }
   const name: string = element.getAttribute(NAMESPACE)
   if (global[name] && global[name].q) {
     const queue = (global[name].q: Array<TaskQueue>)

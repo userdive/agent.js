@@ -4,7 +4,7 @@ import { useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
 import assert from 'assert'
 
-describe.skip('core', () => {
+describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
   const Raven = require('../src/constants').OPTIONS.Raven
@@ -22,7 +22,6 @@ describe.skip('core', () => {
       bind () {
         super.bind(window, random.word(), () => {})
         emitter.on('test', data => {
-          console.log(data)
           super.save(data)
         })
       }
@@ -59,20 +58,21 @@ describe.skip('core', () => {
     agent.send('pageview', location.pathname)
   })
 
-  it('destroy', () => {
+  it.skip('destroy', () => {
     agent.destroy()
   })
 
-  it.skip('listen', () => {
+  it('listen', () => {
     assert(agent.listen() === undefined, 'nothing todo when before load')
 
     agent.loaded = true
 
     agent.listen()
 
-    emitter.emit('test', {})
+    emitter.emit('test', {
+      x: random.number({min: 1}),
+      y: random.number({min: 1})
+    })
     timer.tick(10 * 1000)
-
-    agent.destroy()
   })
 })

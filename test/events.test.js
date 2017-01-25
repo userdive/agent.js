@@ -5,28 +5,28 @@ import { random } from 'faker'
 import { throws } from 'assert-exception'
 import assert from 'assert'
 
+import mitt from 'mitt'
+import Raven from 'raven-js'
+
 describe('events', () => {
   const Events = require('../src/events').default
-
-  const mitt = require('mitt')
-
-  const Raven = require('raven-js')
   const Logger = require('../src/logger').default
 
-  let emitter, instance, logger
+  let emitter, logger
+
+  class DummyEvents extends Events {
+    validate () {
+      return true
+    }
+  }
 
   beforeEach(() => {
     emitter = mitt()
     logger = new Logger(Raven)
-    class DummyEvents extends Events {
-      validate () {
-        return true
-      }
-    }
-    instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
   })
 
   it('init', () => {
+    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
     assert(instance.save)
     assert(instance.bind)
     assert(instance.unbind)
@@ -37,15 +37,24 @@ describe('events', () => {
     assert(throws(() => {
       events.validate()
     }).message === 'please override validate')
+
+    const handler: any = 'function'
+    assert(throws(() => {
+      events.bind(window, 'click', handler)
+    }).message)
   })
 
   it('save', () => {
+    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
     instance.save({x: random.number(), y: random.number()})
     instance.save({x: -1, y: -1})
   })
 
   it('bind', () => {
+    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
+
     let data
+
     instance.bind(document, 'click', (e) => { data = e })
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
@@ -53,7 +62,8 @@ describe('events', () => {
     assert(data)
   })
 
-  it('error', () => {
+  it('bind slient error', () => {
+    let instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
     instance.bind(document, 'click', (e) => { throw new Error(error) })
@@ -63,9 +73,19 @@ describe('events', () => {
 
     assert(logger.error.calledOnce)
     spy.restore()
+
+    class InValidDummyEvents extends DummyEvents {
+      validate () {
+        return false
+      }
+    }
+
+    instance = new InValidDummyEvents(random.word(), emitter, logger, [random.number()])
+    instance.bind(document, 'click', (e) => { throw new Error(error) })
   })
 
   it('unbind', () => {
+    const instance = new Events(random.word(), emitter, logger, [random.number()])
     instance.unbind()
   })
 })
