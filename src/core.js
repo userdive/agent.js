@@ -1,6 +1,6 @@
 import mitt from 'mitt'
-import Logger from '@userdive/logger'
 
+import Logger from './logger'
 import Store from './store'
 import { get } from './requests'
 import { VERSION as v } from './constants'
@@ -33,21 +33,23 @@ const SIZE: Size = {
 const EMIT_NAME = 'POINT'
 
 let emitter
+const interacts: Interact[] = []
+const events: any[] = []
+
+function setInteract (data: Interact): void {
+  interacts.push(data)
+}
 
 export default class Agent extends Store {
   logger: Logger
-  events: []
-  interacts: Interact[]
   loaded: boolean
-  constructor (id: string, eventsClass: any[], options: Options): void {
+  constructor (id: string, eventsClass: [], options: Options): void {
     super(id, options.baseUrl, options.cookieName)
     emitter = mitt()
     this.logger = new Logger(options.Raven)
-    const eventInstances = []
     eventsClass.forEach(Class => {
-      eventInstances.push(new Class(EMIT_NAME, emitter, this.logger, [2000]))
+      events.push(new Class(EMIT_NAME, emitter, this.logger, [2000]))
     })
-    this.events = eventInstances
   }
   send (type: SendType): void {
     switch (type) {
@@ -72,20 +74,17 @@ export default class Agent extends Store {
     }
   }
   destroy (): void {
-    this.events.forEach(e => {
+    emitter.off('*', setInteract)
+    events.forEach(e => {
       e.unbind()
-    })
-    emitter.off(EMIT_NAME, data => {
-
     })
   }
   listen (): void {
     if (!this.loaded) {
       return
     }
-    emitter.on(EMIT_NAME, data => {
-    })
-    this.events.forEach(e => {
+    emitter.on(EMIT_NAME, setInteract)
+    events.forEach(e => {
       e.bind()
     })
   }

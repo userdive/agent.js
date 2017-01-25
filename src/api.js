@@ -1,6 +1,6 @@
 /* @flow */
 import Agent from './core'
-import { Click } from '@userdive/events'
+import Click from './click'
 import { OPTIONS } from './constants'
 import type { SendType, State } from './types'
 
