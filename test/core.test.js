@@ -1,22 +1,29 @@
 /* @flow */
-import { describe, it, beforeEach } from 'mocha'
-import assert from 'assert'
+import { describe, it, beforeEach, afterEach } from 'mocha'
+import { useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
+import assert from 'assert'
 
-describe('core', () => {
+describe.skip('core', () => {
   const Agent = require('../src/core').default
-  const Base = require('@userdive/events').Base
+  const Base = require('../src/events').default
   const Raven = require('../src/constants').OPTIONS.Raven
+  const mitt = require('mitt')
 
-  let agent
+  let agent, emitter, timer
   beforeEach(() => {
+    emitter = mitt()
+    timer = useFakeTimers(new Date().getTime())
+
     class DummyEvents extends Base {
       validate () {
         return true
       }
       bind () {
-        super.bind(document, 'click', e => {
-          this.change({x: e.pageX, y: e.pageY})
+        super.bind(window, random.word(), () => {})
+        emitter.on('test', data => {
+          console.log(data)
+          super.save(data)
         })
       }
     }
@@ -36,11 +43,15 @@ describe('core', () => {
     )
   })
 
+  afterEach(() => {
+    timer.restore()
+  })
+
   it('instance', () => {
     assert(agent)
   })
 
-  it('before ', () => {
+  it('listen before send pageview', () => {
     assert(agent.listen() === undefined, 'nothing todo')
   })
 
@@ -52,13 +63,16 @@ describe('core', () => {
     agent.destroy()
   })
 
-  it('listen', () => {
+  it.skip('listen', () => {
     assert(agent.listen() === undefined, 'nothing todo when before load')
 
     agent.loaded = true
+
     agent.listen()
-    const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    document.dispatchEvent(e)
+
+    emitter.emit('test', {})
+    timer.tick(10 * 1000)
+
+    agent.destroy()
   })
 })
