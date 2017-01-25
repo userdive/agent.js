@@ -22,16 +22,6 @@
     eslint-plugin-promise "^3.3.0"
     eslint-plugin-standard "^2.0.1"
 
-"@userdive/events@file:./@userdive/events":
-  version "0.0.1"
-  dependencies:
-    mitt "^1.0.1"
-    throttle-debounce "^1.0.1"
-    ui-event-observer "^1.1.0"
-
-"@userdive/logger@file:./@userdive/logger":
-  version "0.0.1"
-
 abab@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"

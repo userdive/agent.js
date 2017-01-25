@@ -7,10 +7,10 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/events": "file:./@userdive/events",
-    "@userdive/logger": "file:./@userdive/logger",
     "js-cookie": "^2.1.3",
     "mitt": "^1.0.1",
+    "throttle-debounce": "^1.0.1",
+    "ui-event-observer": "^1.1.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -62,12 +62,9 @@
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
-    "module": "npm-run-all -p module:*",
-    "module:events": "babel node_modules/@userdive/events/src -d node_modules/@userdive/events/dist",
-    "module:logger": "babel node_modules/@userdive/logger/src -d node_modules/@userdive/logger/dist",
     "prebuild": "npm run clean",
     "prepush": "npm test",
-    "pretest": "npm-run-all -p clean module",
+    "pretest": "npm-run-all -p clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
     "test:mocha": "nyc mocha -- test"
