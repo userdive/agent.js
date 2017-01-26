@@ -19,7 +19,7 @@ describe('click', () => {
   })
 
   it('bind', () => {
-    const spy = sinonSpy(instance, 'save')
+    const spy = sinonSpy(instance, 'reduce')
     instance.bind()
 
     const e = document.createEvent('MouseEvents')

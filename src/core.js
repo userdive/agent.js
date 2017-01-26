@@ -94,6 +94,9 @@ function updateInteractCache (data: Object): void {
 }
 
 function sendInteracts (): void {
+  if (!cache) {
+    return
+  }
   // saved snapshot
   Object.keys(cache).forEach(key => {
     interacts.push(cache[key])
@@ -103,10 +106,6 @@ function sendInteracts (): void {
   interacts.forEach(data => {
     query.push(`d=${createInteractData(data)}`)
   })
-
-  if (query.length < 1) {
-    return
-  }
 
   // TODO validate query string
 
