@@ -8,9 +8,9 @@ import { get, obj2query } from './requests'
 import { VERSION as v, INTERVAL } from './constants'
 import type {
   ClientEnvironmentsData,
+  EventType,
   Interact,
   Options,
-  EventType,
   SendType,
   State
 } from './types'

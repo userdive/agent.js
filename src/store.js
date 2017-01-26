@@ -1,13 +1,13 @@
 /* @flow */
 import { VERSION as v } from './constants'
 import type {
+  ClientEnvironments,
   Custom,
   CustomData,
-  ClientEnvironments,
-  State,
+  Dimension,
   Metric,
   SetType,
-  Dimension
+  State
 } from './types'
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {

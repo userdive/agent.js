@@ -1,10 +1,5 @@
 /* @flow */
-
-declare interface Raven {
-  isSetup(): boolean,
-  captureMessage(): void,
-  captureException(): void
-}
+import type { Raven } from './types'
 
 type RavenOptions = {}
 
