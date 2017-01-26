@@ -8,7 +8,7 @@ export default class ClickEvents extends EventBase {
   }
   bind () {
     super.bind(document, 'click', (e: MouseEvent) => {
-      this.save({x: e.pageX, y: e.pageY})
+      this.reduce({x: e.pageX, y: e.pageY})
     })
   }
 }

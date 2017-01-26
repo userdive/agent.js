@@ -27,7 +27,7 @@ describe('events', () => {
 
   it('init', () => {
     const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
-    assert(instance.save)
+    assert(instance.reduce)
     assert(instance.bind)
     assert(instance.unbind)
   })
@@ -44,10 +44,10 @@ describe('events', () => {
     }).message)
   })
 
-  it('save', () => {
+  it('reduce', () => {
     const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
-    instance.save({x: random.number(), y: random.number()})
-    instance.save({x: -1, y: -1})
+    instance.reduce({x: random.number(), y: random.number()})
+    instance.reduce({x: -1, y: -1})
   })
 
   it('bind', () => {

@@ -22,7 +22,7 @@ describe('core', () => {
       bind () {
         super.bind(window, random.word(), () => {})
         emitter.on('test', data => {
-          super.save(data)
+          super.reduce(data)
         })
       }
     }

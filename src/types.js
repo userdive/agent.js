@@ -70,3 +70,5 @@ export type Interact = {
   left: number,
   top: number
 }
+
+export type EventType = 'click'
