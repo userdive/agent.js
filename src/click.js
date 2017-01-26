@@ -6,9 +6,9 @@ export default class ClickEvents extends EventBase {
     // TODO
     return true
   }
-  bind () {
-    super.bind(document, 'click', (e: MouseEvent) => {
-      this.reduce({x: e.pageX, y: e.pageY})
+  on () {
+    super.on(document, 'click', (e: MouseEvent) => {
+      this.emit({x: e.pageX, y: e.pageY})
     })
   }
 }

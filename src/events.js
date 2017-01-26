@@ -42,7 +42,7 @@ export default class Events {
     warning('please override validate')
     return false
   }
-  reduce (data: {x: number, y: number}): void {
+  emit (data: {x: number, y: number}): void {
     if (data.x < 0 || data.y < 0) {
       return
     }
@@ -54,9 +54,9 @@ export default class Events {
       top: window.scrollY
     }))
   }
-  bind (global: Document | window, eventName: EventType, handler: Handler): void {
+  on (global: Document | window, eventName: EventType, handler: Handler): void {
     if (!global || typeof handler !== 'function') {
-      warning('please override bind')
+      warning('please override on')
       return
     }
 
@@ -76,7 +76,7 @@ export default class Events {
       }
     }))
   }
-  unbind (): void {
+  off (): void {
     eventObserver.unsubscribeAll()
   }
 }

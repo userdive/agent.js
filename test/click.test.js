@@ -18,9 +18,9 @@ describe('click', () => {
     instance = new ClickEvents(random.word(), emitter, logger, [random.number()])
   })
 
-  it('bind', () => {
-    const spy = sinonSpy(instance, 'reduce')
-    instance.bind()
+  it('on', () => {
+    const spy = sinonSpy(instance, 'emit')
+    instance.on()
 
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)

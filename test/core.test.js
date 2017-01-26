@@ -19,10 +19,10 @@ describe('core', () => {
       validate () {
         return true
       }
-      bind () {
-        super.bind(window, 'click', () => {})
+      on () {
+        super.on(window, 'click', () => {})
         emitter.on('test', data => {
-          super.reduce(data)
+          super.emit(data)
         })
       }
     }

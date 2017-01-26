@@ -27,9 +27,10 @@ describe('events', () => {
 
   it('init', () => {
     const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
-    assert(instance.reduce)
-    assert(instance.bind)
-    assert(instance.unbind)
+    assert(instance.emit)
+    assert(instance.validate)
+    assert(instance.on)
+    assert(instance.off)
   })
 
   it('must override func', () => {
@@ -40,22 +41,22 @@ describe('events', () => {
 
     const handler: any = 'function'
     assert(throws(() => {
-      events.bind(window, 'click', handler)
+      events.on(window, 'click', handler)
     }).message)
   })
 
-  it('reduce', () => {
+  it('emit', () => {
     const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
-    instance.reduce({x: random.number(), y: random.number()})
-    instance.reduce({x: -1, y: -1})
+    instance.emit({x: random.number(), y: random.number()})
+    instance.emit({x: -1, y: -1})
   })
 
-  it('bind', () => {
+  it('on', () => {
     const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
 
     let data
 
-    instance.bind(document, 'click', (e) => { data = e })
+    instance.on(document, 'click', (e) => { data = e })
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
     document.dispatchEvent(e)
@@ -66,7 +67,7 @@ describe('events', () => {
     let instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
-    instance.bind(document, 'click', (e) => { throw new Error(error) })
+    instance.on(document, 'click', (e) => { throw new Error(error) })
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
     document.dispatchEvent(e)
@@ -81,11 +82,11 @@ describe('events', () => {
     }
 
     instance = new InValidDummyEvents(random.word(), emitter, logger, [random.number()])
-    instance.bind(document, 'click', (e) => { throw new Error(error) })
+    instance.on(document, 'click', (e) => { throw new Error(error) })
   })
 
-  it('unbind', () => {
+  it('off', () => {
     const instance = new Events(random.word(), emitter, logger, [random.number()])
-    instance.unbind()
+    instance.off()
   })
 })

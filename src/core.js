@@ -150,7 +150,7 @@ export default class Agent extends Store {
   destroy (): void {
     emitter.off('*', updateInteractCache)
     events.forEach(e => {
-      e.unbind()
+      e.off()
     })
   }
   listen (): void {
@@ -160,7 +160,7 @@ export default class Agent extends Store {
     cache = {}
     emitter.on(EMIT_NAME, updateInteractCache)
     events.forEach(e => {
-      e.bind()
+      e.on()
     })
     sendInteracts()
   }
