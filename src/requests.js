@@ -5,3 +5,11 @@ export function get (url: string, query: string[]): void {
   img.onerror = () => null
   img.src = `${url}?${query.join('&')}`
 }
+
+export function obj2query (data: Object): string[] {
+  const query = []
+  Object.keys(data).forEach(key => {
+    query.push(`${key}=${encodeURIComponent(data[key])}`)
+  })
+  return query
+}

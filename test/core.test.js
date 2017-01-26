@@ -20,7 +20,7 @@ describe('core', () => {
         return true
       }
       bind () {
-        super.bind(window, random.word(), () => {})
+        super.bind(window, 'click', () => {})
         emitter.on('test', data => {
           super.reduce(data)
         })

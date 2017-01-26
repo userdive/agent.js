@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid'
 
 import Logger from './logger'
 import Store from './store'
-import { get } from './requests'
+import { get, obj2query } from './requests'
 import { VERSION as v, INTERVAL } from './constants'
 import type {
   ClientEnvironmentsData,
@@ -73,22 +73,16 @@ function getInteractTypes (eventName: EventType): string[] {
   const types = []
   switch (eventName) {
     case 'click':
-      types.concat(['l', 'a'])
-      break
+      return types.concat(['l', 'a'])
   }
   return types
 }
 
 function updateInteractCache (data: Object): void {
-  const interact: Object = Object.assign({}, data, {
-    left: window.scrollX,
-    time: Date.now(),
-    top: window.scrollY
-  })
-  if (cacheValidator(interact)) {
+  if (cacheValidator(data)) {
     const types = getInteractTypes(data.type)
     types.forEach(type => {
-      cache[type] = Object.assign({}, interact, {type})
+      cache[type] = Object.assign({}, data, {type})
     })
   }
 }
@@ -145,17 +139,12 @@ export default class Agent extends Store {
             }
           })(this.getWindowSize(window), this.getResourceSize(document), this.getScreenSize(screen))
         })
-        const query: string[] = []
         const data = Object.assign({}, state.env, state.custom)
-        Object.keys(data).forEach(key => {
-          query.push(`${key}=${encodeURIComponent(data[key])}`)
-        })
 
         loadTime = Date.now()
-        get(`${baseUrl}/${loadTime}/env.gif`, query)
+        get(`${baseUrl}/${loadTime}/env.gif`, obj2query(data))
         this.listen()
         this.loaded = true
-        sendInteracts()
     }
   }
   destroy (): void {
@@ -168,10 +157,12 @@ export default class Agent extends Store {
     if (!this.loaded) {
       return
     }
+    cache = {}
     emitter.on(EMIT_NAME, updateInteractCache)
     events.forEach(e => {
       e.bind()
     })
+    sendInteracts()
   }
   getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
     return {

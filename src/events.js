@@ -16,6 +16,21 @@ let EVENT_NAME: EventType
 
 type Handler = MouseEventHandler
 
+function validateBrowserAPIs (): boolean {
+  const windowAPIs = [
+    'scrollX',
+    'scrollY'
+  ]
+
+  for (let i = 0; i < windowAPIs.length; i++) {
+    if (!(windowAPIs[i] in window)) {
+      return false
+    }
+  }
+
+  return true
+}
+
 export default class Events {
   logger: Logger
   constructor (emitName: string, eventEmitter: mitt, logger: Logger): void {
@@ -31,7 +46,13 @@ export default class Events {
     if (data.x < 0 || data.y < 0) {
       return
     }
-    emitter.emit(EMIT_NAME, Object.assign({}, data, {type: EVENT_NAME}))
+
+    emitter.emit(EMIT_NAME, Object.assign({}, data, {
+      type: EVENT_NAME,
+      left: window.scrollX,
+      time: Date.now(),
+      top: window.scrollY
+    }))
   }
   bind (global: Document | window, eventName: EventType, handler: Handler): void {
     if (!global || typeof handler !== 'function') {
@@ -39,7 +60,7 @@ export default class Events {
       return
     }
 
-    if (!this.validate()) {
+    if (!this.validate() || !validateBrowserAPIs()) {
       return
     }
 
