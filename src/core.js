@@ -29,7 +29,7 @@ const EMIT_NAME = 'POINT'
 let emitter: mitt
 let BASE_URL: string
 let LOAD_TIME: number
-let EVENT_ID: number = 0
+let EVENT_ID: number = 1
 const interacts: Interact[] = []
 const events: any[] = []
 
@@ -42,7 +42,7 @@ function findOrCreateClientId (name: string): string {
 }
 
 function createInteractData (data: Interact): string {
-  return `${data.type},${data.time},{data.x},{data.y},${data.left},${data.top}`
+  return `${data.type},${data.time},${data.x},${data.y},${data.left},${data.top}`
 }
 
 function saveInteract (data: Interact): void {
