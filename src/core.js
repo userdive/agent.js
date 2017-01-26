@@ -6,23 +6,15 @@ import { get } from './requests'
 import { VERSION as v } from './constants'
 import type {
   ClientEnvironmentsData,
+  Interact,
   Options,
-  State,
-  SendType
+  SendType,
+  State
 } from './types'
 
 type Size = {
   h: number,
   w: number
-}
-
-type Interact = {
-  x: number,
-  y: number,
-  t: number,
-  type: 'l' | 'a',
-  left: number,
-  top: number
 }
 
 const SIZE: Size = {

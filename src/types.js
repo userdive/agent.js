@@ -59,3 +59,14 @@ export type State = {
   env: ClientEnvironmentsData,
   custom: CustomData
 }
+
+export type InteractType = 'l' | 'a'
+
+export type Interact = {
+  x: number,
+  y: number,
+  time: number,
+  type: InteractType,
+  left: number,
+  top: number
+}

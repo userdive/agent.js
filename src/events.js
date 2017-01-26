@@ -4,6 +4,10 @@ import eventObserver from 'ui-event-observer'
 import throttle from 'throttle-debounce/throttle'
 
 import warning from './warning'
+import type {
+  Interact,
+  InteractType
+} from './types'
 
 type EventType = 'click'
 
@@ -11,12 +15,19 @@ interface Logger {
   error(err: any): void
 }
 
-let emitter, cache, delay, cachedDelayTime, EMIT_NAME
+let emitter: mitt
+let cache: Interact
+let delay: number[]
+let cachedDelayTime: number
+let EMIT_NAME: string
+let EVENT_NAME: EventType
 
 type Handler = MouseEventHandler
 
-function cacheValidator ({x, y}: {x: number, y: number}): boolean {
-  if (x > 0 && y > 0) {
+function cacheValidator (data: Object): boolean {
+  if (data.x > 0 && data.y > 0 &&
+    data.type && data.time > 0 &&
+    typeof data.left === 'number' && typeof data.top === 'number') {
     return true
   }
   return false
@@ -38,6 +49,14 @@ function reduce (): void {
   }, getDelayTime())
 }
 
+function getType (): InteractType | '' {
+  switch (EVENT_NAME) {
+    case 'click':
+      return 'a'
+  }
+  return ''
+}
+
 export default class Events {
   logger: Logger
   constructor (emitName: string, eventEmitter: mitt, logger: Logger, delayTimes: number[]): void {
@@ -50,9 +69,20 @@ export default class Events {
     warning('please override validate')
     return false
   }
-  save (data: {x: number, y: number}): {x: number, y: number } {
-    if (cacheValidator(data)) {
-      cache = data
+  save (data: {x: number, y: number}): Interact | null {
+    const type: string = getType()
+    if (!type) {
+      return null
+    }
+
+    const interact: Object = Object.assign({}, data, {
+      type: type,
+      left: window.scrollX,
+      time: Date.now(),
+      top: window.scrollY
+    })
+    if (cacheValidator(interact)) {
+      cache = interact
     }
     return cache
   }
@@ -66,7 +96,11 @@ export default class Events {
       return
     }
 
-    eventObserver.subscribe(global, eventName, throttle(1000, e => {
+    if (!EVENT_NAME) {
+      EVENT_NAME = eventName
+    }
+
+    eventObserver.subscribe(global, EVENT_NAME, throttle(1000, e => {
       try {
         handler(e)
       } catch (err) {
