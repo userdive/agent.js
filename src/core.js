@@ -1,4 +1,6 @@
 import mitt from 'mitt'
+import cookies from 'js-cookie'
+import { v4 as uuid } from 'uuid'
 
 import Logger from './logger'
 import Store from './store'
@@ -24,21 +26,48 @@ const SIZE: Size = {
 
 const EMIT_NAME = 'POINT'
 
-let emitter
+let emitter: mitt
+let BASE_URL: string
+let LOAD_TIME: number
+let EVENT_ID: number = 0
 const interacts: Interact[] = []
 const events: any[] = []
 
-function setInteract (data: Interact): void {
+function findOrCreateClientId (name: string): string {
+  const c = cookies.get(name)
+  if (c) {
+    return c
+  }
+  return uuid().replace(/-/g, '')
+}
+
+function createInteractData (data: Interact): string {
+  return `${data.type},${data.time},{data.x},{data.y},${data.left},${data.top}`
+}
+
+function saveInteract (data: Interact): void {
   interacts.push(data)
+
+  // TODO skip
+
+  const query: string[] = []
+  interacts.forEach(data => {
+    query.push(`d=${createInteractData(data)}`)
+  })
+
+  get(`${BASE_URL}/${LOAD_TIME}/interact/${EVENT_ID}.gif`, query)
+  interacts.length = 0
+  EVENT_ID++
 }
 
 export default class Agent extends Store {
   logger: Logger
   loaded: boolean
-  constructor (id: string, eventsClass: [], options: Options): void {
-    super(id, options.baseUrl, options.cookieName)
+  constructor (id: string, eventsClass: [], opt: Options): void {
+    super()
+    BASE_URL = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt.cookieName)}/`
     emitter = mitt()
-    this.logger = new Logger(options.Raven)
+    this.logger = new Logger(opt.Raven)
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, this.logger, [2000]))
     })
@@ -48,7 +77,7 @@ export default class Agent extends Store {
       case 'pageview':
         const state: State = this.merge({
           type: 'env',
-          data: ((windowSize, resourceSize, screenSize): ClientEnvironmentsData => {
+          data: ((windowSize: Size, resourceSize: Size, screenSize: Size): ClientEnvironmentsData => {
             return {
               v,
               sh: screenSize.h,
@@ -60,13 +89,20 @@ export default class Agent extends Store {
             }
           })(this.getWindowSize(window), this.getResourceSize(document), this.getScreenSize(screen))
         })
-        get(`${this.baseUrl}/env.gif`, state.env, state.custom)
+        const query: string[] = []
+        const data = Object.assign({}, state.env, state.custom)
+        Object.keys(data).forEach(key => {
+          query.push(`${key}=${encodeURIComponent(data[key])}`)
+        })
+
+        LOAD_TIME = Date.now()
+        get(`${BASE_URL}/${LOAD_TIME}/env.gif`, query)
         this.listen()
         this.loaded = true
     }
   }
   destroy (): void {
-    emitter.off('*', setInteract)
+    emitter.off('*', saveInteract)
     events.forEach(e => {
       e.unbind()
     })
@@ -75,7 +111,7 @@ export default class Agent extends Store {
     if (!this.loaded) {
       return
     }
-    emitter.on(EMIT_NAME, setInteract)
+    emitter.on(EMIT_NAME, saveInteract)
     events.forEach(e => {
       e.bind()
     })

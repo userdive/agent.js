@@ -37,7 +37,6 @@ describe('store', () => {
     const before = env.uid
     delete env.uid
     assert(store.merge({type: 'env', data: env}).env.uid === before)
-    assert(store.baseUrl)
   })
 
   it('set', () => {

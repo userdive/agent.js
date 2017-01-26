@@ -1,7 +1,4 @@
 /* @flow */
-import cookies from 'js-cookie'
-import { v4 as uuid } from 'uuid'
-
 import { VERSION as v } from './constants'
 import type {
   Custom,
@@ -12,14 +9,6 @@ import type {
   SetType,
   Dimension
 } from './types'
-
-function findOrCreateClientId (name: string): string {
-  const c = cookies.get(name)
-  if (c) {
-    return c
-  }
-  return uuid().replace(/-/g, '')
-}
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
   // TODO validate index, value.type
@@ -36,16 +25,8 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
 }
 
 export default class Store {
-  BASE_URL: string
-  baseUrl: string
-  COOKIE_NAME: string
-  pid: string
-  PROJECT_ID: string
   state: State
-  constructor (projectId: string, baseUrl: string, cookieName: string): void {
-    this.PROJECT_ID = projectId
-    this.BASE_URL = baseUrl
-    this.COOKIE_NAME = cookieName
+  constructor (): void {
     this.state = {
       env: {
         v,
@@ -70,6 +51,10 @@ export default class Store {
     }
     return this.state
   }
+  merge (obj: ClientEnvironments | Custom): State {
+    this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
+    return this.state
+  }
   mergeDeep (obj: Object): State {
     if (obj.page) {
       this.state.env.l = obj.page
@@ -80,20 +65,5 @@ export default class Store {
       data = Object.assign({}, data, parseCustomData((key: any), data[key]))
     })
     return this.merge({type: 'custom', data})
-  }
-  merge (obj: ClientEnvironments | Custom): State {
-    switch (obj.type) {
-      case 'env':
-        const clientId = findOrCreateClientId(this.COOKIE_NAME)
-        const loadTime = Date.now()
-        this.baseUrl = `${this.BASE_URL}/${this.PROJECT_ID}/${clientId}/${loadTime}`
-        this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
-        break
-      case 'custom':
-        this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
-        break
-    }
-
-    return this.state
   }
 }
