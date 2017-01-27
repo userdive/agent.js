@@ -53,16 +53,11 @@ describe('core', () => {
   })
 
   it('listen before send pageview', () => {
-    assert(agent.listen() === undefined, 'nothing todo when before load')
+    assert(throws(() => { agent.listen() }).message === 'need send pageview')
+
     agent.loaded = true
 
-    agent.listen()
-
-    emitter.emit('test', {
-      x: random.number({min: 1}),
-      y: random.number({min: 1})
-    })
-    assert(throws(() => { timer.tick(10 * 1000) }).message === 'need load time')
+    assert(throws(() => { agent.listen() }).message === 'need send pageview')
   })
 
   it('send', () => {

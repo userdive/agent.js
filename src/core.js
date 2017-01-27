@@ -62,12 +62,7 @@ function getIntervalTime (): number {
 }
 
 function now2elapsed (saveTime: number): number {
-  const res = parseInt((saveTime - loadTime) / 1000, 10)
-  if (isNaN(res)) {
-    warning('need load time')
-    return -1
-  }
-  return res
+  return parseInt((saveTime - loadTime) / 1000, 10)
 }
 
 function createInteractData (data: Interact): string {
@@ -114,7 +109,9 @@ function sendInteracts (): void {
     interacts.length = 0
     eventId++
   }
-  setTimeout(sendInteracts, getIntervalTime() * 1000)
+  if (loadTime) {
+    setTimeout(sendInteracts, getIntervalTime() * 1000)
+  }
 }
 
 export default class Agent extends Store {
@@ -126,7 +123,7 @@ export default class Agent extends Store {
     emitter = mitt()
     this.logger = new Logger(opt.Raven)
     eventsClass.forEach(Class => {
-      events.push(new Class(EMIT_NAME, emitter, this.logger, [2000]))
+      events.push(new Class(EMIT_NAME, emitter, this.logger))
     })
   }
   send (type: SendType): void {
@@ -164,7 +161,8 @@ export default class Agent extends Store {
     loadTime = undefined
   }
   listen (): void {
-    if (!this.loaded) {
+    if (!this.loaded || !loadTime) {
+      warning('need send pageview')
       return
     }
     cache = {}

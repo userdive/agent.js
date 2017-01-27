@@ -27,6 +27,9 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
 export default class Store {
   state: State
   constructor (): void {
+    this.reset()
+  }
+  reset (): void {
     this.state = {
       env: {
         v,

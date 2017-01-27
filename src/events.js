@@ -4,6 +4,7 @@ import eventObserver from 'ui-event-observer'
 import throttle from 'throttle-debounce/throttle'
 
 import type { EventType } from './types'
+import { validate } from './browser'
 import warning from './warning'
 
 interface Logger {
@@ -17,19 +18,11 @@ let EVENT_NAME: EventType
 type Handler = MouseEventHandler
 
 function validateBrowserAPIs (): boolean {
-  const windowAPIs = [
+  return validate([
     'addEventListener',
     'scrollX',
     'scrollY'
-  ]
-
-  for (let i = 0; i < windowAPIs.length; i++) {
-    if (!(windowAPIs[i] in window)) {
-      return false
-    }
-  }
-
-  return true
+  ], window)
 }
 
 export default class Events {
