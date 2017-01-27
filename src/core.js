@@ -143,8 +143,8 @@ export default class Agent extends Store {
 
         loadTime = Date.now()
         get(`${baseUrl}/${loadTime}/env.gif`, obj2query(data))
-        this.listen()
         this.loaded = true
+        this.listen()
     }
   }
   destroy (): void {

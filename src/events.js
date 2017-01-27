@@ -18,6 +18,7 @@ type Handler = MouseEventHandler
 
 function validateBrowserAPIs (): boolean {
   const windowAPIs = [
+    'addEventListener',
     'scrollX',
     'scrollY'
   ]
