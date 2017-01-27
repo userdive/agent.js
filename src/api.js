@@ -33,9 +33,8 @@ function set (key: any, value?: string | number): State {
 }
 
 function finish () {
-  const body: any = document.body
-  if (validate(['onpagehide'], body)) {
-    body.addEventListener('pagehide', () => {
+  if (validate(['addEventListener', 'onpagehide'], window)) {
+    window.addEventListener('pagehide', () => {
       agent.destroy()
     }, false)
   }
