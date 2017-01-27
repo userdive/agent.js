@@ -102,7 +102,7 @@ function sendInteracts (): void {
   interacts.length = 0
   eventId++
 
-  setTimeout(sendInteracts, getIntervalTime())
+  setTimeout(sendInteracts, getIntervalTime() * 1000)
 }
 
 export default class Agent extends Store {
