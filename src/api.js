@@ -32,7 +32,7 @@ function set (key: any, value?: string | number): State {
 }
 
 export default {
-  create,
-  send,
-  set
+  'create': create,
+  'send': send,
+  'set': set
 }

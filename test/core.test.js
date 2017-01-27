@@ -2,6 +2,7 @@
 import { describe, it, beforeEach, afterEach } from 'mocha'
 import { useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
+import { throws } from 'assert-exception'
 import assert from 'assert'
 
 describe('core', () => {
@@ -20,7 +21,7 @@ describe('core', () => {
         return true
       }
       on () {
-        super.on(window, 'click', () => {})
+        super.on(document.body, 'click', () => {})
         emitter.on('test', data => {
           super.emit(data)
         })
@@ -44,6 +45,7 @@ describe('core', () => {
 
   afterEach(() => {
     timer.restore()
+    agent.destroy()
   })
 
   it('instance', () => {
@@ -51,23 +53,20 @@ describe('core', () => {
   })
 
   it('listen before send pageview', () => {
-    assert(agent.listen() === undefined, 'nothing todo')
+    assert(agent.listen() === undefined, 'nothing todo when before load')
+    agent.loaded = true
+
+    agent.listen()
+
+    emitter.emit('test', {
+      x: random.number({min: 1}),
+      y: random.number({min: 1})
+    })
+    assert(throws(() => { timer.tick(10 * 1000) }).message === 'need load time')
   })
 
   it('send', () => {
     agent.send('pageview', location.pathname)
-  })
-
-  it.skip('destroy', () => {
-    agent.destroy()
-  })
-
-  it('listen', () => {
-    assert(agent.listen() === undefined, 'nothing todo when before load')
-
-    agent.loaded = true
-
-    agent.listen()
 
     emitter.emit('test', {
       x: random.number({min: 1}),

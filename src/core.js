@@ -6,6 +6,7 @@ import Logger from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
 import { VERSION as v, INTERVAL } from './constants'
+import warning from './warning'
 import type {
   ClientEnvironmentsData,
   EventType,
@@ -60,8 +61,13 @@ function getIntervalTime (): number {
   return delay
 }
 
-function now2elapsed (time: number): number {
-  return parseInt((loadTime - time) / 1000, 10)
+function now2elapsed (saveTime: number): number {
+  const res = parseInt((saveTime - loadTime) / 1000, 10)
+  if (isNaN(res)) {
+    warning('need load time')
+    return -1
+  }
+  return res
 }
 
 function createInteractData (data: Interact): string {
@@ -90,9 +96,11 @@ function sendInteracts (): void {
   if (!cache) {
     return
   }
-  // saved snapshot
+
   Object.keys(cache).forEach(key => {
-    interacts.push(cache[key])
+    interacts.push(Object.assign({}, cache[key], {
+      time: Date.now()
+    }))
   })
 
   const query: string[] = []
@@ -101,11 +109,11 @@ function sendInteracts (): void {
   })
 
   // TODO validate query string
-
-  get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
-  interacts.length = 0
-  eventId++
-
+  if (query.length > 2) {
+    get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
+    interacts.length = 0
+    eventId++
+  }
   setTimeout(sendInteracts, getIntervalTime() * 1000)
 }
 
@@ -136,7 +144,7 @@ export default class Agent extends Store {
               h: resourceSize.h,
               w: resourceSize.w
             }
-          })(this.getWindowSize(window), this.getResourceSize(document), this.getScreenSize(screen))
+          })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
         })
         const data = Object.assign({}, state.env, state.custom)
 
@@ -151,6 +159,9 @@ export default class Agent extends Store {
     events.forEach(e => {
       e.off()
     })
+    this.loaded = false
+    cache = undefined
+    loadTime = undefined
   }
   listen (): void {
     if (!this.loaded) {
@@ -169,10 +180,10 @@ export default class Agent extends Store {
       w: w.innerWidth
     }
   }
-  getResourceSize (document: Document): Size {
+  getResourceSize (body: HTMLElement): Size {
     return {
-      h: document.body.clientHeight,
-      w: document.body.clientWidth
+      h: body.clientHeight,
+      w: body.clientWidth
     }
   }
   getScreenSize (s: {height: number, width: number}): Size {
