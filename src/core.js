@@ -60,8 +60,12 @@ function getIntervalTime (): number {
   return delay
 }
 
+function now2elapsed (time: number): number {
+  return parseInt((loadTime - time) / 1000, 10)
+}
+
 function createInteractData (data: Interact): string {
-  return `${data.type},${data.time},${data.x},${data.y},${data.left},${data.top}`
+  return `${data.type},${now2elapsed(data.time)},${data.x},${data.y},${data.left},${data.top}`
 }
 
 function getInteractTypes (eventName: EventType): string[] {
@@ -110,7 +114,7 @@ export default class Agent extends Store {
   loaded: boolean
   constructor (id: string, eventsClass: [], opt: Options): void {
     super()
-    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt.cookieName)}/`
+    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt.cookieName)}`
     emitter = mitt()
     this.logger = new Logger(opt.Raven)
     eventsClass.forEach(Class => {
