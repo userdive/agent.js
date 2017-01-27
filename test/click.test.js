@@ -24,7 +24,8 @@ describe('click', () => {
 
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
-    document.dispatchEvent(e)
+    const body: any = document.body
+    body.dispatchEvent(e)
 
     assert(spy.calledOnce)
     spy.restore()

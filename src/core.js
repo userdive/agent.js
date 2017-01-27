@@ -20,15 +20,10 @@ type Size = {
   w: number
 }
 
-const SIZE: Size = {
-  h: 0,
-  w: 0
-}
-
 const EMIT_NAME = 'POINT'
 
 let baseUrl: string
-let delay: number = Math.max(INTERVAL)
+let delay: number
 let emitter: mitt
 let eventId: number = 1
 let loadTime: number
@@ -170,13 +165,10 @@ export default class Agent extends Store {
       w: w.innerWidth
     }
   }
-  getResourceSize ({ body }: Document): Size {
-    if (!body) {
-      return SIZE
-    }
+  getResourceSize (document: Document): Size {
     return {
-      h: body.clientHeight,
-      w: body.clientWidth
+      h: document.body.clientHeight,
+      w: document.body.clientWidth
     }
   }
   getScreenSize (s: {height: number, width: number}): Size {

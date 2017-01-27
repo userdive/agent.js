@@ -7,7 +7,7 @@ export default class ClickEvents extends EventBase {
     return true
   }
   on () {
-    super.on(document, 'click', (e: MouseEvent) => {
+    super.on(document.body, 'click', (e: MouseEvent) => {
       this.emit({x: e.pageX, y: e.pageY})
     })
   }

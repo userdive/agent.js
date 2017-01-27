@@ -55,7 +55,7 @@ export default class Events {
       top: window.scrollY
     }))
   }
-  on (global: Document | window, eventName: EventType, handler: Handler): void {
+  on (global: HTMLElement | window, eventName: EventType, handler: Handler): void {
     if (!global || typeof handler !== 'function') {
       warning('please override on')
       return
