@@ -8,17 +8,14 @@ module.exports = function (config) {
        { pattern: 'test/*.test.js' }
     ],
     preprocessors: {
-      'test/*.test.js': ['webpack', 'coverage']
+      'test/*.test.js': ['webpack']
     },
     webpack: {
       module: {
         rules: webpackConfig.module.rules.concat([{
           test: /\.js$/,
-          loader: 'babel-istanbul-loader',
-          exclude: /node_modules/,
-          query: {
-            cacheDirectory: true
-          }
+          use: 'babel-istanbul-loader',
+          exclude: /node_modules/
         }])
       },
       node: { fs: 'empty' }
@@ -36,7 +33,7 @@ module.exports = function (config) {
         colors: true
       }
     },
-    reporters: ['mocha'],
+    reporters: ['mocha', 'coverage'],
     browsers: ['Chrome', 'Firefox', 'PhantomJS'],
     singleRun: true
   })
