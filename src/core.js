@@ -1,3 +1,4 @@
+/* @flow */
 import mitt from 'mitt'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
@@ -7,19 +8,22 @@ import Store from './store'
 import { get, obj2query } from './requests'
 import { VERSION as v, INTERVAL } from './constants'
 import warning from './warning'
+
+import {
+  getWindowSize,
+  getResourceSize,
+  getScreenSize
+} from './browser'
+
 import type {
   ClientEnvironmentsData,
   EventType,
   Interact,
   Options,
   SendType,
+  Size,
   State
 } from './types'
-
-type Size = {
-  h: number,
-  w: number
-}
 
 const EMIT_NAME = 'POINT'
 
@@ -27,11 +31,11 @@ let baseUrl: string
 let delay: number
 let emitter: mitt
 let eventId: number = 1
-let loadTime: number
+let loadTime: number = 0
 
 let cache: {
-  l: Interact,
-  a: Interact
+  l: Object,
+  a: Object
 }
 
 const interacts: Interact[] = []
@@ -117,7 +121,7 @@ function sendInteracts (): void {
 export default class Agent extends Store {
   logger: Logger
   loaded: boolean
-  constructor (id: string, eventsClass: [], opt: Options): void {
+  constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt.cookieName)}`
     emitter = mitt()
@@ -129,9 +133,17 @@ export default class Agent extends Store {
   send (type: SendType): void {
     switch (type) {
       case 'pageview':
+        let resourceSize
+        try {
+          resourceSize = getResourceSize(document)
+        } catch (err) {
+          this.logger.error(err)
+          return
+        }
+
         const state: State = this.merge({
           type: 'env',
-          data: ((windowSize: Size, resourceSize: Size, screenSize: Size): ClientEnvironmentsData => {
+          data: ((windowSize: Size, screenSize: Size): ClientEnvironmentsData => {
             return {
               v,
               sh: screenSize.h,
@@ -141,7 +153,7 @@ export default class Agent extends Store {
               h: resourceSize.h,
               w: resourceSize.w
             }
-          })(this.getWindowSize(window), this.getResourceSize(document.body), this.getScreenSize(screen))
+          })(getWindowSize(window), getScreenSize(screen))
         })
         const data = Object.assign({}, state.env, state.custom)
 
@@ -157,37 +169,25 @@ export default class Agent extends Store {
       e.off()
     })
     this.loaded = false
-    cache = undefined
-    loadTime = undefined
+    cache = {
+      a: {},
+      l: {}
+    }
+    loadTime = 0
   }
   listen (): void {
     if (!this.loaded || !loadTime) {
       warning('need send pageview')
       return
     }
-    cache = {}
+    cache = {
+      a: {},
+      l: {}
+    }
     emitter.on(EMIT_NAME, updateInteractCache)
     events.forEach(e => {
       e.on()
     })
     sendInteracts()
-  }
-  getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
-    return {
-      h: w.innerHeight,
-      w: w.innerWidth
-    }
-  }
-  getResourceSize (body: HTMLElement): Size {
-    return {
-      h: body.clientHeight,
-      w: body.clientWidth
-    }
-  }
-  getScreenSize (s: {height: number, width: number}): Size {
-    return {
-      h: s.height,
-      w: s.width
-    }
   }
 }

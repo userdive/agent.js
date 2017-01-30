@@ -13,6 +13,11 @@ export type Options = {
   Raven: Raven
 }
 
+export type Size = {
+  h: number,
+  w: number
+}
+
 export type SendType = 'pageview'
 export type Dimension = 'dimension1' | 'dimension2' | 'dimension3' | 'dimension4' | 'dimension5'
 export type Metric = 'metric1' | 'metric2' | 'metric3' | 'metric4' | 'metric5'
