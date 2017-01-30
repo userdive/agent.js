@@ -1,6 +1,6 @@
 /* @flow */
 import { describe, it, beforeEach, afterEach } from 'mocha'
-import { useFakeTimers } from 'sinon'
+import { spy as sinonSpy, useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
 import { throws } from 'assert-exception'
 import assert from 'assert'
@@ -61,12 +61,22 @@ describe('core', () => {
   })
 
   it('send', () => {
+    const spy = sinonSpy(require('../src/requests'), 'get')
     agent.send('pageview', location.pathname)
 
     emitter.emit('test', {
       x: random.number({min: 1}),
       y: random.number({min: 1})
     })
-    timer.tick(10 * 1000)
+    timer.tick(60 * 30 * 1000)
+
+    const before = spy.callCount
+    assert(before)
+
+    timer.tick(60 * 1 * 1000)
+
+    assert(spy.callCount === before, 'stop tracking')
+
+    spy.restore()
   })
 })

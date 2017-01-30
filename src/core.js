@@ -6,8 +6,12 @@ import { v4 as uuid } from 'uuid'
 import Logger from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
-import { VERSION as v, INTERVAL } from './constants'
 import warning from './warning'
+
+import {
+  VERSION as v,
+  INTERVAL as INTERVAL_DEFAULT_SETTING
+} from './constants'
 
 import {
   getWindowSize,
@@ -27,6 +31,7 @@ import type {
 
 const EMIT_NAME = 'POINT'
 
+let INTERVAL: number[]
 let baseUrl: string
 let delay: number
 let emitter: mitt
@@ -42,8 +47,7 @@ const interacts: Interact[] = []
 const events: any[] = []
 
 function cacheValidator (data: Object): boolean {
-  if (data.x > 0 && data.y > 0 &&
-    data.type && data.time > 0 &&
+  if (data.x > 0 && data.y > 0 && data.type &&
     typeof data.left === 'number' && typeof data.top === 'number') {
     return true
   }
@@ -65,12 +69,23 @@ function getIntervalTime (): number {
   return delay
 }
 
-function now2elapsed (saveTime: number): number {
-  return parseInt((saveTime - loadTime) / 1000, 10)
+function toInt (n: number) {
+  return parseInt(n, 10)
 }
 
-function createInteractData (data: Interact): string {
-  return `${data.type},${now2elapsed(data.time)},${data.x},${data.y},${data.left},${data.top}`
+function now2elapsed (saveTime: number): number {
+  if (!loadTime) {
+    warning('need loadTime')
+  }
+  return toInt((saveTime - loadTime) / 1000, 10)
+}
+
+function createInteractData (d: Interact): string {
+  const time = now2elapsed(d.time)
+  if (time > 0 && time > 30 * 60) {
+    return ''
+  }
+  return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
 }
 
 function getInteractTypes (eventName: EventType): string[] {
@@ -92,10 +107,6 @@ function updateInteractCache (data: Object): void {
 }
 
 function sendInteracts (): void {
-  if (!cache) {
-    return
-  }
-
   Object.keys(cache).forEach(key => {
     interacts.push(Object.assign({}, cache[key], {
       time: Date.now()
@@ -104,10 +115,12 @@ function sendInteracts (): void {
 
   const query: string[] = []
   interacts.forEach(data => {
-    query.push(`d=${createInteractData(data)}`)
+    const q = createInteractData(data)
+    if (q.length) {
+      query.push(`d=${q}`)
+    }
   })
 
-  // TODO validate query string
   if (query.length > 2) {
     get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
     interacts.length = 0
@@ -155,6 +168,8 @@ export default class Agent extends Store {
             }
           })(getWindowSize(window), getScreenSize(screen))
         })
+
+        INTERVAL = INTERVAL_DEFAULT_SETTING.concat()
         const data = Object.assign({}, state.env, state.custom)
 
         loadTime = Date.now()

@@ -44,7 +44,6 @@ export default class Events {
     emitter.emit(EMIT_NAME, Object.assign({}, data, {
       type: EVENT_NAME,
       left: window.scrollX,
-      time: Date.now(),
       top: window.scrollY
     }))
   }
