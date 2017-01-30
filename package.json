@@ -19,8 +19,8 @@
     "assert-exception": "^1.1.0",
     "babel-cli": "^6.22.2",
     "babel-loader": "^6.2.10",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.22.0",
     "codecov": "^1.0.1",
@@ -39,9 +39,9 @@
     "raven-js": "^3.9.2",
     "rimraf": "^2.5.4",
     "sinon": "^2.0.0-pre.5",
-    "webpack": "^1.14.0",
-    "webpack-bundle-size-analyzer": "^2.4.0",
-    "webpack-closure-compiler": "^2.1.3"
+    "uglifyjs-webpack-plugin": "^0.1.2",
+    "webpack": "2.2.0",
+    "webpack-bundle-size-analyzer": "^2.4.0"
   },
   "engine": {
     "node": "> 5"
@@ -57,7 +57,7 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
+    "build": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",

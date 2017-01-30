@@ -1,6 +1,6 @@
 /* @flow */
-const ClosureCompilerPlugin = require('webpack-closure-compiler')
 const webpack = require('webpack')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
 const version = require('./package.json').version
 
@@ -15,16 +15,18 @@ module.exports = {
     filename: '[name].min.js'
   },
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.json$/, loader: 'json' }
+    rules: [
+      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new ClosureCompilerPlugin({}),
-    new webpack.BannerPlugin(`@userdive/agent.js ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`)
+    new UglifyJSPlugin({
+      sourceMap: true,
+      comments: false
+    }),
+    new webpack.BannerPlugin({banner: `@userdive/agent.js ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`})
   ]
 }
