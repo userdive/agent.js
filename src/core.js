@@ -77,8 +77,12 @@ function toInt (n: number) {
 }
 
 function createInteractData (d: Interact): string {
+  if (!cacheValidator(d)) {
+    return ''
+  }
+
   const time: number = toInt((d.time - loadTime) / 1000, 10)
-  if (time < 0 || time > 30 * 60 || cacheValidator(d)) {
+  if (time < 0 || time > 30 * 60) {
     return ''
   }
   return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
@@ -112,7 +116,7 @@ function sendInteracts (): void {
   const query: string[] = []
   interacts.forEach(data => {
     const q = createInteractData(data)
-    if (q) {
+    if (q.length) {
       query.push(`d=${q}`)
     }
   })

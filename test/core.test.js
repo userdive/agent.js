@@ -61,38 +61,30 @@ describe('core', () => {
   })
 
   it('send', () => {
-    const spy = sinonSpy(require('../src/requests'), 'get')
     agent.send('pageview', location.pathname)
+    const spy = sinonSpy(require('../src/requests'), 'get')
 
-    it('failed', () => {
-      emitter.emit('test', {
-        x: -1,
-        y: -1
-      })
-      timer.tick(60 * 30 * 1000)
-
-      assert(spy.called === false)
-      spy.restore()
+    emitter.emit('test', {
+      x: -1,
+      y: -1
     })
+    timer.tick(60 * 1000)
 
-    it('success', () => {
-      const spy = sinonSpy(require('../src/requests'), 'get')
-      agent.send('pageview', location.pathname)
+    assert(spy.called === false, 'failed')
 
-      emitter.emit('test', {
-        x: random.number({min: 1}),
-        y: random.number({min: 1})
-      })
-      timer.tick(60 * 30 * 1000)
-
-      const before = spy.callCount
-      assert(before)
-
-      timer.tick(60 * 1 * 1000)
-
-      assert(spy.callCount === before, 'stop tracking')
-
-      spy.restore()
+    emitter.emit('test', {
+      x: random.number({min: 1}),
+      y: random.number({min: 1})
     })
+    timer.tick(60 * 29 * 1000)
+
+    const before = spy.callCount
+    assert(before, 'success')
+
+    timer.tick(60 * 1 * 1000)
+
+    assert(spy.callCount === before, 'stop tracking')
+
+    spy.restore()
   })
 })
