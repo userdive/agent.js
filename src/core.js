@@ -54,12 +54,15 @@ function cacheValidator (data: Object): boolean {
   return false
 }
 
-function findOrCreateClientId (name: string): string {
-  const c = cookies.get(name)
+function findOrCreateClientId (opt: Options): string {
+  const c = cookies.get(opt.cookieName)
   if (c) {
     return c
   }
-  return uuid().replace(/-/g, '')
+  const id = uuid().replace(/-/g, '')
+  cookies.set(opt.cookieName, { domain: opt.cookieDomain, expires: opt.cookieExpires })
+
+  return id
 }
 
 function getIntervalTime (): number {
@@ -73,16 +76,9 @@ function toInt (n: number) {
   return parseInt(n, 10)
 }
 
-function now2elapsed (saveTime: number): number {
-  if (!loadTime) {
-    warning('need loadTime')
-  }
-  return toInt((saveTime - loadTime) / 1000, 10)
-}
-
 function createInteractData (d: Interact): string {
-  const time = now2elapsed(d.time)
-  if (time > 0 && time > 30 * 60) {
+  const time: number = toInt((d.time - loadTime) / 1000, 10)
+  if (time < 0 || time > 30 * 60) {
     return ''
   }
   return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
@@ -136,7 +132,7 @@ export default class Agent extends Store {
   loaded: boolean
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
-    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt.cookieName)}`
+    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     this.logger = new Logger(opt.Raven)
     eventsClass.forEach(Class => {
@@ -146,7 +142,7 @@ export default class Agent extends Store {
   send (type: SendType): void {
     switch (type) {
       case 'pageview':
-        let resourceSize
+        let resourceSize: {h: number, w: number}
         try {
           resourceSize = getResourceSize(document)
         } catch (err) {

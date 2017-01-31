@@ -8,7 +8,7 @@ export const OPTIONS: Options = {
   baseUrl: 'https://v1.userdive.com',
   cookieName: '_ud', // TODO
   cookieDomain: '',
-  cookieExpires: 0,
+  cookieExpires: 730, // TODO
   Raven: {
     isSetup: () => false,
     captureException: () => {},
