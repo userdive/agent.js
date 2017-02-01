@@ -16,7 +16,15 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /logger\.js$/,
+        loader: 'string-replace-loader',
+        query: {
+          search: 'USERDIVE_AGENT_VERSION',
+          replace: version
+        }
+      }
     ]
   },
   plugins: [

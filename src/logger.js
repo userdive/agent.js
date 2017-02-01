@@ -1,6 +1,5 @@
 /* @flow */
 import type { Raven } from './types'
-import { version } from '../package.json'
 
 type RavenOptions = {}
 
@@ -8,7 +7,7 @@ export default class Logger {
   Raven: Raven
   constructor (Raven: Raven) {
     if (Raven.isSetup()) {
-      Raven.setRelease(version)
+      Raven.setRelease('USERDIVE_AGENT_VERSION')
       this.Raven = Raven
     }
   }
