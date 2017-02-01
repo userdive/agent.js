@@ -78,7 +78,6 @@
     "prepush": "npm test",
     "pretest": "npm-run-all -p clean",
     "test": "npm-run-all -p test:*",
-    "test:karma": "karma start --singleRun",
     "test:lint": "npm run lint",
     "test:mocha": "nyc mocha -- test"
   }
