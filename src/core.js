@@ -9,8 +9,10 @@ import { get, obj2query } from './requests'
 import warning from './warning'
 
 import {
-  VERSION as v,
-  INTERVAL as INTERVAL_DEFAULT_SETTING
+  INTERVAL as INTERVAL_DEFAULT_SETTING,
+  INTERACT as MAX_INTERACT,
+  SESSION_TIME as MAX_SESSION_TIME,
+  VERSION as v
 } from './constants'
 
 import {
@@ -60,7 +62,7 @@ function findOrCreateClientId (opt: Options): string {
     return c
   }
   const id = uuid().replace(/-/g, '')
-  cookies.set(opt.cookieName, { domain: opt.cookieDomain, expires: opt.cookieExpires })
+  cookies.set(opt.cookieName, id, { domain: opt.cookieDomain, expires: opt.cookieExpires })
 
   return id
 }
@@ -82,7 +84,7 @@ function createInteractData (d: Interact): string {
   }
 
   const time: number = toInt((d.time - loadTime) / 1000, 10)
-  if (time < 0 || time > 30 * 60) {
+  if (time < 0 || time > MAX_SESSION_TIME * 60) {
     return ''
   }
   return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
@@ -121,7 +123,7 @@ function sendInteracts (): void {
     }
   })
 
-  if (query.length > 30) {
+  if (query.length >= MAX_INTERACT) {
     get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
     interacts.length = 0
     eventId++

@@ -31,6 +31,7 @@
     "faker": "^3.1.0",
     "flow-bin": "^0.38.0",
     "husky": "^0.13.1",
+    "is-url": "^1.2.2",
     "jsdom": "^9.9.1",
     "jsdom-global": "^2.1.1",
     "jsdom-mount": "^0.1.0",
@@ -46,11 +47,11 @@
     "npm-run-all": "^4.0.1",
     "nyc": "^10.1.2",
     "power-assert": "^1.4.2",
-    "raven-js": "^3.9.2",
+    "raven-js": "^3.10.0",
     "rimraf": "^2.5.4",
     "sinon": "^2.0.0-pre.5",
     "uglifyjs-webpack-plugin": "^0.1.2",
-    "webpack": "2.2.0",
+    "webpack": "^2.2.1",
     "webpack-bundle-size-analyzer": "^2.4.0"
   },
   "engine": {

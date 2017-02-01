@@ -2,14 +2,24 @@
 import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy, useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
+import isUrl from 'is-url'
 import { throws } from 'assert-exception'
 import assert from 'assert'
+import {
+  OPTIONS,
+  SESSION_TIME,
+  INTERACT
+} from '../src/constants'
+
+function toMin (msec: number): number {
+  return msec * 1000 * 60
+}
 
 describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
-  const Raven = require('../src/constants').OPTIONS.Raven
   const mitt = require('mitt')
+  const Raven = OPTIONS.Raven
 
   let agent, emitter, timer
   beforeEach(() => {
@@ -60,7 +70,7 @@ describe('core', () => {
     assert(throws(() => { agent.listen() }).message === 'need send pageview')
   })
 
-  it('send', () => {
+  it('send failed', () => {
     agent.send('pageview', location.pathname)
     const spy = sinonSpy(require('../src/requests'), 'get')
 
@@ -68,20 +78,37 @@ describe('core', () => {
       x: -1,
       y: -1
     })
-    timer.tick(60 * 1000)
+    timer.tick(toMin(SESSION_TIME))
 
-    assert(spy.called === false, 'failed')
+    assert(spy.called === false)
+
+    spy.restore()
+  })
+
+  it('send success', () => {
+    agent.send('pageview', location.pathname)
+    const spy = sinonSpy(require('../src/requests'), 'get')
 
     emitter.emit('test', {
       x: random.number({min: 1}),
       y: random.number({min: 1})
     })
-    timer.tick(60 * 29 * 1000)
+
+    timer.tick(toMin(SESSION_TIME))
+
+    const url = spy.getCall(0).args[0]
+    assert(url.split('/').length === 8)
+    assert(url.split('/')[4].length === 32)
+    assert(url.split('/')[5].length === 13)
+    assert(url.split('/')[6] === 'interact')
+    assert(isUrl(url))
+
+    assert(spy.getCall(0).args[1].length === INTERACT)
 
     const before = spy.callCount
-    assert(before, 'success')
+    assert(before > 0)
 
-    timer.tick(60 * 1 * 1000)
+    timer.tick(toMin(1))
 
     assert(spy.callCount === before, 'stop tracking')
 
