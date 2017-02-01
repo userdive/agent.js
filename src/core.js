@@ -109,12 +109,6 @@ function updateInteractCache (data: Object): void {
 }
 
 function sendInteracts (): void {
-  Object.keys(cache).forEach(key => {
-    interacts.push(Object.assign({}, cache[key], {
-      time: Date.now()
-    }))
-  })
-
   const query: string[] = []
   interacts.forEach(data => {
     const q = createInteractData(data)
@@ -128,8 +122,19 @@ function sendInteracts (): void {
     interacts.length = 0
     eventId++
   }
+}
+
+function sendInteractsWithUpdate (): void {
+  Object.keys(cache).forEach(key => {
+    interacts.push(Object.assign({}, cache[key], {
+      time: Date.now()
+    }))
+  })
+
+  sendInteracts()
+
   if (loadTime) {
-    setTimeout(sendInteracts, getIntervalTime() * 1000)
+    setTimeout(sendInteractsWithUpdate, getIntervalTime() * 1000)
   }
 }
 
@@ -181,6 +186,8 @@ export default class Agent extends Store {
     }
   }
   destroy (): void {
+    sendInteracts()
+
     emitter.off('*', updateInteractCache)
     events.forEach(e => {
       e.off()
@@ -205,6 +212,6 @@ export default class Agent extends Store {
     events.forEach(e => {
       e.on()
     })
-    sendInteracts()
+    sendInteractsWithUpdate()
   }
 }

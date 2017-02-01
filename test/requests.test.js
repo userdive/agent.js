@@ -14,7 +14,7 @@ describe('requests', () => {
   })
 
   it('get', () => {
-    assert(requests.get(internet.url(), []))
+    requests.get(internet.url(), [])
   })
 
   it('obj2query', () => {

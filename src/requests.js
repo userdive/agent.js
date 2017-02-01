@@ -9,15 +9,13 @@ export function enable (): boolean {
   return true
 };
 
-export function get (url: string, query: string[]): boolean {
+export function get (url: string, query: string[]): void {
   if (enable()) {
     const img = document.createElement('img')
     img.onload = () => null
     img.onerror = () => null
     img.src = `${url}?${query.join('&')}`
-    return true
   }
-  return false
 }
 
 export function obj2query (data: Object): string[] {
