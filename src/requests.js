@@ -1,16 +1,16 @@
 /* @flow */
 
 // https://developer.mozilla.org/ja/docs/Web/API/Navigator/doNotTrack
-function isEnableTracking (): boolean {
-  const doNotTrack = navigator.doNotTrack || window.doNotTrack
-  if (doNotTrack === '1' || doNotTrack === 'yes') {
+export function enable (): boolean {
+  const dnt = navigator.doNotTrack || window.doNotTrack
+  if (dnt === '1' || dnt === 'yes') {
     return false
   }
   return true
 };
 
 export function get (url: string, query: string[]): boolean {
-  if (isEnableTracking()) {
+  if (enable()) {
     const img = document.createElement('img')
     img.onload = () => null
     img.onerror = () => null
