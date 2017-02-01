@@ -59,6 +59,7 @@ function cacheValidator (data: Object): boolean {
 function findOrCreateClientId (opt: Options): string {
   const c = cookies.get(opt.cookieName)
   if (c) {
+    cookies.remove(opt.cookieName) // TODO remove
     return c
   }
   const id = uuid().replace(/-/g, '')
@@ -108,7 +109,7 @@ function updateInteractCache (data: Object): void {
   }
 }
 
-function sendInteracts (): void {
+function sendInteracts (force: ?boolean): void {
   const query: string[] = []
   interacts.forEach(data => {
     const q = createInteractData(data)
@@ -117,7 +118,7 @@ function sendInteracts (): void {
     }
   })
 
-  if (query.length >= MAX_INTERACT) {
+  if (query.length >= MAX_INTERACT || force) {
     get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
     interacts.length = 0
     eventId++
@@ -186,7 +187,7 @@ export default class Agent extends Store {
     }
   }
   destroy (): void {
-    sendInteracts()
+    sendInteracts(true)
 
     emitter.off('*', updateInteractCache)
     events.forEach(e => {
