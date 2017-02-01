@@ -20,7 +20,8 @@ module.exports = {
       {
         test: /logger\.js$/,
         loader: 'string-replace-loader',
-        query: {
+        exclude: /node_modules/,
+        options: {
           search: 'USERDIVE_AGENT_VERSION',
           replace: version
         }
