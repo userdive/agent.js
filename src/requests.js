@@ -9,13 +9,15 @@ function isEnableTracking (): boolean {
   return true
 };
 
-export function get (url: string, query: string[]): void {
+export function get (url: string, query: string[]): boolean {
   if (isEnableTracking()) {
     const img = document.createElement('img')
     img.onload = () => null
     img.onerror = () => null
     img.src = `${url}?${query.join('&')}`
+    return true
   }
+  return false
 }
 
 export function obj2query (data: Object): string[] {
