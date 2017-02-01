@@ -13,6 +13,7 @@ export const OPTIONS: Options = {
   cookieExpires: 730, // TODO
   Raven: {
     isSetup: () => false,
+    setRelease: () => {},
     captureException: () => {},
     captureMessage: () => {}
   }

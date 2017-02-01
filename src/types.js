@@ -1,5 +1,6 @@
 /* @flow */
 export interface Raven {
+  setRelease(version: string): void,
   isSetup(): boolean,
   captureMessage(): void,
   captureException(): void
