@@ -2,8 +2,9 @@
 import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy, useFakeTimers } from 'sinon'
 import { random, internet } from 'faker'
-import isUrl from 'is-url'
 import { throws } from 'assert-exception'
+import cookies from 'js-cookie'
+import isUrl from 'is-url'
 import assert from 'assert'
 import {
   OPTIONS,
@@ -87,6 +88,9 @@ describe('core', () => {
 
   it('send success', () => {
     agent.send('pageview', location.pathname)
+
+    assert(cookies.get(OPTIONS.cookieName))
+
     const spy = sinonSpy(require('../src/requests'), 'get')
 
     emitter.emit('test', {
