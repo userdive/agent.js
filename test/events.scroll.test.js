@@ -9,20 +9,24 @@ describe('scroll', () => {
   const mitt = require('mitt')
   const ScrollEvents = require('../src/events/scroll').default
   const Logger = require('../src/logger').default
+  const UIEventObserver = require('ui-event-observer').UIEventObserver
 
-  let emitter, logger, instance
+  let instance
 
   beforeEach(() => {
-    logger = new Logger(Raven)
-    emitter = mitt()
-    instance = new ScrollEvents(random.word(), emitter, logger)
+    instance = new ScrollEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      new Logger(Raven)
+    )
   })
 
   it('validate', () => {
     assert(instance.validate())
   })
 
-  it.skip('on', () => {
+  it('on', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 

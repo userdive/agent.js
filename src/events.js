@@ -1,6 +1,5 @@
 /* @flow */
 import mitt from 'mitt'
-import eventObserver from 'ui-event-observer'
 
 import type { EventType } from './types'
 import { validate } from './browser'
@@ -16,12 +15,14 @@ type Handler = MouseEventHandler
 export default class Events {
   logger: Logger
   name: EventType
-  emitter: mitt
+  mitt: mitt
   ename: string
-  constructor (emitName: string, eventEmitter: mitt, logger: Logger): void {
+  observer: any
+  constructor (emitName: string, eventEmitter: mitt, eventObserver: any, logger: Logger): void {
     this.ename = emitName
-    this.emitter = eventEmitter
+    this.mitt = eventEmitter
     this.logger = logger
+    this.observer = eventObserver
   }
   validate (): boolean {
     warning('please override validate')
@@ -32,7 +33,7 @@ export default class Events {
       return
     }
 
-    this.emitter.emit(this.ename, Object.assign({}, data, {
+    this.mitt.emit(this.ename, Object.assign({}, data, {
       type: this.name,
       left: window.scrollX,
       top: window.scrollY
@@ -48,7 +49,7 @@ export default class Events {
       return
     }
 
-    eventObserver.subscribe(target, eventName, e => {
+    this.observer.subscribe(target, eventName, e => {
       try {
         handler(e)
       } catch (err) {
@@ -58,6 +59,6 @@ export default class Events {
     this.name = eventName
   }
   off (): void {
-    eventObserver.unsubscribeAll()
+    this.observer.unsubscribeAll()
   }
 }

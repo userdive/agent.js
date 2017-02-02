@@ -1,5 +1,6 @@
 /* @flow */
 import mitt from 'mitt'
+import { UIEventObserver } from 'ui-event-observer'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
@@ -141,13 +142,15 @@ function sendInteractsWithUpdate (): void {
 export default class Agent extends Store {
   logger: Logger
   loaded: boolean
+  observer: UIEventObserver
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     this.logger = new Logger(opt.Raven)
+    this.observer = new UIEventObserver()
     eventsClass.forEach(Class => {
-      events.push(new Class(EMIT_NAME, emitter, this.logger))
+      events.push(new Class(EMIT_NAME, emitter, this.observer, this.logger))
     })
   }
   send (type: SendType): void {

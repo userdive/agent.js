@@ -11,8 +11,7 @@ import Raven from 'raven-js'
 describe('events', () => {
   const Events = require('../src/events').default
   const Logger = require('../src/logger').default
-
-  let emitter, logger
+  const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   class DummyEvents extends Events {
     validate () {
@@ -20,13 +19,19 @@ describe('events', () => {
     }
   }
 
+  let logger
+
   beforeEach(() => {
-    emitter = mitt()
     logger = new Logger(Raven)
   })
 
   it('init', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger)
+    const instance = new DummyEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     assert(instance.emit)
     assert(instance.validate)
     assert(instance.on)
@@ -34,7 +39,12 @@ describe('events', () => {
   })
 
   it('must override func', () => {
-    const events = new Events(random.word(), emitter, logger)
+    const events = new Events(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     assert(throws(() => {
       events.validate()
     }).message === 'please override validate')
@@ -46,13 +56,23 @@ describe('events', () => {
   })
 
   it('emit', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger)
+    const instance = new DummyEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     instance.emit({x: random.number(), y: random.number()})
     instance.emit({x: -1, y: -1})
   })
 
   it('on', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger)
+    const instance = new DummyEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
 
     let data
 
@@ -64,7 +84,12 @@ describe('events', () => {
   })
 
   it('bind slient error', () => {
-    let instance = new DummyEvents(random.word(), emitter, logger)
+    let instance = new DummyEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
     instance.on(document, 'click', (e) => { throw new Error(error) })
@@ -81,12 +106,22 @@ describe('events', () => {
       }
     }
 
-    instance = new InValidDummyEvents(random.word(), emitter, logger)
+    instance = new InValidDummyEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     instance.on(document, 'click', (e) => { throw new Error(error) })
   })
 
   it('off', () => {
-    const instance = new Events(random.word(), emitter, logger)
+    const instance = new Events(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      logger
+    )
     instance.off()
   })
 })

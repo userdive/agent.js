@@ -7,22 +7,26 @@ import assert from 'assert'
 describe('click', () => {
   const Raven = require('raven-js')
   const mitt = require('mitt')
+  const UIEventObserver = require('ui-event-observer').UIEventObserver
   const ClickEvents = require('../src/events/click').default
   const Logger = require('../src/logger').default
 
-  let emitter, logger, instance
+  let instance
 
   beforeEach(() => {
-    logger = new Logger(Raven)
-    emitter = mitt()
-    instance = new ClickEvents(random.word(), emitter, logger)
+    instance = new ClickEvents(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+      new Logger(Raven)
+    )
   })
 
   it('validate', () => {
     assert(instance.validate())
   })
 
-  it.skip('on', () => {
+  it('on', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 
