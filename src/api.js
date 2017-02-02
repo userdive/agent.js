@@ -2,7 +2,7 @@
 import Agent from './core'
 import Click from './click'
 import { validate } from './browser'
-import { OPTIONS } from './constants'
+import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
 
 let agent: Agent
@@ -33,7 +33,7 @@ function set (key: any, value?: string | number): State {
 }
 
 function finish () {
-  if (validate(['addEventListener', 'onpagehide'], window)) {
+  if (validate(LISTENER.concat(['onpagehide']))) {
     window.addEventListener('pagehide', () => {
       agent.destroy()
     }, false)

@@ -77,4 +77,4 @@ export type Interact = {
   top: number
 }
 
-export type EventType = 'click'
+export type EventType = 'click' | 'scroll'

@@ -15,7 +15,7 @@ describe('click', () => {
   beforeEach(() => {
     logger = new Logger(Raven)
     emitter = mitt()
-    instance = new ClickEvents(random.word(), emitter, logger, [random.number()])
+    instance = new ClickEvents(random.word(), emitter, logger)
   })
 
   it('on', () => {

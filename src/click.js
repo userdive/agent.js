@@ -1,10 +1,11 @@
 /* @flow */
 import EventBase from './events'
+import { validate } from './browser'
 
 export default class ClickEvents extends EventBase {
   validate (): boolean {
-    // TODO
-    return true
+    const body: any = document.body
+    return validate(['onclick'], body)
   }
   on () {
     super.on(document.body, 'click', (e: MouseEvent) => {

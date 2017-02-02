@@ -26,7 +26,7 @@ describe('events', () => {
   })
 
   it('init', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
+    const instance = new DummyEvents(random.word(), emitter, logger)
     assert(instance.emit)
     assert(instance.validate)
     assert(instance.on)
@@ -34,7 +34,7 @@ describe('events', () => {
   })
 
   it('must override func', () => {
-    const events = new Events(random.word(), emitter, logger, [random.number()])
+    const events = new Events(random.word(), emitter, logger)
     assert(throws(() => {
       events.validate()
     }).message === 'please override validate')
@@ -46,13 +46,13 @@ describe('events', () => {
   })
 
   it('emit', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
+    const instance = new DummyEvents(random.word(), emitter, logger)
     instance.emit({x: random.number(), y: random.number()})
     instance.emit({x: -1, y: -1})
   })
 
   it('on', () => {
-    const instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
+    const instance = new DummyEvents(random.word(), emitter, logger)
 
     let data
 
@@ -64,7 +64,7 @@ describe('events', () => {
   })
 
   it('bind slient error', () => {
-    let instance = new DummyEvents(random.word(), emitter, logger, [random.number()])
+    let instance = new DummyEvents(random.word(), emitter, logger)
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
     instance.on(document, 'click', (e) => { throw new Error(error) })
@@ -81,12 +81,12 @@ describe('events', () => {
       }
     }
 
-    instance = new InValidDummyEvents(random.word(), emitter, logger, [random.number()])
+    instance = new InValidDummyEvents(random.word(), emitter, logger)
     instance.on(document, 'click', (e) => { throw new Error(error) })
   })
 
   it('off', () => {
-    const instance = new Events(random.word(), emitter, logger, [random.number()])
+    const instance = new Events(random.word(), emitter, logger)
     instance.off()
   })
 })

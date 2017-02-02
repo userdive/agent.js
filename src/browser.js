@@ -23,7 +23,8 @@ export function getScreenSize (s: {height: number, width: number}): Size {
   }
 }
 
-export function validate (apis: string[], target: HTMLElement | window): boolean {
+export function validate (apis: string[], target: ?HTMLElement): boolean {
+  target = target || window
   for (let i = 0; i < apis.length; i++) {
     if (!(apis[i] in target)) {
       return false

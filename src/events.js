@@ -5,6 +5,7 @@ import throttle from 'throttle-debounce/throttle'
 
 import type { EventType } from './types'
 import { validate } from './browser'
+import { LISTENER, SCROLL } from './constants'
 import warning from './warning'
 
 interface Logger {
@@ -16,14 +17,6 @@ let EMIT_NAME: string
 let EVENT_NAME: EventType
 
 type Handler = MouseEventHandler
-
-function validateBrowserAPIs (): boolean {
-  return validate([
-    'addEventListener',
-    'scrollX',
-    'scrollY'
-  ], window)
-}
 
 export default class Events {
   logger: Logger
@@ -47,13 +40,13 @@ export default class Events {
       top: window.scrollY
     }))
   }
-  on (global: HTMLElement | window, eventName: EventType, handler: Handler): void {
-    if (!global || typeof handler !== 'function') {
+  on (target: HTMLElement | window, eventName: EventType, handler: Handler): void {
+    if (!target || typeof handler !== 'function') {
       warning('please override on')
       return
     }
 
-    if (!this.validate() || !validateBrowserAPIs()) {
+    if (!this.validate() || !validate(LISTENER.concat(SCROLL))) {
       return
     }
 
@@ -61,7 +54,7 @@ export default class Events {
       EVENT_NAME = eventName
     }
 
-    eventObserver.subscribe(global, EVENT_NAME, throttle(500, e => {
+    eventObserver.subscribe(target, EVENT_NAME, throttle(0, e => {
       try {
         handler(e)
       } catch (err) {
