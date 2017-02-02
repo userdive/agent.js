@@ -1,7 +1,6 @@
 /* @flow */
 import mitt from 'mitt'
 import eventObserver from 'ui-event-observer'
-import throttle from 'throttle-debounce/throttle'
 
 import type { EventType } from './types'
 import { validate } from './browser'
@@ -12,17 +11,16 @@ interface Logger {
   error(err: any): void
 }
 
-let emitter: mitt
-let EMIT_NAME: string
-
 type Handler = MouseEventHandler
 
 export default class Events {
   logger: Logger
   name: EventType
+  emitter: mitt
+  ename: string
   constructor (emitName: string, eventEmitter: mitt, logger: Logger): void {
-    EMIT_NAME = emitName
-    emitter = eventEmitter
+    this.ename = emitName
+    this.emitter = eventEmitter
     this.logger = logger
   }
   validate (): boolean {
@@ -34,7 +32,7 @@ export default class Events {
       return
     }
 
-    emitter.emit(EMIT_NAME, Object.assign({}, data, {
+    this.emitter.emit(this.ename, Object.assign({}, data, {
       type: this.name,
       left: window.scrollX,
       top: window.scrollY
@@ -50,13 +48,13 @@ export default class Events {
       return
     }
 
-    eventObserver.subscribe(target, eventName, throttle(200, e => {
+    eventObserver.subscribe(target, eventName, e => {
       try {
         handler(e)
       } catch (err) {
         this.logger.error(err)
       }
-    }))
+    })
     this.name = eventName
   }
   off (): void {

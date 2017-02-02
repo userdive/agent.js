@@ -1,6 +1,7 @@
 /* @flow */
 import Agent from './core'
-import Click from './click'
+import Click from './events/click'
+import Scroll from './events/scroll'
 import { validate } from './browser'
 import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
@@ -11,16 +12,21 @@ function create (projectId: string, options: any): Agent {
   agent = new Agent(
     projectId,
     [
-      Click
+      Click,
+      Scroll
     ],
     Object.assign({}, OPTIONS, options)
   )
   return agent
 }
 
+function destroy () {
+  agent.destroy()
+}
+
 function send (type: SendType): void {
   if (agent.loaded && type === 'pageview') {
-    agent.destroy()
+    destroy()
   }
   agent.send(type)
 }
@@ -34,9 +40,7 @@ function set (key: any, value?: string | number): State {
 
 function finish () {
   if (validate(LISTENER.concat(['onpagehide']))) {
-    window.addEventListener('pagehide', () => {
-      agent.destroy()
-    }, false)
+    window.addEventListener('pagehide', destroy, false)
   }
 }
 

@@ -4,10 +4,10 @@ import { random } from 'faker'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
-describe('click', () => {
+describe('scroll', () => {
   const Raven = require('raven-js')
   const mitt = require('mitt')
-  const ClickEvents = require('../src/click').default
+  const ScrollEvents = require('../src/events/scroll').default
   const Logger = require('../src/logger').default
 
   let emitter, logger, instance
@@ -15,19 +15,20 @@ describe('click', () => {
   beforeEach(() => {
     logger = new Logger(Raven)
     emitter = mitt()
-    instance = new ClickEvents(random.word(), emitter, logger)
+    instance = new ScrollEvents(random.word(), emitter, logger)
   })
 
-  it('on', () => {
+  it('validate', () => {
+    assert(instance.validate())
+  })
+
+  it.skip('on', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 
-    const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    const body: any = document.body
-    body.dispatchEvent(e)
+    window.dispatchEvent(new Event('scroll'))
 
-    assert(spy.calledOnce)
+    assert(spy.called)
     spy.restore()
   })
 })

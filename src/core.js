@@ -59,7 +59,6 @@ function cacheValidator (data: Object): boolean {
 function findOrCreateClientId (opt: Options): string {
   const c = cookies.get(opt.cookieName)
   if (c) {
-    cookies.remove(opt.cookieName) // TODO remove
     return c
   }
   const id = uuid().replace(/-/g, '')
