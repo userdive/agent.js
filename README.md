@@ -2,10 +2,12 @@
 
 [![Build Status][travis-image]][travis-url] [![codecov][codecov-image]][codecov-url]
 
+[![Coverage Status](https://codecov.io/gh/uncovertruth/agent.js/branch/master/graphs/icicle.svg?token=XNSCDmIcGp)](https://codecov.io/gh/uncovertruth/agent.js)
+
 ## Install
 
 ```sh
-npm install git://github.com/uncovertruth/agent.js.git#alpha --save
+yarn add @userdive/agent
 ```
 
 [travis-image]: https://travis-ci.com/uncovertruth/agent.js.svg?token=jwBf8J1p7dtDvrhwRcod&branch=master
