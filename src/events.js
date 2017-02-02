@@ -14,12 +14,12 @@ interface Logger {
 
 let emitter: mitt
 let EMIT_NAME: string
-let EVENT_NAME: EventType
 
 type Handler = MouseEventHandler
 
 export default class Events {
   logger: Logger
+  name: EventType
   constructor (emitName: string, eventEmitter: mitt, logger: Logger): void {
     EMIT_NAME = emitName
     emitter = eventEmitter
@@ -30,12 +30,12 @@ export default class Events {
     return false
   }
   emit (data: {x: number, y: number}): void {
-    if (data.x < 0 || data.y < 0) {
+    if (data.x < 0 || data.y < 0 || !this.name) {
       return
     }
 
     emitter.emit(EMIT_NAME, Object.assign({}, data, {
-      type: EVENT_NAME,
+      type: this.name,
       left: window.scrollX,
       top: window.scrollY
     }))
@@ -50,17 +50,14 @@ export default class Events {
       return
     }
 
-    if (!EVENT_NAME) {
-      EVENT_NAME = eventName
-    }
-
-    eventObserver.subscribe(target, EVENT_NAME, throttle(0, e => {
+    eventObserver.subscribe(target, eventName, throttle(200, e => {
       try {
         handler(e)
       } catch (err) {
         this.logger.error(err)
       }
     }))
+    this.name = eventName
   }
   off (): void {
     eventObserver.unsubscribeAll()
