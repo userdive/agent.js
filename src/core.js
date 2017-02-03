@@ -96,6 +96,8 @@ function getInteractTypes (eventName: EventType): string[] {
   switch (eventName) {
     case 'click':
       return types.concat(['l', 'a'])
+    case 'scroll':
+      return types.concat(['l'])
   }
   return types
 }

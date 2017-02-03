@@ -22,27 +22,28 @@ describe('core', () => {
   const mitt = require('mitt')
   const Raven = OPTIONS.Raven
 
+  function eventFactory (target, type, emitter) {
+    return class DummyEvents extends Base {
+      validate () {
+        return true
+      }
+      on () {
+        super.on(target, type, () => {})
+        emitter.on('test', data => super.emit(data))
+      }
+    }
+  }
+
   let agent, emitter, timer
   beforeEach(() => {
     emitter = mitt()
     timer = useFakeTimers(new Date().getTime())
 
-    class DummyEvents extends Base {
-      validate () {
-        return true
-      }
-      on () {
-        super.on(document.body, 'click', () => {})
-        emitter.on('test', data => {
-          super.emit(data)
-        })
-      }
-    }
-
     agent = new Agent(
       random.alphaNumeric(),
       [
-        DummyEvents
+        eventFactory(window, 'click', emitter),
+        eventFactory(window, 'scroll', emitter)
       ],
       {
         baseUrl: internet.url(),
