@@ -2,7 +2,7 @@
 import type { Options } from './types'
 
 export const LISTENER = ['addEventListener', 'removeEventListener']
-export const SCROLL = ['scrollX', 'scrollY']
+export const SCROLL = ['pageXOffset', 'pageYOffset']
 
 export const INTERACT = 30
 export const INTERVAL = [0, 2, 2, 4, 4, 8, 8, 16] // TODO
