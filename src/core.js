@@ -142,15 +142,14 @@ function sendInteractsWithUpdate (): void {
 export default class Agent extends Store {
   logger: Logger
   loaded: boolean
-  observer: UIEventObserver
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     this.logger = new Logger(opt.Raven)
-    this.observer = new UIEventObserver()
+    const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      events.push(new Class(EMIT_NAME, emitter, this.observer, this.logger))
+      events.push(new Class(EMIT_NAME, emitter, observer, this.logger))
     })
   }
   send (type: SendType): void {
