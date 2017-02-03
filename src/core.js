@@ -13,7 +13,7 @@ import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   INTERACT as MAX_INTERACT,
   SESSION_TIME as MAX_SESSION_TIME,
-  VERSION as v
+  VERSION
 } from './constants'
 
 import {
@@ -168,7 +168,7 @@ export default class Agent extends Store {
           type: 'env',
           data: ((windowSize: Size, screenSize: Size): ClientEnvironmentsData => {
             return {
-              v,
+              v: VERSION,
               sh: screenSize.h,
               sw: screenSize.w,
               wh: windowSize.h,

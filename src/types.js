@@ -14,6 +14,11 @@ export type Options = {
   Raven: Raven
 }
 
+export type Point = {
+  x: number,
+  y: number
+}
+
 export type Size = {
   h: number,
   w: number

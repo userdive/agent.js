@@ -1,14 +1,11 @@
 /* @flow */
 import mitt from 'mitt'
 
+import Logger from './logger'
 import type { EventType } from './types'
 import { validate } from './browser'
 import { LISTENER, SCROLL } from './constants'
 import warning from './warning'
-
-interface Logger {
-  error(err: any): void
-}
 
 type Handler = MouseEventHandler
 
