@@ -11,12 +11,12 @@ type Handler = MouseEventHandler
 
 export default class Events {
   logger: Logger
-  name: EventType
   mitt: mitt
-  ename: string
+  name: string
   observer: any
+  type: EventType
   constructor (emitName: string, eventEmitter: mitt, eventObserver: any, logger: Logger): void {
-    this.ename = emitName
+    this.name = emitName
     this.mitt = eventEmitter
     this.logger = logger
     this.observer = eventObserver
@@ -26,12 +26,12 @@ export default class Events {
     return false
   }
   emit (data: {x: number, y: number}): void {
-    if (data.x < 0 || data.y < 0 || !this.name) {
+    if (data.x < 0 || data.y < 0 || !this.type) {
       return
     }
 
-    this.mitt.emit(this.ename, Object.assign({}, data, {
-      type: this.name,
+    this.mitt.emit(this.name, Object.assign({}, data, {
+      type: this.type,
       left: window.scrollX,
       top: window.scrollY
     }))
@@ -53,7 +53,7 @@ export default class Events {
         this.logger.error(err)
       }
     })
-    this.name = eventName
+    this.type = eventName
   }
   off (): void {
     this.observer.unsubscribeAll()

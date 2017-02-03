@@ -32,10 +32,12 @@ describe('events', () => {
       new UIEventObserver(),
       logger
     )
-    assert(instance.emit)
-    assert(instance.validate)
-    assert(instance.on)
-    assert(instance.off)
+    assert(instance.mitt)
+    assert(instance.observer)
+    assert(typeof instance.name === 'string')
+    assert(typeof instance.off === 'function')
+    assert(typeof instance.on === 'function')
+    assert(typeof instance.validate === 'function')
   })
 
   it('must override func', () => {
