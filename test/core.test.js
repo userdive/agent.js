@@ -8,7 +8,6 @@ import isUrl from 'is-url'
 import assert from 'assert'
 import {
   OPTIONS,
-  SESSION_TIME,
   INTERACT
 } from '../src/constants'
 
@@ -80,7 +79,7 @@ describe('core', () => {
       x: -1,
       y: -1
     })
-    timer.tick(toMin(SESSION_TIME))
+    timer.tick(toMin(30 * 60))
 
     assert(spy.called === false)
 
@@ -99,7 +98,7 @@ describe('core', () => {
       y: random.number({min: 1})
     })
 
-    timer.tick(toMin(SESSION_TIME))
+    timer.tick(toMin(30 * 60))
 
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 8)

@@ -12,7 +12,6 @@ import warning from './warning'
 import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   INTERACT as MAX_INTERACT,
-  SESSION_TIME as MAX_SESSION_TIME,
   VERSION
 } from './constants'
 
@@ -36,7 +35,6 @@ const EMIT_NAME = 'POINT'
 
 let INTERVAL: number[]
 let baseUrl: string
-let delay: number
 let emitter: mitt
 let eventId: number = 1
 let loadTime: number = 0
@@ -68,13 +66,6 @@ function findOrCreateClientId (opt: Options): string {
   return id
 }
 
-function getIntervalTime (): number {
-  if (INTERVAL.length) {
-    delay = INTERVAL.shift()
-  }
-  return delay
-}
-
 function toInt (n: number) {
   return parseInt(n, 10)
 }
@@ -85,21 +76,20 @@ function createInteractData (d: Interact): string {
   }
 
   const time: number = toInt((d.time - loadTime) / 1000, 10)
-  if (time < 0 || time > MAX_SESSION_TIME * 60) {
+  if (time < 0) {
     return ''
   }
   return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
 }
 
 function getInteractTypes (eventName: EventType): string[] {
-  const types = []
   switch (eventName) {
     case 'click':
-      return types.concat(['l', 'a'])
+      return ['l', 'a']
     case 'scroll':
-      return types.concat(['l'])
+      return ['l']
   }
-  return types
+  return []
 }
 
 function updateInteractCache (data: Object): void {
@@ -137,7 +127,10 @@ function sendInteractsWithUpdate (): void {
   sendInteracts()
 
   if (loadTime) {
-    setTimeout(sendInteractsWithUpdate, getIntervalTime() * 1000)
+    const delay = INTERVAL.shift()
+    if (delay >= 0) {
+      setTimeout(sendInteractsWithUpdate, delay * 1000)
+    }
   }
 }
 
