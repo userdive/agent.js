@@ -27,7 +27,6 @@ export default class Events {
   }
   emit (data: {x: number, y: number}): void {
     if (data.x < 0 || data.y < 0 || !this.type) {
-      this.logger.error(`failed emit (${data.x}, ${data.y}), ${this.type}`, {level: 'warning'})
       return
     }
 
