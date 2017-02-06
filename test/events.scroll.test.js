@@ -1,7 +1,6 @@
 /* @flow */
 import { describe, it, beforeEach } from 'mocha'
 import { random } from 'faker'
-import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
 describe('scroll', () => {
@@ -11,12 +10,13 @@ describe('scroll', () => {
   const Logger = require('../src/logger').default
   const UIEventObserver = require('ui-event-observer').UIEventObserver
 
-  let instance
+  let instance, emitter
 
   beforeEach(() => {
+    emitter = mitt()
     instance = new ScrollEvents(
       random.word(),
-      mitt(),
+      emitter,
       new UIEventObserver(),
       new Logger(Raven)
     )
@@ -27,12 +27,17 @@ describe('scroll', () => {
   })
 
   it('on', () => {
-    const spy = sinonSpy(instance, 'emit')
+    let data: any = {}
+    emitter.on(instance.name, res => { data = res })
     instance.on()
 
     window.dispatchEvent(new Event('scroll'))
+    assert(typeof data.x === 'number')
+    assert(typeof data.y === 'number')
+    assert(typeof data.left === 'number')
+    assert(typeof data.top === 'number')
+    assert(data.type === 'scroll')
 
-    assert(spy.called)
-    spy.restore()
+    emitter.off('*', res => { data = res })
   })
 })

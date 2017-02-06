@@ -50,7 +50,7 @@ const interacts: Interact[] = []
 const events: any[] = []
 
 function cacheValidator (data: Object): boolean {
-  if (data.x > 0 && data.y > 0 && data.type &&
+  if (data.x >= 0 && data.y >= 0 && data.type &&
     typeof data.left === 'number' && typeof data.top === 'number') {
     return true
   }
