@@ -10,7 +10,11 @@ function getPotision (w: window): Point {
 
 export default class ScrollEvents extends EventBase {
   validate (): boolean {
-    return validate(SCROLL.concat(['screenY', 'screenX']))
+    const enable = validate(SCROLL.concat(['screenY', 'screenX']))
+    if (!enable) {
+      this.logger.error('disable scroll', {level: 'warning'})
+    }
+    return enable
   }
   on () {
     super.on(window, 'scroll', () => {

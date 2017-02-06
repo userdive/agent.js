@@ -5,7 +5,11 @@ import { validate } from '../browser'
 export default class ClickEvents extends EventBase {
   validate (): boolean {
     const body: any = document.body
-    return validate(['onclick'], body)
+    const enable = validate(['onclick'], body)
+    if (!enable) {
+      this.logger.error('disable click', {level: 'warning'})
+    }
+    return enable
   }
   on () {
     super.on(document.body, 'click', (e: MouseEvent) => {

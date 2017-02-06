@@ -1,7 +1,9 @@
 /* @flow */
 import type { Raven } from './types'
 
-type RavenOptions = {}
+type RavenOptions = {
+  level: 'warning'
+}
 
 export default class Logger {
   Raven: Raven
