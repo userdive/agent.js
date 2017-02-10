@@ -12,7 +12,7 @@ export default class ScrollEvents extends EventBase {
   validate (): boolean {
     const enable = validate(SCROLL.concat(['screenY', 'screenX']))
     if (!enable) {
-      this.logger.error('disable scroll', {level: 'warning'})
+      this.logger.warning('disable scroll')
     }
     return enable
   }

@@ -7,7 +7,7 @@ export default class ClickEvents extends EventBase {
     const body: any = document.body
     const enable = validate(['onclick'], body)
     if (!enable) {
-      this.logger.error('disable click', {level: 'warning'})
+      this.logger.warning('disable click')
     }
     return enable
   }
