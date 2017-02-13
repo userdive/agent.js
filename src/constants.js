@@ -21,5 +21,6 @@ export const OPTIONS: Options = {
   baseUrl: 'https://v1.userdive.com',
   cookieName: '_ud', // TODO
   cookieDomain: '',
-  cookieExpires: 730 // TODO
+  cookieExpires: 730, // TODO
+  RAVEN_DNS: ''
 }

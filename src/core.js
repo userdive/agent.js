@@ -4,7 +4,7 @@ import { UIEventObserver } from 'ui-event-observer'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
-import { error } from './logger'
+import { setup, error } from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
 import raise from './raise'
@@ -138,6 +138,7 @@ export default class Agent extends Store {
   loaded: boolean
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
+    setup(opt.RAVEN_DNS)
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     const observer = new UIEventObserver() // singleton

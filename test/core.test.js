@@ -47,7 +47,8 @@ describe('core', () => {
         baseUrl: internet.url(),
         cookieName: random.alphaNumeric(),
         cookieDomain: random.alphaNumeric(),
-        cookieExpires: random.number()
+        cookieExpires: random.number(),
+        RAVEN_DNS: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
       }
     )
   })

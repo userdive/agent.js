@@ -9,13 +9,46 @@ describe('logger', () => {
     new Error(random.word())
   ]
 
+  function createDNS () {
+    return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
+  }
+
   afterEach(() => {
     window.Raven = undefined
+  })
+
+  it('not load', () => {
+    const error = require('../src/logger').error
+    const warning = require('../src/logger').warning
+    for (let i = 0; i < args.length; i++) {
+      assert(error(args[i]) === undefined)
+      assert(warning(args[i]) === undefined)
+    }
   })
 
   it('not setup', () => {
     const error = require('../src/logger').error
     const warning = require('../src/logger').warning
+
+    const Raven = require('raven-js')
+
+    window.Raven = Raven
+
+    for (let i = 0; i < args.length; i++) {
+      assert(error(args[i]) === undefined)
+      assert(warning(args[i]) === undefined)
+    }
+  })
+
+  it('setup', () => {
+    const error = require('../src/logger').error
+    const setup = require('../src/logger').setup
+    const warning = require('../src/logger').warning
+
+    const Raven = require('raven-js')
+
+    window.Raven = Raven
+    setup(createDNS())
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
@@ -27,9 +60,7 @@ describe('logger', () => {
     const error = require('../src/logger').error
     const warning = require('../src/logger').warning
     const Raven = require('raven-js')
-    Raven.config(
-      `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
-    ).install()
+    Raven.config(createDNS()).install()
 
     window.Raven = Raven
 
