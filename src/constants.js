@@ -15,7 +15,7 @@ export const INTERACT = 30
 export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-userdive-namespace`
-export const SCROLL = ['scrollX', 'scrollY']
+export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const VERSION = 1
 export const OPTIONS: Options = {
   baseUrl: 'https://v1.userdive.com',
