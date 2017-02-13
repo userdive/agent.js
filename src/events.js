@@ -1,28 +1,32 @@
 /* @flow */
 import mitt from 'mitt'
 
-import Logger from './logger'
-import type { EventType } from './types'
-import { validate } from './browser'
+import { error, warning } from './logger'
 import { LISTENER, SCROLL } from './constants'
-import warning from './warning'
+import { validate } from './browser'
+import type { EventType, CustomError } from './types'
+import raise from './raise'
 
 type Handler = MouseEventHandler
 
 export default class Events {
-  logger: Logger
   mitt: mitt
   name: string
   observer: any
   type: EventType
-  constructor (emitName: string, eventEmitter: mitt, eventObserver: any, logger: Logger): void {
+  constructor (emitName: string, eventEmitter: mitt, eventObserver: any): void {
     this.name = emitName
     this.mitt = eventEmitter
-    this.logger = logger
     this.observer = eventObserver
   }
+  error (err: CustomError): void {
+    error(err)
+  }
+  warning (err: CustomError): void {
+    warning(err)
+  }
   validate (): boolean {
-    warning('please override validate')
+    raise('please override validate')
     return false
   }
   emit (data: {x: number, y: number}): void {
@@ -38,7 +42,7 @@ export default class Events {
   }
   on (target: HTMLElement | window, eventName: EventType, handler: Handler): void {
     if (!target || typeof handler !== 'function') {
-      warning('please override on')
+      raise('please override on')
       return
     }
 
@@ -50,7 +54,7 @@ export default class Events {
       try {
         handler(e)
       } catch (err) {
-        this.logger.error(err)
+        error(err)
       }
     })
     this.type = eventName

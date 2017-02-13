@@ -1,17 +1,9 @@
 /* @flow */
-export interface Raven {
-  setRelease(version: string): void,
-  isSetup(): boolean,
-  captureMessage(): void,
-  captureException(): void
-}
-
 export type Options = {
   baseUrl: string,
   cookieDomain: string,
   cookieExpires: number,
   cookieName: string,
-  Raven: Raven
 }
 
 export type Point = {
@@ -83,3 +75,4 @@ export type Interact = {
 }
 
 export type EventType = 'click' | 'scroll'
+export type CustomError = string | Error

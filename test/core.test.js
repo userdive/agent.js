@@ -19,7 +19,6 @@ describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
   const mitt = require('mitt')
-  const Raven = OPTIONS.Raven
 
   function eventFactory (target, type, emitter) {
     return class DummyEvents extends Base {
@@ -48,8 +47,7 @@ describe('core', () => {
         baseUrl: internet.url(),
         cookieName: random.alphaNumeric(),
         cookieDomain: random.alphaNumeric(),
-        cookieExpires: 0,
-        Raven: Raven
+        cookieExpires: random.number()
       }
     )
   })

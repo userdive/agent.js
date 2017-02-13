@@ -1,16 +1,15 @@
 /* @flow */
-import { describe, it, beforeEach } from 'mocha'
+import { describe, it } from 'mocha'
 import { spy as sinonSpy } from 'sinon'
 import { random } from 'faker'
 import { throws } from 'assert-exception'
 import assert from 'assert'
 
 import mitt from 'mitt'
-import Raven from 'raven-js'
 
 describe('events', () => {
+  const logger: any = require('../src/logger')
   const Events = require('../src/events').default
-  const Logger = require('../src/logger').default
   const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   class DummyEvents extends Events {
@@ -19,18 +18,11 @@ describe('events', () => {
     }
   }
 
-  let logger
-
-  beforeEach(() => {
-    logger = new Logger(Raven)
-  })
-
   it('init', () => {
     const instance = new DummyEvents(
       random.word(),
       mitt(),
       new UIEventObserver(),
-      logger
     )
     assert(instance.mitt)
     assert(instance.observer)
@@ -45,7 +37,6 @@ describe('events', () => {
       random.word(),
       mitt(),
       new UIEventObserver(),
-      logger
     )
     assert(throws(() => {
       events.validate()
@@ -57,12 +48,29 @@ describe('events', () => {
     }).message)
   })
 
+  it('error', () => {
+    const events = new Events(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+    )
+    assert(events.error(random.word()) === undefined)
+  })
+
+  it('warning', () => {
+    const events = new Events(
+      random.word(),
+      mitt(),
+      new UIEventObserver(),
+    )
+    assert(events.warning(random.word()) === undefined)
+  })
+
   it('emit', () => {
     const instance = new DummyEvents(
       random.word(),
       mitt(),
       new UIEventObserver(),
-      logger
     )
     instance.emit({x: random.number(), y: random.number()})
     instance.emit({x: -1, y: -1})
@@ -73,7 +81,6 @@ describe('events', () => {
       random.word(),
       mitt(),
       new UIEventObserver(),
-      logger
     )
 
     let data
@@ -90,7 +97,6 @@ describe('events', () => {
       random.word(),
       mitt(),
       new UIEventObserver(),
-      logger
     )
     const spy = sinonSpy(logger, 'error')
     const error = random.word()

@@ -4,10 +4,10 @@ import { UIEventObserver } from 'ui-event-observer'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
-import Logger from './logger'
+import { error } from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
-import warning from './warning'
+import raise from './raise'
 
 import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
@@ -135,16 +135,14 @@ function sendInteractsWithUpdate (): void {
 }
 
 export default class Agent extends Store {
-  logger: Logger
   loaded: boolean
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
-    this.logger = new Logger(opt.Raven)
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      events.push(new Class(EMIT_NAME, emitter, observer, this.logger))
+      events.push(new Class(EMIT_NAME, emitter, observer))
     })
   }
   send (type: SendType): void {
@@ -154,7 +152,7 @@ export default class Agent extends Store {
         try {
           resourceSize = getResourceSize(document)
         } catch (err) {
-          this.logger.error(err)
+          error(err)
           return
         }
 
@@ -198,7 +196,7 @@ export default class Agent extends Store {
   }
   listen (): void {
     if (!this.loaded || !loadTime) {
-      warning('need send pageview')
+      raise('need send pageview')
       return
     }
     cache = {

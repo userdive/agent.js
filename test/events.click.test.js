@@ -5,11 +5,9 @@ import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
 describe('click', () => {
-  const Raven = require('raven-js')
   const mitt = require('mitt')
   const UIEventObserver = require('ui-event-observer').UIEventObserver
   const ClickEvents = require('../src/events/click').default
-  const Logger = require('../src/logger').default
 
   let instance
 
@@ -17,8 +15,7 @@ describe('click', () => {
     instance = new ClickEvents(
       random.word(),
       mitt(),
-      new UIEventObserver(),
-      new Logger(Raven)
+      new UIEventObserver()
     )
   })
 

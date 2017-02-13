@@ -68,7 +68,10 @@
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
+    "build": "npm-run-all build:*",
+    "build:babel": "babel src -d dist",
+    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
+    "gen-flow": "flow gen-flow-files src --out-dir dist",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
     "lint": "npm-run-all -p lint:*",

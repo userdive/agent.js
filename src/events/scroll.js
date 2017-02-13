@@ -14,7 +14,7 @@ export default class ScrollEvents extends EventBase {
   validate (): boolean {
     const enable = validate(SCROLL.concat(['pageYOffset', 'pageXOffset']))
     if (!enable) {
-      this.logger.warning('disable scroll')
+      this.warning('disable scroll')
     }
     return enable
   }

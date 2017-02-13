@@ -4,10 +4,8 @@ import { random } from 'faker'
 import assert from 'assert'
 
 describe('scroll', () => {
-  const Raven = require('raven-js')
   const mitt = require('mitt')
   const ScrollEvents = require('../src/events/scroll').default
-  const Logger = require('../src/logger').default
   const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   let instance, emitter
@@ -17,8 +15,7 @@ describe('scroll', () => {
     instance = new ScrollEvents(
       random.word(),
       emitter,
-      new UIEventObserver(),
-      new Logger(Raven)
+      new UIEventObserver()
     )
   })
 

@@ -1,34 +1,24 @@
 /* @flow */
-import type { Raven } from './types'
-
+import type { CustomError } from './types'
 type RavenOptions = {
   level: 'warning'
 }
 
-type CustomError = string | Error
+function capture (w: window, err: CustomError, options: ?RavenOptions): void {
+  if (!(w.Raven && w.Raven.isSetup())) {
+    return
+  }
+  w.Raven.setRelease('USERDIVE_AGENT_VERSION')
+  if (typeof err === 'string') {
+    w.Raven.captureMessage(err, options)
+    return
+  }
+  w.Raven.captureException(err, options)
+}
 
-export default class Logger {
-  Raven: Raven
-  constructor (Raven: Raven): void {
-    if (Raven.isSetup()) {
-      Raven.setRelease('USERDIVE_AGENT_VERSION')
-      this.Raven = Raven
-    }
-  }
-  capture (err: CustomError, options: ?RavenOptions): void {
-    if (!this.Raven) {
-      return
-    }
-    if (typeof err === 'string') {
-      this.Raven.captureMessage(err, options)
-      return
-    }
-    this.Raven.captureException(err, options)
-  }
-  error (err: CustomError): void {
-    this.capture(err)
-  }
-  warning (err: CustomError): void {
-    this.capture(err, {level: 'warning'})
-  }
+export function error (err: CustomError): void {
+  capture(window, err)
+}
+export function warning (err: CustomError): void {
+  capture(window, err, {level: 'warning'})
 }
