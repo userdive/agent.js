@@ -2,7 +2,8 @@
 import type { CustomError } from './types'
 
 type RavenOptions = {
-  level: 'warning'
+  level: 'warning' | 'error',
+  extra: ?string
 }
 
 let Raven
@@ -32,9 +33,9 @@ function capture (w: window, err: CustomError, options: ?RavenOptions): void {
   }
 }
 
-export function error (err: CustomError): void {
-  capture(window, err)
+export function error (err: CustomError, extra: ?string): void {
+  capture(window, err, {level: 'error', extra})
 }
-export function warning (err: CustomError): void {
-  capture(window, err, {level: 'warning'})
+export function warning (err: CustomError, extra: ?string): void {
+  capture(window, err, {level: 'warning', extra})
 }
