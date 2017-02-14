@@ -69,7 +69,7 @@
   },
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:babel": "babel src -d dist",
+    "build:babel": "babel src -d lib",
     "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
     "gen-flow": "flow gen-flow-files src --out-dir dist",
     "clean": "rimraf dist coverage",

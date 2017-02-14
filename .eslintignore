@@ -1,5 +1,5 @@
-node_modules/
-@userdive/
 coverage/
 dist/
 flow-typed/
+lib/
+node_modules/

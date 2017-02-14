@@ -1,6 +1,7 @@
 /* @flow */
-import Agent from './agent'
 import Raven from 'raven-js'
+import factory from '../global'
+import Agent from '../agent'
 
 export class DebugAgent extends Agent {
   static create (projectId: string, options: any) {
@@ -9,4 +10,4 @@ export class DebugAgent extends Agent {
   }
 }
 
-export default Agent
+factory(DebugAgent)

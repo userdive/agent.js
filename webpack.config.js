@@ -8,7 +8,8 @@ const date = new Date()
 
 module.exports = {
   entry: {
-    'agent': path.join(__dirname, 'src/index.js')
+    'agent.d': path.join(__dirname, 'src/entrypoint/debug.js'),
+    'agent': path.join(__dirname, 'src/entrypoint/index.js')
   },
   output: {
     path: path.join(__dirname, 'dist/'),
