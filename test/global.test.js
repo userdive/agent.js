@@ -50,7 +50,8 @@ describe('global', () => {
 
     assert(window[GLOBAL_NAME]['q'].length)
 
-    require('../src/global').default
+    const factory = require('../src/global').default
+    factory(require('../src/agent').default)
 
     assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
 

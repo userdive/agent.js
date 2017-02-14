@@ -1,15 +1,15 @@
 /* @flow */
-import Agent from './core'
+import AgentCore from './core'
 import Click from './events/click'
 import Scroll from './events/scroll'
 import { validate } from './browser'
 import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
 
-let agent: Agent
+let agent: AgentCore
 
-function create (projectId: string, options: any): Agent {
-  agent = new Agent(
+function create (projectId: string, options: any): AgentCore {
+  agent = new AgentCore(
     projectId,
     [
       Click,
