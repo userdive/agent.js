@@ -4,7 +4,7 @@ import { UIEventObserver } from 'ui-event-observer'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
-import { setup, raise } from './logger'
+import { setup, raise, warning } from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
 
@@ -30,6 +30,7 @@ let baseUrl: string
 let emitter: mitt
 let eventId: number = 1
 let loadTime: number = 0
+let stop: boolean = false
 
 let cache: {
   l: Object,
@@ -85,11 +86,14 @@ function getInteractTypes (eventName: EventType): string[] {
 }
 
 function updateInteractCache (data: Object): void {
-  if (cacheValidator(data)) {
+  if (cacheValidator(data) && !stop) {
     const types = getInteractTypes(data.type)
     types.forEach(type => {
       cache[type] = Object.assign({}, data, {type})
     })
+  } else {
+    warning(`failed ${data.type}, {x: ${data.x}, y: ${data.y}, top: ${data.top}, lelt: ${data.left}}`)
+    stop = true
   }
 }
 
@@ -118,7 +122,7 @@ function sendInteractsWithUpdate (): void {
 
   sendInteracts()
 
-  if (loadTime) {
+  if (loadTime && !stop) {
     const delay = INTERVAL.shift()
     if (delay >= 0) {
       setTimeout(sendInteractsWithUpdate, delay * 1000)
