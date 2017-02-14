@@ -10,7 +10,7 @@ describe('logger', () => {
     new Error(random.word())
   ]
 
-  function createDNS () {
+  function createDSN () {
     return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
   }
 
@@ -33,7 +33,7 @@ describe('logger', () => {
     const setup = require('../src/logger').setup
     const warning = require('../src/logger').warning
 
-    setup(createDNS(), null)
+    setup(createDSN(), null)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
@@ -42,7 +42,7 @@ describe('logger', () => {
 
     const Raven = require('raven-js')
 
-    setup(createDNS(), Raven)
+    setup(createDSN(), Raven)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
