@@ -57,12 +57,15 @@
   "engine": {
     "node": "> 5"
   },
+  "files": [
+    "lib/"
+  ],
   "homepage": "https://github.com/userdive/agent.js#readme",
   "keywords": [
     "userdive"
   ],
   "license": "UNLICENSED",
-  "main": "dist/index.js",
+  "main": "lib/agent.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
@@ -71,9 +74,9 @@
     "build": "npm-run-all build:*",
     "build:babel": "babel src -d lib",
     "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
-    "gen-flow": "flow gen-flow-files src --out-dir dist",
     "clean": "rimraf dist coverage",
     "codecov": "nyc report --reporter=lcov > coverage.lcov && codecov -t $CODECOV_TOKEN",
+    "gen-flow": "flow gen-flow-files src --out-dir lib",
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
