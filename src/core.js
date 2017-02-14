@@ -92,7 +92,7 @@ function updateInteractCache (data: Object): void {
       cache[type] = Object.assign({}, data, {type})
     })
   } else {
-    warning(`failed ${data.type}`, `{x: ${data.x}, y: ${data.y}, top: ${data.top}, lelt: ${data.left}}`)
+    warning(`failed ${data.type}`, data)
     stop = true
   }
 }
