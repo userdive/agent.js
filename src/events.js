@@ -1,11 +1,10 @@
 /* @flow */
 import mitt from 'mitt'
 
-import { error, warning } from './logger'
+import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
 import { validate } from './browser'
 import type { EventType, CustomError } from './types'
-import raise from './raise'
 
 type Handler = MouseEventHandler
 

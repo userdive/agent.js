@@ -4,7 +4,7 @@ export type Options = {
   cookieDomain: string,
   cookieExpires: number,
   cookieName: string,
-  RAVEN_DNS: string
+  RAVEN_DSN: string
 }
 
 export type Point = {

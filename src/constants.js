@@ -22,5 +22,5 @@ export const OPTIONS: Options = {
   cookieName: '_ud', // TODO
   cookieDomain: '',
   cookieExpires: 730, // TODO
-  RAVEN_DNS: ''
+  RAVEN_DSN: ''
 }

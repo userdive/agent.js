@@ -1,12 +1,17 @@
 /* @flow */
 import type { CustomError } from './types'
-import raise from './raise'
 type RavenOptions = {
   level: 'warning'
 }
 
 let RAVEN_DNS = ''
 let Raven
+
+export function raise (msg: string) {
+  if (process.env.NODE_ENV !== 'production') {
+    throw new Error(msg)
+  }
+}
 
 export function setup (DNS: string) {
   if (!RAVEN_DNS && DNS) {

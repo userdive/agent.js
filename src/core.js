@@ -4,30 +4,22 @@ import { UIEventObserver } from 'ui-event-observer'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
-import { setup, error } from './logger'
+import { setup, raise } from './logger'
 import Store from './store'
 import { get, obj2query } from './requests'
-import raise from './raise'
 
 import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
-  INTERACT as MAX_INTERACT,
-  VERSION
+  INTERACT as MAX_INTERACT
 } from './constants'
 
-import {
-  getWindowSize,
-  getResourceSize,
-  getScreenSize
-} from './browser'
+import { getEnv } from './browser'
 
 import type {
-  ClientEnvironmentsData,
   EventType,
   Interact,
   Options,
   SendType,
-  Size,
   State
 } from './types'
 
@@ -138,7 +130,7 @@ export default class Agent extends Store {
   loaded: boolean
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
-    setup(opt.RAVEN_DNS)
+    setup(opt.RAVEN_DSN)
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     const observer = new UIEventObserver() // singleton
@@ -149,27 +141,14 @@ export default class Agent extends Store {
   send (type: SendType): void {
     switch (type) {
       case 'pageview':
-        let resourceSize: {h: number, w: number}
-        try {
-          resourceSize = getResourceSize(document)
-        } catch (err) {
-          error(err)
+        const env = getEnv()
+        if (!env) {
           return
         }
 
         const state: State = this.merge({
           type: 'env',
-          data: ((windowSize: Size, screenSize: Size): ClientEnvironmentsData => {
-            return {
-              v: VERSION,
-              sh: screenSize.h,
-              sw: screenSize.w,
-              wh: windowSize.h,
-              ww: windowSize.w,
-              h: resourceSize.h,
-              w: resourceSize.w
-            }
-          })(getWindowSize(window), getScreenSize(screen))
+          data: env
         })
 
         INTERVAL = INTERVAL_DEFAULT_SETTING.concat()

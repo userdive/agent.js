@@ -1,12 +1,12 @@
 /* @flow */
 import { describe, it, before, beforeEach, afterEach } from 'mocha'
-import assert from 'assert'
 import { random, internet } from 'faker'
+import assert from 'assert'
 
 import { NAMESPACE } from '../src/constants'
 const GLOBAL_NAME: string = random.word()
 
-describe('index', () => {
+describe('global', () => {
   before(() => {
     const id = random.word()
 
@@ -50,7 +50,7 @@ describe('index', () => {
 
     assert(window[GLOBAL_NAME]['q'].length)
 
-    require('../src').default
+    require('../src/global').default
 
     assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
 
