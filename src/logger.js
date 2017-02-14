@@ -1,10 +1,10 @@
 /* @flow */
 import type { CustomError } from './types'
+
 type RavenOptions = {
   level: 'warning'
 }
 
-let RAVEN_DNS = ''
 let Raven
 
 export function raise (msg: string) {
@@ -13,30 +13,16 @@ export function raise (msg: string) {
   }
 }
 
-export function setup (DNS: string) {
-  if (!RAVEN_DNS && DNS) {
-    RAVEN_DNS = DNS
-    install(window)
-  }
-}
-
-function install (w: window) {
-  if (!w.Raven || w.Raven.isSetup() || Raven) {
+export function setup (DSN: string, raven: any) {
+  if (!DSN || !raven) {
     return
   }
-  try {
-    Raven = w.Raven.noConflict()
-    Raven.config(RAVEN_DNS).install()
-    Raven.setRelease('USERDIVE_AGENT_VERSION')
-  } catch (err) {
-    raise(err)
-  }
+  Raven = raven
+  Raven.config(DSN).install()
+  Raven.setRelease('USERDIVE_AGENT_VERSION')
 }
 
 function capture (w: window, err: CustomError, options: ?RavenOptions): void {
-  if (!Raven) {
-    install(window)
-  }
   if (Raven && Raven.isSetup()) {
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)

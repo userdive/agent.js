@@ -1,7 +1,8 @@
 /* @flow */
-import { describe, it, afterEach } from 'mocha'
-import assert from 'assert'
+import { describe, it } from 'mocha'
 import { random } from 'faker'
+import { throws } from 'assert-exception'
+import assert from 'assert'
 
 describe('logger', () => {
   const args = [
@@ -13,27 +14,14 @@ describe('logger', () => {
     return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
   }
 
-  afterEach(() => {
-    window.Raven = undefined
-  })
-
-  it('not load', () => {
-    const error = require('../src/logger').error
-    const warning = require('../src/logger').warning
-    for (let i = 0; i < args.length; i++) {
-      assert(error(args[i]) === undefined)
-      assert(warning(args[i]) === undefined)
-    }
+  it('raise', () => {
+    const raise = require('../src/logger').raise
+    assert(throws(() => raise(random.word())).message)
   })
 
   it('not setup', () => {
     const error = require('../src/logger').error
     const warning = require('../src/logger').warning
-
-    const Raven = require('raven-js')
-
-    window.Raven = Raven
-
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
       assert(warning(args[i]) === undefined)
@@ -45,24 +33,16 @@ describe('logger', () => {
     const setup = require('../src/logger').setup
     const warning = require('../src/logger').warning
 
-    const Raven = require('raven-js')
-
-    window.Raven = Raven
-    setup(createDNS())
+    setup(createDNS(), null)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
       assert(warning(args[i]) === undefined)
     }
-  })
 
-  it('after setup', () => {
-    const error = require('../src/logger').error
-    const warning = require('../src/logger').warning
     const Raven = require('raven-js')
-    Raven.config(createDNS()).install()
 
-    window.Raven = Raven
+    setup(createDNS(), Raven)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)

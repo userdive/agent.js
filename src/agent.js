@@ -7,47 +7,35 @@ import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
 
 let agent: AgentCore
-
-function create (projectId: string, options: any): AgentCore {
-  agent = new AgentCore(
-    projectId,
-    [
-      Click,
-      Scroll
-    ],
-    Object.assign({}, OPTIONS, options)
-  )
-  return agent
-}
-
 function destroy () {
   agent.destroy()
 }
 
-function send (type: SendType): void {
-  if (agent.loaded && type === 'pageview') {
-    destroy()
+export default class Agent {
+  static create (projectId: string, options: any): AgentCore {
+    agent = new AgentCore(
+      projectId,
+      [
+        Click,
+        Scroll
+      ],
+      Object.assign({}, OPTIONS, options)
+    )
+    if (validate(LISTENER.concat(['onpagehide']))) {
+      window.addEventListener('pagehide', destroy, false)
+    }
+    return agent
   }
-  agent.send(type)
-}
-
-function set (key: any, value?: string | number): State {
-  if (key && value) {
-    return agent.set(key, value)
+  static send (type: SendType): void {
+    if (agent.loaded && type === 'pageview') {
+      destroy()
+    }
+    agent.send(type)
   }
-  return agent.mergeDeep(key)
-}
-
-function finish () {
-  if (validate(LISTENER.concat(['onpagehide']))) {
-    window.addEventListener('pagehide', destroy, false)
+  static set (key: any, value?: string | number): State {
+    if (key && value) {
+      return agent.set(key, value)
+    }
+    return agent.mergeDeep(key)
   }
-}
-
-finish()
-
-export default {
-  'create': create,
-  'send': send,
-  'set': set
 }

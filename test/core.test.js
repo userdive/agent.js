@@ -48,7 +48,8 @@ describe('core', () => {
         cookieName: random.alphaNumeric(),
         cookieDomain: random.alphaNumeric(),
         cookieExpires: random.number(),
-        RAVEN_DSN: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
+        RAVEN_DSN: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`,
+        Raven: undefined
       }
     )
   })

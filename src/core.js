@@ -130,7 +130,7 @@ export default class Agent extends Store {
   loaded: boolean
   constructor (id: string, eventsClass: any[], opt: Options): void {
     super()
-    setup(opt.RAVEN_DSN)
+    setup(opt.RAVEN_DSN, opt.Raven)
     baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
     emitter = mitt()
     const observer = new UIEventObserver() // singleton
