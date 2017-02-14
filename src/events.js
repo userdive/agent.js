@@ -3,7 +3,7 @@ import mitt from 'mitt'
 
 import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
-import { validate } from './browser'
+import { validate, getOffset } from './browser'
 import type { EventType, CustomError } from './types'
 
 type Handler = MouseEventHandler
@@ -33,10 +33,12 @@ export default class Events {
       return
     }
 
+    const { x, y } = getOffset(window)
+
     this.mitt.emit(this.name, Object.assign({}, data, {
       type: this.type,
-      left: window.scrollX,
-      top: window.scrollY
+      left: x,
+      top: y
     }))
   }
   on (target: HTMLElement | window, eventName: EventType, handler: Handler): void {

@@ -1,13 +1,12 @@
 /* @flow */
 import EventBase from '../events'
-import { validate } from '../browser'
+import { validate, getOffset } from '../browser'
 import { SCROLL } from '../constants'
 import type { Point } from '../types'
 
-function getPotision (w: window): Point {
-  const offsetX = w.scrollX || w.pageXOffset
-  const offsetY = w.scrollY || w.pageYOffset
-  return {x: offsetX + w.screenX, y: offsetY + (w.screenY / 2)}
+function getPotision (w, window): Point {
+  const { x, y } = getOffset(w)
+  return {x: x + w.screenX, y: y + (w.screenY / 2)}
 }
 
 export default class ScrollEvents extends EventBase {

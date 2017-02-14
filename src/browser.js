@@ -25,6 +25,13 @@ function getScreenSize (s: {height: number, width: number}): Size {
   }
 }
 
+export function getOffset (w: window) {
+  return {
+    x: w.scrollX || w.pageXOffset,
+    y: w.scrollY || w.pageYOffset
+  }
+}
+
 export function getEnv (): ?ClientEnvironmentsData {
   try {
     const screenSize = getScreenSize(screen)
