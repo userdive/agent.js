@@ -77,5 +77,5 @@ export type Interact = {
   top: number
 }
 
-export type EventType = 'click' | 'scroll'
+export type EventType = 'click' | 'scroll' | 'touchend'
 export type CustomError = string | Error

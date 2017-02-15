@@ -78,6 +78,7 @@ function createInteractData (d: Interact): string {
 function getInteractTypes (eventName: EventType): string[] {
   switch (eventName) {
     case 'click':
+    case 'touchend':
       return ['l', 'a']
     case 'scroll':
       return ['l']

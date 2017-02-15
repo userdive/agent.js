@@ -6,7 +6,7 @@ import { LISTENER, SCROLL } from './constants'
 import { validate, getOffset } from './browser'
 import type { EventType, CustomError } from './types'
 
-type Handler = MouseEventHandler
+type Handler = MouseEventHandler | TouchEventHandler
 
 export default class Events {
   mitt: mitt

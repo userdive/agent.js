@@ -2,6 +2,7 @@
 import AgentCore from './core'
 import Click from './events/click'
 import Scroll from './events/scroll'
+import TouchEnd from './events/touch'
 import { validate } from './browser'
 import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
@@ -17,7 +18,8 @@ export default class Agent {
       projectId,
       [
         Click,
-        Scroll
+        Scroll,
+        TouchEnd
       ],
       Object.assign({}, OPTIONS, options)
     )

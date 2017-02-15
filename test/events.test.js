@@ -85,7 +85,8 @@ describe('events', () => {
 
     let data
 
-    instance.on(document, 'click', (e) => { data = e })
+    const handler: any = (e) => { data = e }
+    instance.on(document, 'click', handler)
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
     document.dispatchEvent(e)
@@ -100,7 +101,8 @@ describe('events', () => {
     )
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
-    instance.on(document, 'click', (e) => { throw new Error(error) })
+    const handler: any = (e) => { throw new Error(error) }
+    instance.on(document, 'click', handler)
     const e = document.createEvent('MouseEvents')
     e.initEvent('click', false, true)
     document.dispatchEvent(e)
@@ -120,7 +122,7 @@ describe('events', () => {
       new UIEventObserver(),
       logger
     )
-    instance.on(document, 'click', (e) => { throw new Error(error) })
+    instance.on(document, 'click', handler)
   })
 
   it('off', () => {
