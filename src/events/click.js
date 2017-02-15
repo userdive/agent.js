@@ -4,8 +4,7 @@ import { validate } from '../browser'
 
 export default class ClickEvents extends EventBase {
   validate (): boolean {
-    const body: any = document.body
-    const enable = validate(['onclick'], body)
+    const enable = validate(['onclick'], document.body)
     if (!enable) {
       this.warning('disable click')
     }
