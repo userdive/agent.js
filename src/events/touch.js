@@ -2,7 +2,7 @@
 import EventBase from '../events'
 import { validate } from '../browser'
 
-export default class ClickEvents extends EventBase {
+export default class TouchEvents extends EventBase {
   validate (): boolean {
     const enable = validate(['ontouchend'], document.body)
     if (!enable) {
