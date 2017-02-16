@@ -28,14 +28,14 @@ after_success:
 - npm run coverage:$BROWSER
 - |
 
-    [[ $BROWSER = 'sp']] && $(npm bin)/set-up-ssh --key "$encrypted_c9174680005e_key" \
+    '[ "$BROWSER" == "sp"] && $(npm bin)/set-up-ssh --key "$encrypted_c9174680005e_key" \
                           --iv "$encrypted_c9174680005e_iv" \
-                          --path-encrypted-key ".travis/github_deploy_key.enc"
-    [[ $BROWSER = 'sp']] && $(npm bin)/update-branch --commands "npm run build" \
+                          --path-encrypted-key ".travis/github_deploy_key.enc"'
+    '[ "$BROWSER" = "sp"] && $(npm bin)/update-branch --commands "npm run build" \
                              --commit-message "[ci skip] build :robot:" \
                              --directory "dist" \
                              --distribution-branch "gh-pages" \
-                             --source-branch "master"
+                             --source-branch "master"'
 notifications:
   email: false
   slack:
