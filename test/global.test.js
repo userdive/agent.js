@@ -25,14 +25,17 @@ describe('global', () => {
     set(document.getElementById(id))
   })
 
-  function createEntry (global, name) {
-    return global[name] || function () {
-      (global[name].q = global[name].q || []).push(arguments)
-    }
-  }
-
   beforeEach(() => {
-    delete require.cache['../src']
+    function createEntry (global, name) {
+      return global[name] || function () {
+        (global[name].q = global[name].q || []).push(arguments)
+      }
+    }
+
+    window[GLOBAL_NAME] = createEntry(window, GLOBAL_NAME)
+
+    assert(window[GLOBAL_NAME])
+    assert(window[GLOBAL_NAME]['q'] === undefined)
   })
 
   afterEach(() => {
@@ -40,18 +43,25 @@ describe('global', () => {
   })
 
   it('find global', () => {
-    window[GLOBAL_NAME] = createEntry(window, GLOBAL_NAME)
-
-    assert(window[GLOBAL_NAME])
-    assert(window[GLOBAL_NAME]['q'] === undefined)
-
     window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url())
-    assert(window[GLOBAL_NAME]['q'])
-
     assert(window[GLOBAL_NAME]['q'].length)
 
-    const factory = require('../src/global').default
-    factory(require('../src/agent').default)
+    require('../src/entrypoint/')
+
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+
+    const agent = window[GLOBAL_NAME](
+      'create', random.alphaNumeric(), {}, internet.url()
+    )
+    assert(agent.send)
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+    assert(window[GLOBAL_NAME]['q'] === undefined)
+  })
+
+  it('debug', () => {
+    window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url())
+    assert(window[GLOBAL_NAME]['q'].length)
+    require('../src/entrypoint/debug')
 
     assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
 

@@ -4,7 +4,7 @@ import { random, internet } from 'faker'
 import { stub } from 'sinon'
 import assert from 'assert'
 
-describe('api', () => {
+describe('agent', () => {
   const AgentCore = require('../src/core').default
   const agent = require('../src/agent').default
 
