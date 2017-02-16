@@ -1,10 +1,11 @@
 /* @flow */
+import { OPTIONS, LISTENER } from './constants'
+import { validate } from './browser'
 import AgentCore from './core'
 import Click from './events/click'
+import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
-import { validate } from './browser'
-import { OPTIONS, LISTENER } from './constants'
 import type { SendType, State } from './types'
 
 let agent: AgentCore
@@ -18,6 +19,7 @@ export default class Agent {
       projectId,
       [
         Click,
+        MouseMove,
         Scroll,
         TouchEnd
       ],

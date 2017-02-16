@@ -77,7 +77,7 @@
     "ci:jsdom": "npm run test",
     "ci:pc": "cross-env BROWSER=pc npm run karma",
     "ci:sp": "cross-env BROWSER=sp npm run karma",
-    "clean": "rimraf dist coverage",
+    "clean": "rimraf dist coverage lib",
     "coverage:jsdom": "echo 'nothing to do'",
     "coverage:pc": "echo 'nothing to do'",
     "coverage:sp": "codecov -t $CODECOV_TOKEN -f ./coverage/sp/*/lcov.info",

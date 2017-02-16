@@ -81,6 +81,7 @@ function getInteractTypes (eventName: EventType): string[] {
     case 'touchend':
       return ['l', 'a']
     case 'scroll':
+    case 'mousemove':
       return ['l']
   }
   return []
