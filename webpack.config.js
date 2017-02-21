@@ -13,8 +13,10 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist/'),
-    filename: '[name].min.js'
+    filename: '[name].min.js',
+    sourceMapFilename: '[name].min.map'
   },
+  devtool: 'cheap-source-map',
   module: {
     rules: [
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
