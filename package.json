@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -30,7 +30,6 @@
     "eslint": "^3.16.0",
     "faker": "^4.0.0",
     "flow-bin": "^0.39.0",
-    "husky": "^0.13.1",
     "is-url": "^1.2.2",
     "jsdom": "^9.11.0",
     "jsdom-global": "^2.1.1",
@@ -87,7 +86,7 @@
     "lint:flow": "flow",
     "prebuild": "npm run clean",
     "prekarma": "npm run clean",
-    "prepush": "npm test",
+    "prepublish": "npm run build",
     "pretest": "npm-run-all -p clean",
     "test": "npm-run-all -p test:*",
     "test:lint": "npm run lint",
