@@ -1,5 +1,4 @@
 codecov:
-  bot: userdivebot
   notify:
     require_ci_to_pass: yes
 
