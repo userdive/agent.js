@@ -19,9 +19,13 @@
 
 > TODO
 
+## Contribute
+
+PRs accepted. [join us](https://www.wantedly.com/companies/uncovertruth/projects)
+
 ## License
 
- © UNCOVER TRUTH Inc
+This library is licensed under GPLv3. Full license text is available in [LICENSE](https://github.com/userdive/agent.js/blob/master/LICENSE)
 
 [npm-v-img]: https://badge.fury.io/js/%40userdive%2Fagent.js.svg
 [npm-v-url]: https://badge.fury.io/js/%40userdive%2Fagent.js
