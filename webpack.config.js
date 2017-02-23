@@ -12,9 +12,9 @@ module.exports = {
     'agent': path.join(__dirname, 'src/entrypoint/index.js')
   },
   output: {
-    path: path.join(__dirname, 'dist/'),
-    filename: '[name].min.js',
-    sourceMapFilename: '[name].min.map'
+    path: path.join(__dirname, 'lib/build/'),
+    filename: '[name].js',
+    sourceMapFilename: '[name].map'
   },
   devtool: 'cheap-source-map',
   module: {
