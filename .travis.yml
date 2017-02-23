@@ -16,8 +16,6 @@ env:
   - BROWSER=sp
   - BROWSER=pc
   - BROWSER=jsdom
-  global:
-    secure: "S75SyqTXZ/SoW2DuyFeKSdnMjMcis7i6IHCBS3SRteO/VSObs6+2FdkofolBfI77n/34gX/UZBsGPqLtcVVJ+PFb54vj4QYNuVXep2OvTryeTeOnmr0PK7FicxQRDMtYNuSLvRgmly9XUDL0Zvhao7pk8PT1FEJjywfd8DrWdeBHR2Z6wJ+g4Al3VHV+1ypDAmMs2lkDys3dhqqAGYPMPTLJnTPPVOOqWlv+xVrd9N0o4JCm3y+ckGiOtecAOV4taI4J3JXpJ2r44Bb9BPKeZgdnHfnVg8S+ZRV5jr3oxLL+Qg6o6OvpjrKk2EhRQPJUVpDyq7LuIP1LUQwavt7weHYM+zAmxok04XhqXqMMAvjn9W++q3RryxDeaiwylUwcE/4eXtcd87dfUaOQnPdX/xlnqtMMGSfA8qsUNUZKdUORfRIO3oF/bxwCOPcePA1h83PuKd8qvc7w+nsBN4FwrhL9pqx8FI6n8Qa8NOA5xDG0r3Hnb3dB4iSoIZfKJUdRPWbkGk0DFrVMPPLeauGhGTJ9J0DyX1ZIzc5LkKmeFnyDV/Uv3hxSjLkfgHZyC+1+2fDtZNQeVLmNGmK5aM1M3oUmWKlZ5dCSjmqTzHip2G6Y1zyMLrmreNfR/KAwVFZ4P7aXvM8QH0cyHWIogn2w75CwtmIApDeFqwCUfpJJNJQ="
 before_install:
 - export CHROME_BIN=chromium-browser
 - export DISPLAY=:99.0
@@ -26,16 +24,6 @@ script:
 - npm run ci:$BROWSER
 after_success:
 - npm run coverage:$BROWSER
-- |
-
-    $(npm bin)/set-up-ssh --key "$encrypted_c9174680005e_key" \
-                          --iv "$encrypted_c9174680005e_iv" \
-                          --path-encrypted-key ".travis/github_deploy_key.enc"
-    $(npm bin)/update-branch --commands "npm run build" \
-                             --commit-message "[ci skip] build :robot:" \
-                             --directory "dist" \
-                             --distribution-branch "gh-pages" \
-                             --source-branch "master"
 notifications:
   email: false
   slack:
