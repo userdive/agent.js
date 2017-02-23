@@ -1,18 +1,10 @@
 # @userdive/agent
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
-
-[![Build Status][travis-image]][travis-url] [![codecov][codecov-image]][codecov-url]
+[![Build Status][travis-image]][travis-url] [![codecov][codecov-image]][codecov-url] [![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
 
 [![Coverage Status](https://codecov.io/gh/uncovertruth/agent.js/branch/master/graphs/icicle.svg?token=XNSCDmIcGp)](https://codecov.io/gh/uncovertruth/agent.js)
 
-## Install
-
-```sh
-yarn add @userdive/agent
-```
-
-[travis-image]: https://travis-ci.com/uncovertruth/agent.js.svg?token=jwBf8J1p7dtDvrhwRcod&branch=master
-[travis-url]: https://travis-ci.com/uncovertruth/agent.js
-[codecov-image]: https://codecov.io/gh/uncovertruth/agent.js/branch/master/graph/badge.svg?token=XNSCDmIcGp
-[codecov-url]: https://codecov.io/gh/uncovertruth/agent.js
+[travis-image]: https://travis-ci.org/userdive/agent.js.svg?branch=master
+[travis-url]: https://travis-ci.org/userdive/agent.js
+[codecov-image]: https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/userdive/agent.js
