@@ -1,0 +1,9 @@
+[ignore]
+.*/.cache/.*
+.*/.nyc_output/.*
+
+[include]
+
+[libs]
+
+[options]

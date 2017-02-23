@@ -1,0 +1,97 @@
+{
+  "name": "@userdive/agent",
+  "description": "webpage tracking agent",
+  "version": "0.0.0",
+  "author": "UNCOVER TRUTH Inc.",
+  "bugs": {
+    "url": "https://github.com/userdive/agent.js/issues"
+  },
+  "dependencies": {
+    "js-cookie": "^2.1.3",
+    "mitt": "^1.0.1",
+    "raven-js": "^3.11.0",
+    "ui-event-observer": "^1.1.0",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "@alrra/travis-scripts": "^3.0.1",
+    "@uncovertruth/eslint-config-flowtype": "^0.2.0",
+    "assert-exception": "^1.1.0",
+    "babel-cli": "^6.23.0",
+    "babel-istanbul-loader": "^0.1.0",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-register": "^6.23.0",
+    "browser-env": "^2.0.21",
+    "codecov": "^1.0.1",
+    "cross-env": "^3.1.4",
+    "eslint": "^3.16.0",
+    "faker": "^4.0.0",
+    "flow-bin": "^0.39.0",
+    "husky": "^0.13.1",
+    "is-url": "^1.2.2",
+    "jsdom": "^9.11.0",
+    "jsdom-global": "^2.1.1",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.2",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-webpack": "^2.0.2",
+    "mocha": "^3.2.0",
+    "npm-run-all": "^4.0.1",
+    "nyc": "^10.1.2",
+    "power-assert": "^1.4.2",
+    "rimraf": "^2.6.0",
+    "sinon": "^2.0.0-pre.5",
+    "string-replace-loader": "^1.0.5",
+    "uglifyjs-webpack-plugin": "^0.2.0",
+    "webpack": "^2.2.1",
+    "webpack-bundle-size-analyzer": "^2.4.0"
+  },
+  "engine": {
+    "node": "> 5"
+  },
+  "files": [
+    "lib/"
+  ],
+  "homepage": "https://github.com/userdive/agent.js#readme",
+  "keywords": [
+    "userdive"
+  ],
+  "license": "UNLICENSED",
+  "main": "lib/agent.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/uncovertruth/agent.js.git"
+  },
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:babel": "babel src -d lib",
+    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
+    "ci:jsdom": "npm run test",
+    "ci:pc": "cross-env BROWSER=pc npm run karma",
+    "ci:sp": "cross-env BROWSER=sp npm run karma",
+    "clean": "rimraf dist coverage lib",
+    "coverage:jsdom": "echo 'nothing to do'",
+    "coverage:pc": "echo 'nothing to do'",
+    "coverage:sp": "codecov -t $CODECOV_TOKEN -f ./coverage/sp/*/lcov.info",
+    "gen-flow": "flow gen-flow-files src --out-dir lib",
+    "karma": "karma start --singleRun",
+    "lint": "npm-run-all -p lint:*",
+    "lint:es": "eslint . --cache",
+    "lint:flow": "flow",
+    "prebuild": "npm run clean",
+    "prekarma": "npm run clean",
+    "prepush": "npm test",
+    "pretest": "npm-run-all -p clean",
+    "test": "npm-run-all -p test:*",
+    "test:lint": "npm run lint",
+    "test:mocha": "cross-env BROWSER=jsdom nyc mocha -- test"
+  }
+}

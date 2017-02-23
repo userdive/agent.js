@@ -1,0 +1,13 @@
+codecov:
+  bot: userdivebot
+  notify:
+    require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "90...100"
+
+comment:
+  layout: "header, diff, changes, sunburst, uncovered, tree"
+  behavior: new
