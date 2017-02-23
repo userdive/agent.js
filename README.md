@@ -1,5 +1,7 @@
 # @userdive/agent
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
+
 [![Build Status][travis-image]][travis-url] [![codecov][codecov-image]][codecov-url]
 
 [![Coverage Status](https://codecov.io/gh/uncovertruth/agent.js/branch/master/graphs/icicle.svg?token=XNSCDmIcGp)](https://codecov.io/gh/uncovertruth/agent.js)
