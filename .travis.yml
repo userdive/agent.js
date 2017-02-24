@@ -11,8 +11,8 @@ matrix:
   allow_failures:
     - env: "CI_MODE=sauce"
 script:
-- npm run ci:$BROWSER
+- npm run ci:$CI_MODE
 after_success:
-- npm run coverage:$BROWSER
+- npm run coverage:$CI_MODE
 notifications:
   email: false
