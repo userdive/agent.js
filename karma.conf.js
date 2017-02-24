@@ -20,7 +20,6 @@ const base = {
     node: { fs: 'empty' }
   },
   coverageReporter: {
-    dir: './coverage/pc',
     reporters: [
       {type: 'lcov'},
       {type: 'text'}
@@ -34,29 +33,18 @@ const base = {
     }
   },
   reporters: ['mocha', 'coverage'],
-  browsers: ['Chrome', 'Firefox', 'PhantomJS'],
+  browsers: ['PhantomJS'],
+  captureTimeout: 180000,
+  browserDisconnectTimeout: 180000,
+  browserDisconnectTolerance: 3,
+  browserNoActivityTimeout: 300000,
   singleRun: true
 }
 
 let override = {}
 
-if (process.env.BROWSER === 'sp') {
-  override = {
-    browsers: ['PhantomJS'],
-    coverageReporter: Object.assign({}, base.coverageReporter, { dir: './coverage/sp' })
-  }
-}
-
 if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
-  let customLaunchers
-  switch (process.env.BROWSER) {
-    case 'sp':
-      customLaunchers = require('./browser-providers.conf').customLauncherSP
-      break
-    case 'pc':
-      customLaunchers = require('./browser-providers.conf').customLauncherPC
-      break
-  }
+  const customLaunchers = require('./browser-providers.conf').customLaunchers
   override = Object.assign({}, {
     sauceLabs: {
       testName: '@userdive/agent',
@@ -65,6 +53,7 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
       recordVideo: false,
       recordScreenshots: false,
       options: {
+        'selenium-version': '2.53.0',
         'command-timeout': 600,
         'idle-timeout': 600,
         'max-duration': 5400
