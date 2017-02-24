@@ -4,7 +4,7 @@ const base = {
   basePath: '',
   frameworks: ['mocha'],
   files: [
-       { pattern: 'test/*.test.js' }
+    { pattern: 'test/*.test.js' }
   ],
   preprocessors: {
     'test/*.test.js': ['webpack']
@@ -20,7 +20,7 @@ const base = {
     node: { fs: 'empty' }
   },
   coverageReporter: {
-    dir: './coverage/pc',
+    dir: './coverage/karma',
     reporters: [
       {type: 'lcov'},
       {type: 'text'}
@@ -34,17 +34,23 @@ const base = {
     }
   },
   reporters: ['mocha', 'coverage'],
-  browsers: ['Chrome', 'Firefox', 'PhantomJS'],
+  browsers: ['PhantomJS'],
   singleRun: true
 }
 
 let override = {}
 
-if (process.env.BROWSER === 'sp') {
-  override = {
-    browsers: ['PhantomJS'],
-    coverageReporter: Object.assign({}, base.coverageReporter, { dir: './coverage/sp' })
-  }
+if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI_MODE === 'sauce') {
+  const customLaunchers = require('./browser-providers.conf').customLaunchers
+  override = Object.assign({}, {
+    sauceLabs: {
+      testName: '@userdive/agent',
+      recordVideo: false
+    },
+    customLaunchers,
+    browsers: Object.keys(customLaunchers),
+    reporters: ['mocha', 'coverage', 'saucelabs']
+  })
 }
 
 const setting = Object.assign({}, base, override)
