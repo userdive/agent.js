@@ -60,7 +60,7 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
   override = Object.assign({}, {
     customLaunchers,
     browsers: Object.keys(customLaunchers),
-    reporters: base.reporters.push('saucelabs')
+    reporters: ['coverage', 'saucelabs']
   })
 }
 
