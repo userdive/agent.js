@@ -40,7 +40,7 @@ const base = {
 
 let override = {}
 
-if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI_MODE === 'sauselab') {
+if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI_MODE === 'sauce') {
   const customLaunchers = require('./browser-providers.conf').customLaunchers
   override = Object.assign({}, {
     sauceLabs: {
