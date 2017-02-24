@@ -47,6 +47,23 @@ if (process.env.BROWSER === 'sp') {
   }
 }
 
+if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
+  let customLaunchers
+  switch (process.env.BROWSER) {
+    case 'sp':
+      customLaunchers = require('./browser-providers.conf').customLauncherSP
+      break
+    case 'pc':
+      customLaunchers = require('./browser-providers.conf').customLauncherPC
+      break
+  }
+  override = Object.assign({}, {
+    customLaunchers,
+    browsers: Object.keys(customLaunchers),
+    reporters: base.reporters.push('saucelabs')
+  })
+}
+
 const setting = Object.assign({}, base, override)
 
 module.exports = function (config) {
