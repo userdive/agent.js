@@ -34,10 +34,6 @@ const base = {
   },
   reporters: ['mocha', 'coverage'],
   browsers: ['PhantomJS'],
-  captureTimeout: 180000,
-  browserDisconnectTimeout: 180000,
-  browserDisconnectTolerance: 3,
-  browserNoActivityTimeout: 300000,
   singleRun: true
 }
 
@@ -48,16 +44,7 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
   override = Object.assign({}, {
     sauceLabs: {
       testName: '@userdive/agent',
-      retryLimit: 3,
-      startConnect: false,
-      recordVideo: false,
-      recordScreenshots: false,
-      options: {
-        'selenium-version': '2.53.0',
-        'command-timeout': 600,
-        'idle-timeout': 600,
-        'max-duration': 5400
-      }
+      recordVideo: false
     },
     customLaunchers,
     browsers: Object.keys(customLaunchers),
