@@ -33,8 +33,13 @@ const base = {
       colors: true
     }
   },
+  concurrency: 3,
   reporters: ['mocha', 'coverage'],
   browsers: ['PhantomJS'],
+  captureTimeout: 180000,
+  browserDisconnectTimeout: 180000,
+  browserDisconnectTolerance: 3,
+  browserNoActivityTimeout: 300000,
   singleRun: true
 }
 
@@ -45,7 +50,14 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI
   override = Object.assign({}, {
     sauceLabs: {
       testName: '@userdive/agent',
-      recordVideo: false
+      recordVideo: false,
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+      options: {
+        'selenium-version': '3.1.0',
+        'command-timeout': 600,
+        'idle-timeout': 600,
+        'max-duration': 5400
+      }
     },
     customLaunchers,
     browsers: Object.keys(customLaunchers),
