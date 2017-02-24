@@ -79,7 +79,7 @@
     "clean": "rimraf coverage lib",
     "coverage:jsdom": "echo 'nothing to do'",
     "coverage:pc": "echo 'nothing to do'",
-    "coverage:sp": "codecov -t $CODECOV_TOKEN -f ./coverage/sp/*/lcov.info",
+    "coverage:sp": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
     "gen-flow": "flow gen-flow-files src --out-dir lib",
     "karma": "karma start --singleRun",
     "lint": "npm-run-all -p lint:*",

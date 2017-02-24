@@ -58,9 +58,21 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
       break
   }
   override = Object.assign({}, {
+    sauceLabs: {
+      testName: '@userdive/agent',
+      retryLimit: 3,
+      startConnect: false,
+      recordVideo: false,
+      recordScreenshots: false,
+      options: {
+        'command-timeout': 600,
+        'idle-timeout': 600,
+        'max-duration': 5400
+      }
+    },
     customLaunchers,
     browsers: Object.keys(customLaunchers),
-    reporters: ['coverage', 'saucelabs']
+    reporters: ['mocha', 'coverage', 'saucelabs']
   })
 }
 
