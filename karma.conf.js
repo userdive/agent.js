@@ -33,6 +33,7 @@ const base = {
       colors: true
     }
   },
+  concurrency: 3,
   reporters: ['mocha', 'coverage'],
   browsers: ['PhantomJS'],
   singleRun: true
