@@ -45,7 +45,11 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI
   override = Object.assign({}, {
     sauceLabs: {
       testName: '@userdive/agent',
-      recordVideo: false
+      recordVideo: false,
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+      options: {
+        'selenium-version': '3.1.0'
+      }
     },
     customLaunchers,
     browsers: Object.keys(customLaunchers),
