@@ -4,7 +4,7 @@ const base = {
   basePath: '',
   frameworks: ['mocha'],
   files: [
-       { pattern: 'test/*.test.js' }
+    { pattern: 'test/*.test.js' }
   ],
   preprocessors: {
     'test/*.test.js': ['webpack']
@@ -20,6 +20,7 @@ const base = {
     node: { fs: 'empty' }
   },
   coverageReporter: {
+    dir: './coverage/karma',
     reporters: [
       {type: 'lcov'},
       {type: 'text'}
@@ -39,7 +40,7 @@ const base = {
 
 let override = {}
 
-if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY) {
+if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI_MODE === 'sauselab') {
   const customLaunchers = require('./browser-providers.conf').customLaunchers
   override = Object.assign({}, {
     sauceLabs: {

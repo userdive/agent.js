@@ -1,16 +1,18 @@
 language: node_js
 sudo: false
-node_js:
-- stable
-- 6
+node_js: stable
 env:
   matrix:
-  - BROWSER=sp
-  - BROWSER=jsdom
+  - CI_MODE=saucelabs
+  - CI_MODE=karma
+  - CI_MODE=jsdom
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: "CI_MODE=saucelabs_optional"
 script:
 - npm run ci:$BROWSER
 after_success:
-- ls coverage
 - npm run coverage:$BROWSER
 notifications:
   email: false
