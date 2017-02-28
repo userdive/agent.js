@@ -1,14 +1,4 @@
 /* @flow */
-import Raven from 'raven-js'
-export type Options = {
-  baseUrl: string,
-  cookieDomain: string,
-  cookieExpires: number,
-  cookieName: string,
-  RAVEN_DSN: string,
-  Raven: ?Raven
-}
-
 export type Point = {
   x: number,
   y: number

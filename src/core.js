@@ -18,10 +18,18 @@ import { getEnv } from './browser'
 import type {
   EventType,
   Interact,
-  Options,
   SendType,
   State
 } from './types'
+
+type Options = {
+  baseUrl: string,
+  cookieDomain: string,
+  cookieExpires: number,
+  cookieName: string,
+  RAVEN_DSN: string,
+  Raven: any
+}
 
 const EMIT_NAME = 'POINT'
 
