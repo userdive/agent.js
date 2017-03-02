@@ -45,7 +45,7 @@
     "nyc": "^10.1.2",
     "power-assert": "^1.4.2",
     "rimraf": "^2.6.1",
-    "sinon": "^1.17.7",
+    "sinon": "^2.0.0-pre.6",
     "string-replace-loader": "^1.0.5",
     "uglifyjs-webpack-plugin": "^0.2.0",
     "webpack": "^2.2.1",
