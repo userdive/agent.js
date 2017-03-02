@@ -14,7 +14,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'lib/build/'),
     filename: '[name].js',
-    sourceMapFilename: '[name].map'
+    sourceMapFilename: '[name].js.map'
   },
   devtool: 'cheap-source-map',
   module: {
@@ -39,6 +39,6 @@ module.exports = {
       sourceMap: true,
       comments: false
     }),
-    new webpack.BannerPlugin({banner: `@userdive/agent.js ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`})
+    new webpack.BannerPlugin({banner: `@userdive/agent ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`})
   ]
 }
