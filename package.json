@@ -61,7 +61,7 @@
   "keywords": [
     "userdive"
   ],
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "main": "lib/agent.js",
   "repository": {
     "type": "git",
