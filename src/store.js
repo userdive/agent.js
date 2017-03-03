@@ -33,6 +33,9 @@ export default class Store {
     this.state = {
       env: {
         v,
+        l: '',
+        r: '',
+        n: '',
         h: 0,
         w: 0,
         sh: 0,
