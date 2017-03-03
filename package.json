@@ -14,7 +14,7 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@uncovertruth/eslint-config-flowtype": "^0.2.0",
+    "@uncovertruth/eslint-config-flowtype": "^1.0.0-beta.0",
     "assert-exception": "^1.1.0",
     "babel-cli": "^6.23.0",
     "babel-istanbul-loader": "^0.1.0",
