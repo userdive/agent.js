@@ -45,9 +45,9 @@ export type Custom = {
 export type ClientEnvironmentsData = {
   v: number,
   uid?: number,
-  l?: string,
-  n?: string,
-  r?: string,
+  l: string,
+  n: string,
+  r: string,
   sw: number,
   sh: number,
   ww: number,

@@ -32,6 +32,14 @@ export function getOffset (w: window) {
   }
 }
 
+function getReferrer (): string {
+  return document.referrer
+}
+
+function getTitle () {
+  return document.title
+}
+
 export function getEnv (): ?ClientEnvironmentsData {
   try {
     const screenSize = getScreenSize(screen)
@@ -39,6 +47,9 @@ export function getEnv (): ?ClientEnvironmentsData {
     const resourceSize = getResourceSize(document)
     return {
       v: VERSION,
+      r: getReferrer(),
+      n: getTitle(),
+      l: location.href,
       sh: screenSize.h,
       sw: screenSize.w,
       wh: windowSize.h,
