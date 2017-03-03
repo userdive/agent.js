@@ -22,7 +22,7 @@ describe('events', () => {
     const instance = new DummyEvents(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     assert(instance.mitt)
     assert(instance.observer)
@@ -36,7 +36,7 @@ describe('events', () => {
     const events = new Events(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     assert(throws(() => {
       events.validate()
@@ -52,7 +52,7 @@ describe('events', () => {
     const events = new Events(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     assert(events.error(random.word()) === undefined)
   })
@@ -61,7 +61,7 @@ describe('events', () => {
     const events = new Events(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     assert(events.warning(random.word()) === undefined)
   })
@@ -70,7 +70,7 @@ describe('events', () => {
     const instance = new DummyEvents(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     instance.emit({x: random.number(), y: random.number()})
     instance.emit({x: -1, y: -1})
@@ -80,7 +80,7 @@ describe('events', () => {
     const instance = new DummyEvents(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
 
     let data
@@ -97,7 +97,7 @@ describe('events', () => {
     let instance = new DummyEvents(
       random.word(),
       mitt(),
-      new UIEventObserver(),
+      new UIEventObserver()
     )
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
