@@ -14,9 +14,10 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@uncovertruth/eslint-config-flowtype": "^0.2.0",
+    "@uncovertruth/eslint-config-flowtype": "^1.0.0-beta.0",
     "assert-exception": "^1.1.0",
     "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
     "babel-istanbul-loader": "^0.1.0",
     "babel-loader": "^6.3.2",
     "babel-plugin-transform-object-assign": "^6.22.0",
@@ -47,6 +48,7 @@
     "rimraf": "^2.6.1",
     "sinon": "^2.0.0-pre.6",
     "string-replace-loader": "^1.0.5",
+    "uglify-js": "^2.8.5",
     "uglifyjs-webpack-plugin": "^0.2.0",
     "webpack": "^2.2.1",
     "webpack-bundle-size-analyzer": "^2.4.0"

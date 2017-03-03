@@ -9,7 +9,7 @@ function push (t: number, n: number): void {
 }
 push(2, 20)
 push(4, 20)
-push(8, (30 * 60 - 120) / 8)
+push(8, ((30 * 60) - 120) / 8)
 
 export const INTERACT = 30
 export const INTERVAL = intervals.sort()
