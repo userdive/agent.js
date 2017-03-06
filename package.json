@@ -27,7 +27,7 @@
     "babel-register": "^6.23.0",
     "browser-env": "^2.0.21",
     "codecov": "^1.0.1",
-    "cross-env": "^3.1.4",
+    "cross-env": "^3.2.3",
     "eslint": "^3.16.1",
     "faker": "^4.1.0",
     "flow-bin": "^0.41.0",
