@@ -71,7 +71,7 @@
   },
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:babel": "babel src -d lib",
+    "build:babel": "cross-env NODE_ENV=dev babel src -d lib",
     "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
     "ci:jsdom": "npm run test",
     "ci:karma": "npm run karma",
