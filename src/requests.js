@@ -10,7 +10,7 @@ export function enable (): boolean {
 };
 
 export function get (url: string, query: string[]): void {
-  if (enable() && query.length) {
+  if (enable() && query.length > 0) {
     const img = document.createElement('img')
     img.onload = () => null
     img.onerror = () => null
