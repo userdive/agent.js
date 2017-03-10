@@ -7,8 +7,7 @@ import cookies from 'js-cookie'
 import isUrl from 'is-url'
 import assert from 'assert'
 import {
-  OPTIONS,
-  INTERACT
+  OPTIONS
 } from '../src/constants'
 
 function toMin (msec: number): number {
@@ -98,7 +97,9 @@ describe('core', () => {
       y: random.number({min: 1})
     })
 
-    timer.tick(toMin(30 * 60))
+    timer.tick(toMin(1))
+
+    agent.destroy()
 
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 8)
@@ -107,14 +108,8 @@ describe('core', () => {
     assert(url.split('/')[6] === 'interact')
     assert(isUrl(url))
 
-    assert(spy.getCall(0).args[1].length === INTERACT)
-
-    const before = spy.callCount
-    assert(before > 0)
-
-    timer.tick(toMin(1))
-
-    assert(spy.callCount === before, 'stop tracking')
+    assert(spy.getCall(0).args[1].length === 2)
+    assert(spy.getCall(0).args[1][1].split(',').length === 6)
 
     spy.restore()
   })

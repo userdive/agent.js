@@ -40,6 +40,13 @@ let cache: {
 const interacts: Interact[] = []
 const events: any[] = []
 
+function clearCache (): void {
+  cache = {
+    a: {},
+    l: {}
+  }
+}
+
 function cacheValidator (data: Object): boolean {
   if (data.x >= 0 && data.y >= 0 && data.type &&
     typeof data.left === 'number' && typeof data.top === 'number') {
@@ -117,11 +124,14 @@ function sendInteracts (force: ?boolean): void {
 
 function sendInteractsWithUpdate (): void {
   Object.keys(cache).forEach(key => {
-    interacts.push(Object.assign({}, cache[key], {
-      time: Date.now()
-    }))
+    if (cacheValidator(cache[key])) {
+      interacts.push(Object.assign({}, cache[key], {
+        time: Date.now()
+      }))
+    }
   })
 
+  clearCache()
   sendInteracts()
 
   if (loadTime && !stop) {
@@ -174,10 +184,7 @@ export default class Agent extends Store {
       e.off()
     })
     this.loaded = false
-    cache = {
-      a: {},
-      l: {}
-    }
+    clearCache()
     loadTime = 0
   }
   listen (): void {
@@ -185,10 +192,7 @@ export default class Agent extends Store {
       raise('need send pageview')
       return
     }
-    cache = {
-      a: {},
-      l: {}
-    }
+    clearCache()
     emitter.on(EMIT_NAME, updateInteractCache)
     events.forEach(e => {
       e.on()
