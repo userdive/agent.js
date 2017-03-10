@@ -33,5 +33,6 @@ deploy:
   local-dir: lib/build
   upload-dir: "agent/$TRAVIS_BRANCH"
   on:
+    tags: true
     repo: userdive/agent.js
     all_branches: true
