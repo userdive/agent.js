@@ -102,10 +102,10 @@ describe('core', () => {
     agent.destroy()
 
     const url = spy.getCall(0).args[0]
-    assert(url.split('/').length === 8)
+    assert(url.split('/').length === 7)
     assert(url.split('/')[4].length === 32)
     assert(url.split('/')[5].length === 13)
-    assert(url.split('/')[6] === 'interact')
+    assert(url.split('/')[6] === 'int.gif')
     assert(isUrl(url))
 
     assert(spy.getCall(0).args[1].length === 2)

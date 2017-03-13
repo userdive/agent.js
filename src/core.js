@@ -27,7 +27,6 @@ const EMIT_NAME = 'POINT'
 
 let baseUrl: string
 let emitter: mitt
-let eventId: number = 1
 let interactId: number = 0
 let INTERVAL: number[]
 let loadTime: number = 0
@@ -112,9 +111,8 @@ function sendInteracts (force: ?boolean): void {
   })
 
   if (query.length >= MAX_INTERACT || force) {
-    get(`${baseUrl}/${loadTime}/interact/${eventId}.gif`, query)
+    get(`${baseUrl}/${loadTime}/int.gif`, query)
     interacts.length = 0
-    eventId++
   }
 }
 
