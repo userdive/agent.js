@@ -69,12 +69,12 @@ export type State = {
 export type InteractType = 'l' | 'a'
 
 export type Interact = {
-  x: number,
-  y: number,
-  time: number,
-  type: InteractType,
+  id: number,
   left: number,
-  top: number
+  top: number,
+  type: InteractType,
+  x: number,
+  y: number
 }
 
 export type EventType = 'mousemove' | 'click' | 'scroll' | 'touchend'
