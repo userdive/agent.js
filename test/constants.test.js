@@ -12,6 +12,6 @@ describe('constants', () => {
     INTERVAL.forEach(n => {
       sum += n
     })
-    assert(sum === 30 * 60, '30 min')
+    assert(sum === 10 * 60, '10 min')
   })
 })

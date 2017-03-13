@@ -25,10 +25,11 @@ import type {
 
 const EMIT_NAME = 'POINT'
 
-let INTERVAL: number[]
 let baseUrl: string
 let emitter: mitt
 let eventId: number = 1
+let interactId: number = 0
+let INTERVAL: number[]
 let loadTime: number = 0
 let stop: boolean = false
 
@@ -74,12 +75,7 @@ function createInteractData (d: Interact): string {
   if (!cacheValidator(d)) {
     return ''
   }
-
-  const time: number = toInt((d.time - loadTime) / 1000, 10)
-  if (time < 0) {
-    return ''
-  }
-  return `${d.type},${time},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
+  return `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
 }
 
 function getInteractTypes (eventName: EventType): string[] {
@@ -126,7 +122,7 @@ function sendInteractsWithUpdate (): void {
   Object.keys(cache).forEach(key => {
     if (cacheValidator(cache[key])) {
       interacts.push(Object.assign({}, cache[key], {
-        time: Date.now()
+        id: interactId
       }))
     }
   })
@@ -139,6 +135,7 @@ function sendInteractsWithUpdate (): void {
     if (delay >= 0) {
       setTimeout(sendInteractsWithUpdate, delay * 1000)
     }
+    interactId++
   }
 }
 
@@ -168,6 +165,7 @@ export default class Agent extends Store {
         })
 
         INTERVAL = INTERVAL_DEFAULT_SETTING.concat()
+        interactId = 0
         const data = Object.assign({}, state.env, state.custom)
 
         loadTime = Date.now()
