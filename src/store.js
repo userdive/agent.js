@@ -1,5 +1,8 @@
 /* @flow */
-import { VERSION as v } from './constants'
+import {
+  CUSTOM_INDEX,
+  VERSION as v
+} from './constants'
 import type {
   ClientEnvironments,
   Custom,
@@ -11,14 +14,14 @@ import type {
 } from './types'
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
-  // TODO validate index, value.type
+  // TODO value.type
   const data = {}
-  let splitedKey = key.split('dimension')
-  if (splitedKey.length > 1) {
+  let splitedKey: any = key.split('dimension')
+  if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cd${splitedKey[1]}`] = value
   }
   splitedKey = key.split('metric')
-  if (splitedKey.length > 1) {
+  if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cm${splitedKey[1]}`] = value
   }
   return data

@@ -9,6 +9,7 @@ function push (t: number, n: number): void {
 }
 push(2, 300)
 
+export const CUSTOM_INDEX = 20
 export const INTERACT = 30
 export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
