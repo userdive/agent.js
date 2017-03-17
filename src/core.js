@@ -18,7 +18,6 @@ import { getEnv } from './browser'
 import type {
   EventType,
   Interact,
-  SendOptions,
   SendType,
   Settings,
   State
@@ -26,7 +25,7 @@ import type {
 
 const EMIT_NAME = 'POINT'
 
-let baseUrl: string
+let BASE_URL: string
 let emitter: mitt
 let interactId: number = 0
 let INTERVAL: number[]
@@ -56,15 +55,29 @@ function cacheValidator (data: Object): boolean {
   return false
 }
 
-function findOrCreateClientId (settings: Settings): string {
-  const c = cookies.get(settings.cookieName)
+function removeNaked ({ hostname }: Location) {
+  const domain = `${hostname}`
+  return domain.indexOf('www.') === 0 ? domain.substring(4) : domain
+}
+
+function findOrCreateClientId (type: boolean, name: string, cookieDomain: string, expires: ?number): string {
+  const c = cookies.get(name)
   if (c) {
     return c
   }
-  const id = uuid().replace(/-/g, '')
-  cookies.set(settings.cookieName, id, { domain: settings.cookieDomain, expires: settings.cookieExpires })
 
-  return id
+  let domain
+  if (cookieDomain.length === '') {
+    domain = undefined
+  }
+  const id = uuid().replace(/-/g, '')
+  if (type) {
+    domain = removeNaked(location).split('.')
+    cookies.set(name, id, { domain, expires })
+  } else {
+    cookies.set(name, id, { domain, expires })
+  }
+  return cookies.get(name)
 }
 
 function toInt (n: number) {
@@ -112,7 +125,7 @@ function sendInteracts (force: ?boolean): void {
   })
 
   if (query.length >= MAX_INTERACT || force) {
-    get(`${baseUrl}/${loadTime}/int.gif`, query)
+    get(`${BASE_URL}/${loadTime}/int.gif`, query)
     interacts.length = 0
   }
 }
@@ -140,21 +153,20 @@ function sendInteractsWithUpdate (): void {
 
 export default class Agent extends Store {
   loaded: boolean
-  settings: Settings
-  constructor (eventsClass: any[], settings: Settings): void {
+  constructor (projectId: string, eventsClass: any[], { RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName }: Settings, auto: boolean): void {
     super()
-    setup(settings.RAVEN_DSN, settings.Raven)
+    setup(RAVEN_DSN, Raven)
     emitter = mitt()
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
     })
-    this.settings = settings
+    BASE_URL = `${baseUrl}/${projectId}/${findOrCreateClientId(auto, cookieName, cookieDomain, cookieExpires)}`
   }
-  send (type: SendType, options: SendOptions): void {
+  send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
-        const env = getEnv()
+        const env = getEnv(page)
         if (!env) {
           return
         }
@@ -167,11 +179,8 @@ export default class Agent extends Store {
         INTERVAL = INTERVAL_DEFAULT_SETTING.concat()
         interactId = 0
         const data = Object.assign({}, state.env, state.custom)
-        const { settings } = this
-
-        baseUrl = `${settings.baseUrl}/${settings.id}/${findOrCreateClientId(settings)}`
         loadTime = Date.now()
-        get(`${baseUrl}/${loadTime}/env.gif`, obj2query(data))
+        get(`${BASE_URL}/${loadTime}/env.gif`, obj2query(data))
         this.loaded = true
         this.listen()
     }

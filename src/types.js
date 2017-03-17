@@ -1,7 +1,6 @@
 /* @flow */
 import Raven from 'raven-js'
 export type Settings = {
-  id: string,
   baseUrl: string,
   cookieDomain: string,
   cookieExpires: number,

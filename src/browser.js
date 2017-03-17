@@ -40,7 +40,7 @@ function getTitle () {
   return document.title
 }
 
-export function getEnv (): ?ClientEnvironmentsData {
+export function getEnv (page: string): ?ClientEnvironmentsData {
   try {
     const screenSize = getScreenSize(screen)
     const windowSize = getWindowSize(window)
@@ -49,7 +49,7 @@ export function getEnv (): ?ClientEnvironmentsData {
       v: VERSION,
       r: getReferrer(),
       n: getTitle(),
-      l: location.href,
+      l: page,
       sh: screenSize.h,
       sw: screenSize.w,
       wh: windowSize.h,

@@ -37,6 +37,7 @@ describe('core', () => {
     timer = useFakeTimers(new Date().getTime())
 
     agent = new Agent(
+      random.uuid(),
       [
         eventFactory(window, 'click', emitter),
         eventFactory(window, 'scroll', emitter)
@@ -49,7 +50,8 @@ describe('core', () => {
         cookieExpires: random.number(),
         RAVEN_DSN: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`,
         Raven: undefined
-      }
+      },
+      false
     )
   })
 
