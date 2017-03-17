@@ -1,5 +1,5 @@
 /* @flow */
-import type { Options } from './types'
+import type { Settings } from './types'
 
 const intervals = [0]
 function push (t: number, n: number): void {
@@ -16,7 +16,8 @@ export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-userdive-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const VERSION = 1
-export const OPTIONS: Options = {
+export const SETTINGS: Settings = {
+  id: '',
   baseUrl: 'https://v1.userdive.com',
   cookieName: '_ud', // TODO
   cookieDomain: '',

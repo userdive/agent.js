@@ -7,7 +7,7 @@ import cookies from 'js-cookie'
 import isUrl from 'is-url'
 import assert from 'assert'
 import {
-  OPTIONS
+  SETTINGS as SETTINGS_DEFAULT
 } from '../src/constants'
 
 function toMin (msec: number): number {
@@ -37,12 +37,12 @@ describe('core', () => {
     timer = useFakeTimers(new Date().getTime())
 
     agent = new Agent(
-      random.alphaNumeric(),
       [
         eventFactory(window, 'click', emitter),
         eventFactory(window, 'scroll', emitter)
       ],
       {
+        id: random.uuid(),
         baseUrl: internet.url(),
         cookieName: random.alphaNumeric(),
         cookieDomain: random.alphaNumeric(),
@@ -88,7 +88,7 @@ describe('core', () => {
   it('send success', () => {
     agent.send('pageview', location.pathname)
 
-    assert(cookies.get(OPTIONS.cookieName))
+    assert(cookies.get(SETTINGS_DEFAULT.cookieName))
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 

@@ -18,8 +18,9 @@ import { getEnv } from './browser'
 import type {
   EventType,
   Interact,
-  Options,
+  SendOptions,
   SendType,
+  Settings,
   State
 } from './types'
 
@@ -55,13 +56,13 @@ function cacheValidator (data: Object): boolean {
   return false
 }
 
-function findOrCreateClientId (opt: Options): string {
-  const c = cookies.get(opt.cookieName)
+function findOrCreateClientId (settings: Settings): string {
+  const c = cookies.get(settings.cookieName)
   if (c) {
     return c
   }
   const id = uuid().replace(/-/g, '')
-  cookies.set(opt.cookieName, id, { domain: opt.cookieDomain, expires: opt.cookieExpires })
+  cookies.set(settings.cookieName, id, { domain: settings.cookieDomain, expires: settings.cookieExpires })
 
   return id
 }
@@ -139,17 +140,18 @@ function sendInteractsWithUpdate (): void {
 
 export default class Agent extends Store {
   loaded: boolean
-  constructor (id: string, eventsClass: any[], opt: Options): void {
+  settings: Settings
+  constructor (eventsClass: any[], settings: Settings): void {
     super()
-    setup(opt.RAVEN_DSN, opt.Raven)
-    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
+    setup(settings.RAVEN_DSN, settings.Raven)
     emitter = mitt()
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
     })
+    this.settings = settings
   }
-  send (type: SendType): void {
+  send (type: SendType, options: SendOptions): void {
     switch (type) {
       case 'pageview':
         const env = getEnv()
@@ -165,7 +167,9 @@ export default class Agent extends Store {
         INTERVAL = INTERVAL_DEFAULT_SETTING.concat()
         interactId = 0
         const data = Object.assign({}, state.env, state.custom)
+        const { settings } = this
 
+        baseUrl = `${settings.baseUrl}/${settings.id}/${findOrCreateClientId(settings)}`
         loadTime = Date.now()
         get(`${baseUrl}/${loadTime}/env.gif`, obj2query(data))
         this.loaded = true
