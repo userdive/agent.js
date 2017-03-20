@@ -7,7 +7,6 @@ import mitt from 'mitt'
 import { UIEventObserver } from 'ui-event-observer'
 
 describe('scroll', () => {
-  const eventFactory = require('./helpers/events').default
   const ScrollEvents = require('../src/events/scroll').default
 
   let instance, emitter
@@ -30,7 +29,7 @@ describe('scroll', () => {
     emitter.on(instance.name, res => { data = res })
     instance.on()
 
-    window.dispatchEvent(eventFactory('scroll'))
+    window.scrollTo(random.number(), random.number())
     assert(typeof data.x === 'number')
     assert(typeof data.y === 'number')
     assert(typeof data.left === 'number')
