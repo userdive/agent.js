@@ -33,13 +33,8 @@ const base = {
       colors: true
     }
   },
-  concurrency: 3,
   reporters: ['mocha', 'coverage'],
   browsers: ['PhantomJS'],
-  captureTimeout: 180000,
-  browserDisconnectTimeout: 180000,
-  browserDisconnectTolerance: 3,
-  browserNoActivityTimeout: 300000,
   singleRun: true
 }
 
@@ -60,6 +55,11 @@ if (process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY && process.env.CI
       }
     },
     customLaunchers,
+    concurrency: 3,
+    captureTimeout: 180000,
+    browserDisconnectTimeout: 180000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 300000,
     browsers: Object.keys(customLaunchers),
     reporters: ['mocha', 'coverage', 'saucelabs']
   })

@@ -17,7 +17,6 @@ export const NAMESPACE = `data-userdive-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const VERSION = 1
 export const SETTINGS: Settings = {
-  id: '',
   baseUrl: 'https://v1.userdive.com',
   cookieName: '_ud', // TODO
   cookieDomain: '',

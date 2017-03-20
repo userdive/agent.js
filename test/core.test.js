@@ -1,9 +1,8 @@
 /* @flow */
 import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy, useFakeTimers } from 'sinon'
-import { random, internet } from 'faker'
+import { random } from 'faker'
 import { throws } from 'assert-exception'
-import cookies from 'js-cookie'
 import isUrl from 'is-url'
 import assert from 'assert'
 import {
@@ -31,28 +30,23 @@ describe('core', () => {
     }
   }
 
-  let agent, emitter, timer
-  beforeEach(() => {
-    emitter = mitt()
-    timer = useFakeTimers(new Date().getTime())
-
-    agent = new Agent(
+  function agentFactory (auto = false, options = {}) {
+    return new Agent(
       random.uuid(),
       [
         eventFactory(window, 'click', emitter),
         eventFactory(window, 'scroll', emitter)
       ],
-      {
-        id: random.uuid(),
-        baseUrl: internet.url(),
-        cookieName: random.alphaNumeric(),
-        cookieDomain: random.alphaNumeric(),
-        cookieExpires: random.number(),
-        RAVEN_DSN: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`,
-        Raven: undefined
-      },
-      false
+      Object.assign({}, SETTINGS_DEFAULT, options),
+      auto
     )
+  }
+
+  let agent, emitter, timer
+  beforeEach(() => {
+    emitter = mitt()
+    timer = useFakeTimers(new Date().getTime())
+    agent = agentFactory()
   })
 
   afterEach(() => {
@@ -73,7 +67,7 @@ describe('core', () => {
   })
 
   it('send failed', () => {
-    agent.send('pageview', location.pathname)
+    agent.send('pageview', location.href)
     const spy = sinonSpy(require('../src/requests'), 'get')
 
     emitter.emit('test', {
@@ -88,9 +82,7 @@ describe('core', () => {
   })
 
   it('send success', () => {
-    agent.send('pageview', location.pathname)
-
-    assert(cookies.get(SETTINGS_DEFAULT.cookieName))
+    agent.send('pageview', location.href)
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 

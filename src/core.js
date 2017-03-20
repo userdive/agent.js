@@ -55,29 +55,42 @@ function cacheValidator (data: Object): boolean {
   return false
 }
 
-function removeNaked ({ hostname }: Location) {
+function removeNaked ({ hostname }: Location): string {
   const domain = `${hostname}`
   return domain.indexOf('www.') === 0 ? domain.substring(4) : domain
 }
 
-function findOrCreateClientId (type: boolean, name: string, cookieDomain: string, expires: ?number): string {
-  const c = cookies.get(name)
+function findOrCreateClientId (autoFlag: boolean, cookieName: string, cookieDomain: string, cookieExpires: ?number): string {
+  let options = { domain: cookieDomain, expires: cookieExpires }
+  const c = cookies.get(cookieName, options)
   if (c) {
     return c
   }
 
+  const id = uuid().replace(/-/g, '')
   let domain
-  if (cookieDomain.length === '') {
+  if (cookieDomain.length === 0) {
     domain = undefined
   }
-  const id = uuid().replace(/-/g, '')
-  if (type) {
-    domain = removeNaked(location).split('.')
-    cookies.set(name, id, { domain, expires })
-  } else {
-    cookies.set(name, id, { domain, expires })
+  if (autoFlag) {
+    const domainParts = removeNaked(location).split('.')
+    let subDomain = domainParts[domainParts.length - 1]
+    if (domainParts.length === 4 && (parseInt(subDomain, 10) === subDomain)) {
+      domain = undefined
+    }
+
+    for (let i = 2; i < domainParts.length; i++) {
+      subDomain = `${domainParts[domainParts.length - i]}.${subDomain}`
+      options = { domain, expires: cookieExpires }
+      cookies.set(cookieName, id, options)
+      const storedId = cookies.get(cookieName, options)
+      if (storedId) {
+        return storedId
+      }
+    }
   }
-  return cookies.get(name)
+  cookies.set(cookieName, id, options)
+  return cookies.get(cookieName, options)
 }
 
 function toInt (n: number) {
@@ -124,7 +137,7 @@ function sendInteracts (force: ?boolean): void {
     }
   })
 
-  if (query.length >= MAX_INTERACT || force) {
+  if (BASE_URL && loadTime && (query.length >= MAX_INTERACT || force)) {
     get(`${BASE_URL}/${loadTime}/int.gif`, query)
     interacts.length = 0
   }
@@ -161,13 +174,16 @@ export default class Agent extends Store {
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
     })
-    BASE_URL = `${baseUrl}/${projectId}/${findOrCreateClientId(auto, cookieName, cookieDomain, cookieExpires)}`
+    const id = findOrCreateClientId(auto, cookieName, cookieDomain, cookieExpires)
+    if (id) {
+      BASE_URL = `${baseUrl}/${projectId}/${id}`
+    }
   }
   send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
         const env = getEnv(page)
-        if (!env) {
+        if (!env || !BASE_URL) {
           return
         }
 
