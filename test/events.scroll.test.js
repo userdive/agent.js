@@ -29,7 +29,13 @@ describe('scroll', () => {
     emitter.on(instance.name, res => { data = res })
     instance.on()
 
-    window.scrollTo(random.number(), random.number())
+    try {
+      window.dispatchEvent(new Event('scroll'))
+    } catch (err) {
+      const evt = document.createEvent('HTMLEvents')
+      evt.initEvent('scroll', false, false)
+      window.dispatchEvent(evt)
+    }
     assert(typeof data.x === 'number')
     assert(typeof data.y === 'number')
     assert(typeof data.left === 'number')
