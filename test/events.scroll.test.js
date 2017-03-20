@@ -3,10 +3,12 @@ import { describe, it, beforeEach } from 'mocha'
 import { random } from 'faker'
 import assert from 'assert'
 
+import mitt from 'mitt'
+import { UIEventObserver } from 'ui-event-observer'
+
 describe('scroll', () => {
-  const mitt = require('mitt')
+  const eventFactory = require('./helpers/events').default
   const ScrollEvents = require('../src/events/scroll').default
-  const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   let instance, emitter
 
@@ -28,7 +30,7 @@ describe('scroll', () => {
     emitter.on(instance.name, res => { data = res })
     instance.on()
 
-    window.dispatchEvent(new Event('scroll'))
+    window.dispatchEvent(eventFactory('scroll'))
     assert(typeof data.x === 'number')
     assert(typeof data.y === 'number')
     assert(typeof data.left === 'number')
