@@ -32,7 +32,7 @@ describe('scroll', () => {
     try {
       window.dispatchEvent(new Event('scroll'))
     } catch (err) {
-      const evt = document.createEvent('HTMLEvents')
+      const evt = document.createEvent('Event')
       evt.initEvent('scroll', false, false)
       window.dispatchEvent(evt)
     }
