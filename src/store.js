@@ -14,14 +14,13 @@ import type {
 } from './types'
 
 function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
-  // TODO value.type
   const data = {}
   let splitedKey: any = key.split('dimension')
   if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cd${splitedKey[1]}`] = value
   }
   splitedKey = key.split('metric')
-  if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
+  if (splitedKey.length > 1 && typeof value === 'number' && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cm${splitedKey[1]}`] = value
   }
   return data
@@ -71,7 +70,7 @@ export default class Store {
     }
     let data = {}
     Object.keys(obj).forEach(key => {
-      data = Object.assign({}, data, parseCustomData((key: any), data[key]))
+      data = Object.assign({}, data, parseCustomData((key: any), obj[key]))
     })
     return this.merge({type: 'custom', data})
   }
