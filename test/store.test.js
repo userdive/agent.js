@@ -2,6 +2,7 @@
 import { describe, it } from 'mocha'
 import assert from 'assert'
 import { internet, random } from 'faker'
+import { CUSTOM_INDEX } from '../src/constants'
 
 describe('store', () => {
   const Store = require('../src/store').default
@@ -45,20 +46,18 @@ describe('store', () => {
     const state = store.set('page', url)
     assert(state.env.l === url)
 
-    store.set(`dimension1`, random.alphaNumeric())
-    store.set(`dimension2`, random.alphaNumeric())
-    store.set(`dimension3`, random.alphaNumeric())
-    store.set(`dimension4`, random.alphaNumeric())
-    store.set(`dimension5`, random.alphaNumeric())
-    store.set(`metric1`, random.number({min: 1, max: 99}))
-    store.set(`metric2`, random.number({min: 1, max: 99}))
-    store.set(`metric3`, random.number({min: 1, max: 99}))
-    store.set(`metric4`, random.number({min: 1, max: 99}))
-    store.set(`metric5`, random.number({min: 1, max: 99}))
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= CUSTOM_INDEX + 1; i++) {
+      const dimention: any = `dimension${i}`
+      const metric: any = `metric${i}`
+      store.set(dimention, random.alphaNumeric())
+      store.set(metric, random.number({min: 1, max: 99}))
+    }
+    for (let i = 1; i <= CUSTOM_INDEX; i++) {
       assert(store.state.custom[`cd${i}`])
       assert(store.state.custom[`cm${i}`])
     }
+    assert(store.state.custom[`cd${CUSTOM_INDEX + 1}`] === undefined)
+    assert(store.state.custom[`cm${CUSTOM_INDEX + 1}`] === undefined)
   })
 
   it('mergeDeep', () => {
