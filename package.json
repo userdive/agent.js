@@ -9,7 +9,7 @@
   "dependencies": {
     "js-cookie": "^2.1.3",
     "mitt": "^1.1.0",
-    "raven-js": "^3.12.1",
+    "raven-js": "^3.13.1",
     "ui-event-observer": "^1.1.0",
     "uuid": "^3.0.1"
   },
@@ -46,11 +46,11 @@
     "nyc": "^10.1.2",
     "power-assert": "^1.4.2",
     "rimraf": "^2.6.1",
-    "sinon": "^2.0.0",
+    "sinon": "^2.1.0",
     "string-replace-loader": "^1.0.5",
-    "uglify-js": "^2.8.14",
-    "uglifyjs-webpack-plugin": "^0.3.0",
-    "webpack": "^2.2.1",
+    "uglify-js": "^2.8.15",
+    "uglifyjs-webpack-plugin": "^0.3.1",
+    "webpack": "^2.3.1",
     "webpack-bundle-size-analyzer": "^2.4.0"
   },
   "engine": {
