@@ -37,3 +37,13 @@ deploy:
     tags: true
     repo: userdive/agent.js
     all_branches: true
+- provider: s3
+  skip_cleanup: true
+  access_key_id: AKIAIBHDA4WTPT4XYYKQ
+  secret_access_key:
+    secure: Qr+/6Ungmyd4U5+zPPKrr62Lv+/VOkrfoCIiGMOdqGvCtDebvv1FqBbA3/FVLtAuHBHUR3Ikm1ZNCvpFItXbIrGpQjEakKzk0M75koVaTD6RCxxvGgM4M4Ge3EwtGJ5NQJlwvjF2z69CLqp8wWRfupRPOMyAOVjNeKLdmRIVFuZD7bz39JmuwUEn7p1bYqEGdhI8x1rObGGNnMlxS1szcNdLhumPfjwLca0YktkFKNMRT1qwi6QsrorUPegvk/yk+Hcnm5/PW7nagQ8zZp/+lS/MF9ZsEZU+IeTZY5calbzldv5gwlveYp4kbNrsMV7M/IJcRuR8DrP+b3uyJ9nEstqtwTCWHm+zk6RsCefJSxIQxPFDf2J/ZbEwywpCuUdtqjZDtyEuiw7Dtcz5QcyzxTMtAWauuZ8pumjxyCbY5OlB/UzjP3TbF63Kr7BgEiEQb6xZedEQRC0Or3ko+V8a9w0A42mJjtxUn3VdWNbSw9Z4/vSME4y0X/iw0YjX4ecJQAv79JwMyINHuZdAqfF9yuUzQr72kMzgwszEQDOkyDWMit3KZ4qDKjH5H2gAGUrhdT+wPeOXD/4Mnah4AVYV9Ejg5KSmhb9swxBDAaR+mcA+Fv3bwgKjyO7KEGq9NVjatcUIJMs/alyRT37kpzMrLwzTIAwuOm8VRTmirqtAzhk=
+  bucket: cdn.userdive.com
+  local-dir: lib/build
+  on:
+    tags: true
+    repo: userdive/agent.js
