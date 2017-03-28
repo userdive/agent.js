@@ -2,7 +2,7 @@
 
 const customLaunchers = {
   'SL_IOS10': {base: 'SauceLabs', browserName: 'iphone', version: '10.0'},
-  'SL_ANDROID4.4': {base: 'SauceLabs', browserName: 'android', version: '4.4'},
+  // 'SL_ANDROID4.4': {base: 'SauceLabs', browserName: 'android', version: '4.4'},
   'SL_ANDROID5': {base: 'SauceLabs', browserName: 'android', version: '5.1'},
   'SL_CHROME46': {base: 'SauceLabs', browserName: 'chrome', platform: 'Linux', version: '46'},
   'SL_CHROME_BETA': {base: 'SauceLabs', browserName: 'chrome', version: 'beta'},
