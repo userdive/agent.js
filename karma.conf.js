@@ -34,6 +34,9 @@ const base = {
     }
   },
   reporters: ['mocha', 'coverage'],
+  mochaReporter: {
+    showDiff: true
+  },
   browsers: ['PhantomJS'],
   singleRun: true
 }

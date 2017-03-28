@@ -1,6 +1,7 @@
 /* @flow */
 import mitt from 'mitt'
 import { UIEventObserver } from 'ui-event-observer'
+import { find, save } from 'auto-cookie'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
@@ -47,50 +48,34 @@ function clearCache (): void {
   }
 }
 
+function generateId () {
+  return uuid().replace(/-/g, '')
+}
+
+function findOrCreateClientId (cookieName: string, cookieDomain: string, cookieExpires: ?number): string {
+  const options = {domain: cookieDomain, expires: cookieExpires}
+  const c = cookies.get(cookieName, options)
+  if (c) {
+    return c
+  }
+  cookies.set(cookieName, generateId(), options)
+  return cookies.get(cookieName, options)
+}
+
+function findOrCreateClientIdAuto (cookieName: string, cookieExpires) {
+  const c = find(cookieName, cookieExpires)
+  if (c) {
+    return c
+  }
+  return save(cookieName, generateId(), cookieExpires)
+}
+
 function cacheValidator (data: Object): boolean {
   if (data.x >= 0 && data.y >= 0 && data.type &&
     typeof data.left === 'number' && typeof data.top === 'number') {
     return true
   }
   return false
-}
-
-function removeNaked ({ hostname }: Location): string {
-  const domain = `${hostname}`
-  return domain.indexOf('www.') === 0 ? domain.substring(4) : domain
-}
-
-function findOrCreateClientId (autoFlag: boolean, cookieName: string, cookieDomain: string, cookieExpires: ?number): string {
-  let options = { domain: cookieDomain, expires: cookieExpires }
-  const c = cookies.get(cookieName, options)
-  if (c) {
-    return c
-  }
-
-  const id = uuid().replace(/-/g, '')
-  let domain
-  if (cookieDomain.length === 0) {
-    domain = undefined
-  }
-  if (autoFlag) {
-    const domainParts = removeNaked(location).split('.')
-    let subDomain = domainParts[domainParts.length - 1]
-    if (domainParts.length === 4 && (parseInt(subDomain, 10) === subDomain)) {
-      domain = undefined
-    }
-
-    for (let i = 2; i < domainParts.length; i++) {
-      subDomain = `${domainParts[domainParts.length - i]}.${subDomain}`
-      options = { domain, expires: cookieExpires }
-      cookies.set(cookieName, id, options)
-      const storedId = cookies.get(cookieName, options)
-      if (storedId) {
-        return storedId
-      }
-    }
-  }
-  cookies.set(cookieName, id, options)
-  return cookies.get(cookieName, options)
 }
 
 function toInt (n: number) {
@@ -166,7 +151,7 @@ function sendInteractsWithUpdate (): void {
 
 export default class Agent extends Store {
   loaded: boolean
-  constructor (projectId: string, eventsClass: any[], { RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName }: Settings, auto: boolean): void {
+  constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
     super()
     setup(RAVEN_DSN, Raven)
     emitter = mitt()
@@ -174,9 +159,14 @@ export default class Agent extends Store {
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
     })
-    const id = findOrCreateClientId(auto, cookieName, cookieDomain, cookieExpires)
-    if (id) {
-      BASE_URL = `${baseUrl}/${projectId}/${id}`
+    let userId
+    if (auto) {
+      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
+    } else {
+      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+    }
+    if (id && userId) {
+      BASE_URL = `${baseUrl}/${id}/${userId}`
     }
   }
   send (type: SendType, page: string): void {
@@ -184,7 +174,7 @@ export default class Agent extends Store {
       case 'pageview':
         const env = getEnv(page)
         if (!env || !BASE_URL) {
-          return
+          return warning(`failed init`)
         }
 
         const state: State = this.merge({

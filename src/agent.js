@@ -15,9 +15,8 @@ function destroy () {
 
 export default class Agent {
   static create (projectId: string, settings: any): AgentCore {
-    let auto = false
     if (typeof settings === 'string' && settings === 'auto') {
-      auto = true
+      settings = { auto: true }
     }
     agent = new AgentCore(
       projectId,
@@ -27,8 +26,7 @@ export default class Agent {
         Scroll,
         TouchEnd
       ],
-      Object.assign({}, SETTINGS_DEFAULT, settings),
-      auto
+      Object.assign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener('pagehide', destroy, false)

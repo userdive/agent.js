@@ -30,15 +30,14 @@ describe('core', () => {
     }
   }
 
-  function agentFactory (auto = false, options = {}) {
+  function agentFactory (options = {}) {
     return new Agent(
       random.uuid(),
       [
         eventFactory(window, 'click', emitter),
         eventFactory(window, 'scroll', emitter)
       ],
-      Object.assign({}, SETTINGS_DEFAULT, options),
-      auto
+      Object.assign({}, SETTINGS_DEFAULT, options)
     )
   }
 
@@ -106,5 +105,16 @@ describe('core', () => {
     assert(spy.getCall(0).args[1][1].split(',').length === 6)
 
     spy.restore()
+  })
+
+  it('send success auto', () => {
+    const spy = sinonSpy(require('../src/requests'), 'get')
+    const autoAgent = agentFactory({auto: true})
+    autoAgent.send('pageview', location.href)
+    const url = spy.getCall(0).args[0]
+    assert(url.split('/').length === 7)
+    assert(url.split('/')[4].length === 32)
+    assert(url.split('/')[5].length === 13)
+    assert(url.split('/')[6] === 'env.gif')
   })
 })
