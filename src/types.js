@@ -1,6 +1,7 @@
 /* @flow */
 import Raven from 'raven-js'
-export type Options = {
+export type Settings = {
+  auto: boolean,
   baseUrl: string,
   cookieDomain: string,
   cookieExpires: number,

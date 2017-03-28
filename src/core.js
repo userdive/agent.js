@@ -1,6 +1,7 @@
 /* @flow */
 import mitt from 'mitt'
 import { UIEventObserver } from 'ui-event-observer'
+import { find, save } from 'auto-cookie'
 import cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
@@ -18,14 +19,14 @@ import { getEnv } from './browser'
 import type {
   EventType,
   Interact,
-  Options,
   SendType,
+  Settings,
   State
 } from './types'
 
 const EMIT_NAME = 'POINT'
 
-let baseUrl: string
+let BASE_URL: string
 let emitter: mitt
 let interactId: number = 0
 let INTERVAL: number[]
@@ -47,23 +48,34 @@ function clearCache (): void {
   }
 }
 
+function generateId () {
+  return uuid().replace(/-/g, '')
+}
+
+function findOrCreateClientId (cookieName: string, cookieDomain: string, cookieExpires: ?number): string {
+  const options = {domain: cookieDomain, expires: cookieExpires}
+  const c = cookies.get(cookieName, options)
+  if (c) {
+    return c
+  }
+  cookies.set(cookieName, generateId(), options)
+  return cookies.get(cookieName, options)
+}
+
+function findOrCreateClientIdAuto (cookieName: string, cookieExpires) {
+  const c = find(cookieName, cookieExpires)
+  if (c) {
+    return c
+  }
+  return save(cookieName, generateId(), cookieExpires)
+}
+
 function cacheValidator (data: Object): boolean {
   if (data.x >= 0 && data.y >= 0 && data.type &&
     typeof data.left === 'number' && typeof data.top === 'number') {
     return true
   }
   return false
-}
-
-function findOrCreateClientId (opt: Options): string {
-  const c = cookies.get(opt.cookieName)
-  if (c) {
-    return c
-  }
-  const id = uuid().replace(/-/g, '')
-  cookies.set(opt.cookieName, id, { domain: opt.cookieDomain, expires: opt.cookieExpires })
-
-  return id
 }
 
 function toInt (n: number) {
@@ -110,8 +122,8 @@ function sendInteracts (force: ?boolean): void {
     }
   })
 
-  if (query.length >= MAX_INTERACT || force) {
-    get(`${baseUrl}/${loadTime}/int.gif`, query)
+  if (BASE_URL && loadTime && (query.length >= MAX_INTERACT || force)) {
+    get(`${BASE_URL}/${loadTime}/int.gif`, query)
     interacts.length = 0
   }
 }
@@ -139,22 +151,30 @@ function sendInteractsWithUpdate (): void {
 
 export default class Agent extends Store {
   loaded: boolean
-  constructor (id: string, eventsClass: any[], opt: Options): void {
+  constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
     super()
-    setup(opt.RAVEN_DSN, opt.Raven)
-    baseUrl = `${opt.baseUrl}/${id}/${findOrCreateClientId(opt)}`
+    setup(RAVEN_DSN, Raven)
     emitter = mitt()
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
     })
+    let userId
+    if (auto) {
+      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
+    } else {
+      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+    }
+    if (id && userId) {
+      BASE_URL = `${baseUrl}/${id}/${userId}`
+    }
   }
-  send (type: SendType): void {
+  send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
-        const env = getEnv()
-        if (!env) {
-          return
+        const env = getEnv(page)
+        if (!env || !BASE_URL) {
+          return warning(`failed init`)
         }
 
         const state: State = this.merge({
@@ -165,9 +185,8 @@ export default class Agent extends Store {
         INTERVAL = INTERVAL_DEFAULT_SETTING.concat()
         interactId = 0
         const data = Object.assign({}, state.env, state.custom)
-
         loadTime = Date.now()
-        get(`${baseUrl}/${loadTime}/env.gif`, obj2query(data))
+        get(`${BASE_URL}/${loadTime}/env.gif`, obj2query(data))
         this.loaded = true
         this.listen()
     }

@@ -3,10 +3,11 @@ import { describe, it, beforeEach } from 'mocha'
 import { random } from 'faker'
 import assert from 'assert'
 
+import mitt from 'mitt'
+import { UIEventObserver } from 'ui-event-observer'
+
 describe('scroll', () => {
-  const mitt = require('mitt')
   const ScrollEvents = require('../src/events/scroll').default
-  const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   let instance, emitter
 

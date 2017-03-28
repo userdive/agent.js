@@ -29,7 +29,6 @@ describe('store', () => {
       wh: random.number(),
       h: random.number(),
       w: random.number()
-
     }
     assert(store.merge({
       type: 'env',

@@ -1,13 +1,12 @@
 /* @flow */
 import { describe, it, beforeEach, afterEach } from 'mocha'
 import { spy as sinonSpy, useFakeTimers } from 'sinon'
-import { random, internet } from 'faker'
+import { random } from 'faker'
 import { throws } from 'assert-exception'
-import cookies from 'js-cookie'
 import isUrl from 'is-url'
 import assert from 'assert'
 import {
-  OPTIONS
+  SETTINGS as SETTINGS_DEFAULT
 } from '../src/constants'
 
 function toMin (msec: number): number {
@@ -31,26 +30,22 @@ describe('core', () => {
     }
   }
 
-  let agent, emitter, timer
-  beforeEach(() => {
-    emitter = mitt()
-    timer = useFakeTimers(new Date().getTime())
-
-    agent = new Agent(
-      random.alphaNumeric(),
+  function agentFactory (options = {}) {
+    return new Agent(
+      random.uuid(),
       [
         eventFactory(window, 'click', emitter),
         eventFactory(window, 'scroll', emitter)
       ],
-      {
-        baseUrl: internet.url(),
-        cookieName: random.alphaNumeric(),
-        cookieDomain: random.alphaNumeric(),
-        cookieExpires: random.number(),
-        RAVEN_DSN: `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`,
-        Raven: undefined
-      }
+      Object.assign({}, SETTINGS_DEFAULT, options)
     )
+  }
+
+  let agent, emitter, timer
+  beforeEach(() => {
+    emitter = mitt()
+    timer = useFakeTimers(new Date().getTime())
+    agent = agentFactory()
   })
 
   afterEach(() => {
@@ -71,7 +66,7 @@ describe('core', () => {
   })
 
   it('send failed', () => {
-    agent.send('pageview', location.pathname)
+    agent.send('pageview', location.href)
     const spy = sinonSpy(require('../src/requests'), 'get')
 
     emitter.emit('test', {
@@ -86,9 +81,7 @@ describe('core', () => {
   })
 
   it('send success', () => {
-    agent.send('pageview', location.pathname)
-
-    assert(cookies.get(OPTIONS.cookieName))
+    agent.send('pageview', location.href)
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 
@@ -112,5 +105,16 @@ describe('core', () => {
     assert(spy.getCall(0).args[1][1].split(',').length === 6)
 
     spy.restore()
+  })
+
+  it('send success auto', () => {
+    const spy = sinonSpy(require('../src/requests'), 'get')
+    const autoAgent = agentFactory({auto: true})
+    autoAgent.send('pageview', location.href)
+    const url = spy.getCall(0).args[0]
+    assert(url.split('/').length === 7)
+    assert(url.split('/')[4].length === 32)
+    assert(url.split('/')[5].length === 13)
+    assert(url.split('/')[6] === 'env.gif')
   })
 })

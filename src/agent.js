@@ -1,5 +1,5 @@
 /* @flow */
-import { OPTIONS, LISTENER } from './constants'
+import { SETTINGS as SETTINGS_DEFAULT, LISTENER } from './constants'
 import { validate } from './browser'
 import AgentCore from './core'
 import Click from './events/click'
@@ -14,7 +14,10 @@ function destroy () {
 }
 
 export default class Agent {
-  static create (projectId: string, options: any): AgentCore {
+  static create (projectId: string, settings: any): AgentCore {
+    if (typeof settings === 'string' && settings === 'auto') {
+      settings = { auto: true }
+    }
     agent = new AgentCore(
       projectId,
       [
@@ -23,18 +26,18 @@ export default class Agent {
         Scroll,
         TouchEnd
       ],
-      Object.assign({}, OPTIONS, options)
+      Object.assign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener('pagehide', destroy, false)
     }
     return agent
   }
-  static send (type: SendType): void {
+  static send (type: SendType, page: ?string): void {
     if (agent.loaded && type === 'pageview') {
       destroy()
     }
-    agent.send(type)
+    agent.send(type, page || location.href)
   }
   static set (key: any, value?: string | number): State {
     if (key && value) {
