@@ -5,6 +5,7 @@ import { random } from 'faker'
 import { throws } from 'assert-exception'
 import isUrl from 'is-url'
 import assert from 'assert'
+import EventEmitter from 'events'
 import {
   SETTINGS as SETTINGS_DEFAULT
 } from '../src/constants'
@@ -16,7 +17,6 @@ function toMin (msec: number): number {
 describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
-  const mitt = require('mitt')
 
   function eventFactory (target, type, emitter) {
     return class DummyEvents extends Base {
@@ -43,7 +43,7 @@ describe('core', () => {
 
   let agent, emitter, timer
   beforeEach(() => {
-    emitter = mitt()
+    emitter = new EventEmitter()
     timer = useFakeTimers(new Date().getTime())
     agent = agentFactory()
   })

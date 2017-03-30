@@ -4,8 +4,9 @@ import { random } from 'faker'
 import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
+import EventEmitter from 'events'
+
 describe('click', () => {
-  const mitt = require('mitt')
   const UIEventObserver = require('ui-event-observer').UIEventObserver
   const ClickEvents = require('../src/events/click').default
 
@@ -14,7 +15,7 @@ describe('click', () => {
   beforeEach(() => {
     instance = new ClickEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
   })
