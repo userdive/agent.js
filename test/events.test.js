@@ -5,12 +5,12 @@ import { random } from 'faker'
 import { throws } from 'assert-exception'
 import assert from 'assert'
 
-import mitt from 'mitt'
+import EventEmitter from 'events'
+import { UIEventObserver } from 'ui-event-observer'
 
 describe('events', () => {
   const logger: any = require('../src/logger')
   const Events = require('../src/events').default
-  const UIEventObserver = require('ui-event-observer').UIEventObserver
 
   class DummyEvents extends Events {
     validate () {
@@ -21,10 +21,10 @@ describe('events', () => {
   it('init', () => {
     const instance = new DummyEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
-    assert(instance.mitt)
+    assert(instance.emitter)
     assert(instance.observer)
     assert(typeof instance.name === 'string')
     assert(typeof instance.off === 'function')
@@ -35,7 +35,7 @@ describe('events', () => {
   it('must override func', () => {
     const events = new Events(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
     assert(throws(() => {
@@ -51,7 +51,7 @@ describe('events', () => {
   it('error', () => {
     const events = new Events(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
     assert(events.error(random.word()) === undefined)
@@ -60,7 +60,7 @@ describe('events', () => {
   it('warning', () => {
     const events = new Events(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
     assert(events.warning(random.word()) === undefined)
@@ -69,7 +69,7 @@ describe('events', () => {
   it('emit', () => {
     const instance = new DummyEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
     instance.emit({x: random.number(), y: random.number()})
@@ -79,7 +79,7 @@ describe('events', () => {
   it('on', () => {
     const instance = new DummyEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
 
@@ -96,7 +96,7 @@ describe('events', () => {
   it('bind slient error', () => {
     let instance = new DummyEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver()
     )
     const spy = sinonSpy(logger, 'error')
@@ -118,7 +118,7 @@ describe('events', () => {
 
     instance = new InValidDummyEvents(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver(),
       logger
     )
@@ -128,7 +128,7 @@ describe('events', () => {
   it('off', () => {
     const instance = new Events(
       random.word(),
-      mitt(),
+      new EventEmitter(),
       new UIEventObserver(),
       logger
     )

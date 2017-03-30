@@ -3,7 +3,7 @@ import { describe, it, beforeEach } from 'mocha'
 import { random } from 'faker'
 import assert from 'assert'
 
-import mitt from 'mitt'
+import EventEmitter from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 
 describe('scroll', () => {
@@ -12,7 +12,7 @@ describe('scroll', () => {
   let instance, emitter
 
   beforeEach(() => {
-    emitter = mitt()
+    emitter = new EventEmitter()
     instance = new ScrollEvents(
       random.word(),
       emitter,
@@ -36,6 +36,6 @@ describe('scroll', () => {
     assert(typeof data.top === 'number')
     assert(data.type === 'scroll')
 
-    emitter.off('*', res => { data = res })
+    emitter.removeListener(instance.name, res => { data = res })
   })
 })

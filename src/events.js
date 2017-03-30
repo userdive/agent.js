@@ -1,5 +1,5 @@
 /* @flow */
-import mitt from 'mitt'
+import EventEmitter from 'events'
 
 import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
@@ -9,13 +9,13 @@ import type { EventType, CustomError } from './types'
 type Handler = MouseEventHandler | TouchEventHandler
 
 export default class Events {
-  mitt: mitt
+  emitter: EventEmitter
   name: string
   observer: any
   type: EventType
-  constructor (emitName: string, eventEmitter: mitt, eventObserver: any): void {
+  constructor (emitName: string, eventEmitter: EventEmitter, eventObserver: any): void {
     this.name = emitName
-    this.mitt = eventEmitter
+    this.emitter = eventEmitter
     this.observer = eventObserver
   }
   error (err: CustomError): void {
@@ -35,7 +35,7 @@ export default class Events {
 
     const { x, y } = getOffset(window)
 
-    this.mitt.emit(this.name, Object.assign({}, data, {
+    this.emitter.emit(this.name, Object.assign({}, data, {
       type: this.type,
       left: x,
       top: y

@@ -1,5 +1,5 @@
 /* @flow */
-import mitt from 'mitt'
+import EventEmitter from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 import { find, save } from 'auto-cookie'
 import cookies from 'js-cookie'
@@ -27,7 +27,7 @@ import type {
 const EMIT_NAME = 'POINT'
 
 let BASE_URL: string
-let emitter: mitt
+let emitter: EventEmitter
 let interactId: number = 0
 let INTERVAL: number[]
 let loadTime: number = 0
@@ -154,7 +154,7 @@ export default class Agent extends Store {
   constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
     super()
     setup(RAVEN_DSN, Raven)
-    emitter = mitt()
+    emitter = new EventEmitter()
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
       events.push(new Class(EMIT_NAME, emitter, observer))
@@ -194,7 +194,7 @@ export default class Agent extends Store {
   destroy (): void {
     sendInteracts(true)
 
-    emitter.off('*', updateInteractCache)
+    emitter.removeListener(EMIT_NAME, updateInteractCache)
     events.forEach(e => {
       e.off()
     })
