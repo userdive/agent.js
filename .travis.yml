@@ -32,8 +32,21 @@ deploy:
     secure: aTQLdKpTJORmb60PYD20AAp8D7hc6J9slNHewuqUcfIWO7KVq7PQovvJ0gRaBIcz3uPd0SZ5u8/sfrO4YXH4ChiFje/Qgwsgci6nqEwKtIULCqTNREkkTPqKKssYYq/6d3a35+9oXHsRroUa2qybX4YJHk6IXmY7QhQryn2RIN6eXpCX9pGnji7Ql30cq9QaH3sstE4pvjZux71+U6ee7OZtRJxZ13TvGQLGdhziQog10/8QVlRKgwQzYSIu5Ikga01I+ToMlkjJVGqku4KDCvXIdz7IL9KvUYIGgNGPeDIBy2rVNeP95UhYcPu9W41CM5zMVT0aO0n7CdfJ7/zoWkiI4O3uxOkmLk9noVzApClSVsYWTTz7uGJumPgM/URYlboxLoSA6PcSwvtQhrJ0RZTNtFpYPfreSveQhaQFF8F80S9C1ZSPBInMJB386Hp6/9a9ZZ9pbwK+zzKVAX2lNv+F7bavi1nBFd1vrW/tfMqJfMoiynZqZWAjPQdvNnMRO2cXM8vvJg9IOixRaOcU9UE/bDL2/6gOZ5BjrDcecOuLfTwp9M0F8ISUEBlZrFvecaYHKXZYoT8vHxW4APo7BCXCts/hcS2JzN3IL/U2hDtW5D030kphtTrzUmOs7J3SxMevl8m5yMjAjY2ma8Wz/y6ZHhEQ38o3atv0nwPsrzk=
   bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
   local-dir: lib/build
+  upload-dir: "agent/$TRAVIS_BRANCH"
   on:
     all_branches: true
+    repo: userdive/agent.js
+    condition: $CI_MODE = karma
+deploy:
+- provider: s3
+  skip_cleanup: true
+  access_key_id: AKIAJGRQLUF4DJQRRPGA
+  secret_access_key:
+    secure: aTQLdKpTJORmb60PYD20AAp8D7hc6J9slNHewuqUcfIWO7KVq7PQovvJ0gRaBIcz3uPd0SZ5u8/sfrO4YXH4ChiFje/Qgwsgci6nqEwKtIULCqTNREkkTPqKKssYYq/6d3a35+9oXHsRroUa2qybX4YJHk6IXmY7QhQryn2RIN6eXpCX9pGnji7Ql30cq9QaH3sstE4pvjZux71+U6ee7OZtRJxZ13TvGQLGdhziQog10/8QVlRKgwQzYSIu5Ikga01I+ToMlkjJVGqku4KDCvXIdz7IL9KvUYIGgNGPeDIBy2rVNeP95UhYcPu9W41CM5zMVT0aO0n7CdfJ7/zoWkiI4O3uxOkmLk9noVzApClSVsYWTTz7uGJumPgM/URYlboxLoSA6PcSwvtQhrJ0RZTNtFpYPfreSveQhaQFF8F80S9C1ZSPBInMJB386Hp6/9a9ZZ9pbwK+zzKVAX2lNv+F7bavi1nBFd1vrW/tfMqJfMoiynZqZWAjPQdvNnMRO2cXM8vvJg9IOixRaOcU9UE/bDL2/6gOZ5BjrDcecOuLfTwp9M0F8ISUEBlZrFvecaYHKXZYoT8vHxW4APo7BCXCts/hcS2JzN3IL/U2hDtW5D030kphtTrzUmOs7J3SxMevl8m5yMjAjY2ma8Wz/y6ZHhEQ38o3atv0nwPsrzk=
+  bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
+  local-dir: lib/build
+  on:
+    tags: true
     repo: userdive/agent.js
     condition: $CI_MODE = karma
 - provider: s3
