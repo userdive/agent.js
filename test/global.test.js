@@ -3,37 +3,17 @@ import { describe, it, before, beforeEach, afterEach } from 'mocha'
 import { random, internet } from 'faker'
 import assert from 'assert'
 
-import { NAMESPACE } from '../src/constants'
+import { inject, createEntry } from './helpers/injectScript'
+
 const GLOBAL_NAME: string = random.word()
 
-describe('global', () => {
+describe('global async', () => {
   before(() => {
-    const id = random.word()
-
-    const script = document.createElement('script')
-    script.id = id
-
-    function append (body: any, element: HTMLElement) {
-      body.appendChild(element)
-    }
-
-    append(document.body, script)
-
-    function set (element: any) {
-      element.setAttribute(NAMESPACE, GLOBAL_NAME)
-    }
-    set(document.getElementById(id))
+    inject(GLOBAL_NAME)
   })
 
-  beforeEach(() => {
-    function createEntry (global, name) {
-      return global[name] || function () {
-        (global[name].q = global[name].q || []).push(arguments)
-      }
-    }
-
+  beforeEach('generate queue', () => {
     window[GLOBAL_NAME] = createEntry(window, GLOBAL_NAME)
-
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
   })
@@ -43,33 +23,24 @@ describe('global', () => {
   })
 
   it('find global', () => {
-    window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url())
-    assert(window[GLOBAL_NAME]['q'].length)
-
-    require('../src/entrypoint/')
-
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
-
-    const agent = window[GLOBAL_NAME](
-      'create', random.alphaNumeric(), {}, internet.url()
+    assert.equal(
+      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url()),
+      undefined
     )
-    assert(agent.send)
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+    assert(window[GLOBAL_NAME]['q'].length)
+    require('../src/entrypoint/')
     assert(window[GLOBAL_NAME]['q'] === undefined)
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
   })
 
-  it('debug', () => {
-    window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url())
+  it('debug global', () => {
+    assert.equal(
+      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url()),
+      undefined
+    )
     assert(window[GLOBAL_NAME]['q'].length)
     require('../src/entrypoint/debug')
-
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
-
-    const agent = window[GLOBAL_NAME](
-      'create', random.alphaNumeric(), {}, internet.url()
-    )
-    assert(agent.send)
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
     assert(window[GLOBAL_NAME]['q'] === undefined)
+    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
   })
 })

@@ -78,24 +78,26 @@ function getInteractTypes (eventName: EventType): string[] {
 }
 
 export default class Agent extends Store {
+  id: string
   _baseUrl: string
   _cache: {a: Object, l: Object}
   _emitter: EventEmitter
   _events: any[]
-  _id: number
+  _interactId: number
   _interacts: Interact[]
   _interval: number[]
-  _loaded: boolean
   _stop: boolean
+  loaded: boolean
   constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
     super()
     setup(RAVEN_DSN, Raven)
 
+    this.id = generateId()
     this._clear()
     this._events = []
     this._interacts = []
     this._interval = []
-    this._id = 0
+    this._interactId = 0
     this._emitter = new EventEmitter()
 
     const observer = new UIEventObserver() // singleton
@@ -150,7 +152,7 @@ export default class Agent extends Store {
     Object.keys(this._cache).forEach(key => {
       if (cacheValidator(this._cache[key])) {
         this._interacts.push(Object.assign({}, this._cache[key], {
-          id: this._id
+          id: this._interactId
         }))
       }
     })
@@ -163,7 +165,7 @@ export default class Agent extends Store {
       if (delay >= 0) {
         setTimeout(this._sendInteractsWithUpdate.bind(this), delay * 1000)
       }
-      this._id++
+      this._interactId++
     }
   }
 
@@ -180,14 +182,15 @@ export default class Agent extends Store {
         })
 
         this._interval = INTERVAL_DEFAULT_SETTING.concat()
-        this._id = 0
+        this._interactId = 0
         const data = Object.assign({}, state.env, state.custom)
         this._baseUrl = `${this._baseUrl}/${Date.now()}`
         get(`${this._baseUrl}/env.gif`, obj2query(data))
-        this._loaded = true
+        this.loaded = true
         this.listen()
     }
   }
+
   destroy (): void {
     this._sendInteracts(true)
 
@@ -195,11 +198,12 @@ export default class Agent extends Store {
     this._events.forEach(e => {
       e.off()
     })
-    this._loaded = false
+    this.loaded = false
     this._baseUrl = ''
   }
+
   listen (): void {
-    if (!this._loaded || this._baseUrl.split('/').length !== 6) {
+    if (!this.loaded || this._baseUrl.split('/').length !== 6) {
       raise('need send pageview')
       return
     }

@@ -14,7 +14,7 @@ function destroy () {
 }
 
 export default class Agent {
-  static create (projectId: string, settings: any): AgentCore {
+  create (projectId: string, settings: any): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
@@ -33,13 +33,13 @@ export default class Agent {
     }
     return agent
   }
-  static send (type: SendType, page: ?string): void {
+  send (type: SendType, page: ?string): void {
     if (agent.loaded && type === 'pageview') {
       destroy()
     }
     agent.send(type, page || location.href)
   }
-  static set (key: any, value?: string | number): State {
+  set (key: any, value?: string | number): State {
     if (key && value) {
       return agent.set(key, value)
     }

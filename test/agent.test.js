@@ -6,7 +6,8 @@ import assert from 'assert'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default
-  const agent = require('../src/agent').default
+  const Agent = require('../src/agent').default
+  const agent = new Agent()
 
   it('create', () => {
     assert(agent.create(random.uuid(), {baseUrl: internet.url()}))
