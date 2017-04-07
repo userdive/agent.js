@@ -38,6 +38,9 @@ describe('global async', () => {
     const agent2 = window[GLOBAL_NAME](`create.${name}`, random.alphaNumeric(), {}, internet.url())
     assert(agent.id !== agent2.id)
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
+
+    const agent3 = window[GLOBAL_NAME]('send', 'pageview')
+    assert(agent.id === agent3.id)
   })
 
   it('debug global', () => {
