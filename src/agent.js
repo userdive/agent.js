@@ -8,17 +8,13 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import type { SendType, State } from './types'
 
-let agent: AgentCore
-function destroy () {
-  agent.destroy()
-}
-
 export default class Agent {
+  _core: AgentCore
   create (projectId: string, settings: any): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
-    agent = new AgentCore(
+    this._core = new AgentCore(
       projectId,
       [
         Click,
@@ -29,21 +25,21 @@ export default class Agent {
       Object.assign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
-      window.addEventListener('pagehide', destroy, false)
+      window.addEventListener('pagehide', () => this._core.destroy, false)
     }
-    return agent
+    return this._core
   }
   send (type: SendType, page: ?string): AgentCore {
-    if (agent.active && type === 'pageview') {
-      destroy()
+    if (this._core.active && type === 'pageview') {
+      this._core.destroy()
     }
-    agent.send(type, page || location.href)
-    return agent
+    this._core.send(type, page || location.href)
+    return this._core
   }
   set (key: any, value?: string | number): State {
     if (key && value) {
-      return agent.set(key, value)
+      return this._core.set(key, value)
     }
-    return agent.mergeDeep(key)
+    return this._core.mergeDeep(key)
   }
 }

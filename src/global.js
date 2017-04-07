@@ -19,7 +19,7 @@ export default function (Agent: any) {
       agents[name] = new Agent()
     }
 
-    return agents[name][api[0]].apply(this, tasks)
+    return agents[name][api[0]](...tasks)
   }
 
   ((global: window) => {
