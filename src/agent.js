@@ -33,11 +33,12 @@ export default class Agent {
     }
     return agent
   }
-  send (type: SendType, page: ?string): void {
-    if (agent.loaded && type === 'pageview') {
+  send (type: SendType, page: ?string): AgentCore {
+    if (agent.active && type === 'pageview') {
       destroy()
     }
     agent.send(type, page || location.href)
+    return agent
   }
   set (key: any, value?: string | number): State {
     if (key && value) {

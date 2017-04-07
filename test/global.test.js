@@ -30,7 +30,14 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME]['q'].length)
     require('../src/entrypoint/')
     assert(window[GLOBAL_NAME]['q'] === undefined)
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+
+    const agent = window[GLOBAL_NAME]('send', 'pageview')
+    assert(agent.active)
+
+    const name = random.word()
+    const agent2 = window[GLOBAL_NAME](`create.${name}`, random.alphaNumeric(), {}, internet.url())
+    assert(agent.id !== agent2.id)
+    assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
   })
 
   it('debug global', () => {
@@ -41,6 +48,8 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME]['q'].length)
     require('../src/entrypoint/debug')
     assert(window[GLOBAL_NAME]['q'] === undefined)
-    assert(window[GLOBAL_NAME]('send', 'pageview') === undefined)
+
+    const agent = window[GLOBAL_NAME]('send', 'pageview')
+    assert(agent.active)
   })
 })

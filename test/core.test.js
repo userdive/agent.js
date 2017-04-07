@@ -60,7 +60,7 @@ describe('core', () => {
   it('listen before send pageview', () => {
     assert(throws(() => { agent.listen() }).message === 'need send pageview')
 
-    agent.loaded = true
+    agent.active = true
 
     assert(throws(() => { agent.listen() }).message === 'need send pageview')
   })

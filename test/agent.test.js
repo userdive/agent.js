@@ -15,8 +15,8 @@ describe('agent', () => {
 
   it('send', () => {
     const listen = stub(AgentCore.prototype, 'listen')
-    assert(agent.send('pageview') === undefined)
-    assert(agent.send('pageview') === undefined, 'take2')
+    assert(agent.send('pageview').active)
+    assert(agent.send('pageview').active, 'take2')
     listen.restore()
   })
 

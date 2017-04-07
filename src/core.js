@@ -78,7 +78,6 @@ function getInteractTypes (eventName: EventType): string[] {
 }
 
 export default class Agent extends Store {
-  id: string
   _baseUrl: string
   _cache: {a: Object, l: Object}
   _emitter: EventEmitter
@@ -86,8 +85,9 @@ export default class Agent extends Store {
   _interactId: number
   _interacts: Interact[]
   _interval: number[]
-  _stop: boolean
-  loaded: boolean
+  _loadTime: number
+  active: boolean
+  id: string
   constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
     super()
     setup(RAVEN_DSN, Raven)
@@ -116,14 +116,14 @@ export default class Agent extends Store {
   }
 
   _updateInteractCache (data: Object): void {
-    if (cacheValidator(data) && !this._stop) {
+    if (cacheValidator(data) && this.active) {
       const types = getInteractTypes(data.type)
       types.forEach(type => {
         this._cache[type] = Object.assign({}, data, {type})
       })
     } else {
       warning(`failed ${data.type}`, data)
-      this._stop = true
+      this.active = false
     }
   }
 
@@ -137,7 +137,7 @@ export default class Agent extends Store {
     })
 
     if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
-      get(`${this._baseUrl}/int.gif`, query)
+      get(`${this._baseUrl}/${this._loadTime}/int.gif`, query)
       this._interacts.length = 0
     }
   }
@@ -160,7 +160,7 @@ export default class Agent extends Store {
     this._clear()
     this._sendInteracts()
 
-    if (!this._stop) {
+    if (this.active) {
       const delay = this._interval.shift()
       if (delay >= 0) {
         setTimeout(this._sendInteractsWithUpdate.bind(this), delay * 1000)
@@ -184,26 +184,25 @@ export default class Agent extends Store {
         this._interval = INTERVAL_DEFAULT_SETTING.concat()
         this._interactId = 0
         const data = Object.assign({}, state.env, state.custom)
-        this._baseUrl = `${this._baseUrl}/${Date.now()}`
-        get(`${this._baseUrl}/env.gif`, obj2query(data))
-        this.loaded = true
+        this._loadTime = Date.now()
+        get(`${this._baseUrl}/${this._loadTime}/env.gif`, obj2query(data))
+        this.active = true
         this.listen()
     }
   }
 
   destroy (): void {
     this._sendInteracts(true)
-
     this._emitter.removeListener(EMIT_NAME, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.off()
     })
-    this.loaded = false
-    this._baseUrl = ''
+    this.active = false
+    this._loadTime = 0
   }
 
   listen (): void {
-    if (!this.loaded || this._baseUrl.split('/').length !== 6) {
+    if (!this.active || !this._loadTime) {
       raise('need send pageview')
       return
     }
