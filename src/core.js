@@ -77,7 +77,7 @@ function getInteractTypes (eventName: EventType): string[] {
   return []
 }
 
-export default class Agent extends Store {
+export default class AgentCore extends Store {
   _baseUrl: string
   _cache: {a: Object, l: Object}
   _emitter: EventEmitter

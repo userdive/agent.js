@@ -48,6 +48,12 @@ export default class Store {
       custom: {}
     }
   }
+  /**
+   * set custom state
+   * @param {String} type page or dimension or matric
+   * @param {Number|String} data set datas
+   * @returns {State} current state
+   */
   set (type: SetType, data: any): State {
     switch (type) {
       case 'page':
