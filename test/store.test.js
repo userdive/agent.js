@@ -52,11 +52,11 @@ describe('store', () => {
       store.set(metric, random.number({min: 1, max: 99}))
     }
     for (let i = 1; i <= CUSTOM_INDEX; i++) {
-      assert(store.state.custom[`cd${i}`])
-      assert(store.state.custom[`cm${i}`])
+      assert(store._state.custom[`cd${i}`])
+      assert(store._state.custom[`cm${i}`])
     }
-    assert(store.state.custom[`cd${CUSTOM_INDEX + 1}`] === undefined)
-    assert(store.state.custom[`cm${CUSTOM_INDEX + 1}`] === undefined)
+    assert(store._state.custom[`cd${CUSTOM_INDEX + 1}`] === undefined)
+    assert(store._state.custom[`cm${CUSTOM_INDEX + 1}`] === undefined)
   })
 
   it('mergeDeep', () => {

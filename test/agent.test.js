@@ -6,7 +6,8 @@ import assert from 'assert'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default
-  const agent = require('../src/agent').default
+  const Agent = require('../src/agent').default
+  const agent = new Agent()
 
   it('create', () => {
     assert(agent.create(random.uuid(), {baseUrl: internet.url()}))
@@ -14,8 +15,8 @@ describe('agent', () => {
 
   it('send', () => {
     const listen = stub(AgentCore.prototype, 'listen')
-    assert(agent.send('pageview') === undefined)
-    assert(agent.send('pageview') === undefined, 'take2')
+    assert(agent.send('pageview').active)
+    assert(agent.send('pageview').active, 'take2')
     listen.restore()
   })
 

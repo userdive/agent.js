@@ -27,12 +27,12 @@ function parseCustomData (key: Metric | Dimension, value: string | number): Cust
 }
 
 export default class Store {
-  state: State
+  _state: State
   constructor (): void {
     this.reset()
   }
   reset (): void {
-    this.state = {
+    this._state = {
       env: {
         v,
         l: '',
@@ -48,24 +48,30 @@ export default class Store {
       custom: {}
     }
   }
+  /**
+   * set custom state
+   * @param {String} type page or dimension or matric
+   * @param {Number|String} data set datas
+   * @returns {State} current state
+   */
   set (type: SetType, data: any): State {
     switch (type) {
       case 'page':
         const l: string = data
-        this.state.env.l = l
+        this._state.env.l = l
         break
       default:
-        this.state.custom = Object.assign({}, this.state.custom, parseCustomData(type, data))
+        this._state.custom = Object.assign({}, this._state.custom, parseCustomData(type, data))
     }
-    return this.state
+    return this._state
   }
   merge (obj: ClientEnvironments | Custom): State {
-    this.state[obj.type] = Object.assign({}, this.state[obj.type], obj.data)
-    return this.state
+    this._state[obj.type] = Object.assign({}, this._state[obj.type], obj.data)
+    return this._state
   }
   mergeDeep (obj: Object): State {
     if (obj.page) {
-      this.state.env.l = obj.page
+      this._state.env.l = obj.page
       delete obj.page
     }
     let data = {}

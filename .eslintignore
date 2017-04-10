@@ -2,4 +2,5 @@ coverage/
 dist/
 flow-typed/
 lib/
+docs/
 node_modules/

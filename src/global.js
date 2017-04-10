@@ -3,12 +3,23 @@ import { NAMESPACE } from './constants'
 
 type TaskQueue = any[]
 
-export default function (agent: Object) {
+export default function (Agent: any) {
+  const agents = {}
+
   function execute (): any {
     const tasks = []
     tasks.push.apply(tasks, arguments)
-    const apiName = tasks.shift()
-    return agent[apiName].apply(this, tasks)
+    const api = tasks.shift().split('.')
+    let name = 'default'
+    if (api.length === 2) {
+      name = api[1]
+    }
+
+    if (!agents[name]) {
+      agents[name] = new Agent()
+    }
+
+    return agents[name][api[0]](...tasks)
   }
 
   ((global: window) => {
