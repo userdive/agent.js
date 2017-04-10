@@ -10,6 +10,12 @@ import type { SendType, State } from './types'
 
 export default class Agent {
   _core: AgentCore
+  /**
+   * create singleton Agent instance
+   * @param  {String} projectId generated from userdive
+   * @param  {Object|'auto'} settings recommend 'auto'
+   * @return {AgentCore} singleton instance
+   */
   create (projectId: string, settings: any): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
@@ -25,7 +31,9 @@ export default class Agent {
       Object.assign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
-      window.addEventListener('pagehide', () => this._core.destroy, false)
+      window.addEventListener('pagehide', () => {
+        this._core.destroy()
+      }, false)
     }
     return this._core
   }
