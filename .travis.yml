@@ -37,7 +37,6 @@ deploy:
     all_branches: true
     repo: userdive/agent.js
     condition: $CI_MODE = karma
-deploy:
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
