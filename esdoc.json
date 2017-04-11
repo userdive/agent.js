@@ -1,6 +1,12 @@
 {
   "source": "./src",
   "destination": "./docs",
+  "title": "@userdive/agent API Document",
+  "test": {
+    "type": "mocha",
+    "source": "./test",
+    "includes": ["test.js$"]
+  },
   "plugins": [
     {
       "name": "esdoc-flow-plugin"
