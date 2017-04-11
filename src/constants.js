@@ -1,8 +1,5 @@
-/* @flow */
-import type { Settings } from './types'
-
 const intervals = [0]
-function push (t: number, n: number): void {
+function push (t, n) {
   for (let i = 0; i < n; i++) {
     intervals.push(t)
   }
@@ -16,7 +13,7 @@ export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const VERSION = 1
-export const SETTINGS: Settings = {
+export const SETTINGS = {
   auto: false,
   baseUrl: 'https://v1.userdive.com',
   cookieName: '_ud', // TODO
