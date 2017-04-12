@@ -1,6 +1,15 @@
 {
   "presets": [
-    "es2015",
+    [
+      "env",
+      {
+        "browsers": [
+          "last 2 versions",
+          "> 1%"
+        ],
+        "ie": "11"
+      }
+    ],
     "flow"
   ],
   "plugins": [
