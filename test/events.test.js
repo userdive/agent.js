@@ -7,6 +7,7 @@ import assert from 'assert'
 
 import EventEmitter from 'events'
 import { UIEventObserver } from 'ui-event-observer'
+import { createEvent } from './helpers/Event'
 
 describe('events', () => {
   const logger: any = require('../src/logger')
@@ -87,7 +88,7 @@ describe('events', () => {
 
     const handler: any = (e) => { data = e }
     instance.on('click', handler)
-    const e = new Event('click')
+    const e = createEvent('click')
     window.dispatchEvent(e)
     assert(data)
   })
@@ -102,7 +103,7 @@ describe('events', () => {
     const error = random.word()
     const handler: any = (e) => { throw new Error(error) }
     instance.on('click', handler)
-    const e = new Event('click')
+    const e = createEvent('click')
     window.dispatchEvent(e)
 
     assert(logger.error.calledOnce)

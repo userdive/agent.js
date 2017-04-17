@@ -5,6 +5,7 @@ import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
 import EventEmitter from 'events'
+import { createEvent } from './helpers/Event'
 
 describe('click', () => {
   const UIEventObserver = require('ui-event-observer').UIEventObserver
@@ -28,7 +29,7 @@ describe('click', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 
-    const e = new Event('click')
+    const e = createEvent('click')
     window.dispatchEvent(e)
 
     assert(spy.called)

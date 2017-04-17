@@ -6,6 +6,7 @@ import assert from 'assert'
 
 import EventEmitter from 'events'
 import { UIEventObserver } from 'ui-event-observer'
+import { createEvent } from './helpers/Event'
 
 describe('mousemove', () => {
   const MouseMoveEvents = require('../src/events/mousemove').default
@@ -28,7 +29,7 @@ describe('mousemove', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 
-    const e = new Event('mousemove')
+    const e = createEvent('mousemove')
     window.dispatchEvent(e)
 
     assert(spy.called)
