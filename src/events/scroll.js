@@ -18,7 +18,7 @@ export default class ScrollEvents extends EventBase {
     return enable
   }
   on () {
-    super.on(window, 'scroll', () => {
+    super.on('scroll', () => {
       this.emit(getPotision(window))
     })
   }

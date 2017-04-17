@@ -41,8 +41,8 @@ export default class Events {
       top: y
     }))
   }
-  on (target: HTMLElement | window, eventName: EventType, handler: Handler): void {
-    if (!target || typeof handler !== 'function') {
+  on (eventName: EventType, handler: Handler): void {
+    if (typeof handler !== 'function') {
       raise('please override on')
       return
     }
@@ -51,7 +51,7 @@ export default class Events {
       return
     }
 
-    this.observer.subscribe(target, eventName, e => {
+    this.observer.subscribe(window, eventName, e => {
       try {
         handler(e)
       } catch (err) {

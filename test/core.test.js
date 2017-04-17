@@ -18,13 +18,13 @@ describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
 
-  function eventFactory (target, type, emitter) {
+  function eventFactory (type, emitter) {
     return class DummyEvents extends Base {
       validate () {
         return true
       }
       on () {
-        super.on(target, type, () => {})
+        super.on(type, () => {})
         emitter.on('test', data => super.emit(data))
       }
     }
@@ -34,8 +34,8 @@ describe('core', () => {
     return new Agent(
       random.uuid(),
       [
-        eventFactory(window, 'click', emitter),
-        eventFactory(window, 'scroll', emitter)
+        eventFactory('click', emitter),
+        eventFactory('scroll', emitter)
       ],
       Object.assign({}, SETTINGS_DEFAULT, options)
     )

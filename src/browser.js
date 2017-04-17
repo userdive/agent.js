@@ -62,10 +62,9 @@ export function getEnv (page: string): ?ClientEnvironmentsData {
   }
 }
 
-export function validate (apis: string[], target: ?HTMLElement): boolean {
-  target = target || window
+export function validate (apis: string[]): boolean {
   for (let i = 0; i < apis.length; i++) {
-    if (!(apis[i] in target)) {
+    if (!(apis[i] in window)) {
       return false
     }
   }

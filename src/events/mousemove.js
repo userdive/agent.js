@@ -4,14 +4,14 @@ import { validate } from '../browser'
 
 export default class MouseMoveEvents extends EventBase {
   validate (): boolean {
-    const enable = validate(['onmousemove'], document.body)
+    const enable = validate(['onmousemove'])
     if (!enable) {
       this.warning('disable mousemove')
     }
     return enable
   }
   on () {
-    super.on(document.body, 'mousemove', (e: MouseEvent) => {
+    super.on('mousemove', (e: MouseEvent) => {
       this.emit({x: e.pageX, y: e.pageY})
     })
   }

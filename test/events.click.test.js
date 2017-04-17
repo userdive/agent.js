@@ -28,10 +28,8 @@ describe('click', () => {
     const spy = sinonSpy(instance, 'emit')
     instance.on()
 
-    const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    const body: any = document.body
-    body.dispatchEvent(e)
+    const e = new Event('click')
+    window.dispatchEvent(e)
 
     assert(spy.called)
     spy.restore()
