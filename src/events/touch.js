@@ -4,11 +4,7 @@ import { validate } from '../browser'
 
 export default class TouchEvents extends EventBase {
   validate (): boolean {
-    const enable = validate(['ontouchend'])
-    if (!enable) {
-      this.warning('disable ontouchend')
-    }
-    return enable
+    return validate(['ontouchend'])
   }
   on () {
     super.on('touchend', (e: TouchEvent) => {
