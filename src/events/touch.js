@@ -1,6 +1,6 @@
 /* @flow */
 import EventBase from '../events'
-import { validate } from '../browser'
+import {validate} from '../browser'
 
 export default class TouchEvents extends EventBase {
   validate (): boolean {

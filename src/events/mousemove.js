@@ -1,6 +1,6 @@
 /* @flow */
 import EventBase from '../events'
-import { validate } from '../browser'
+import {validate} from '../browser'
 
 export default class MouseMoveEvents extends EventBase {
   validate (): boolean {

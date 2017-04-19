@@ -1,6 +1,6 @@
 /* @flow */
-import { describe, it } from 'mocha'
-import { internet, random } from 'faker/locale/ja'
+import {describe, it} from 'mocha'
+import {internet, random} from 'faker/locale/ja'
 import assert from 'assert'
 
 describe('requests', () => {

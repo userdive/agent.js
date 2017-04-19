@@ -1,14 +1,11 @@
 /* @flow */
-import { describe, it } from 'mocha'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
+import {describe, it} from 'mocha'
+import {random} from 'faker'
+import {throws} from 'assert-exception'
 import assert from 'assert'
 
 describe('logger', () => {
-  const args = [
-    random.word(),
-    new Error(random.word())
-  ]
+  const args = [random.word(), new Error(random.word())]
 
   function createDSN () {
     return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`

@@ -1,12 +1,12 @@
 /* @flow */
-import { SETTINGS as SETTINGS_DEFAULT, LISTENER } from './constants'
-import { validate } from './browser'
+import {SETTINGS as SETTINGS_DEFAULT, LISTENER} from './constants'
+import {validate} from './browser'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
-import type { SendType, State } from './types'
+import type {SendType, State} from './types'
 
 export default class Agent {
   _core: AgentCore
@@ -18,22 +18,21 @@ export default class Agent {
    */
   create (projectId: string, settings: any): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
-      settings = { auto: true }
+      settings = {auto: true}
     }
     this._core = new AgentCore(
       projectId,
-      [
-        Click,
-        MouseMove,
-        Scroll,
-        TouchEnd
-      ],
+      [Click, MouseMove, Scroll, TouchEnd],
       Object.assign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
-      window.addEventListener('pagehide', () => {
-        this._core.destroy()
-      }, false)
+      window.addEventListener(
+        'pagehide',
+        () => {
+          this._core.destroy()
+        },
+        false
+      )
     }
     return this._core
   }

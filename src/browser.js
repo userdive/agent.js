@@ -1,7 +1,7 @@
 /* @flow */
-import { VERSION } from './constants'
-import type { Size, ClientEnvironmentsData } from './types'
-import { error } from './logger'
+import {VERSION} from './constants'
+import type {Size, ClientEnvironmentsData} from './types'
+import {error} from './logger'
 
 function getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
   return {

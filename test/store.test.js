@@ -1,8 +1,8 @@
 /* @flow */
-import { describe, it } from 'mocha'
+import {describe, it} from 'mocha'
 import assert from 'assert'
-import { internet, random } from 'faker'
-import { CUSTOM_INDEX } from '../src/constants'
+import {internet, random} from 'faker'
+import {CUSTOM_INDEX} from '../src/constants'
 
 describe('store', () => {
   const Store = require('../src/store').default
@@ -30,10 +30,12 @@ describe('store', () => {
       h: random.number(),
       w: random.number()
     }
-    assert(store.merge({
-      type: 'env',
-      data: env
-    }).env.v === env.v)
+    assert(
+      store.merge({
+        type: 'env',
+        data: env
+      }).env.v === env.v
+    )
     const before = env.uid
     delete env.uid
     assert(store.merge({type: 'env', data: env}).env.uid === before)
@@ -64,18 +66,18 @@ describe('store', () => {
     const store = createInstance()
 
     const state = store.mergeDeep({
-      'dimension1': random.alphaNumeric(),
-      'dimension2': random.alphaNumeric(),
-      'dimension3': random.alphaNumeric(),
-      'dimension4': random.alphaNumeric(),
-      'dimension5': random.alphaNumeric(),
-      'metric1': random.number({min: 1, max: 99}),
-      'metric2': random.number({min: 1, max: 99}),
-      'metric3': random.number({min: 1, max: 99}),
-      'metric4': random.number({min: 1, max: 99}),
-      'metric5': random.number({min: 1, max: 99}),
-      'page': url,
-      'undefined': random.word() // useless
+      dimension1: random.alphaNumeric(),
+      dimension2: random.alphaNumeric(),
+      dimension3: random.alphaNumeric(),
+      dimension4: random.alphaNumeric(),
+      dimension5: random.alphaNumeric(),
+      metric1: random.number({min: 1, max: 99}),
+      metric2: random.number({min: 1, max: 99}),
+      metric3: random.number({min: 1, max: 99}),
+      metric4: random.number({min: 1, max: 99}),
+      metric5: random.number({min: 1, max: 99}),
+      page: url,
+      undefined: random.word() // useless
     })
     assert(state.env.l === url)
     assert(Object.keys(state.custom).length === 10)

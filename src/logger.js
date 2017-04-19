@@ -1,5 +1,5 @@
 /* @flow */
-import type { CustomError } from './types'
+import type {CustomError} from './types'
 
 type RavenOptions = {
   level: 'warning' | 'error',

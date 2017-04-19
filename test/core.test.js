@@ -1,14 +1,12 @@
 /* @flow */
-import { describe, it, beforeEach, afterEach } from 'mocha'
-import { spy as sinonSpy, useFakeTimers } from 'sinon'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
+import {describe, it, beforeEach, afterEach} from 'mocha'
+import {spy as sinonSpy, useFakeTimers} from 'sinon'
+import {random} from 'faker'
+import {throws} from 'assert-exception'
 import isUrl from 'is-url'
 import assert from 'assert'
 import EventEmitter from 'events'
-import {
-  SETTINGS as SETTINGS_DEFAULT
-} from '../src/constants'
+import {SETTINGS as SETTINGS_DEFAULT} from '../src/constants'
 
 function toMin (msec: number): number {
   return msec * 1000 * 60
@@ -33,10 +31,7 @@ describe('core', () => {
   function agentFactory (options = {}) {
     return new Agent(
       random.uuid(),
-      [
-        eventFactory('click', emitter),
-        eventFactory('scroll', emitter)
-      ],
+      [eventFactory('click', emitter), eventFactory('scroll', emitter)],
       Object.assign({}, SETTINGS_DEFAULT, options)
     )
   }
@@ -58,11 +53,19 @@ describe('core', () => {
   })
 
   it('listen before send pageview', () => {
-    assert(throws(() => { agent.listen() }).message === 'need send pageview')
+    assert(
+      throws(() => {
+        agent.listen()
+      }).message === 'need send pageview'
+    )
 
     agent.active = true
 
-    assert(throws(() => { agent.listen() }).message === 'need send pageview')
+    assert(
+      throws(() => {
+        agent.listen()
+      }).message === 'need send pageview'
+    )
   })
 
   it('send failed', () => {

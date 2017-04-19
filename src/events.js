@@ -1,10 +1,10 @@
 /* @flow */
 import EventEmitter from 'events'
 
-import { error, warning, raise } from './logger'
-import { LISTENER, SCROLL } from './constants'
-import { validate, getOffset } from './browser'
-import type { EventType, CustomError } from './types'
+import {error, warning, raise} from './logger'
+import {LISTENER, SCROLL} from './constants'
+import {validate, getOffset} from './browser'
+import type {EventType, CustomError} from './types'
 
 type Handler = MouseEventHandler | TouchEventHandler
 
@@ -13,7 +13,11 @@ export default class Events {
   name: string
   observer: any
   type: EventType
-  constructor (emitName: string, eventEmitter: EventEmitter, eventObserver: any): void {
+  constructor (
+    emitName: string,
+    eventEmitter: EventEmitter,
+    eventObserver: any
+  ): void {
     this.name = emitName
     this.emitter = eventEmitter
     this.observer = eventObserver
@@ -33,13 +37,16 @@ export default class Events {
       return
     }
 
-    const { x, y } = getOffset(window)
+    const {x, y} = getOffset(window)
 
-    this.emitter.emit(this.name, Object.assign({}, data, {
-      type: this.type,
-      left: x,
-      top: y
-    }))
+    this.emitter.emit(
+      this.name,
+      Object.assign({}, data, {
+        type: this.type,
+        left: x,
+        top: y
+      })
+    )
   }
   on (eventName: EventType, handler: Handler): void {
     if (typeof handler !== 'function') {
