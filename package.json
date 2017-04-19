@@ -77,7 +77,7 @@
     "ci:local": "npm run test",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test:karma",
     "clean": "rimraf coverage lib docs",
-    "coverage:local": "codecov -t $CODECOV_TOKEN -f ./coverage/karma/*/lcov.info",
+    "coverage:local": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
     "coverage:sauce": "echo 'nothing to do'",
     "lint": "npm-run-all -p lint:*",
     "lint:es": "eslint . --cache",
