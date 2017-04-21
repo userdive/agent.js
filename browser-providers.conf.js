@@ -2,7 +2,6 @@
 
 const customLaunchers = {
   SL_IOS10: {base: 'SauceLabs', browserName: 'iphone', version: '10.0'},
-  // 'SL_ANDROID4.4': {base: 'SauceLabs', browserName: 'android', version: '4.4'},
   SL_ANDROID5: {base: 'SauceLabs', browserName: 'android', version: '5.1'},
   SL_CHROME46: {
     base: 'SauceLabs',
@@ -23,8 +22,13 @@ const customLaunchers = {
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
     version: '11'
+  },
+  SL_EDGE: {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
+    platform: 'Windows 10',
+    version: '14.14393'
   }
-  // 'SL_EDGE': {base: 'SauceLabs', browserName: 'MicrosoftEdge', platform: 'Windows 10', version: '13.10586'}
 }
 
 module.exports = {
