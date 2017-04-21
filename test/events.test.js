@@ -1,12 +1,13 @@
 /* @flow */
-import { describe, it } from 'mocha'
-import { spy as sinonSpy } from 'sinon'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
+import {describe, it} from 'mocha'
+import {spy as sinonSpy} from 'sinon'
+import {random} from 'faker'
+import {throws} from 'assert-exception'
 import assert from 'assert'
 
 import EventEmitter from 'events'
-import { UIEventObserver } from 'ui-event-observer'
+import {UIEventObserver} from 'ui-event-observer'
+import {createEvent} from './helpers/Event'
 
 describe('events', () => {
   const logger: any = require('../src/logger')
@@ -38,14 +39,18 @@ describe('events', () => {
       new EventEmitter(),
       new UIEventObserver()
     )
-    assert(throws(() => {
-      events.validate()
-    }).message === 'please override validate')
+    assert(
+      throws(() => {
+        events.validate()
+      }).message === 'please override validate'
+    )
 
     const handler: any = 'function'
-    assert(throws(() => {
-      events.on(window, 'click', handler)
-    }).message)
+    assert(
+      throws(() => {
+        events.on('click', handler)
+      }).message
+    )
   })
 
   it('error', () => {
@@ -85,11 +90,12 @@ describe('events', () => {
 
     let data
 
-    const handler: any = (e) => { data = e }
-    instance.on(document, 'click', handler)
-    const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    document.dispatchEvent(e)
+    const handler: any = e => {
+      data = e
+    }
+    instance.on('click', handler)
+    const e = createEvent('click')
+    window.dispatchEvent(e)
     assert(data)
   })
 
@@ -101,11 +107,12 @@ describe('events', () => {
     )
     const spy = sinonSpy(logger, 'error')
     const error = random.word()
-    const handler: any = (e) => { throw new Error(error) }
-    instance.on(document, 'click', handler)
-    const e = document.createEvent('MouseEvents')
-    e.initEvent('click', false, true)
-    document.dispatchEvent(e)
+    const handler: any = e => {
+      throw new Error(error)
+    }
+    instance.on('click', handler)
+    const e = createEvent('click')
+    window.dispatchEvent(e)
 
     assert(logger.error.calledOnce)
     spy.restore()
@@ -122,7 +129,7 @@ describe('events', () => {
       new UIEventObserver(),
       logger
     )
-    instance.on(document, 'click', handler)
+    instance.on('click', handler)
   })
 
   it('off', () => {

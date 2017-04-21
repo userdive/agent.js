@@ -1,4 +1,0 @@
---require test/helpers/setup-browser-env.js
---require jsdom-global/register
---require babel-register
---recursive

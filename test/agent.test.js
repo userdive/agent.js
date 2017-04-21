@@ -1,7 +1,7 @@
 /* @flow */
-import { describe, it } from 'mocha'
-import { random, internet } from 'faker'
-import { stub } from 'sinon'
+import {describe, it} from 'mocha'
+import {random, internet} from 'faker'
+import {stub} from 'sinon'
 import assert from 'assert'
 
 describe('agent', () => {
@@ -22,6 +22,6 @@ describe('agent', () => {
 
   it('set', () => {
     assert(agent.set('key', 'value'))
-    assert(agent.set({'key': 'value'}))
+    assert(agent.set({key: 'value'}))
   })
 })

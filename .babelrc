@@ -18,7 +18,10 @@
   "env": {
     "development": {
       "presets": [
-        "power-assert"
+        "power-assert",
+      ],
+      "plugins": [
+        "istanbul"
       ]
     }
   }

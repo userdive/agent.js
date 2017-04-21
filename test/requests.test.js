@@ -1,23 +1,10 @@
 /* @flow */
-import { describe, it } from 'mocha'
-import { internet, random } from 'faker/locale/ja'
+import {describe, it} from 'mocha'
+import {internet, random} from 'faker/locale/ja'
 import assert from 'assert'
 
 describe('requests', () => {
   const requests = require('../src/requests')
-
-  function onlyJSDOM () {
-    if (process.env.BROWSER === 'jsdom') {
-      return it
-    }
-    return it.skip
-  }
-
-  onlyJSDOM()('doNotTrack', () => {
-    navigator.doNotTrack = '1'
-    assert(requests.enable() === false)
-    navigator.doNotTrack = undefined
-  })
 
   it('get', () => {
     assert(requests.get(internet.url(), []) === undefined)

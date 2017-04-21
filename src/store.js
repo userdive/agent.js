@@ -1,8 +1,5 @@
 /* @flow */
-import {
-  CUSTOM_INDEX,
-  VERSION as v
-} from './constants'
+import {CUSTOM_INDEX, VERSION as v} from './constants'
 import type {
   ClientEnvironments,
   Custom,
@@ -13,14 +10,21 @@ import type {
   State
 } from './types'
 
-function parseCustomData (key: Metric | Dimension, value: string | number): CustomData {
+function parseCustomData (
+  key: Metric | Dimension,
+  value: string | number
+): CustomData {
   const data = {}
   let splitedKey: any = key.split('dimension')
   if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cd${splitedKey[1]}`] = value
   }
   splitedKey = key.split('metric')
-  if (splitedKey.length > 1 && typeof value === 'number' && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
+  if (
+    splitedKey.length > 1 &&
+    typeof value === 'number' &&
+    parseInt(splitedKey[1], 10) <= CUSTOM_INDEX
+  ) {
     data[`cm${splitedKey[1]}`] = value
   }
   return data
@@ -61,7 +65,11 @@ export default class Store {
         this._state.env.l = l
         break
       default:
-        this._state.custom = Object.assign({}, this._state.custom, parseCustomData(type, data))
+        this._state.custom = Object.assign(
+          {},
+          this._state.custom,
+          parseCustomData(type, data)
+        )
     }
     return this._state
   }

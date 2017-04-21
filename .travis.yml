@@ -8,8 +8,7 @@ cache:
 env:
   matrix:
   - CI_MODE=sauce
-  - CI_MODE=karma
-  - CI_MODE=jsdom
+  - CI_MODE=local
 matrix:
   fast_finish: true
   allow_failures:
@@ -36,7 +35,7 @@ deploy:
   on:
     all_branches: true
     repo: userdive/agent.js
-    condition: $CI_MODE = karma
+    condition: $CI_MODE = local
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
@@ -47,7 +46,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CI_MODE = karma
+    condition: $CI_MODE = local
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJF4LQ6ECJ6VAO76Q
@@ -58,7 +57,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CI_MODE = karma
+    condition: $CI_MODE = local
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAIBHDA4WTPT4XYYKQ
@@ -70,4 +69,4 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CI_MODE = karma
+    condition: $CI_MODE = local

@@ -1,10 +1,10 @@
 /* @flow */
-import { describe, it } from 'mocha'
+import {describe, it} from 'mocha'
 import assert from 'assert'
 
 describe('constants', () => {
   it('INTERVAL', () => {
-    const { INTERVAL } = require('../src/constants')
+    const {INTERVAL} = require('../src/constants')
 
     assert(INTERVAL[0] === 0)
 

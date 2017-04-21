@@ -1,26 +1,20 @@
 /* @flow */
 import EventEmitter from 'events'
-import { UIEventObserver } from 'ui-event-observer'
-import { find, save } from 'auto-cookie'
+import {UIEventObserver} from 'ui-event-observer'
+import {find, save} from 'auto-cookie'
 import cookies from 'js-cookie'
-import { v4 as uuid } from 'uuid'
+import {v4 as uuid} from 'uuid'
 
-import { get, obj2query } from './requests'
-import { getEnv } from './browser'
-import { setup, raise, warning } from './logger'
+import {get, obj2query} from './requests'
+import {getEnv} from './browser'
+import {setup, raise, warning} from './logger'
 import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   INTERACT as MAX_INTERACT
 } from './constants'
 import Store from './store'
 
-import type {
-  EventType,
-  Interact,
-  SendType,
-  Settings,
-  State
-} from './types'
+import type {EventType, Interact, SendType, Settings, State} from './types'
 
 const EMIT_NAME = 'POINT'
 
@@ -28,7 +22,11 @@ function generateId () {
   return uuid().replace(/-/g, '')
 }
 
-function findOrCreateClientId (cookieName: string, cookieDomain: string, cookieExpires: ?number): string {
+function findOrCreateClientId (
+  cookieName: string,
+  cookieDomain: string,
+  cookieExpires: ?number
+): string {
   const options = {domain: cookieDomain, expires: cookieExpires}
   const c = cookies.get(cookieName, options)
   if (c) {
@@ -47,8 +45,13 @@ function findOrCreateClientIdAuto (cookieName: string, cookieExpires) {
 }
 
 function cacheValidator (data: Object): boolean {
-  if (data.x >= 0 && data.y >= 0 && data.type &&
-    typeof data.left === 'number' && typeof data.top === 'number') {
+  if (
+    data.x >= 0 &&
+    data.y >= 0 &&
+    data.type &&
+    typeof data.left === 'number' &&
+    typeof data.top === 'number'
+  ) {
     return true
   }
   return false
@@ -88,7 +91,19 @@ export default class AgentCore extends Store {
   _loadTime: number
   active: boolean
   id: string
-  constructor (id: string, eventsClass: any[], {RAVEN_DSN, Raven, baseUrl, cookieDomain, cookieExpires, cookieName, auto}: Settings): void {
+  constructor (
+    id: string,
+    eventsClass: any[],
+    {
+      RAVEN_DSN,
+      Raven,
+      baseUrl,
+      cookieDomain,
+      cookieExpires,
+      cookieName,
+      auto
+    }: Settings
+  ): void {
     super()
     setup(RAVEN_DSN, Raven)
 
@@ -151,9 +166,11 @@ export default class AgentCore extends Store {
   _sendInteractsWithUpdate (): void {
     Object.keys(this._cache).forEach(key => {
       if (cacheValidator(this._cache[key])) {
-        this._interacts.push(Object.assign({}, this._cache[key], {
-          id: this._interactId
-        }))
+        this._interacts.push(
+          Object.assign({}, this._cache[key], {
+            id: this._interactId
+          })
+        )
       }
     })
 
@@ -193,7 +210,10 @@ export default class AgentCore extends Store {
 
   destroy (): void {
     this._sendInteracts(true)
-    this._emitter.removeListener(EMIT_NAME, this._updateInteractCache.bind(this))
+    this._emitter.removeListener(
+      EMIT_NAME,
+      this._updateInteractCache.bind(this)
+    )
     this._events.forEach(e => {
       e.off()
     })

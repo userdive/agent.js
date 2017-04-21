@@ -1,7 +1,7 @@
 /* @flow */
-import { VERSION } from './constants'
-import type { Size, ClientEnvironmentsData } from './types'
-import { error } from './logger'
+import {VERSION} from './constants'
+import type {Size, ClientEnvironmentsData} from './types'
+import {error} from './logger'
 
 function getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
   return {
@@ -62,10 +62,9 @@ export function getEnv (page: string): ?ClientEnvironmentsData {
   }
 }
 
-export function validate (apis: string[], target: ?HTMLElement): boolean {
-  target = target || window
+export function validate (apis: string[]): boolean {
   for (let i = 0; i < apis.length; i++) {
-    if (!(apis[i] in target)) {
+    if (!(apis[i] in window)) {
       return false
     }
   }

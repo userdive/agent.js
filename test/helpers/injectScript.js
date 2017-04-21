@@ -1,6 +1,6 @@
 /* @flow */
-import { NAMESPACE } from '../../src/constants'
-import { random } from 'faker'
+import {NAMESPACE} from '../../src/constants'
+import {random} from 'faker'
 
 export function inject (GLOBAL_NAME: string) {
   const id = random.word()
@@ -20,8 +20,10 @@ export function inject (GLOBAL_NAME: string) {
 }
 
 export function createEntry (global: window, name: string) {
-  global[name] = global[name] || function () {
-    (global[name].q = global[name].q || []).push(arguments)
-  }
+  global[name] =
+    global[name] ||
+    function () {
+      ;(global[name].q = global[name].q || []).push(arguments)
+    }
   return global[name]
 }

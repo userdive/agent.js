@@ -7,7 +7,7 @@ export function enable (): boolean {
     return false
   }
   return true
-};
+}
 
 export function get (url: string, query: string[]): void {
   if (enable() && query.length > 0) {

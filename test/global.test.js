@@ -1,9 +1,9 @@
 /* @flow */
-import { describe, it, before, beforeEach, afterEach } from 'mocha'
-import { random, internet } from 'faker'
+import {describe, it, before, beforeEach, afterEach} from 'mocha'
+import {random, internet} from 'faker'
 import assert from 'assert'
 
-import { inject, createEntry } from './helpers/injectScript'
+import {inject, createEntry} from './helpers/injectScript'
 
 const GLOBAL_NAME: string = random.word()
 
@@ -35,7 +35,12 @@ describe('global async', () => {
     assert(agent.active)
 
     const name = random.word()
-    const agent2 = window[GLOBAL_NAME](`create.${name}`, random.alphaNumeric(), {}, internet.url())
+    const agent2 = window[GLOBAL_NAME](
+      `create.${name}`,
+      random.alphaNumeric(),
+      {},
+      internet.url()
+    )
     assert(agent.id !== agent2.id)
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
 
