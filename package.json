@@ -27,7 +27,7 @@
     "babel-register": "^6.24.1",
     "codecov": "^2.0.1",
     "cross-env": "^4.0.0",
-    "esdoc": "^0.5.2",
+    "esdoc": "^1.0.0-alpha.1",
     "esdoc-flow-plugin": "^1.0.0",
     "esdoc-importpath-plugin": "^0.1.1",
     "eslint": "^3.19.0",
