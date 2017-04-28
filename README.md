@@ -1,6 +1,12 @@
 # @userdive/agent
 
-[![npm version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![codecov][codecov-image]][codecov-url] [![dependencies Status](https://david-dm.org/userdive/agent.js/status.svg)](https://david-dm.org/userdive/agent.js) [![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
+[![Build Status][travis-image]][travis-url]
+[![codecov][codecov-image]][codecov-url]
+[![dependencies Status](https://david-dm.org/userdive/agent.js/status.svg)](https://david-dm.org/userdive/agent.js)
+[![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev)
+[![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
+[![npm version][npm-image]][npm-url]
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 
