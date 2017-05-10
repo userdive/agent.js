@@ -2,7 +2,7 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const version = require('./package.json').version
+const { version, name, author } = require('./package.json')
 
 const date = new Date()
 
@@ -40,7 +40,7 @@ module.exports = {
       comments: false
     }),
     new webpack.BannerPlugin({
-      banner: `@userdive/agent ${version} | Copyright (c) ${date.getFullYear()} UNCOVER TRUTH Inc.`
+      banner: `${name} ${version} | Copyright (c) ${date.getFullYear()} ${author}`
     })
   ]
 }
