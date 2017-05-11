@@ -16,8 +16,6 @@ import Store from './store'
 
 import type {EventType, Interact, SendType, Settings, State} from './types'
 
-const EMIT_NAME = 'POINT'
-
 function generateId () {
   return uuid().replace(/-/g, '')
 }
@@ -117,7 +115,7 @@ export default class AgentCore extends Store {
 
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      this._events.push(new Class(EMIT_NAME, this._emitter, observer))
+      this._events.push(new Class(this.id, this._emitter, observer))
     })
     let userId
     if (auto) {
@@ -211,7 +209,7 @@ export default class AgentCore extends Store {
   destroy (): void {
     this._sendInteracts(true)
     this._emitter.removeListener(
-      EMIT_NAME,
+      this.id,
       this._updateInteractCache.bind(this)
     )
     this._events.forEach(e => {
@@ -226,7 +224,7 @@ export default class AgentCore extends Store {
       raise('need send pageview')
       return
     }
-    this._emitter.on(EMIT_NAME, this._updateInteractCache.bind(this))
+    this._emitter.on(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.on()
     })
