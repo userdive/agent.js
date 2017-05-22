@@ -33,12 +33,7 @@ describe('scroll', () => {
     })
     instance.on()
 
-    const e = createEvent('scroll')
-    if (e) {
-      window.dispatchEvent(e)
-    } else {
-      window.scroll(random.number({min: 0}), random.number({min: 0}))
-    }
+    window.dispatchEvent(createEvent('scroll'))
     assert(typeof data.x === 'number')
     assert(typeof data.y === 'number')
     assert(typeof data.left === 'number')
