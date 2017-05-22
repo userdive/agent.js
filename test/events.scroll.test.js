@@ -6,6 +6,11 @@ import assert from 'assert'
 import EventEmitter from 'events'
 import {UIEventObserver} from 'ui-event-observer'
 import {createEvent} from './helpers/Event'
+import {isIE11} from './helpers/browser'
+
+function itExcludeIE (): Function {
+  return isIE11() ? it.skip : it
+}
 
 describe('scroll', () => {
   const ScrollEvents = require('../src/events/scroll').default
@@ -21,7 +26,7 @@ describe('scroll', () => {
     assert(instance.validate())
   })
 
-  it('on', () => {
+  itExcludeIE()('on', () => {
     let data: any = {}
     emitter.on(instance.name, res => {
       data = res
