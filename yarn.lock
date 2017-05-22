@@ -275,13 +275,13 @@ async@1.x, async@^1.4.0:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@2.0.1, async@^2.0.0:
+async@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/async/-/async-2.0.1.tgz#b709cc0280a9c36f09f4536be823c838a9049e25"
   dependencies:
     lodash "^4.8.0"
 
-async@^2.1.2:
+async@^2.0.0, async@^2.1.2:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/async/-/async-2.1.4.tgz#2d2160c7788032e4dd6cbe2502f1f9a2c8f6cde4"
   dependencies:
@@ -811,9 +811,9 @@ babel-polyfill@^6.23.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-preset-env@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.4.0.tgz#c8e02a3bcc7792f23cded68e0355b9d4c28f0f7a"
+babel-preset-env@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.5.0.tgz#6e5452f7c8742afe3b9a917883ccf3f7a4f340c5"
   dependencies:
     babel-plugin-check-es2015-constants "^6.22.0"
     babel-plugin-syntax-trailing-function-commas "^6.22.0"
@@ -842,8 +842,9 @@ babel-preset-env@^1.4.0:
     babel-plugin-transform-es2015-unicode-regex "^6.22.0"
     babel-plugin-transform-exponentiation-operator "^6.22.0"
     babel-plugin-transform-regenerator "^6.22.0"
-    browserslist "^1.4.0"
+    browserslist "^2.1.2"
     invariant "^2.2.2"
+    semver "^5.3.0"
 
 babel-preset-flow@^6.23.0:
   version "6.23.0"
@@ -1101,12 +1102,12 @@ browserify-zlib@^0.1.4:
   dependencies:
     pako "~0.2.0"
 
-browserslist@^1.4.0:
-  version "1.7.7"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-1.7.7.tgz#0bd76704258be829b2398bb50e4b62d1a166b0b9"
+browserslist@^2.1.2:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.1.4.tgz#cc526af4a1312b7d2e05653e56d0c8ab70c0e053"
   dependencies:
-    caniuse-db "^1.0.30000639"
-    electron-to-chromium "^1.2.7"
+    caniuse-lite "^1.0.30000670"
+    electron-to-chromium "^1.3.11"
 
 buffer-crc32@^0.2.1:
   version "0.2.13"
@@ -1186,9 +1187,9 @@ camelcase@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
-caniuse-db@^1.0.30000639:
-  version "1.0.30000650"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000650.tgz#615f564d367533d32b82d72ada09661e75386bab"
+caniuse-lite@^1.0.30000670:
+  version "1.0.30000670"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000670.tgz#c94f7dbf0b68eaadc46d3d203f46e82e7801135e"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -1467,9 +1468,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
-cross-env@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-4.0.0.tgz#16083862d08275a4628b0b243b121bedaa55dd80"
+cross-env@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.0.0.tgz#565ccae4d09676441a5087f406fe7661a29c931b"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
@@ -1748,9 +1749,9 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
-electron-to-chromium@^1.2.7:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.3.tgz#651eb63fe89f39db70ffc8dbd5d9b66958bc6a0e"
+electron-to-chromium@^1.3.11:
+  version "1.3.11"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.11.tgz#744761df1d67b492b322ce9aa0aba5393260eb61"
 
 elliptic@^6.0.0:
   version "6.3.2"
@@ -1970,9 +1971,9 @@ esdoc-flow-plugin@^1.0.0:
     babel-plugin-syntax-jsx "6.8.0"
     babel-plugin-transform-flow-strip-types "6.8.0"
 
-esdoc-importpath-plugin@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/esdoc-importpath-plugin/-/esdoc-importpath-plugin-0.1.2.tgz#dfc3bdb38b3707e1ff5839c236f24bb2f891239a"
+esdoc-importpath-plugin@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/esdoc-importpath-plugin/-/esdoc-importpath-plugin-0.1.3.tgz#c3992cc8b66de8fdb2f33f4ef42649095fdfa87d"
 
 esdoc@^0.5.2:
   version "0.5.2"
@@ -2324,9 +2325,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flow-bin@^0.45.0:
-  version "0.45.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.45.0.tgz#009dd0f577a3f665c74ca8be827ae8c2dd8fd6b5"
+flow-bin@^0.46.0:
+  version "0.46.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.46.0.tgz#06ad7fe19dddb1042264438064a2a32fee12b872"
 
 for-in@^0.1.5:
   version "0.1.6"
@@ -3489,9 +3490,9 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
-mocha@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.3.0.tgz#d29b7428d3f52c82e2e65df1ecb7064e1aabbfb5"
+mocha@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.4.1.tgz#a3802b4aa381934cacb38de70cf771621da8f9af"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.9.0"
@@ -4898,14 +4899,12 @@ uglify-js@^2.6, uglify-js@^2.8.5:
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
 
-uglify-js@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.0.3.tgz#fff68ce4c5c9453c05747f080e61fd5d7fe7247e"
+uglify-js@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.0.10.tgz#e220e7dbc05ce1f9bb08268b221aa0cf152fb4e2"
   dependencies:
     commander "~2.9.0"
     source-map "~0.5.1"
-  optionalDependencies:
-    uglify-to-browserify "~1.0.0"
 
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
