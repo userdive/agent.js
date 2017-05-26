@@ -8,11 +8,7 @@ describe('store', () => {
   const Store = require('../src/store').default
 
   function createInstance () {
-    return new Store(
-      random.alphaNumeric(),
-      internet.url(),
-      random.alphaNumeric()
-    )
+    return new Store()
   }
 
   it('merge', () => {
