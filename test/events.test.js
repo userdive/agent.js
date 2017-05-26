@@ -126,8 +126,7 @@ describe('events', () => {
     instance = new InValidDummyEvents(
       random.word(),
       new EventEmitter(),
-      new UIEventObserver(),
-      logger
+      new UIEventObserver()
     )
     instance.on('click', handler)
   })
@@ -136,8 +135,7 @@ describe('events', () => {
     const instance = new Events(
       random.word(),
       new EventEmitter(),
-      new UIEventObserver(),
-      logger
+      new UIEventObserver()
     )
     instance.off()
   })
