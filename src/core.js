@@ -1,20 +1,20 @@
 /* @flow */
 import EventEmitter from 'events'
-import {UIEventObserver} from 'ui-event-observer'
-import {find, save} from 'auto-cookie'
+import { UIEventObserver } from 'ui-event-observer'
+import { find, save } from 'auto-cookie'
 import cookies from 'js-cookie'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 
-import {get, obj2query} from './requests'
-import {getEnv} from './browser'
-import {setup, raise, warning} from './logger'
+import { get, obj2query } from './requests'
+import { getEnv } from './browser'
+import { setup, raise, warning } from './logger'
 import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   INTERACT as MAX_INTERACT
 } from './constants'
 import Store from './store'
 
-import type {EventType, Interact, SendType, Settings, State} from './types'
+import type { EventType, Interact, SendType, Settings, State } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -25,7 +25,7 @@ function findOrCreateClientId (
   cookieDomain: string,
   cookieExpires: ?number
 ): string {
-  const options = {domain: cookieDomain, expires: cookieExpires}
+  const options = { domain: cookieDomain, expires: cookieExpires }
   const c = cookies.get(cookieName, options)
   if (c) {
     return c
@@ -79,16 +79,16 @@ function getInteractTypes (eventName: EventType): string[] {
 }
 
 export default class AgentCore extends Store {
-  _baseUrl: string
-  _cache: {a: Object, l: Object}
-  _emitter: EventEmitter
-  _events: any[]
-  _interactId: number
-  _interacts: Interact[]
-  _interval: number[]
-  _loadTime: number
-  active: boolean
-  id: string
+  _baseUrl: string;
+  _cache: { a: Object, l: Object };
+  _emitter: EventEmitter;
+  _events: any[];
+  _interactId: number;
+  _interacts: Interact[];
+  _interval: number[];
+  _loadTime: number;
+  active: boolean;
+  id: string;
   constructor (
     id: string,
     eventsClass: any[],
@@ -132,7 +132,7 @@ export default class AgentCore extends Store {
     if (cacheValidator(data) && this.active) {
       const types = getInteractTypes(data.type)
       types.forEach(type => {
-        this._cache[type] = Object.assign({}, data, {type})
+        this._cache[type] = Object.assign({}, data, { type })
       })
     } else {
       warning(`failed ${data.type}`, data)
@@ -141,7 +141,7 @@ export default class AgentCore extends Store {
   }
 
   _sendInteracts (force: ?boolean): void {
-    const query: string[] = []
+    const query: string[] = obj2query(this.get('custom'))
     this._interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -208,10 +208,7 @@ export default class AgentCore extends Store {
 
   destroy (): void {
     this._sendInteracts(true)
-    this._emitter.removeListener(
-      this.id,
-      this._updateInteractCache.bind(this)
-    )
+    this._emitter.removeListener(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.off()
     })
