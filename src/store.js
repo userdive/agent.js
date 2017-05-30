@@ -1,5 +1,5 @@
 /* @flow */
-import {CUSTOM_INDEX, VERSION as v} from './constants'
+import { CUSTOM_INDEX, VERSION as v } from './constants'
 import type {
   ClientEnvironments,
   Custom,
@@ -31,7 +31,7 @@ function parseCustomData (
 }
 
 export default class Store {
-  _state: State
+  _state: State;
   constructor (): void {
     this.reset()
   }
@@ -51,6 +51,14 @@ export default class Store {
       },
       custom: {}
     }
+  }
+  /**
+   * get state
+   * @param  {String} key env | custom
+   * @return {Object}     cached state
+   */
+  get (key: "env" | "custom"): Object {
+    return this._state[key]
   }
   /**
    * set custom state
@@ -86,6 +94,6 @@ export default class Store {
     Object.keys(obj).forEach(key => {
       data = Object.assign({}, data, parseCustomData((key: any), obj[key]))
     })
-    return this.merge({type: 'custom', data})
+    return this.merge({ type: 'custom', data })
   }
 }
