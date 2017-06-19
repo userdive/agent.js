@@ -42,13 +42,15 @@ function findOrCreateClientIdAuto (cookieName: string, cookieExpires) {
   return save(cookieName, generateId(), cookieExpires)
 }
 
-function cacheValidator (data: Object): boolean {
+function cacheValidator ({ x, y, type, left, top }: Object): boolean {
   if (
-    data.x >= 0 &&
-    data.y >= 0 &&
-    data.type &&
-    typeof data.left === 'number' &&
-    typeof data.top === 'number'
+    x > 0 &&
+    y > 0 &&
+    type &&
+    typeof left === 'number' &&
+    left >= 0 &&
+    typeof top === 'number' &&
+    top >= 0
   ) {
     return true
   }
@@ -63,7 +65,9 @@ function createInteractData (d: Interact): string {
   if (!cacheValidator(d)) {
     return ''
   }
-  return `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(d.top)}`
+  return `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(
+    d.left
+  )},${toInt(d.top)}`
 }
 
 function getInteractTypes (eventName: EventType): string[] {
@@ -79,16 +83,16 @@ function getInteractTypes (eventName: EventType): string[] {
 }
 
 export default class AgentCore extends Store {
-  _baseUrl: string;
-  _cache: { a: Object, l: Object };
-  _emitter: EventEmitter;
-  _events: any[];
-  _interactId: number;
-  _interacts: Interact[];
-  _interval: number[];
-  _loadTime: number;
-  active: boolean;
-  id: string;
+  _baseUrl: string
+  _cache: { a: Object, l: Object }
+  _emitter: EventEmitter
+  _events: any[]
+  _interactId: number
+  _interacts: Interact[]
+  _interval: number[]
+  _loadTime: number
+  active: boolean
+  id: string
   constructor (
     id: string,
     eventsClass: any[],

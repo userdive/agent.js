@@ -1,12 +1,12 @@
 /* @flow */
-import {describe, it, beforeEach, afterEach} from 'mocha'
-import {spy as sinonSpy, useFakeTimers} from 'sinon'
-import {random} from 'faker'
-import {throws} from 'assert-exception'
+import { describe, it, beforeEach, afterEach } from 'mocha'
+import { spy as sinonSpy, useFakeTimers } from 'sinon'
+import { random } from 'faker'
+import { throws } from 'assert-exception'
 import isUrl from 'is-url'
 import assert from 'assert'
 import EventEmitter from 'events'
-import {SETTINGS as SETTINGS_DEFAULT} from '../src/constants'
+import { SETTINGS as SETTINGS_DEFAULT } from '../src/constants'
 
 function toMin (msec: number): number {
   return msec * 1000 * 60
@@ -80,6 +80,12 @@ describe('core', () => {
 
     assert(spy.called === false)
 
+    emitter.emit('test', {
+      x: 0,
+      y: 0
+    })
+    timer.tick(toMin(30 * 60))
+
     spy.restore()
   })
 
@@ -89,8 +95,8 @@ describe('core', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
 
     emitter.emit('test', {
-      x: random.number({min: 1}),
-      y: random.number({min: 1})
+      x: random.number({ min: 1 }),
+      y: random.number({ min: 1 })
     })
 
     timer.tick(toMin(1))
@@ -112,7 +118,7 @@ describe('core', () => {
 
   it('send success auto', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
-    const autoAgent = agentFactory({auto: true})
+    const autoAgent = agentFactory({ auto: true })
     autoAgent.send('pageview', location.href)
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 7)
