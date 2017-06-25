@@ -53,7 +53,7 @@ deploy:
   bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
   local-dir: lib/build
   on:
-    tags: true
+    branch: master
     repo: userdive/agent.js
     condition: $CI_MODE = local
 - provider: s3
