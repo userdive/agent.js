@@ -4,10 +4,10 @@ function push (t, n) {
     intervals.push(t)
   }
 }
-push(1, 600)
+push(2, 300)
 
 export const CUSTOM_INDEX = 20
-export const INTERACT = 10
+export const INTERACT = 20
 export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`
