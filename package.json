@@ -52,7 +52,7 @@
     "string-replace-loader": "^1.2.0",
     "uglify-js": "^3.0.16",
     "uglifyjs-webpack-plugin": "^0.4.3",
-    "webpack": "^2.6.1",
+    "webpack": "^3.0.0",
     "webpack-bundle-size-analyzer": "^2.7.0"
   },
   "engine": {
