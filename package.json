@@ -84,7 +84,7 @@
     "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
     "build:doc": "esdoc",
     "ci:local": "npm run test",
-    "ci:sauce": "cross-env CI_MODE=sauce npm run test:karma",
+    "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage:local": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
     "coverage:sauce": "echo 'nothing to do'",
