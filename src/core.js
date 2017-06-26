@@ -43,15 +43,7 @@ function findOrCreateClientIdAuto (cookieName: string, cookieExpires) {
 }
 
 function cacheValidator ({ x, y, type, left, top }: Object): boolean {
-  if (
-    x > 0 &&
-    y > 0 &&
-    type &&
-    typeof left === 'number' &&
-    left >= 0 &&
-    typeof top === 'number' &&
-    top >= 0
-  ) {
+  if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
   return false
