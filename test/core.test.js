@@ -76,7 +76,6 @@ describe('core', () => {
 
     assert.deepEqual(agent._cache.a, {})
     assert.deepEqual(agent._cache.l, {})
-    assert(agent.active === false, 'stop agent')
   }
 
   it('cache failed, scroll', () => {

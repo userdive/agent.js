@@ -140,7 +140,6 @@ export default class AgentCore extends Store {
       })
     } else {
       warning(`failed ${data.type}`, data)
-      this.active = false
     }
   }
 
