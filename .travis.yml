@@ -7,12 +7,13 @@ cache:
   - node_modules
 env:
   matrix:
-  - CI_MODE=sauce
-  - CI_MODE=local
+  - CMD=lint
+  - CMD=test
+  - CMD=ci:sauce
 script:
-- npm run ci:$CI_MODE
+- npm run $CMD
 after_success:
-- npm run coverage:$CI_MODE
+- '[ "$CMD" == "test" ] && npm run coverage'
 notifications:
   email: false
   slack:
