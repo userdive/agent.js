@@ -1,12 +1,10 @@
 /* @flow */
-import {describe, it} from 'mocha'
+import { describe, it } from 'mocha'
 import assert from 'assert'
 
 describe('constants', () => {
   it('INTERVAL', () => {
-    const {INTERVAL} = require('../src/constants')
-
-    assert(INTERVAL[0] === 0)
+    const { INTERVAL } = require('../src/constants')
 
     let sum = 0
     INTERVAL.forEach(n => {

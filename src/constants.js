@@ -1,4 +1,4 @@
-const intervals = [0]
+const intervals = []
 function push (t, n) {
   for (let i = 0; i < n; i++) {
     intervals.push(t)
@@ -7,7 +7,7 @@ function push (t, n) {
 push(2, 300)
 
 export const CUSTOM_INDEX = 20
-export const INTERACT = 20
+export const INTERACT = 3
 export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`

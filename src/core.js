@@ -140,7 +140,6 @@ export default class AgentCore extends Store {
       })
     } else {
       warning(`failed ${data.type}`, data)
-      this.active = false
     }
   }
 
@@ -158,6 +157,7 @@ export default class AgentCore extends Store {
       this._interacts.length = 0
     }
   }
+
   _clear () {
     this._cache = {
       a: {},
@@ -222,8 +222,7 @@ export default class AgentCore extends Store {
 
   listen (): void {
     if (!this.active || !this._loadTime) {
-      raise('need send pageview')
-      return
+      return raise('need send pageview')
     }
     this._emitter.on(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
