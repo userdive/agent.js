@@ -136,7 +136,7 @@ export default class AgentCore extends Store {
   }
 
   _sendInteracts (force: ?boolean): void {
-    const query: string[] = obj2query(this.get('custom'))
+    const query: string[] = []
     this._interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -145,7 +145,10 @@ export default class AgentCore extends Store {
     })
 
     if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
-      get(`${this._baseUrl}/${this._loadTime}/int.gif`, query)
+      get(
+        `${this._baseUrl}/${this._loadTime}/int.gif`,
+        query.concat(obj2query(this.get('custom')))
+      )
       this._interacts.length = 0
     }
   }
