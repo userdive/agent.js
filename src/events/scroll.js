@@ -11,9 +11,15 @@ function getPotision (w, window): Point {
 
 export default class ScrollEvents extends EventBase {
   validate (): boolean {
-    const enable = validate(
-      SCROLL.concat(['pageYOffset', 'pageXOffset', 'innerWidth', 'innerHeight'])
-    )
+    const enable =
+      validate(
+        SCROLL.concat([
+          'pageYOffset',
+          'pageXOffset',
+          'innerWidth',
+          'innerHeight'
+        ])
+      ) && !validate(['ontouchend'])
     if (!enable) {
       this.warning('disable scroll')
     }
