@@ -2,7 +2,7 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const { version, name, author } = require('./package.json')
+const { version, name, author, license } = require('./package.json')
 
 const date = new Date()
 
@@ -19,7 +19,7 @@ module.exports = {
   devtool: 'cheap-source-map',
   module: {
     rules: [
-      {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/},
+      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
       {
         test: /logger\.js$/,
         loader: 'string-replace-loader',
@@ -32,6 +32,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
@@ -40,7 +41,7 @@ module.exports = {
       comments: false
     }),
     new webpack.BannerPlugin({
-      banner: `${name} ${version} | Copyright (c) ${date.getFullYear()} ${author}`
+      banner: `${name} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
     })
   ]
 }
