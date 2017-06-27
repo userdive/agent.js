@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -81,7 +81,7 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "build:babel": "cross-env NODE_ENV=dev babel src -d lib",
-    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json --colors | webpack-bundle-size-analyzer",
+    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
