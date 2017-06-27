@@ -1,18 +1,18 @@
 /* @flow */
-import {describe, it, beforeEach} from 'mocha'
-import {random} from 'faker'
+import { describe, it, beforeEach } from 'mocha'
+import { random } from 'faker'
 import assert from 'assert'
 
 import EventEmitter from 'events'
-import {UIEventObserver} from 'ui-event-observer'
-import {createEvent} from './helpers/Event'
-import {isIE11} from './helpers/browser'
+import { UIEventObserver } from 'ui-event-observer'
+import { createEvent } from './helpers/Event'
+import { isIE11 } from './helpers/browser'
 
 function itExcludeIE (): Function {
   return isIE11() ? it.skip : it
 }
 
-describe('scroll', () => {
+describe.skip('scroll', () => {
   const ScrollEvents = require('../src/events/scroll').default
 
   let instance, emitter
