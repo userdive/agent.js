@@ -7,12 +7,29 @@ export default class TouchEvents extends EventBase {
     return validate(['ontouchstart', 'ontouchmove', 'ontouchend'])
   }
   on () {
-    function handler (e: TouchEvent) {
-      const t = e.changedTouches[0]
-      this.emit({ x: t.pageX, y: t.pageY })
-    }
-    super.on('touchstart', handler, 'l')
-    super.on('touchmove', handler, 'l')
-    super.on('touchend', handler, 'a')
+    super.on(
+      'touchstart',
+      (e: TouchEvent) => {
+        const t = e.changedTouches[0]
+        this.emit({ x: t.pageX, y: t.pageY })
+      },
+      'l'
+    )
+    super.on(
+      'touchmove',
+      (e: TouchEvent) => {
+        const t = e.changedTouches[0]
+        this.emit({ x: t.pageX, y: t.pageY })
+      },
+      'l'
+    )
+    super.on(
+      'touchend',
+      (e: TouchEvent) => {
+        const t = e.changedTouches[0]
+        this.emit({ x: t.pageX, y: t.pageY })
+      },
+      'a'
+    )
   }
 }
