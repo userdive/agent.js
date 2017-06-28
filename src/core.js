@@ -96,7 +96,7 @@ export default class AgentCore extends Store {
       cookieExpires,
       cookieName,
       auto
-    }: Settings
+      }: Settings
   ): void {
     super()
     setup(RAVEN_DSN, Raven)
