@@ -102,6 +102,7 @@ describe('core', () => {
       y: random.number({ min: 1 })
     })
 
+    assert(agent._cache.a.name === 'click')
     assert(agent._cache.a.type === 'a')
     assert(agent._cache.a.x > 0)
     assert(agent._cache.a.y > 0)
