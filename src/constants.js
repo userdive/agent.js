@@ -12,6 +12,7 @@ export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
+export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
 export const VERSION = 1
 export const SETTINGS = {
   auto: false,

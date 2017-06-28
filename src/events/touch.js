@@ -1,10 +1,15 @@
 /* @flow */
 import EventBase from '../events'
 import { validate } from '../browser'
+import { TOUCH } from '../constants'
 
 export default class TouchEvents extends EventBase {
   validate (): boolean {
-    return validate(['ontouchstart', 'ontouchmove', 'ontouchend'])
+    const enable = validate(TOUCH)
+    if (!enable) {
+      this.warning(`disable touch`)
+    }
+    return enable
   }
   on () {
     super.on(
