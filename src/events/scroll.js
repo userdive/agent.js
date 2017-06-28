@@ -9,25 +9,24 @@ function getPotision (w, window): Point {
   return { x: x + w.innerWidth / 2, y: y + w.innerHeight / 2 }
 }
 
+const eventName = 'scroll'
+
 export default class ScrollEvents extends EventBase {
   validate (): boolean {
-    const enable =
-      validate(
-        SCROLL.concat([
-          'pageYOffset',
-          'pageXOffset',
-          'innerWidth',
-          'innerHeight'
-        ])
-      ) && !validate(['ontouchend'])
+    let enable = validate(
+      SCROLL.concat(['pageYOffset', 'pageXOffset', 'innerWidth', 'innerHeight'])
+    )
+    if (!validate(['ontouchend'])) {
+      enable = false
+    }
     if (!enable) {
-      this.warning('disable scroll')
+      this.warning(`disable ${eventName}`)
     }
     return enable
   }
   on () {
     super.on(
-      'scroll',
+      eventName,
       () => {
         this.emit(getPotision(window))
       },
