@@ -1,10 +1,10 @@
 /* @flow */
 import EventEmitter from 'events'
 
-import {error, warning, raise} from './logger'
-import {LISTENER, SCROLL} from './constants'
-import {validate, getOffset} from './browser'
-import type {EventType, CustomError} from './types'
+import { error, warning, raise } from './logger'
+import { LISTENER, SCROLL } from './constants'
+import { validate, getOffset } from './browser'
+import type { EventType, CustomError, InteractType } from './types'
 
 type Handler = MouseEventHandler | TouchEventHandler
 
@@ -12,7 +12,7 @@ export default class Events {
   emitter: EventEmitter
   name: string
   observer: any
-  type: EventType
+  type: InteractType
   constructor (
     emitName: string,
     eventEmitter: EventEmitter,
@@ -32,12 +32,12 @@ export default class Events {
     raise('please override validate')
     return false
   }
-  emit (data: {x: number, y: number}): void {
+  emit (data: { x: number, y: number }): void {
     if (data.x < 0 || data.y < 0 || !this.type) {
       return
     }
 
-    const {x, y} = getOffset(window)
+    const { x, y } = getOffset(window)
 
     this.emitter.emit(
       this.name,
@@ -48,10 +48,9 @@ export default class Events {
       })
     )
   }
-  on (eventName: EventType, handler: Handler): void {
-    if (typeof handler !== 'function') {
-      raise('please override on')
-      return
+  on (eventName: EventType, handler: Handler, type: InteractType): void {
+    if (typeof handler !== 'function' || !type) {
+      return raise('please override on')
     }
 
     if (!this.validate() || !validate(LISTENER.concat(SCROLL))) {
@@ -65,7 +64,7 @@ export default class Events {
         error(err)
       }
     })
-    this.type = eventName
+    this.type = type
   }
   off (): void {
     this.observer.unsubscribeAll()
