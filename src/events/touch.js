@@ -5,11 +5,7 @@ import { TOUCH } from '../constants'
 
 export default class TouchEvents extends EventBase {
   validate (): boolean {
-    const enable = validate(TOUCH)
-    if (!enable) {
-      this.warning(`disable touch`)
-    }
-    return enable
+    return validate(TOUCH)
   }
   dispatch (e: TouchEvent) {
     const self = this
