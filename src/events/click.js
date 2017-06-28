@@ -16,7 +16,7 @@ export default class ClickEvents extends EventBase {
       (e: MouseEvent) => {
         this.emit({ x: e.pageX, y: e.pageY })
       },
-      'l'
+      'a'
     )
   }
 }
