@@ -13,13 +13,7 @@ const eventName = 'scroll'
 
 export default class ScrollEvents extends EventBase {
   validate (): boolean {
-    const enable = validate(
-      SCROLL.concat(['innerWidth', 'innerHeight']).concat(TOUCH)
-    )
-    if (!enable) {
-      this.warning(`disable ${eventName}`)
-    }
-    return enable
+    return validate(SCROLL.concat(['innerWidth', 'innerHeight']).concat(TOUCH))
   }
   on () {
     super.on(
