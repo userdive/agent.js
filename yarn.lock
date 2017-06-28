@@ -5599,6 +5599,10 @@ useragent@^2.1.12:
     lru-cache "2.2.x"
     tmp "0.0.x"
 
+userdive@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/userdive/-/userdive-0.3.0.tgz#4b57f6302209059a77cad45b01344a4e88f04e6c"
+
 util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"

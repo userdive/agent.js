@@ -1,19 +1,20 @@
 /* @flow */
-import {describe, it, before, beforeEach, afterEach} from 'mocha'
-import {random, internet} from 'faker'
+import { describe, it, before, beforeEach, afterEach } from 'mocha'
+import { random, internet } from 'faker'
 import assert from 'assert'
 
-import {inject, createEntry} from './helpers/injectScript'
+import { inject, q } from 'userdive'
+import { NAMESPACE } from '../src/constants'
 
 const GLOBAL_NAME: string = random.word()
 
 describe('global async', () => {
   before(() => {
-    inject(GLOBAL_NAME)
+    inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
   beforeEach('generate queue', () => {
-    window[GLOBAL_NAME] = createEntry(window, GLOBAL_NAME)
+    window[GLOBAL_NAME] = q(GLOBAL_NAME, window)
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
   })

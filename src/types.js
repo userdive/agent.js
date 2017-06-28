@@ -148,5 +148,11 @@ export type Interact = {
   y: number
 }
 
-export type EventType = 'mousemove' | 'click' | 'scroll' | 'touchend'
+export type EventType =
+  | 'mousemove'
+  | 'click'
+  | 'scroll'
+  | 'touchend'
+  | 'touchstart'
+  | 'touchmove'
 export type CustomError = string | Error

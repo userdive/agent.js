@@ -12,6 +12,7 @@ import {
   INTERACT
 } from '../src/constants'
 import type { EventType } from '../src/types'
+import { getType } from './helpers/Event'
 
 describe('core', () => {
   const Agent = require('../src/core').default
@@ -23,7 +24,7 @@ describe('core', () => {
         return true
       }
       on () {
-        super.on(type, () => {})
+        super.on(type, () => {}, getType(type))
         emitter.on(type, data => super.emit(data))
       }
     }
@@ -101,16 +102,13 @@ describe('core', () => {
       y: random.number({ min: 1 })
     })
 
+    assert(agent._cache.a.name === 'click')
+    assert(agent._cache.a.type === 'a')
     assert(agent._cache.a.x > 0)
     assert(agent._cache.a.y > 0)
-    assert(agent._cache.a.x === agent._cache.l.x)
-    assert(agent._cache.a.y === agent._cache.l.y)
-    assert(agent._cache.a.type === 'a')
     assert(typeof agent._cache.a.top === 'number')
     assert(typeof agent._cache.a.left === 'number')
-    assert(agent._cache.a.top === agent._cache.l.top)
-    assert(agent._cache.a.left === agent._cache.l.top)
-    assert(agent._cache.l.type === 'l')
+    assert.deepEqual(agent._cache.l, {})
 
     agent._clear()
 

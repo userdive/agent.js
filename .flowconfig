@@ -2,6 +2,7 @@
 <PROJECT_ROOT>/lib/.*
 .*/.cache/.*
 .*/.nyc_output/.*
+<PROJECT_ROOT>/node_modules/userdive/lib/index.js.flow
 
 [include]
 

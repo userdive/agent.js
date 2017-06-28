@@ -1,6 +1,6 @@
 /* @flow */
 import EventBase from '../events'
-import {validate} from '../browser'
+import { validate } from '../browser'
 
 export default class MouseMoveEvents extends EventBase {
   validate (): boolean {
@@ -11,8 +11,12 @@ export default class MouseMoveEvents extends EventBase {
     return enable
   }
   on () {
-    super.on('mousemove', (e: MouseEvent) => {
-      this.emit({x: e.pageX, y: e.pageY})
-    })
+    super.on(
+      'mousemove',
+      (e: MouseEvent) => {
+        this.emit({ x: e.pageX, y: e.pageY })
+      },
+      'l'
+    )
   }
 }
