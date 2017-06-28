@@ -11,30 +11,14 @@ export default class TouchEvents extends EventBase {
     }
     return enable
   }
+  dispatch (e: TouchEvent) {
+    const self = this
+    const t = e.changedTouches ? e.changedTouches[0] : e.touches[0]
+    self.emit({ x: t.pageX, y: t.pageY })
+  }
   on () {
-    super.on(
-      'touchstart',
-      (e: TouchEvent) => {
-        const t = e.changedTouches[0]
-        this.emit({ x: t.pageX, y: t.pageY })
-      },
-      'l'
-    )
-    super.on(
-      'touchmove',
-      (e: TouchEvent) => {
-        const t = e.changedTouches[0]
-        this.emit({ x: t.pageX, y: t.pageY })
-      },
-      'l'
-    )
-    super.on(
-      'touchend',
-      (e: TouchEvent) => {
-        const t = e.changedTouches[0]
-        this.emit({ x: t.pageX, y: t.pageY })
-      },
-      'a'
-    )
+    super.on('touchstart', this.dispatch, 'l')
+    super.on('touchmove', this.dispatch, 'l')
+    super.on('touchend', this.dispatch, 'a')
   }
 }
