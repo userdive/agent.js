@@ -14,11 +14,11 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "@uncovertruth/eslint-config-flowtype": "^1.0.0",
+    "@uncovertruth/eslint-config-flowtype": "^1.1.0",
     "assert-exception": "^1.1.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.0",
+    "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "^1.5.2",
@@ -30,7 +30,7 @@
     "esdoc": "^0.5.2",
     "esdoc-flow-plugin": "^1.0.0",
     "esdoc-importpath-plugin": "^0.1.4",
-    "eslint": "^3.19.0",
+    "eslint": "^4.1.1",
     "faker": "^4.1.0",
     "flow-bin": "^0.48.0",
     "husky": "^0.14.0",
