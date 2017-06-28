@@ -49,7 +49,7 @@ export default class Events {
     )
   }
   on (eventName: EventType, handler: Handler, type: InteractType): void {
-    if (typeof handler !== 'function' || !type) {
+    if (typeof handler !== 'function' || !(type === 'a' || type === 'l')) {
       return raise('please override on')
     }
 

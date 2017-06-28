@@ -52,6 +52,7 @@
     "string-replace-loader": "^1.2.0",
     "uglify-js": "^3.0.20",
     "uglifyjs-webpack-plugin": "^0.4.6",
+    "userdive": "^0.3.0",
     "webpack": "^3.0.0",
     "webpack-bundle-size-analyzer": "^2.7.0"
   },
