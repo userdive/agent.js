@@ -12,7 +12,6 @@ export default class Events {
   emitter: EventEmitter
   name: string
   observer: any
-  eventName: EventType
   type: InteractType
   constructor (
     emitName: string,
@@ -43,7 +42,6 @@ export default class Events {
     this.emitter.emit(
       this.name,
       Object.assign({}, data, {
-        name: this.eventName,
         type: this.type,
         left: x,
         top: y
@@ -67,7 +65,6 @@ export default class Events {
       }
     })
     this.type = type
-    this.eventName = eventName
   }
   off (): void {
     this.observer.unsubscribeAll()
