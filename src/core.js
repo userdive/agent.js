@@ -42,8 +42,8 @@ function findOrCreateClientIdAuto (cookieName: string, cookieExpires): string {
   return save(cookieName, generateId(), cookieExpires)
 }
 
-function cacheValidator ({ x, y, type, left, top, name }: Object): boolean {
-  if (x > 0 && y > 0 && type && name && left >= 0 && top >= 0) {
+function cacheValidator ({ x, y, type, left, top }: Object): boolean {
+  if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
   return false
@@ -115,8 +115,6 @@ export default class AgentCore extends Store {
   _updateInteractCache (data: Object): void {
     if (cacheValidator(data) && this.active) {
       this._cache[data.type] = data
-    } else {
-      warning(`failed ${data.name}`, data)
     }
   }
 
