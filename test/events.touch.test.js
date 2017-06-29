@@ -1,7 +1,6 @@
 /* @flow */
 import { describe, it, beforeEach } from 'mocha'
 import { random } from 'faker'
-import { spy as sinonSpy } from 'sinon'
 import assert from 'assert'
 
 import EventEmitter from 'events'
@@ -27,15 +26,5 @@ describeExcludeTouch()('touch', () => {
 
   it('validate', () => {
     assert(instance.validate())
-  })
-
-  it('dispatch', () => {
-    const spy = sinonSpy(instance, 'emit')
-    const e: any = {
-      touches: [{ pageX: random.number(), pageY: random.number() }]
-    }
-    assert(instance.dispatch(e) === undefined)
-    assert(spy.called)
-    spy.restore()
   })
 })
