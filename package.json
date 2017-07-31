@@ -29,7 +29,7 @@
     "cross-env": "^5.0.1",
     "esdoc": "^0.5.2",
     "esdoc-flow-plugin": "^1.0.0",
-    "esdoc-importpath-plugin": "^0.1.4",
+    "esdoc-importpath-plugin": "^1.0.0",
     "eslint": "^4.1.1",
     "faker": "^4.1.0",
     "flow-bin": "^0.51.0",
