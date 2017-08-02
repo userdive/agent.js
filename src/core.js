@@ -130,9 +130,14 @@ export default class AgentCore extends Store {
     if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
       get(
         `${this._baseUrl}/${this._loadTime}/int.gif`,
-        query.concat(obj2query(this.get('custom')))
+        query.concat(obj2query(this.get('custom'))),
+        () => {
+          this._interacts.length = 0
+        },
+        () => {
+          this.destroy()
+        }
       )
-      this._interacts.length = 0
     }
   }
 
@@ -182,14 +187,22 @@ export default class AgentCore extends Store {
         this._interactId = 0
         const data = Object.assign({}, state.env, state.custom)
         this._loadTime = Date.now()
-        get(`${this._baseUrl}/${this._loadTime}/env.gif`, obj2query(data))
-        this.active = true
-        this.listen()
+        get(
+          `${this._baseUrl}/${this._loadTime}/env.gif`,
+          obj2query(data),
+          () => {
+            this.active = true
+            this.listen()
+          },
+          () => {
+            this.destroy()
+          }
+        )
     }
   }
 
   destroy (): void {
-    this._sendInteracts(true)
+    this._sendInteracts()
     this._emitter.removeListener(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.off()
