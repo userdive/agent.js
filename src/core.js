@@ -131,13 +131,12 @@ export default class AgentCore extends Store {
       get(
         `${this._baseUrl}/${this._loadTime}/int.gif`,
         query.concat(obj2query(this.get('custom'))),
+        () => {},
         () => {
-          this._interacts.length = 0
-        },
-        () => {
-          this.destroy()
+          this.active = false
         }
       )
+      this._interacts.length = 0
     }
   }
 
@@ -195,14 +194,14 @@ export default class AgentCore extends Store {
             this.listen()
           },
           () => {
-            this.destroy()
+            this.active = false
           }
         )
     }
   }
 
   destroy (): void {
-    this._sendInteracts()
+    this._sendInteracts(true)
     this._emitter.removeListener(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.off()
