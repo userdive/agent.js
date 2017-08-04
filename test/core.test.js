@@ -1,6 +1,6 @@
 /* @flow */
 import { describe, it, beforeEach, afterEach } from 'mocha'
-import { spy as sinonSpy, useFakeTimers } from 'sinon'
+import { spy as sinonSpy, useFakeTimers, stub as sinonStub } from 'sinon'
 import { random } from 'faker'
 import { throws } from 'assert-exception'
 import isUrl from 'is-url'
@@ -96,6 +96,11 @@ describe('core', () => {
   })
 
   it('cache success action', () => {
+    const stub = sinonStub(require('../src/requests'), 'get')
+    stub.callsFake((url, query, onload, onerror) => {
+      onload()
+    })
+
     agent.send('pageview', location.href)
     emitter.emit('click', {
       x: random.number({ min: 1 }),
@@ -113,9 +118,16 @@ describe('core', () => {
 
     assert.deepEqual(agent._cache.a, {})
     assert.deepEqual(agent._cache.l, {})
+
+    stub.restore()
   })
 
   it('cache success looks', () => {
+    const stub = sinonStub(require('../src/requests'), 'get')
+    stub.callsFake((url, query, onload, onerror) => {
+      onload()
+    })
+
     agent.send('pageview', location.href)
     emitter.emit('scroll', {
       x: random.number({ min: 1 }),
@@ -133,10 +145,14 @@ describe('core', () => {
 
     assert.deepEqual(agent._cache.a, {})
     assert.deepEqual(agent._cache.l, {})
+
+    stub.restore()
   })
 
   it('send success', () => {
     agent.send('pageview', location.href)
+    agent.active = true
+    agent.listen()
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 
@@ -147,7 +163,6 @@ describe('core', () => {
     timer.tick(INTERVAL[1] * 1000)
     assert.deepEqual(agent._cache.a, {})
     assert.deepEqual(agent._cache.l, {})
-    assert(agent.active)
 
     for (let i = 0; i <= INTERACT; i++) {
       emitter.emit('scroll', {
@@ -174,10 +189,13 @@ describe('core', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
     const autoAgent = agentFactory({ auto: true })
     autoAgent.send('pageview', location.href)
+    autoAgent.active = true
+    autoAgent.listen()
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 7)
     assert(url.split('/')[4].length === 32)
     assert(url.split('/')[5].length === 13)
     assert(url.split('/')[6] === 'env.gif')
+    spy.restore()
   })
 })

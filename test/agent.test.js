@@ -3,7 +3,6 @@ import { describe, it } from 'mocha'
 import { random, internet } from 'faker'
 import { stub } from 'sinon'
 import assert from 'assert'
-import * as req from '../src/requests'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default
@@ -17,10 +16,10 @@ describe('agent', () => {
   it('send', () => {
     const listen = stub(AgentCore.prototype, 'listen')
 
-    const stubGet = (url, query, onload, onerror) => {
+    const get = stub(require('../src/requests'), 'get')
+    get.callsFake((url, query, onload, onerror) => {
       onload()
-    }
-    const get = stub(req, 'get').callsFake(stubGet)
+    })
 
     let core = agent.send('pageview')
     assert(core.active)
