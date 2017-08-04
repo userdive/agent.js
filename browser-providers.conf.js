@@ -13,8 +13,8 @@ exports.customLaunchers = {
   SL_FIREFOX: {
     base: 'SauceLabs',
     browserName: 'firefox',
-    platform: 'Linux',
-    version: '44'
+    platform: 'Windows 10',
+    version: '51'
   },
   SL_SAFARI10: { base: 'SauceLabs', browserName: 'safari', version: '10.0' },
   SL_IE11: {
