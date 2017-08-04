@@ -191,11 +191,34 @@ describe('core', () => {
     autoAgent.send('pageview', location.href)
     autoAgent.active = true
     autoAgent.listen()
+
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 7)
     assert(url.split('/')[4].length === 32)
     assert(url.split('/')[5].length === 13)
     assert(url.split('/')[6] === 'env.gif')
     spy.restore()
+  })
+
+  it('send fail', () => {
+    const stub = sinonStub(require('../src/requests'), 'get')
+    stub.callsFake((url, query, onload, onerror) => {
+      onerror()
+    })
+
+    agent.send('pageview', location.href)
+    assert(agent.active === false)
+    stub.restore()
+  })
+
+  it('_sendInteract fail', () => {
+    const stub = sinonStub(require('../src/requests'), 'get')
+    stub.callsFake((url, query, onload, onerror) => {
+      onerror()
+    })
+
+    agent._sendInteracts(true)
+    assert(agent.active === false)
+    stub.restore()
   })
 })
