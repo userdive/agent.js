@@ -29,7 +29,7 @@ export default class Agent {
       window.addEventListener(
         'pagehide',
         () => {
-          this._core.destroy()
+          this._core.destroy(true)
         },
         false
       )
@@ -37,9 +37,6 @@ export default class Agent {
     return this._core
   }
   send (type: SendType, page: ?string): AgentCore {
-    if (type === 'pageview') {
-      this._core.destroy()
-    }
     this._core.send(type, page || location.href)
     return this._core
   }

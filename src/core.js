@@ -173,6 +173,8 @@ export default class AgentCore extends Store {
   send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
+        this.destroy(false)
+
         const env = getEnv(page)
         if (!env || !this._baseUrl) {
           return warning(`failed init`)
@@ -200,8 +202,8 @@ export default class AgentCore extends Store {
     }
   }
 
-  destroy (): void {
-    this._sendInteracts(true)
+  destroy (isPageHide: boolean): void {
+    this._sendInteracts(isPageHide)
     this._emitter.removeListener(this.id, this._updateInteractCache.bind(this))
     this._events.forEach(e => {
       e.off()
