@@ -48,6 +48,7 @@ describe('core', () => {
   afterEach(() => {
     timer.restore()
     agent.destroy(false)
+    assert(agent._emitter.listenerCount(agent.id) === 0)
   })
 
   it('instance', () => {
@@ -102,6 +103,7 @@ describe('core', () => {
     })
 
     agent.send('pageview', location.href)
+    assert(agent._emitter.listenerCount(agent.id) === 1)
     emitter.emit('click', {
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
