@@ -204,7 +204,7 @@ export default class AgentCore extends Store {
 
   destroy (isPageHide: boolean): void {
     this._sendInteracts(isPageHide)
-    this._emitter.removeListener(this.id, this._updateInteractCache.bind(this))
+    this._emitter.removeAllListeners(this.id)
     this._events.forEach(e => {
       e.off()
     })

@@ -12,8 +12,8 @@ export function enable (): boolean {
 export function get (
   url: string,
   query: string[],
-  onload: Function = () => null,
-  onerror: Function = () => null
+  onload: Function,
+  onerror: Function
 ): void {
   if (enable() && query.length > 0) {
     const img = document.createElement('img')
