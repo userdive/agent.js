@@ -84,7 +84,7 @@ export default class AgentCore extends Store {
       cookieExpires,
       cookieName,
       auto
-      }: Settings
+    }: Settings
   ): void {
     super()
     setup(RAVEN_DSN, Raven)
@@ -140,7 +140,7 @@ export default class AgentCore extends Store {
     }
   }
 
-  _clear () {
+  _clear (): void {
     this._cache = {
       a: {},
       l: {}

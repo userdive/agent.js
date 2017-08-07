@@ -10,7 +10,7 @@ import type { SendType, State } from './types'
 
 export default class Agent {
   _core: AgentCore
-  create (projectId: string, settings: any): AgentCore {
+  create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
