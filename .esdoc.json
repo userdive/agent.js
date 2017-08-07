@@ -5,15 +5,32 @@
     {
       "name": "esdoc-standard-plugin",
       "option": {
-        "lint": {"enable": true},
-        "coverage": {"enable": true},
-        "accessor": {"access": ["public", "protected", "private"], "autoPrivate": true},
-        "undocumentIdentifier": {"enable": true},
-        "unexportedIdentifier": {"enable": false},
-        "typeInference": {"enable": true},
+        "lint": {
+          "enable": true
+        },
+        "coverage": {
+          "enable": true
+        },
+        "accessor": {
+          "access": [
+            "public",
+            "protected",
+            "private"
+          ],
+          "autoPrivate": true
+        },
+        "undocumentIdentifier": {
+          "enable": true
+        },
+        "unexportedIdentifier": {
+          "enable": false
+        },
+        "typeInference": {
+          "enable": true
+        },
         "brand": {
           "title": "@userdive/agent API Document",
-          "description": "this is awesome library",
+          "description": "Official USERDIVE module for webpage analytics",
           "repository": "https://github.com/userdive/agent.js",
           "site": "https://github.com/userdive/agent.js",
           "author": "https://github.com/uncovertruth"
@@ -21,18 +38,26 @@
         "test": {
           "type": "mocha",
           "source": "./test",
-          "includes": ["test.js$"]
+          "includes": [
+            "test.js$"
+          ]
         }
       }
     },
     {
-      "name": "esdoc-flow-plugin"
+      "name": "esdoc-flow-type-plugin",
+      "option": {
+        "enable": true
+      }
     },
     {
       "name": "esdoc-importpath-plugin",
       "option": {
         "replaces": [
-          {"from": "^src/", "to": "lib/"}
+          {
+            "from": "^src/",
+            "to": "lib/"
+          }
         ]
       }
     }
