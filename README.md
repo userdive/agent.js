@@ -10,6 +10,7 @@
 [![codebeat badge](https://codebeat.co/badges/248f31a1-c73e-45e4-b1e0-a6154c1baaca)](https://codebeat.co/projects/github-com-userdive-agent-js-master)
 [![CodeFactor](https://www.codefactor.io/repository/github/userdive/agent.js/badge)](https://www.codefactor.io/repository/github/userdive/agent.js)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=userdive/agent.js&amp;utm_campaign=Badge_Grade)
+[![BCH compliance](https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master)](https://bettercodehub.com/)
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 

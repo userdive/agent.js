@@ -47,7 +47,7 @@ describe('core', () => {
 
   afterEach(() => {
     timer.restore()
-    agent.destroy()
+    agent.destroy(false)
   })
 
   it('instance', () => {
