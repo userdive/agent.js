@@ -31,7 +31,7 @@ function parseCustomData (
 }
 
 export default class Store {
-  _state: State;
+  _state: State
   constructor (): void {
     this.reset()
   }
@@ -52,20 +52,9 @@ export default class Store {
       custom: {}
     }
   }
-  /**
-   * get state
-   * @param  {String} key env | custom
-   * @return {Object}     cached state
-   */
-  get (key: "env" | "custom"): Object {
+  get (key: 'env' | 'custom'): Object {
     return this._state[key]
   }
-  /**
-   * set custom state
-   * @param {String} type page or dimension or matric
-   * @param {Number|String} data set datas
-   * @returns {State} current state
-   */
   set (type: SetType, data: any): State {
     switch (type) {
       case 'page':

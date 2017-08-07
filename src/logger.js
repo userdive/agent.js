@@ -14,7 +14,7 @@ export function raise (msg: string) {
   }
 }
 
-export function setup (DSN: string, raven: any) {
+export function setup (DSN: string, raven: ?Object): void {
   if (!DSN || !raven) {
     return
   }
