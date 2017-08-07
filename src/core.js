@@ -130,7 +130,11 @@ export default class AgentCore extends Store {
     if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
       get(
         `${this._baseUrl}/${this._loadTime}/int.gif`,
-        query.concat(obj2query(this.get('custom')))
+        query.concat(obj2query(this.get('custom'))),
+        () => {},
+        () => {
+          this.active = false
+        }
       )
       this._interacts.length = 0
     }
@@ -182,9 +186,17 @@ export default class AgentCore extends Store {
         this._interactId = 0
         const data = Object.assign({}, state.env, state.custom)
         this._loadTime = Date.now()
-        get(`${this._baseUrl}/${this._loadTime}/env.gif`, obj2query(data))
-        this.active = true
-        this.listen()
+        get(
+          `${this._baseUrl}/${this._loadTime}/env.gif`,
+          obj2query(data),
+          () => {
+            this.active = true
+            this.listen()
+          },
+          () => {
+            this.active = false
+          }
+        )
     }
   }
 

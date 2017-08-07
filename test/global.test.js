@@ -1,6 +1,7 @@
 /* @flow */
 import { describe, it, before, beforeEach, afterEach } from 'mocha'
 import { random, internet } from 'faker'
+import { stub as sinonStub } from 'sinon'
 import assert from 'assert'
 
 import { inject, q } from 'userdive'
@@ -13,14 +14,20 @@ describe('global async', () => {
     inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
+  let stub
   beforeEach('generate queue', () => {
     window[GLOBAL_NAME] = q(GLOBAL_NAME, window)
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
+    stub = sinonStub(require('../src/requests'), 'get')
+    stub.callsFake((url, query, onload, onerror) => {
+      onload()
+    })
   })
 
   afterEach(() => {
     window[GLOBAL_NAME] = undefined
+    stub.restore()
   })
 
   it('find global', () => {
