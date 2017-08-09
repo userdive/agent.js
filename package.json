@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -81,16 +81,17 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "npm-run-all build:*",
+    "build": "run-p build:*",
     "build:babel": "cross-env NODE_ENV=dev babel src -d lib",
     "build:bundle": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
-    "lint": "npm-run-all -p lint:*",
+    "lint": "run-p lint:*",
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
+    "postbuild": "cp robots.txt lib/build/.",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
     "prepublish": "npm run build",
