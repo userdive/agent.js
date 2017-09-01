@@ -114,17 +114,17 @@ export type Custom = {
 }
 
 export type ClientEnvironmentsData = {
-  v: number,
+  v?: number,
   uid?: number,
-  l: string,
-  n: string,
-  r: string,
-  sw: number,
-  sh: number,
-  ww: number,
-  wh: number,
-  h: number,
-  w: number
+  l?: string,
+  n?: string,
+  r?: string,
+  sw?: number,
+  sh?: number,
+  ww?: number,
+  wh?: number,
+  h?: number,
+  w?: number
 }
 
 export type ClientEnvironments = {
