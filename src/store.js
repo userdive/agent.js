@@ -70,8 +70,31 @@ export default class Store {
     }
     return this._state
   }
+
+  initialStatePram (obj: ClientEnvironments | Custom): any {
+    if (obj.type === 'env') {
+      return {
+        v,
+        l: '',
+        r: '',
+        n: '',
+        h: 0,
+        w: 0,
+        sh: 0,
+        sw: 0,
+        wh: 0,
+        ww: 0
+      }
+    }
+    return {}
+  }
+
   merge (obj: ClientEnvironments | Custom): State {
-    this._state[obj.type] = Object.assign({}, this._state[obj.type], obj.data)
+    this._state[obj.type] = Object.assign(
+      this.initialStatePram(obj),
+      this._state[obj.type],
+      obj.data
+    )
     return this._state
   }
   mergeDeep (obj: Object): State {
