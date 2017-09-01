@@ -30,13 +30,31 @@ function parseCustomData (
   return data
 }
 
+function initialState (): Object {
+  return {
+    env: {
+      v,
+      l: '',
+      r: '',
+      n: '',
+      h: 0,
+      w: 0,
+      sh: 0,
+      sw: 0,
+      wh: 0,
+      ww: 0
+    },
+    custom: {}
+  }
+}
+
 export default class Store {
   _state: State
   constructor (): void {
     this.reset()
   }
   reset (): void {
-    this._state = this.initialState()
+    this._state = initialState()
   }
   get (key: 'env' | 'custom'): Object {
     return this._state[key]
@@ -57,28 +75,10 @@ export default class Store {
     return this._state
   }
 
-  initialState (): Object {
-    return {
-      env: {
-        v,
-        l: '',
-        r: '',
-        n: '',
-        h: 0,
-        w: 0,
-        sh: 0,
-        sw: 0,
-        wh: 0,
-        ww: 0
-      },
-      custom: {}
-    }
-  }
-
   merge (obj: ClientEnvironments | Custom): State {
-    const initialState = this.initialState()
+    const stateObj = initialState()
     this._state[obj.type] = Object.assign(
-      initialState[obj.type],
+      stateObj[obj.type],
       this._state[obj.type],
       obj.data
     )
