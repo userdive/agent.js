@@ -36,21 +36,7 @@ export default class Store {
     this.reset()
   }
   reset (): void {
-    this._state = {
-      env: {
-        v,
-        l: '',
-        r: '',
-        n: '',
-        h: 0,
-        w: 0,
-        sh: 0,
-        sw: 0,
-        wh: 0,
-        ww: 0
-      },
-      custom: {}
-    }
+    this._state = this.initialState()
   }
   get (key: 'env' | 'custom'): Object {
     return this._state[key]
@@ -71,9 +57,9 @@ export default class Store {
     return this._state
   }
 
-  initialStatePram (obj: ClientEnvironments | Custom): any {
-    if (obj.type === 'env') {
-      return {
+  initialState (): Object {
+    return {
+      env: {
         v,
         l: '',
         r: '',
@@ -84,14 +70,15 @@ export default class Store {
         sw: 0,
         wh: 0,
         ww: 0
-      }
+      },
+      custom: {}
     }
-    return {}
   }
 
   merge (obj: ClientEnvironments | Custom): State {
+    const initialState = this.initialState()
     this._state[obj.type] = Object.assign(
-      this.initialStatePram(obj),
+      initialState[obj.type],
       this._state[obj.type],
       obj.data
     )
