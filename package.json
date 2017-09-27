@@ -81,7 +81,11 @@
   ],
   "license": "GPL-3.0",
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts": [
       "prettier --parser typescript --write",
       "tslint --fix",
       "git add"
