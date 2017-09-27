@@ -16,8 +16,14 @@ module.exports = {
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
   devtool: 'cheap-source-map',
   module: {
+    loaders: [
+      { test: /\.tsx?$/, loader: 'ts-loader' }
+    ],
     rules: [
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
       {
