@@ -1,4 +1,3 @@
-/* @flow */
 import EventBase from '../events'
 import { validate } from '../browser'
 import { TOUCH } from '../constants'

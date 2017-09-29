@@ -1,4 +1,3 @@
-/* @flow */
 import EventBase from '../events'
 import { validate } from '../browser'
 
@@ -10,6 +9,7 @@ export default class ClickEvents extends EventBase {
     }
     return enable
   }
+
   on () {
     super.on(
       'click',
