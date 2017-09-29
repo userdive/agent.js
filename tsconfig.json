@@ -5,14 +5,15 @@
     "lib": [
       "es5",
       "dom",
+      "es2015.core",
       "es2015.promise",
-      "es2015.core"
+      "es2015.collection"
     ],
+    "declaration": true,
     "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
     "noEmit": false,
-    "declaration": true,
     "baseUrl": "./",
     "paths": {},
     "outDir": "./lib",
