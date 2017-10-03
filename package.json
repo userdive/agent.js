@@ -45,7 +45,7 @@
     "karma-sauce-launcher": "^1.1.0",
     "karma-webpack": "^2.0.4",
     "lint-staged": "^4.0.3",
-    "mocha": "^3.5.0",
+    "mocha": "^4.0.0",
     "npm-run-all": "^4.0.2",
     "power-assert": "^1.4.4",
     "prettier-eslint-cli": "^4.1.1",
