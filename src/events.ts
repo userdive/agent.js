@@ -1,23 +1,20 @@
-/* @flow */
-import EventEmitter from 'events'
+import * as events from 'events'
 
 import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
 import { validate, getOffset } from './browser'
-import type { EventType, CustomError, InteractType } from './types'
-
-type Handler = MouseEventHandler | TouchEventHandler
+import { EventType, CustomError, InteractType } from './types'
 
 export default class Events {
-  emitter: EventEmitter
+  emitter: events.EventEmitter
   name: string
   observer: any
   type: InteractType
   constructor (
     emitName: string,
-    eventEmitter: EventEmitter,
+    eventEmitter: events.EventEmitter,
     eventObserver: any
-  ): void {
+  ) {
     this.name = emitName
     this.emitter = eventEmitter
     this.observer = eventObserver
@@ -32,7 +29,7 @@ export default class Events {
     raise('please override validate')
     return false
   }
-  emit (data: { x: number, y: number }): void {
+  emit (data: { x: number; y: number }): void {
     if (data.x < 0 || data.y < 0 || !this.type) {
       return
     }
@@ -48,7 +45,7 @@ export default class Events {
       })
     )
   }
-  on (eventName: EventType, handler: Handler, type: InteractType): void {
+  on (eventName: EventType, handler: any, type: InteractType): void {
     if (typeof handler !== 'function' || !(type === 'a' || type === 'l')) {
       return raise('please override on')
     }

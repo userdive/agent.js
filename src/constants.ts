@@ -1,5 +1,5 @@
-const intervals = []
-function push (t, n) {
+const intervals: number[] = []
+function push (t: number, n: number) {
   for (let i = 0; i < n; i++) {
     intervals.push(t)
   }

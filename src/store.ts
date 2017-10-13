@@ -1,7 +1,7 @@
-/* @flow */
 import { CUSTOM_INDEX, VERSION as v } from './constants'
-import type {
+import {
   ClientEnvironments,
+  ClientEnvironmentsData,
   Custom,
   CustomData,
   Dimension,
@@ -10,10 +10,7 @@ import type {
   State
 } from './types'
 
-function parseCustomData (
-  key: Metric | Dimension,
-  value: string | number
-): CustomData {
+function parseCustomData (key: string, value: string | number): CustomData {
   const data = {}
   let splitedKey: any = key.split('dimension')
   if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
@@ -30,29 +27,30 @@ function parseCustomData (
   return data
 }
 
-function initialState (): Object {
-  return {
-    env: {
-      v,
-      l: '',
-      r: '',
-      n: '',
-      h: 0,
-      w: 0,
-      sh: 0,
-      sw: 0,
-      wh: 0,
-      ww: 0
-    },
-    custom: {}
+function initialState (): State {
+  let env: ClientEnvironmentsData = {
+    v,
+    l: '',
+    r: '',
+    n: '',
+    h: 0,
+    w: 0,
+    sh: 0,
+    sw: 0,
+    wh: 0,
+    ww: 0
   }
+  let custom: CustomData = {}
+  return { env, custom }
 }
 
 export default class Store {
   _state: State
-  constructor (): void {
+
+  constructor () {
     this.reset()
   }
+
   reset (): void {
     this._state = initialState()
   }
@@ -84,14 +82,14 @@ export default class Store {
     )
     return this._state
   }
-  mergeDeep (obj: Object): State {
-    if (obj.page) {
-      this._state.env.l = obj.page
-      delete obj.page
+  mergeDeep (obj: any): State {
+    if (obj['page']) {
+      this._state.env.l = obj['page']
+      delete obj['page']
     }
     let data = {}
     Object.keys(obj).forEach(key => {
-      data = Object.assign({}, data, parseCustomData((key: any), obj[key]))
+      data = Object.assign({}, data, parseCustomData(key, obj[key]))
     })
     return this.merge({ type: 'custom', data })
   }

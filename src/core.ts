@@ -1,8 +1,7 @@
-/* @flow */
-import EventEmitter from 'events'
+import * as events from 'events'
 import { UIEventObserver } from 'ui-event-observer'
-import { find, save } from 'auto-cookie'
-import cookies from 'js-cookie'
+import * as autoCookie from 'auto-cookie'
+import * as cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
 import { get, obj2query } from './requests'
@@ -13,44 +12,49 @@ import {
   INTERACT as MAX_INTERACT
 } from './constants'
 import Store from './store'
+import { Interact, SendType, Settings, State } from './types'
 
-import type { Interact, SendType, Settings, State } from './types'
-
-function generateId () {
+function generateId (): string {
   return uuid().replace(/-/g, '')
 }
 
 function findOrCreateClientId (
   cookieName: string,
   cookieDomain: string,
-  cookieExpires: ?number
-): string {
+  cookieExpires?: number
+): string | undefined {
   const options = { domain: cookieDomain, expires: cookieExpires }
-  const c = cookies.get(cookieName, options)
+  const c = cookies.get(cookieName)
   if (c) {
     return c
   }
   cookies.set(cookieName, generateId(), options)
-  return cookies.get(cookieName, options)
+  return cookies.get(cookieName)
 }
 
-function findOrCreateClientIdAuto (cookieName: string, cookieExpires): string {
-  const c = find(cookieName, cookieExpires)
+function findOrCreateClientIdAuto (
+  cookieName: string,
+  cookieExpires
+): string | undefined {
+  const options: cookies.CookieAttributes = {
+    expires: cookieExpires
+  }
+  const c = autoCookie.find(cookieName, options)
   if (c) {
     return c
   }
-  return save(cookieName, generateId(), cookieExpires)
+  return autoCookie.save(cookieName, generateId(), options)
 }
 
-function cacheValidator ({ x, y, type, left, top }: Object): boolean {
-  if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
+function cacheValidator (c: Interact): boolean {
+  if (c.x > 0 && c.y > 0 && c.type && c.left >= 0 && c.top >= 0) {
     return true
   }
   return false
 }
 
 function toInt (n: number) {
-  return parseInt(n, 10)
+  return Math.floor(n)
 }
 
 function createInteractData (d: Interact): string {
@@ -64,8 +68,8 @@ function createInteractData (d: Interact): string {
 
 export default class AgentCore extends Store {
   _baseUrl: string
-  _cache: { a: Object, l: Object }
-  _emitter: EventEmitter
+  _cache: { a: Object; l: Object }
+  _emitter: events.EventEmitter
   _events: any[]
   _interactId: number
   _interacts: Interact[]
@@ -85,7 +89,7 @@ export default class AgentCore extends Store {
       cookieName,
       auto
     }: Settings
-  ): void {
+  ) {
     super()
     setup(RAVEN_DSN, Raven)
 
@@ -95,7 +99,7 @@ export default class AgentCore extends Store {
     this._interacts = []
     this._interval = []
     this._interactId = 0
-    this._emitter = new EventEmitter()
+    this._emitter = new events.EventEmitter()
 
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
@@ -112,13 +116,14 @@ export default class AgentCore extends Store {
     }
   }
 
-  _updateInteractCache (data: Object): void {
+  // FIXME data type can decide?
+  _updateInteractCache (data: any): void {
     if (cacheValidator(data) && this.active) {
       this._cache[data.type] = data
     }
   }
 
-  _sendInteracts (force: ?boolean): void {
+  _sendInteracts (force?: boolean): void {
     const query: string[] = []
     this._interacts.forEach(data => {
       const q = createInteractData(data)
@@ -131,7 +136,9 @@ export default class AgentCore extends Store {
       get(
         `${this._baseUrl}/${this._loadTime}/int.gif`,
         query.concat(obj2query(this.get('custom'))),
-        () => {},
+        (): void => {
+          //
+        },
         () => {
           this.active = false
         }
@@ -163,7 +170,7 @@ export default class AgentCore extends Store {
 
     if (this.active) {
       const delay = this._interval.shift()
-      if (delay >= 0) {
+      if (delay && delay >= 0) {
         setTimeout(this._sendInteractsWithUpdate.bind(this), delay * 1000)
       }
       this._interactId++

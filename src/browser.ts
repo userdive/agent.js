@@ -1,9 +1,8 @@
-/* @flow */
-import {VERSION} from './constants'
-import type {Size, ClientEnvironmentsData} from './types'
-import {error} from './logger'
+import { VERSION } from './constants'
+import { Size, ClientEnvironmentsData } from './types'
+import { error } from './logger'
 
-function getWindowSize (w: {innerHeight: number, innerWidth: number}): Size {
+function getWindowSize (w: Window): Size {
   return {
     h: w.innerHeight,
     w: w.innerWidth
@@ -18,14 +17,14 @@ function getResourceSize (d: Document): Size {
   }
 }
 
-function getScreenSize (s: {height: number, width: number}): Size {
+function getScreenSize (s: Screen): Size {
   return {
     h: s.height,
     w: s.width
   }
 }
 
-export function getOffset (w: window) {
+export function getOffset (w: Window) {
   return {
     x: w.scrollX || w.pageXOffset,
     y: w.scrollY || w.pageYOffset
@@ -40,7 +39,7 @@ function getTitle () {
   return document.title
 }
 
-export function getEnv (page: string): ?ClientEnvironmentsData {
+export function getEnv (page: string): ClientEnvironmentsData | undefined {
   try {
     const screenSize = getScreenSize(screen)
     const windowSize = getWindowSize(window)

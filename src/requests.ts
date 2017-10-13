@@ -1,8 +1,6 @@
-/* @flow */
-
 // https://developer.mozilla.org/ja/docs/Web/API/Navigator/doNotTrack
 export function enable (): boolean {
-  const dnt = navigator.doNotTrack || window.doNotTrack
+  const dnt: string = navigator['doNotTrack'] || window['doNotTrack']
   if (dnt === '1' || dnt === 'yes') {
     return false
   }
@@ -12,8 +10,8 @@ export function enable (): boolean {
 export function get (
   url: string,
   query: string[],
-  onload: Function,
-  onerror: Function
+  onload: (this: HTMLElement, ev: Event) => any,
+  onerror: (this: HTMLElement, ev: ErrorEvent) => any
 ): void {
   if (enable() && query.length > 0) {
     const img = document.createElement('img')
@@ -24,7 +22,7 @@ export function get (
 }
 
 export function obj2query (data: Object): string[] {
-  const query = []
+  const query: string[] = []
   Object.keys(data).forEach(key => {
     query.push(`${key}=${encodeURIComponent(data[key])}`)
   })

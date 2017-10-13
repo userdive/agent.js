@@ -1,12 +1,7 @@
-/* @flow */
-import type { CustomError } from './types'
+import { CustomError } from './types'
+import * as ravenjs from 'raven-js'
 
-type RavenOptions = {
-  level: 'warning' | 'error',
-  extra: ?Object
-}
-
-let Raven
+let Raven: ravenjs.RavenStatic
 
 export function raise (msg: string) {
   if (process.env.NODE_ENV !== 'production') {
@@ -14,7 +9,7 @@ export function raise (msg: string) {
   }
 }
 
-export function setup (DSN: string, raven: ?Object): void {
+export function setup (DSN: string, raven?: ravenjs.RavenStatic): void {
   if (!DSN || !raven) {
     return
   }
@@ -23,7 +18,11 @@ export function setup (DSN: string, raven: ?Object): void {
   Raven.setRelease('USERDIVE_AGENT_VERSION')
 }
 
-function capture (w: window, err: CustomError, options: ?RavenOptions): void {
+function capture (
+  w: Window,
+  err: CustomError,
+  options?: ravenjs.RavenOptions
+): void {
   if (Raven && Raven.isSetup()) {
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)
@@ -33,9 +32,9 @@ function capture (w: window, err: CustomError, options: ?RavenOptions): void {
   }
 }
 
-export function error (err: CustomError, extra: ?Object): void {
+export function error (err: CustomError, extra?: Object): void {
   capture(window, err, { level: 'error', extra })
 }
-export function warning (err: CustomError, extra: ?Object): void {
+export function warning (err: CustomError, extra?: Object): void {
   capture(window, err, { level: 'warning', extra })
 }

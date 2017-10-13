@@ -1,4 +1,3 @@
-/* @flow */
 import { SETTINGS as SETTINGS_DEFAULT, LISTENER } from './constants'
 import { validate } from './browser'
 import AgentCore from './core'
@@ -6,7 +5,7 @@ import Click from './events/click'
 import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
-import type { SendType, State } from './types'
+import { SendType, SetType, State } from './types'
 
 export default class Agent {
   _core: AgentCore
@@ -30,11 +29,11 @@ export default class Agent {
     }
     return this._core
   }
-  send (type: SendType, page: ?string): AgentCore {
+  send (type: SendType, page?: string): AgentCore {
     this._core.send(type, page || location.href)
     return this._core
   }
-  set (key: any, value?: string | number): State {
+  set (key: SetType, value?: string | number): State {
     if (key && value) {
       return this._core.set(key, value)
     }
