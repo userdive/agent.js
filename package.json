@@ -100,11 +100,11 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:babel": "cross-env NODE_ENV=dev tsc && webpack",
+    "build:ts": "cross-env NODE_ENV=dev tsc && webpack",
     "build:bundle": "cross-env NODE_ENV=production tsc && webpack --profile --json | webpack-bundle-size-analyzer",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
-    "clean": "rimraf coverage lib docs",
+    "clean": "rimraf coverage lib build docs",
     "coverage": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
     "lint": "tslint \"src/*.ts\" \"test/*.ts\"",
     "postbuild": "cp robots.txt lib/build/.",
