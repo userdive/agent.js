@@ -1,17 +1,16 @@
-/* @flow */
-import { describe, it, beforeEach, afterEach } from 'mocha'
+import 'mocha'
+import * as assert from 'assert'
 import { spy as sinonSpy, useFakeTimers, stub as sinonStub } from 'sinon'
 import { random } from 'faker'
 import { throws } from 'assert-exception'
 import isUrl from 'is-url'
-import assert from 'assert'
-import EventEmitter from 'events'
+import * as events from 'events'
 import {
   SETTINGS as SETTINGS_DEFAULT,
   INTERVAL,
   INTERACT
 } from '../src/constants'
-import type { EventType } from '../src/types'
+import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 
 describe('core', () => {
@@ -24,7 +23,13 @@ describe('core', () => {
         return true
       }
       on () {
-        super.on(type, () => {}, getType(type))
+        super.on(
+          type,
+          () => {
+            //
+          },
+          getType(type)
+        )
         emitter.on(type, data => super.emit(data))
       }
     }
@@ -38,9 +43,11 @@ describe('core', () => {
     )
   }
 
-  let agent, emitter, timer
+  let agent
+  let emitter
+  let timer
   beforeEach(() => {
-    emitter = new EventEmitter()
+    emitter = new events.EventEmitter()
     timer = useFakeTimers(new Date().getTime())
     agent = agentFactory()
   })

@@ -1,6 +1,5 @@
-/* @flow */
-import { describe, it } from 'mocha'
-import assert from 'assert'
+import 'mocha'
+import * as assert from 'assert'
 import { internet, random } from 'faker'
 import { CUSTOM_INDEX } from '../src/constants'
 

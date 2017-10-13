@@ -1,8 +1,7 @@
-/* @flow */
-import { describe, it, before, beforeEach, afterEach } from 'mocha'
+import 'mocha'
+import * as assert from 'assert'
 import { random, internet } from 'faker'
 import { stub as sinonStub } from 'sinon'
-import assert from 'assert'
 
 import { inject, q } from 'userdive'
 import { NAMESPACE } from '../src/constants'

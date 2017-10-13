@@ -1,11 +1,10 @@
-/* @flow */
-import {describe, it, beforeEach} from 'mocha'
-import {random} from 'faker'
-import {spy as sinonSpy} from 'sinon'
-import assert from 'assert'
+import 'mocha'
+import * as assert from 'assert'
+import { random } from 'faker'
+import { spy as sinonSpy } from 'sinon'
 
-import EventEmitter from 'events'
-import {createEvent} from './helpers/Event'
+import * as events from 'events'
+import { createEvent } from './helpers/Event'
 
 describe('click', () => {
   const UIEventObserver = require('ui-event-observer').UIEventObserver
@@ -16,7 +15,7 @@ describe('click', () => {
   beforeEach(() => {
     instance = new ClickEvents(
       random.word(),
-      new EventEmitter(),
+      new events.EventEmitter(),
       new UIEventObserver()
     )
   })

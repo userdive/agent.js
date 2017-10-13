@@ -1,6 +1,5 @@
-/* @flow */
-import { describe, it } from 'mocha'
-import assert from 'assert'
+import 'mocha'
+import * as assert from 'assert'
 
 describe('constants', () => {
   it('INTERVAL', () => {

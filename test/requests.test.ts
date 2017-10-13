@@ -1,13 +1,16 @@
-/* @flow */
-import { describe, it } from 'mocha'
+import 'mocha'
+import * as assert from 'assert'
 import { internet, random } from 'faker/locale/ja'
-import assert from 'assert'
 
 describe('requests', () => {
   const requests = require('../src/requests')
 
+  const callback = (): void => {
+    //
+  }
+
   it('get', () => {
-    assert(requests.get(internet.url(), [], () => {}, () => {}) === undefined)
+    assert(requests.get(internet.url(), [], callback, callback) === undefined)
   })
 
   it('obj2query', () => {

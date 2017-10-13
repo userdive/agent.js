@@ -1,8 +1,7 @@
-/* @flow */
-import { describe, it } from 'mocha'
+import 'mocha'
+import * as assert from 'assert'
 import { random, internet } from 'faker'
 import { stub } from 'sinon'
-import assert from 'assert'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default

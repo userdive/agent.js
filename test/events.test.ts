@@ -1,18 +1,17 @@
-/* @flow */
-import { describe, it } from 'mocha'
-import { spy as sinonSpy } from 'sinon'
+import 'mocha'
+import * as assert from 'assert'
+
+import * as sinon from 'sinon'
 import { random } from 'faker'
 import { throws } from 'assert-exception'
-import assert from 'assert'
 
-import EventEmitter from 'events'
+import * as nodeEvents from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 import { createEvent, getType } from './helpers/Event'
+import Events from '../src/events'
+import * as logger from '../src/logger'
 
 describe('events', () => {
-  const logger: any = require('../src/logger')
-  const Events = require('../src/events').default
-
   class DummyEvents extends Events {
     validate () {
       return true
@@ -22,7 +21,7 @@ describe('events', () => {
   it('init', () => {
     const instance = new DummyEvents(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     assert(instance.emitter)
@@ -36,7 +35,7 @@ describe('events', () => {
   it('must override func', () => {
     const events = new Events(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     assert(
@@ -56,7 +55,7 @@ describe('events', () => {
   it('error', () => {
     const events = new Events(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     assert(events.error(random.word()) === undefined)
@@ -65,7 +64,7 @@ describe('events', () => {
   it('warning', () => {
     const events = new Events(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     assert(events.warning(random.word()) === undefined)
@@ -74,7 +73,7 @@ describe('events', () => {
   it('emit', () => {
     const instance = new DummyEvents(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     instance.emit({ x: random.number(), y: random.number() })
@@ -84,7 +83,7 @@ describe('events', () => {
   it('on', () => {
     const instance = new DummyEvents(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
 
@@ -103,10 +102,11 @@ describe('events', () => {
   it('bind slient error', () => {
     let instance = new DummyEvents(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
-    const spy = sinonSpy(logger, 'error')
+
+    const spy = sinon.spy(logger, 'error')
     const error = random.word()
     const eventName = 'click'
     const handler: any = e => {
@@ -116,7 +116,7 @@ describe('events', () => {
     const e = createEvent(eventName)
     window.dispatchEvent(e)
 
-    assert(logger.error.calledOnce)
+    assert(spy.calledOnce)
     spy.restore()
 
     class InValidDummyEvents extends DummyEvents {
@@ -127,7 +127,7 @@ describe('events', () => {
 
     instance = new InValidDummyEvents(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     instance.on('click', handler, getType('click'))
@@ -136,7 +136,7 @@ describe('events', () => {
   it('off', () => {
     const instance = new Events(
       random.word(),
-      new EventEmitter(),
+      new nodeEvents.EventEmitter(),
       new UIEventObserver()
     )
     instance.off()

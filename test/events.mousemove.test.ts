@@ -1,12 +1,10 @@
-/* @flow */
-import {describe, it, beforeEach} from 'mocha'
-import {random} from 'faker'
-import {spy as sinonSpy} from 'sinon'
-import assert from 'assert'
-
-import EventEmitter from 'events'
-import {UIEventObserver} from 'ui-event-observer'
-import {createEvent} from './helpers/Event'
+import 'mocha'
+import * as assert from 'assert'
+import { random } from 'faker'
+import { spy as sinonSpy } from 'sinon'
+import * as events from 'events'
+import { UIEventObserver } from 'ui-event-observer'
+import { createEvent } from './helpers/Event'
 
 describe('mousemove', () => {
   const MouseMoveEvents = require('../src/events/mousemove').default
@@ -16,7 +14,7 @@ describe('mousemove', () => {
   beforeEach(() => {
     instance = new MouseMoveEvents(
       random.word(),
-      new EventEmitter(),
+      new events.EventEmitter(),
       new UIEventObserver()
     )
   })

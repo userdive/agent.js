@@ -1,8 +1,8 @@
-/* @flow */
-import {describe, it} from 'mocha'
-import {random} from 'faker'
-import {throws} from 'assert-exception'
-import assert from 'assert'
+import 'mocha'
+import * as assert from 'assert'
+import { random } from 'faker'
+import { throws } from 'assert-exception'
+import { error, setup, warning } from '../src/logger'
 
 describe('logger', () => {
   const args = [random.word(), new Error(random.word())]
@@ -17,8 +17,6 @@ describe('logger', () => {
   })
 
   it('not setup', () => {
-    const error = require('../src/logger').error
-    const warning = require('../src/logger').warning
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
       assert(warning(args[i]) === undefined)
@@ -26,11 +24,7 @@ describe('logger', () => {
   })
 
   it('setup', () => {
-    const error = require('../src/logger').error
-    const setup = require('../src/logger').setup
-    const warning = require('../src/logger').warning
-
-    setup(createDSN(), null)
+    setup(createDSN())
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)

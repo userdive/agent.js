@@ -1,9 +1,8 @@
-/* @flow */
-import { describe, it, beforeEach } from 'mocha'
+import 'mocha'
+import * as assert from 'assert'
 import { random } from 'faker'
-import assert from 'assert'
 
-import EventEmitter from 'events'
+import * as events from 'events'
 import { isTouchDevice } from './helpers/browser'
 
 function describeExcludeTouch (): Function {
@@ -19,7 +18,7 @@ describeExcludeTouch()('touch', () => {
   beforeEach(() => {
     instance = new TouchEvents(
       random.word(),
-      new EventEmitter(),
+      new events.EventEmitter(),
       new UIEventObserver()
     )
   })
