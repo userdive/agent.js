@@ -1,20 +1,27 @@
 const webpackConfig = require('./webpack.config')
 
 const base = {
+  mime: {
+    'text/x-typescript': ['ts', 'tsx']
+  },
   basePath: '',
-  frameworks: ['mocha'],
-  files: [{pattern: 'test/*.test.js'}],
+  frameworks: ['mocha', 'karma-typescript'],
+  files: [{ pattern: 'src/**/*.ts' }, { pattern: 'test/**/*.test.ts' }],
   preprocessors: {
-    'test/*.test.js': ['webpack']
+    'src/**/*.ts': ['karma-typescript', 'coverage'],
+    'test/**/*.test.ts': ['karma-typescript']
   },
   webpack: {
     module: {
       rules: webpackConfig.module.rules
     },
-    node: {fs: 'empty'}
+    node: { fs: 'empty' }
+  },
+  karmaTypescriptConfig: {
+    tsconfig: './tsconfig.test.json'
   },
   coverageReporter: {
-    reporters: [{type: 'lcov'}, {type: 'text'}]
+    reporters: [{ type: 'lcov' }, { type: 'text' }]
   },
   webpackMiddleware: {
     noInfo: true,
@@ -23,7 +30,7 @@ const base = {
       colors: true
     }
   },
-  reporters: ['mocha', 'coverage'],
+  reporters: ['mocha', 'coverage', 'karma-typescript'],
   mochaReporter: {
     showDiff: true
   },

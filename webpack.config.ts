@@ -22,7 +22,10 @@ module.exports = {
   devtool: 'cheap-source-map',
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'ts-loader' },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      },
       {
         test: /logger\.ts$/,
         loader: 'string-replace-loader',

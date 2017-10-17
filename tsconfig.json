@@ -16,6 +16,12 @@
     "noEmit": false,
     "baseUrl": "./",
     "paths": {},
-    "outDir": "./lib",
-  }
+    "outDir": "./lib"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

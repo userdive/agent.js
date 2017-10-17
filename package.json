@@ -52,6 +52,7 @@
     "karma-mocha-reporter": "^2.2.3",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sauce-launcher": "^1.1.0",
+    "karma-typescript": "^3.0.7",
     "karma-webpack": "^2.0.4",
     "lint-staged": "^4.0.3",
     "mocha": "^3.5.0",
@@ -100,8 +101,8 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:ts": "cross-env NODE_ENV=dev tsc && webpack",
-    "build:bundle": "cross-env NODE_ENV=production tsc && webpack --profile --json | webpack-bundle-size-analyzer",
+    "build:ts": "cross-env NODE_ENV=dev tsc",
+    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib build docs",
@@ -112,7 +113,7 @@
     "precommit": "lint-staged",
     "prepublish": "npm run build",
     "test": "run-p  test:*",
-    "test:build": " run-s clean build",
+    "test:build": "run-s clean build",
     "test:karma": "karma start --single-run",
     "test:lint": "npm run lint"
   }
