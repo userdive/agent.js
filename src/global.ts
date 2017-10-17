@@ -6,13 +6,9 @@ export default function (Agent: any) {
   const agents: Object = {}
 
   function execute (): any {
-    const tasks: string[] = []
+    const tasks: any[] = []
     tasks.push.apply(tasks, arguments)
-    const task = tasks.shift()
-    let api: string[] = []
-    if (task) {
-      api = task.split('.')
-    }
+    const api = tasks.shift().split('.')
     let name = 'default'
     if (api.length === 2) {
       name = api[1]

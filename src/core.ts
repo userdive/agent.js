@@ -1,4 +1,4 @@
-import * as events from 'events'
+import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 import * as autoCookie from 'auto-cookie'
 import * as cookies from 'js-cookie'
@@ -46,8 +46,8 @@ function findOrCreateClientIdAuto (
   return autoCookie.save(cookieName, generateId(), options)
 }
 
-function cacheValidator (c: Interact): boolean {
-  if (c.x > 0 && c.y > 0 && c.type && c.left >= 0 && c.top >= 0) {
+function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
+  if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
   return false
@@ -69,7 +69,7 @@ function createInteractData (d: Interact): string {
 export default class AgentCore extends Store {
   _baseUrl: string
   _cache: { a: Object; l: Object }
-  _emitter: events.EventEmitter
+  _emitter: EventEmitter
   _events: any[]
   _interactId: number
   _interacts: Interact[]
@@ -99,7 +99,7 @@ export default class AgentCore extends Store {
     this._interacts = []
     this._interval = []
     this._interactId = 0
-    this._emitter = new events.EventEmitter()
+    this._emitter = new EventEmitter()
 
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
@@ -170,7 +170,7 @@ export default class AgentCore extends Store {
 
     if (this.active) {
       const delay = this._interval.shift()
-      if (delay && delay >= 0) {
+      if (delay !== undefined && delay >= 0) {
         setTimeout(this._sendInteractsWithUpdate.bind(this), delay * 1000)
       }
       this._interactId++
