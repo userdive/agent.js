@@ -100,6 +100,7 @@
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
     "lint": "run-p lint:*",
+    "lint:ts": "tslint \"src/**/*.ts\" ",
     "lint:es": "eslint . --cache",
     "lint:flow": "flow",
     "postbuild": "cp robots.txt lib/build/.",
