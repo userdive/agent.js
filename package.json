@@ -93,7 +93,7 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:babel": "cross-env NODE_ENV=dev babel src -d lib",
+    "build:ts": "cross-env NODE_ENV=dev tsc",
     "build:bundle": "cross-env NODE_ENV=production webpack",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
@@ -107,6 +107,9 @@
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
     "prepublish": "npm run build",
-    "test": "karma start --single-run"
+    "test": "run-p  test:*",
+    "test:build": "run-s clean build",
+    "test:karma": "karma start --single-run",
+    "test:lint": "npm run lint"
   }
 }

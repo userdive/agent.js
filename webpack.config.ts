@@ -1,8 +1,7 @@
-/* @flow */
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const { version, name, author, license } = require('./package.json')
+const { version, moduleName, author, license } = require('./package.json')
 
 const date = new Date()
 
@@ -20,8 +19,9 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.tsx?$/, loader: 'ts-loader' },
       {
-        test: /logger\.js$/,
+        test: /logger\.ts$/,
         loader: 'string-replace-loader',
         exclude: /node_modules/,
         options: {
@@ -45,7 +45,7 @@ module.exports = {
       }
     }),
     new webpack.BannerPlugin({
-      banner: `${name} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
+      banner: `${moduleName} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
     })
   ]
 }
