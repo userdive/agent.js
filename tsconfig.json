@@ -8,8 +8,8 @@
       "es2015.core",
       "es2015.collection"
     ],
-    "declaration": true,
-    "sourceMap": true,
+    "declaration": false,
+    "sourceMap": false,
     "outDir": "./lib",
     "noEmit": false,
     "strict": true,
