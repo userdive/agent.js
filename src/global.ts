@@ -8,10 +8,14 @@ export default function (Agent: any) {
   function execute (): any {
     const tasks: any[] = []
     tasks.push.apply(tasks, arguments)
-    const api = tasks.shift().split('.')
     let name = 'default'
-    if (api.length === 2) {
-      name = api[1]
+    let api: string[] = []
+    const t: string | undefined = tasks.shift()
+    if (t !== undefined) {
+      api = t.split('.')
+      if (api.length === 2) {
+        name = api[1]
+      }
     }
 
     if (!agents[name]) {
@@ -25,7 +29,7 @@ export default function (Agent: any) {
     const element: any = document.querySelector(`[${NAMESPACE}]`)
     const name: string = element.getAttribute(NAMESPACE)
     if (global[name] && global[name].q) {
-      const queue = Array<TaskQueue>(global[name].q)
+      const queue: TaskQueue = global[name].q
       for (let i = 0; i < queue.length; i++) {
         execute.apply(this, queue[i])
       }

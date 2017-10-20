@@ -10,7 +10,6 @@
     ],
     "declaration": false,
     "sourceMap": false,
-    "outDir": "./lib",
     "noEmit": false,
     "strict": true,
     "noImplicitAny": false,

@@ -109,7 +109,6 @@
     "prepublish": "npm run build",
     "test": "run-p  test:*",
     "test:build": "run-s clean build",
-    "test:karma": "karma start --single-run",
-    "test:lint": "npm run lint"
+    "test:karma": "karma start --single-run"
   }
 }
