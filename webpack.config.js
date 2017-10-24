@@ -38,7 +38,11 @@ module.exports = {
     }),
     new UglifyJSPlugin({
       sourceMap: true,
-      comments: false
+      uglifyOptions: {
+        output: {
+          comments: false
+        }
+      }
     }),
     new webpack.BannerPlugin({
       banner: `${name} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
