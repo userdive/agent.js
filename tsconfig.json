@@ -19,7 +19,8 @@
     "noUnusedParameters": false,
     "moduleResolution": "node",
     "baseUrl":  "./",
-    "paths": {}
+    "paths": {},
+    "outDir": "lib"
   },
   "include": [
     "src/**/*",
