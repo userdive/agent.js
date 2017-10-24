@@ -14,8 +14,12 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.1",
+    "@types/is-url": "^1.2.28",
     "@types/js-cookie": "^2.1.0",
+    "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.44",
+    "@types/sinon": "^2.3.6",
     "@uncovertruth/eslint-config-flowtype": "^1.2.0",
     "@uncovertruth/tslint-config": "^1.1.0",
     "assert-exception": "^1.1.0",
@@ -73,7 +77,6 @@
   "license": "GPL-3.0",
   "lint-staged": {
     "*.{ts,tsx}": [
-      "prettier --parser typescript --write",
       "tslint --fix",
       "git add"
     ]
