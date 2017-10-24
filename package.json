@@ -53,10 +53,9 @@
     "sinon": "^4.0.0",
     "string-replace-loader": "^1.3.0",
     "uglify-js": "^3.0.27",
-    "uglifyjs-webpack-plugin": "^0.4.6",
+    "uglifyjs-webpack-plugin": "^1.0.0",
     "userdive": "^0.4.0",
-    "webpack": "^3.5.4",
-    "webpack-bundle-size-analyzer": "^2.7.0"
+    "webpack": "^3.5.4"
   },
   "engine": {
     "node": "> 5"
@@ -84,7 +83,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:babel": "cross-env NODE_ENV=dev babel src -d lib",
-    "build:bundle": "cross-env NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
+    "build:bundle": "cross-env NODE_ENV=production webpack",
     "build:doc": "esdoc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
