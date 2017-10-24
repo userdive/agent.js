@@ -7,18 +7,20 @@ const date = new Date()
 
 module.exports = {
   entry: {
-    'agent.d': path.join(__dirname, 'src/entrypoint/debug.js'),
-    agent: path.join(__dirname, 'src/entrypoint/index.js')
+    'agent.d': path.join(__dirname, 'src/entrypoint/debug.ts'),
+    agent: path.join(__dirname, 'src/entrypoint/index.ts')
   },
   output: {
     path: path.join(__dirname, 'lib/build/'),
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
   devtool: 'cheap-source-map',
   module: {
     rules: [
-      { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
       { test: /\.tsx?$/, loader: 'ts-loader' },
       {
         test: /logger\.ts$/,
