@@ -1,16 +1,20 @@
 const webpackConfig = require('./webpack.config')
 
 const base = {
+  mime: {
+    'text/x-typescript': ['ts','tsx']
+  },
   basePath: '',
   frameworks: ['mocha'],
-  files: [{pattern: 'test/*.test.js'}],
+  files: [{pattern: 'test/**/*.test.ts'}],
   preprocessors: {
-    'test/*.test.js': ['webpack']
+    'test/**/*.test.ts': ['webpack']
   },
   webpack: {
     module: {
       rules: webpackConfig.module.rules
     },
+    resolve: webpackConfig.resolve,
     node: {fs: 'empty'}
   },
   coverageReporter: {
