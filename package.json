@@ -7,7 +7,7 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "auto-cookie": "^0.0.1",
+    "auto-cookie": "^1.0.1",
     "js-cookie": "^2.1.4",
     "raven-js": "^3.17.0",
     "ui-event-observer": "^1.2.1",
@@ -87,7 +87,7 @@
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -t $CODECOV_TOKEN -f ./coverage/*/lcov.info",
-    "lint": "tslint \"src/**/*.ts\" ",
+    "lint": "tslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "postbuild": "cp robots.txt lib/build/.",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
