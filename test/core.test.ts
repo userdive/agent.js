@@ -14,6 +14,7 @@ import { getType } from './helpers/Event'
 import Agent from '../src/core'
 import Base from '../src/events'
 import * as req from '../src/requests'
+import objectAssign = require('object-assign')
 
 describe('core', () => {
   function eventFactory (type, emitter) {
@@ -34,7 +35,7 @@ describe('core', () => {
     return new Agent(
       random.uuid(),
       [eventFactory('click', emitter), eventFactory('scroll', emitter)],
-      Object.assign({}, SETTINGS_DEFAULT, options)
+      objectAssign({}, SETTINGS_DEFAULT, options)
     )
   }
 

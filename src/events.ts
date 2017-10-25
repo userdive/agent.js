@@ -3,6 +3,7 @@ import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
 import { validate, getOffset } from './browser'
 import { EventType, CustomError, InteractType } from './types'
+import objectAssign = require('object-assign')
 
 export default class Events {
   emitter: EventEmitter
@@ -37,7 +38,7 @@ export default class Events {
 
     this.emitter.emit(
       this.name,
-      Object.assign({}, data, {
+      objectAssign({}, data, {
         type: this.type,
         left: x,
         top: y

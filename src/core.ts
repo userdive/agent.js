@@ -14,6 +14,7 @@ import {
 import Store from './store'
 
 import { Interact, SendType, Settings, State } from './types'
+import objectAssign = require('object-assign')
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -152,7 +153,7 @@ export default class AgentCore extends Store {
     Object.keys(this._cache).forEach(key => {
       if (cacheValidator(this._cache[key])) {
         this._interacts.push(
-          Object.assign({}, this._cache[key], {
+          objectAssign({}, this._cache[key], {
             id: this._interactId
           })
         )
@@ -187,7 +188,7 @@ export default class AgentCore extends Store {
 
         this._interval = INTERVAL_DEFAULT_SETTING.concat()
         this._interactId = 0
-        const data = Object.assign({}, state.env, state.custom)
+        const data = objectAssign({}, state.env, state.custom)
         this._loadTime = Date.now()
         get(
           `${this._baseUrl}/${this._loadTime}/env.gif`,
