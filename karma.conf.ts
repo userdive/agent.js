@@ -1,4 +1,5 @@
 const webpackConfig = require('./webpack.config')
+import objectAssign = require('object-assign')
 
 const base = {
   mime: {
@@ -43,7 +44,7 @@ if (
   process.env.CI_MODE === 'sauce'
 ) {
   const customLaunchers = require('./browser-providers.conf').customLaunchers
-  override = Object.assign(
+  override = objectAssign(
     {},
     {
       sauceLabs: {
@@ -69,7 +70,7 @@ if (
   )
 }
 
-const setting = Object.assign({}, base, override)
+const setting = objectAssign({}, base, override)
 
 module.exports = function (config) {
   config.set(setting)
