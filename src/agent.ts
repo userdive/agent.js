@@ -6,6 +6,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
+import objectAssign = require('object-assign')
 
 export default class Agent {
   _core: AgentCore
@@ -16,7 +17,7 @@ export default class Agent {
     this._core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
-      Object.assign({}, SETTINGS_DEFAULT, settings)
+      objectAssign({}, SETTINGS_DEFAULT, settings)
     )
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(

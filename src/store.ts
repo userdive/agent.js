@@ -6,6 +6,7 @@ import {
   SetType,
   State
 } from './types'
+import objectAssign = require('object-assign')
 
 function parseCustomData (
   key: string, // TODO only enum string Metric | Dimension
@@ -63,7 +64,7 @@ export default class Store {
         this._state.env.l = l
         break
       default:
-        this._state.custom = Object.assign(
+        this._state.custom = objectAssign(
           {},
           this._state.custom,
           parseCustomData(type, data)
@@ -74,7 +75,7 @@ export default class Store {
 
   merge (obj: ClientEnvironments | Custom): State {
     const stateObj = initialState()
-    this._state[obj.type] = Object.assign(
+    this._state[obj.type] = objectAssign(
       stateObj[obj.type],
       this._state[obj.type],
       obj.data
@@ -88,7 +89,7 @@ export default class Store {
     }
     let data = {}
     Object.keys(obj).forEach(key => {
-      data = Object.assign({}, data, parseCustomData(key, obj[key]))
+      data = objectAssign({}, data, parseCustomData(key, obj[key]))
     })
     return this.merge({ type: 'custom', data })
   }
