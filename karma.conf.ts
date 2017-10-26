@@ -1,5 +1,6 @@
 const webpackConfig = require('./webpack.config')
 import objectAssign = require('object-assign')
+import { customLaunchers } from './browser-providers.conf'
 
 const base = {
   mime: {
@@ -43,7 +44,6 @@ if (
   process.env.SAUCE_ACCESS_KEY &&
   process.env.CI_MODE === 'sauce'
 ) {
-  const customLaunchers = require('./browser-providers.conf').customLaunchers
   override = objectAssign(
     {},
     {
