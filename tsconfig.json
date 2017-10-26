@@ -14,6 +14,7 @@
     "alwaysStrict": true,
     "strict": true,
     "noImplicitAny": true,
+    "noImplicitThis": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
