@@ -3,7 +3,7 @@ import { NAMESPACE } from './constants'
 type TaskQueue = any[]
 
 export default function (Agent: any) {
-  const agents = {}
+  const agents: any = {}
 
   function execute (): any {
     const tasks: any[] = []
@@ -25,7 +25,7 @@ export default function (Agent: any) {
     return agents[name][api[0]](...tasks)
   }
 
-  ((global: Window) => {
+  ((global: any) => {
     const element: any = document.querySelector(`[${NAMESPACE}]`)
     const name: string = element.getAttribute(NAMESPACE)
     if (global[name] && global[name].q) {

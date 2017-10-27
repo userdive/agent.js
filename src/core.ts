@@ -34,12 +34,18 @@ function findOrCreateClientId (
   return cookies.get(cookieName)
 }
 
-function findOrCreateClientIdAuto (cookieName: string, cookieExpires): string {
-  const c = find(cookieName, cookieExpires)
+function findOrCreateClientIdAuto (
+  cookieName: string,
+  cookieExpires: number
+): string | undefined {
+  const cookieAttr: cookies.CookieAttributes = {
+    expires: cookieExpires
+  }
+  const c = find(cookieName, cookieAttr)
   if (c) {
     return c
   }
-  return save(cookieName, generateId(), cookieExpires)
+  return save(cookieName, generateId(), cookieAttr)
 }
 
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
@@ -112,7 +118,7 @@ export default class AgentCore extends Store {
     }
   }
 
-  _updateInteractCache (data: any): void {
+  _updateInteractCache (data: Interact): void {
     if (cacheValidator(data) && this.active) {
       this._cache[data.type] = data
     }
@@ -128,9 +134,10 @@ export default class AgentCore extends Store {
     })
 
     if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
+      const customState: any = this.get('custom')
       get(
         `${this._baseUrl}/${this._loadTime}/int.gif`,
-        query.concat(obj2query(this.get('custom'))),
+        query.concat(obj2query(customState)),
         () => {
           //
         },
@@ -150,10 +157,11 @@ export default class AgentCore extends Store {
   }
 
   _sendInteractsWithUpdate (): void {
-    Object.keys(this._cache).forEach(key => {
-      if (cacheValidator(this._cache[key])) {
+    Object.keys(this._cache).forEach((key: 'a' | 'l') => {
+      let cache: any = this._cache[key]
+      if (cacheValidator(cache)) {
         this._interacts.push(
-          objectAssign({}, this._cache[key], {
+          objectAssign({}, cache, {
             id: this._interactId
           })
         )
@@ -188,7 +196,7 @@ export default class AgentCore extends Store {
 
         this._interval = INTERVAL_DEFAULT_SETTING.concat()
         this._interactId = 0
-        const data = objectAssign({}, state.env, state.custom)
+        const data: any = objectAssign({}, state.env, state.custom)
         this._loadTime = Date.now()
         get(
           `${this._baseUrl}/${this._loadTime}/env.gif`,

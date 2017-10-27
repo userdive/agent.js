@@ -1,6 +1,7 @@
 // https://developer.mozilla.org/ja/docs/Web/API/Navigator/doNotTrack
 export function enable (): boolean {
-  const dnt = navigator['doNotTrack'] || window['doNotTrack']
+  const w: any = window
+  const dnt: string = w.navigator.doNotTrack || w.doNotTrack
   if (dnt === '1' || dnt === 'yes') {
     return false
   }
@@ -21,10 +22,10 @@ export function get (
   }
 }
 
-export function obj2query (data: Object): string[] {
+export function obj2query (data: { key: any; uriComponent: string }): string[] {
   const query: any[] = []
   Object.keys(data).forEach(key => {
-    query.push(`${key}=${encodeURIComponent(data[key])}`)
+    query.push(`${key}=${encodeURIComponent(data.key)}`)
   })
   return query
 }

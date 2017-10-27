@@ -1,6 +1,7 @@
 import { CUSTOM_INDEX, VERSION as v } from './constants'
 import {
   ClientEnvironments,
+  ClientEnvironmentsData,
   Custom,
   CustomData,
   SetType,
@@ -12,7 +13,7 @@ function parseCustomData (
   key: string, // TODO only enum string Metric | Dimension
   value: string | number
 ): CustomData {
-  const data = {}
+  const data: any = {}
   let splitedKey: any = key.split('dimension')
   if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= CUSTOM_INDEX) {
     data[`cd${splitedKey[1]}`] = value
@@ -54,7 +55,7 @@ export default class Store {
   reset (): void {
     this._state = initialState()
   }
-  get (key: 'env' | 'custom'): Object {
+  get (key: 'env' | 'custom'): ClientEnvironmentsData | CustomData {
     return this._state[key]
   }
   set (type: SetType, data: any): State {

@@ -54,7 +54,7 @@ export default class Events {
       return
     }
 
-    this.observer.subscribe(window, eventName, e => {
+    this.observer.subscribe(window, eventName, (e: any) => {
       try {
         handler(e)
       } catch (err) {
