@@ -7,7 +7,7 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "auto-cookie": "^1.0.1",
+    "auto-cookie": "^1.0.2",
     "js-cookie": "^2.1.4",
     "raven-js": "^3.17.0",
     "ui-event-observer": "^1.2.1",
