@@ -3,11 +3,11 @@ import { customLaunchers } from './browser-providers.conf'
 
 const base = {
   mime: {
-    'text/x-typescript': ['ts','tsx']
+    'text/x-typescript': ['ts']
   },
   basePath: '',
   frameworks: ['mocha'],
-  files: [{pattern: 'test/**/*.test.ts'}],
+  files: [{ pattern: 'test/**/*.test.ts' }],
   preprocessors: {
     'test/**/*.test.ts': ['webpack']
   },
@@ -16,10 +16,10 @@ const base = {
       rules: webpackConfig.module.rules
     },
     resolve: webpackConfig.resolve,
-    node: {fs: 'empty'}
+    node: { fs: 'empty' }
   },
   coverageReporter: {
-    reporters: [{type: 'lcov'}, {type: 'text'}]
+    reporters: [{ type: 'lcov' }, { type: 'text' }]
   },
   webpackMiddleware: {
     noInfo: true,
