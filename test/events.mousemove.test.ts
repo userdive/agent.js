@@ -1,6 +1,6 @@
 import 'mocha'
 import { random } from 'faker'
-import {spy as sinonSpy } from 'sinon'
+import { spy as sinonSpy } from 'sinon'
 import * as assert from 'assert'
 
 import { EventEmitter } from 'events'
