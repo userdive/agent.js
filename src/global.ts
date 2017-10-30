@@ -29,7 +29,7 @@ export default function (Agent: any) {
     const element: any = document.querySelector(`[${NAMESPACE}]`)
     const name: string = element.getAttribute(NAMESPACE)
     if (global[name] && global[name].q) {
-      const queue: TaskQueue = global[name].q
+      const queue: TaskQueue[] = global[name].q
       for (let i = 0; i < queue.length; i++) {
         execute.apply(this, queue[i])
       }
