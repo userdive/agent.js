@@ -1,8 +1,12 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const { version, author, license } = require('./package.json')
-const packageName = '@userdive/agent'
+const {
+  version,
+  name: moduleName,
+  author,
+  license
+} = require('./package.json')
 
 const date = new Date()
 
@@ -48,7 +52,7 @@ module.exports = {
       }
     }),
     new webpack.BannerPlugin({
-      banner: `${packageName} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
+      banner: `${moduleName} ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
     })
   ]
 }
