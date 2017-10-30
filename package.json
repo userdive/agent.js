@@ -9,6 +9,7 @@
   "dependencies": {
     "auto-cookie": "^1.0.2",
     "js-cookie": "^2.1.4",
+    "object-assign": "^4.1.1",
     "raven-js": "^3.17.0",
     "ui-event-observer": "^1.2.1",
     "uuid": "^3.1.0"
@@ -24,7 +25,7 @@
     "@types/uuid": "^3.4.3",
     "@uncovertruth/tslint-config": "^1.2.0",
     "assert-exception": "^1.1.0",
-    "codecov": "^2.3.0",
+    "codecov": "^3.0.0",
     "cross-env": "^5.0.5",
     "esdoc": "^1.0.1",
     "esdoc-flow-type-plugin": "^1.0.0",
@@ -43,7 +44,6 @@
     "lint-staged": "^4.0.3",
     "mocha": "^4.0.0",
     "npm-run-all": "^4.0.2",
-    "object-assign": "^4.1.1",
     "power-assert": "^1.4.4",
     "prettier": "^1.7.4",
     "rimraf": "^2.6.1",
