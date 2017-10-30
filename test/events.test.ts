@@ -9,9 +9,10 @@ import { UIEventObserver } from 'ui-event-observer'
 import { createEvent, getType } from './helpers/Event'
 
 import Events from '../src/events'
-import * as logger from '../src/logger'
 
 describe('events', () => {
+  const logger: any = require('../src/logger')
+
   class DummyEvents extends Events {
     validate () {
       return true

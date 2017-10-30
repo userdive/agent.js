@@ -2,10 +2,10 @@ import 'mocha'
 import { random, internet } from 'faker'
 import { stub } from 'sinon'
 import * as assert from 'assert'
-import AgentCore from '../src/core'
-import Agent from '../src/agent'
 
 describe('agent', () => {
+  const AgentCore = require('../src/core').default
+  const Agent = require('../src/agent').default
   const agent = new Agent()
 
   it('create', () => {

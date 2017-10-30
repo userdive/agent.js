@@ -13,19 +13,24 @@ import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 import Agent from '../src/core'
 import Base from '../src/events'
-import * as req from '../src/requests'
 import objectAssign = require('object-assign')
 
 describe('core', () => {
+  const Agent = require('../src/core').default
+  const Base = require('../src/events').default
   function eventFactory (type, emitter) {
     return class DummyEvents extends Base {
       validate () {
         return true
       }
       on () {
-        super.on(type, () => {
-          //
-        }, getType(type))
+        super.on(
+          type,
+          () => {
+            //
+          },
+          getType(type)
+        )
         emitter.on(type, data => super.emit(data))
       }
     }
@@ -100,7 +105,7 @@ describe('core', () => {
   })
 
   it('cache success action', () => {
-    const stub = sinonStub(req, 'get')
+    const stub = sinonStub(require('../src/requests'), 'get')
     stub.callsFake((url, query, onload, onerror) => {
       onload()
     })

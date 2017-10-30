@@ -6,9 +6,9 @@ import * as assert from 'assert'
 import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 import { createEvent } from './helpers/Event'
-import MouseMoveEvents from '../src/events/mousemove'
 
 describe('mousemove', () => {
+  const MouseMoveEvents = require('../src/events/mousemove').default
   let instance
 
   beforeEach(() => {

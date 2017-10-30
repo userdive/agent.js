@@ -5,10 +5,10 @@ import * as assert from 'assert'
 
 import { EventEmitter } from 'events'
 import { createEvent } from './helpers/Event'
-import { UIEventObserver } from 'ui-event-observer'
-import ClickEvents from '../src/events/click'
 
 describe('click', () => {
+  const UIEventObserver = require('ui-event-observer').UIEventObserver
+  const ClickEvents = require('../src/events/click').default
   let instance
 
   beforeEach(() => {

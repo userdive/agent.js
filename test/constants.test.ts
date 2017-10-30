@@ -1,10 +1,9 @@
 import 'mocha'
 import * as assert from 'assert'
-import { INTERVAL } from '../src/constants'
 
 describe('constants', () => {
   it('INTERVAL', () => {
-
+    const { INTERVAL } = require('../src/constants')
     let sum = 0
     INTERVAL.forEach(n => {
       sum += n
