@@ -95,7 +95,7 @@
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
     "prepublish": "npm run build",
-    "test": "run-s test:*",
+    "test": "run-p test:*",
     "test:build": "run-s clean build",
     "test:karma": "karma start --single-run",
     "test:lint": "npm run lint"
