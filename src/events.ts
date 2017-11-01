@@ -3,13 +3,13 @@ import { error, warning, raise } from './logger'
 import { LISTENER, SCROLL } from './constants'
 import { validate, getOffset } from './browser'
 import { EventType, CustomError, InteractType } from './types'
-import objectAssign = require('object-assign')
+import * as objectAssign from 'object-assign'
 
 export default class Events {
-  emitter: EventEmitter
-  name: string
-  observer: any
-  type: InteractType
+  private emitter: EventEmitter
+  private name: string
+  private observer: any
+  private type: InteractType
   constructor (
     emitName: string,
     eventEmitter: EventEmitter,
@@ -18,32 +18,6 @@ export default class Events {
     this.name = emitName
     this.emitter = eventEmitter
     this.observer = eventObserver
-  }
-  error (err: CustomError): void {
-    error(err)
-  }
-  warning (err: CustomError): void {
-    warning(err)
-  }
-  validate (): boolean {
-    raise('please override validate')
-    return false
-  }
-  emit (data: { x: number; y: number }): void {
-    if (data.x < 0 || data.y < 0 || !this.type) {
-      return
-    }
-
-    const { x, y } = getOffset(window)
-
-    this.emitter.emit(
-      this.name,
-      objectAssign({}, data, {
-        type: this.type,
-        left: x,
-        top: y
-      })
-    )
   }
   on (eventName: EventType, handler: Function, type: InteractType): void {
     if (typeof handler !== 'function' || !(type === 'a' || type === 'l')) {
@@ -65,5 +39,31 @@ export default class Events {
   }
   off (): void {
     this.observer.unsubscribeAll()
+  }
+  protected error (err: CustomError): void {
+    error(err)
+  }
+  protected warning (err: CustomError): void {
+    warning(err)
+  }
+  protected validate (): boolean {
+    raise('please override validate')
+    return false
+  }
+  protected emit (data: { x: number; y: number }): void {
+    if (data.x < 0 || data.y < 0 || !this.type) {
+      return
+    }
+
+    const { x, y } = getOffset(window)
+
+    this.emitter.emit(
+      this.name,
+      objectAssign({}, data, {
+        type: this.type,
+        left: x,
+        top: y
+      })
+    )
   }
 }
