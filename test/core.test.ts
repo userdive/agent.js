@@ -3,7 +3,9 @@ import { spy as sinonSpy, useFakeTimers, stub as sinonStub } from 'sinon'
 import { random } from 'faker'
 import { throws } from 'assert-exception'
 import * as assert from 'assert'
+import * as objectAssign from 'object-assign'
 import { EventEmitter } from 'events'
+
 import {
   SETTINGS as SETTINGS_DEFAULT,
   INTERVAL,
@@ -13,7 +15,6 @@ import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 import Agent from '../src/core'
 import Base from '../src/events'
-import objectAssign = require('object-assign')
 
 describe('core', () => {
   const Agent = require('../src/core').default
@@ -56,7 +57,7 @@ describe('core', () => {
   afterEach(() => {
     timer.restore()
     agent.destroy(false)
-    assert(agent._emitter.listenerCount(agent.id) === 0)
+    assert(agent.emitter.listenerCount(agent.id) === 0)
   })
 
   it('instance', () => {

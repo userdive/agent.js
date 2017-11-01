@@ -1,3 +1,5 @@
+import * as objectAssign from 'object-assign'
+
 import { CUSTOM_INDEX, VERSION as v } from './constants'
 import {
   ClientEnvironments,
@@ -7,7 +9,6 @@ import {
   SetType,
   State
 } from './types'
-import * as objectAssign from 'object-assign'
 
 function parseCustomData (
   key: string, // TODO only enum string Metric | Dimension
