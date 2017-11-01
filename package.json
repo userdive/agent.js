@@ -91,7 +91,7 @@
     "build:ts": "tsc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
-    "coverage": "codecov -t $CODECOV_TOKEN -f ./coverage/lcov.info",
+    "coverage": "codecov -f ./coverage/lcov.info",
     "lint": "tslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "postbuild": "cp robots.txt lib/build/.",
     "prebuild": "npm run clean",
