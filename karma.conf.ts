@@ -1,7 +1,6 @@
 const webpackConfig = require('./webpack.config')
 const path = require('path')
 const { customLaunchers } = require('./browser-providers.conf')
-
 const base = {
   mime: {
     'text/x-typescript': ['ts']
@@ -31,8 +30,7 @@ const base = {
     node: { fs: 'empty' }
   },
   coverageIstanbulReporter: {
-    reports: ['html', 'lcovonly', 'text-summary'],
-    dir: path.join(__dirname, 'coverage')
+    reports: ['html', 'lcovonly', 'text-summary']
   },
   webpackMiddleware: {
     noInfo: true,
