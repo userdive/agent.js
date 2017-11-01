@@ -7,7 +7,7 @@ import {
   SetType,
   State
 } from './types'
-import objectAssign = require('object-assign')
+import * as objectAssign from 'object-assign'
 
 function parseCustomData (
   key: string, // TODO only enum string Metric | Dimension
@@ -48,44 +48,43 @@ function initialState (): State {
 }
 
 export default class Store {
-  _state: State
+  private state: State
   constructor () {
     this.reset()
   }
-  reset (): void {
-    this._state = initialState()
+  public reset (): void {
+    this.state = initialState()
   }
-  get (key: 'env' | 'custom'): ClientEnvironmentsData | CustomData {
-    return this._state[key]
+  public get (key: 'env' | 'custom'): ClientEnvironmentsData | CustomData {
+    return this.state[key]
   }
-  set (type: SetType, data: any): State {
+  public set (type: SetType, data: any): State {
     switch (type) {
       case 'page':
         const l: string = data
-        this._state.env.l = l
+        this.state.env.l = l
         break
       default:
-        this._state.custom = objectAssign(
+        this.state.custom = objectAssign(
           {},
-          this._state.custom,
+          this.state.custom,
           parseCustomData(type, data)
         )
     }
-    return this._state
+    return this.state
   }
-
-  merge (obj: ClientEnvironments | Custom): State {
+  public merge (obj: ClientEnvironments | Custom): State {
     const stateObj = initialState()
-    this._state[obj.type] = objectAssign(
+    this.state[obj.type] = objectAssign(
       stateObj[obj.type],
-      this._state[obj.type],
+      this.state[obj.type],
       obj.data
     )
-    return this._state
+    return this.state
   }
-  mergeDeep (obj: any): State {
+  public mergeDeep (obj: any): State {
     if (obj.page) {
-      this._state.env.l = obj.page
+      this.state.env.l = obj.page
       delete obj.page
     }
     let data = {}
