@@ -1,5 +1,6 @@
 const webpackConfig = require('./webpack.config')
-import { customLaunchers } from './browser-providers.conf'
+const path = require('path')
+const { customLaunchers } = require('./browser-providers.conf')
 
 const base = {
   mime: {
@@ -13,13 +14,25 @@ const base = {
   },
   webpack: {
     module: {
-      rules: webpackConfig.module.rules
+      rules: [
+        {
+          test: /\.ts$/,
+          use: { loader: 'ts-loader' }
+        },
+        {
+          test: /\.ts$/,
+          enforce: 'post',
+          use: { loader: 'istanbul-instrumenter-loader' },
+          exclude: [/node_modules/, /test/]
+        }
+      ]
     },
     resolve: webpackConfig.resolve,
     node: { fs: 'empty' }
   },
-  coverageReporter: {
-    reporters: [{ type: 'lcov' }, { type: 'text' }]
+  coverageIstanbulReporter: {
+    reports: ['html', 'lcovonly', 'text-summary'],
+    dir: path.join(__dirname, 'coverage')
   },
   webpackMiddleware: {
     noInfo: true,
@@ -28,7 +41,7 @@ const base = {
       colors: true
     }
   },
-  reporters: ['mocha', 'coverage'],
+  reporters: ['mocha', 'coverage-istanbul'],
   mochaReporter: {
     showDiff: true
   },
@@ -64,7 +77,7 @@ if (
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage', 'saucelabs']
+      reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
     }
   )
 }
