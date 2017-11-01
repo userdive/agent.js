@@ -85,8 +85,8 @@ describe('core', () => {
 
     emitter.emit(type, { x, y })
 
-    assert.deepEqual(agent._cache.a, {})
-    assert.deepEqual(agent._cache.l, {})
+    assert.deepEqual(agent.cache.a, {})
+    assert.deepEqual(agent.cache.l, {})
   }
 
   it('cache failed, scroll', () => {
@@ -112,23 +112,23 @@ describe('core', () => {
     })
 
     agent.send('pageview', location.href)
-    assert(agent._emitter.listenerCount(agent.id) === 1)
+    assert(agent.emitter.listenerCount(agent.id) === 1)
     emitter.emit('click', {
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
 
-    assert(agent._cache.a.type === 'a')
-    assert(agent._cache.a.x > 0)
-    assert(agent._cache.a.y > 0)
-    assert(typeof agent._cache.a.top === 'number')
-    assert(typeof agent._cache.a.left === 'number')
-    assert.deepEqual(agent._cache.l, {})
+    assert(agent.cache.a.type === 'a')
+    assert(agent.cache.a.x > 0)
+    assert(agent.cache.a.y > 0)
+    assert(typeof agent.cache.a.top === 'number')
+    assert(typeof agent.cache.a.left === 'number')
+    assert.deepEqual(agent.cache.l, {})
 
-    agent._clear()
+    agent.clear()
 
-    assert.deepEqual(agent._cache.a, {})
-    assert.deepEqual(agent._cache.l, {})
+    assert.deepEqual(agent.cache.a, {})
+    assert.deepEqual(agent.cache.l, {})
 
     stub.restore()
   })
@@ -145,17 +145,17 @@ describe('core', () => {
       y: random.number({ min: 1 })
     })
 
-    assert(agent._cache.l.type === 'l')
-    assert(agent._cache.l.x > 0)
-    assert(agent._cache.l.y > 0)
-    assert(typeof agent._cache.l.top === 'number')
-    assert(typeof agent._cache.l.left === 'number')
-    assert.deepEqual(agent._cache.a, {})
+    assert(agent.cache.l.type === 'l')
+    assert(agent.cache.l.x > 0)
+    assert(agent.cache.l.y > 0)
+    assert(typeof agent.cache.l.top === 'number')
+    assert(typeof agent.cache.l.left === 'number')
+    assert.deepEqual(agent.cache.a, {})
 
-    agent._clear()
+    agent.clear()
 
-    assert.deepEqual(agent._cache.a, {})
-    assert.deepEqual(agent._cache.l, {})
+    assert.deepEqual(agent.cache.a, {})
+    assert.deepEqual(agent.cache.l, {})
 
     stub.restore()
   })
@@ -172,8 +172,8 @@ describe('core', () => {
       y: random.number({ min: 1 })
     })
     timer.tick(INTERVAL[1] * 1000)
-    assert.deepEqual(agent._cache.a, {})
-    assert.deepEqual(agent._cache.l, {})
+    assert.deepEqual(agent.cache.a, {})
+    assert.deepEqual(agent.cache.l, {})
 
     for (let i = 0; i <= INTERACT; i++) {
       emitter.emit('scroll', {
@@ -223,13 +223,13 @@ describe('core', () => {
     stub.restore()
   })
 
-  it('_sendInteract fail', () => {
+  it('sendInteract fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
     stub.callsFake((url, query, onload, onerror) => {
       onerror()
     })
 
-    agent._sendInteracts(true)
+    agent.sendInteracts(true)
     assert(agent.active === false)
     stub.restore()
   })
