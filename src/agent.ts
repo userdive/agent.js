@@ -1,3 +1,5 @@
+import * as objectAssign from 'object-assign'
+
 import { SETTINGS as SETTINGS_DEFAULT, LISTENER } from './constants'
 import { validate } from './browser'
 import AgentCore from './core'
@@ -6,15 +8,14 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
-import objectAssign = require('object-assign')
 
 export default class Agent {
-  _core: AgentCore
+  private core: AgentCore
   create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
-    this._core = new AgentCore(
+    this.core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
       objectAssign({}, SETTINGS_DEFAULT, settings)
@@ -23,21 +24,21 @@ export default class Agent {
       window.addEventListener(
         'pagehide',
         () => {
-          this._core.destroy(true)
+          this.core.destroy(true)
         },
         false
       )
     }
-    return this._core
+    return this.core
   }
   send (type: SendType, page?: string): AgentCore {
-    this._core.send(type, page || location.href)
-    return this._core
+    this.core.send(type, page || location.href)
+    return this.core
   }
   set (key: any, value?: string | number): State {
     if (key && value) {
-      return this._core.set(key, value)
+      return this.core.set(key, value)
     }
-    return this._core.mergeDeep(key)
+    return this.core.mergeDeep(key)
   }
 }

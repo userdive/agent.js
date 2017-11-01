@@ -11,9 +11,6 @@ function getPotision (w: Window): Point {
 const eventName = 'scroll'
 
 export default class ScrollEvents extends EventBase {
-  validate (): boolean {
-    return validate(SCROLL.concat(['innerWidth', 'innerHeight']).concat(TOUCH))
-  }
   on () {
     super.on(
       eventName,
@@ -22,5 +19,8 @@ export default class ScrollEvents extends EventBase {
       },
       'l'
     )
+  }
+  protected validate (): boolean {
+    return validate(SCROLL.concat(['innerWidth', 'innerHeight']).concat(TOUCH))
   }
 }

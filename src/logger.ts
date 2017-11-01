@@ -1,5 +1,5 @@
-import { CustomError } from './types'
 import * as ravenjs from 'raven-js'
+import { CustomError } from './types'
 
 let Raven: ravenjs.RavenStatic
 

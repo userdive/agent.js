@@ -2,13 +2,6 @@ import EventBase from '../events'
 import { validate } from '../browser'
 
 export default class ClickEvents extends EventBase {
-  validate (): boolean {
-    const enable = validate(['onclick'])
-    if (!enable) {
-      this.warning('disable click')
-    }
-    return enable
-  }
   on () {
     super.on(
       'click',
@@ -17,5 +10,12 @@ export default class ClickEvents extends EventBase {
       },
       'a'
     )
+  }
+  protected validate (): boolean {
+    const enable = validate(['onclick'])
+    if (!enable) {
+      this.warning('disable click')
+    }
+    return enable
   }
 }

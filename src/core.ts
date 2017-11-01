@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 import { find, save } from 'auto-cookie'
+import * as objectAssign from 'object-assign'
 import * as cookies from 'js-cookie'
 import { v4 as uuid } from 'uuid'
 
@@ -14,7 +15,6 @@ import {
 import Store from './store'
 
 import { Interact, SendType, Settings, State } from './types'
-import objectAssign = require('object-assign')
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -69,16 +69,16 @@ function createInteractData (d: Interact): string {
 }
 
 export default class AgentCore extends Store {
-  _baseUrl: string
-  _cache: { a: Object; l: Object }
-  _emitter: EventEmitter
-  _events: any[]
-  _interactId: number
-  _interacts: Interact[]
-  _interval: number[]
-  _loadTime: number
-  active: boolean
-  id: string
+  private baseUrl: string
+  private cache: { a: Object; l: Object }
+  private emitter: EventEmitter
+  private events: any[]
+  private interactId: number
+  private interacts: Interact[]
+  private interval: number[]
+  private loadTime: number
+  private active: boolean
+  private id: string
   constructor (
     id: string,
     eventsClass: any[],
@@ -96,16 +96,16 @@ export default class AgentCore extends Store {
     setup(RAVEN_DSN, Raven)
 
     this.id = generateId()
-    this._clear()
-    this._events = []
-    this._interacts = []
-    this._interval = []
-    this._interactId = 0
-    this._emitter = new EventEmitter()
+    this.clear()
+    this.events = []
+    this.interacts = []
+    this.interval = []
+    this.interactId = 0
+    this.emitter = new EventEmitter()
 
     const observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      this._events.push(new Class(this.id, this._emitter, observer))
+      this.events.push(new Class(this.id, this.emitter, observer))
     })
     let userId
     if (auto) {
@@ -114,69 +114,7 @@ export default class AgentCore extends Store {
       userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
     }
     if (id && userId) {
-      this._baseUrl = `${baseUrl}/${id}/${userId}`
-    }
-  }
-
-  _updateInteractCache (data: Interact): void {
-    if (cacheValidator(data) && this.active) {
-      this._cache[data.type] = data
-    }
-  }
-
-  _sendInteracts (force?: boolean): void {
-    const query: string[] = []
-    this._interacts.forEach(data => {
-      const q = createInteractData(data)
-      if (q.length) {
-        query.push(`d=${q}`)
-      }
-    })
-
-    if (this._baseUrl && (query.length >= MAX_INTERACT || force)) {
-      const customState: any = this.get('custom')
-      get(
-        `${this._baseUrl}/${this._loadTime}/int.gif`,
-        query.concat(obj2query(customState)),
-        () => {
-          //
-        },
-        () => {
-          this.active = false
-        }
-      )
-      this._interacts.length = 0
-    }
-  }
-
-  _clear (): void {
-    this._cache = {
-      a: {},
-      l: {}
-    }
-  }
-
-  _sendInteractsWithUpdate (): void {
-    Object.keys(this._cache).forEach((key: 'a' | 'l') => {
-      let cache: any = this._cache[key]
-      if (cacheValidator(cache)) {
-        this._interacts.push(
-          objectAssign({}, cache, {
-            id: this._interactId
-          })
-        )
-      }
-    })
-
-    this._clear()
-    this._sendInteracts()
-
-    if (this.active) {
-      const delay = this._interval.shift()
-      if (delay !== undefined && delay >= 0) {
-        setTimeout(this._sendInteractsWithUpdate.bind(this), delay * 1000)
-      }
-      this._interactId++
+      this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
   }
 
@@ -186,7 +124,7 @@ export default class AgentCore extends Store {
         this.destroy(false)
 
         const env = getEnv(page)
-        if (!env || !this._baseUrl) {
+        if (!env || !this.baseUrl) {
           return warning(`failed init`)
         }
         const state: State = this.merge({
@@ -194,12 +132,12 @@ export default class AgentCore extends Store {
           data: env
         })
 
-        this._interval = INTERVAL_DEFAULT_SETTING.concat()
-        this._interactId = 0
+        this.interval = INTERVAL_DEFAULT_SETTING.concat()
+        this.interactId = 0
         const data: any = objectAssign({}, state.env, state.custom)
-        this._loadTime = Date.now()
+        this.loadTime = Date.now()
         get(
-          `${this._baseUrl}/${this._loadTime}/env.gif`,
+          `${this.baseUrl}/${this.loadTime}/env.gif`,
           obj2query(data),
           () => {
             this.active = true
@@ -213,23 +151,85 @@ export default class AgentCore extends Store {
   }
 
   destroy (isPageHide: boolean): void {
-    this._sendInteracts(isPageHide)
-    this._emitter.removeAllListeners(this.id)
-    this._events.forEach(e => {
+    this.sendInteracts(isPageHide)
+    this.emitter.removeAllListeners(this.id)
+    this.events.forEach(e => {
       e.off()
     })
     this.active = false
-    this._loadTime = 0
+    this.loadTime = 0
   }
 
   listen (): void {
-    if (!this.active || !this._loadTime) {
+    if (!this.active || !this.loadTime) {
       return raise('need send pageview')
     }
-    this._emitter.on(this.id, this._updateInteractCache.bind(this))
-    this._events.forEach(e => {
+    this.emitter.on(this.id, this.updateInteractCache.bind(this))
+    this.events.forEach(e => {
       e.on()
     })
-    this._sendInteractsWithUpdate()
+    this.sendInteractsWithUpdate()
+  }
+
+  protected sendInteractsWithUpdate (): void {
+    Object.keys(this.cache).forEach((key: 'a' | 'l') => {
+      let cache: any = this.cache[key]
+      if (cacheValidator(cache)) {
+        this.interacts.push(
+          objectAssign({}, cache, {
+            id: this.interactId
+          })
+        )
+      }
+    })
+
+    this.clear()
+    this.sendInteracts()
+
+    if (this.active) {
+      const delay = this.interval.shift()
+      if (delay !== undefined && delay >= 0) {
+        setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
+      }
+      this.interactId++
+    }
+  }
+
+  private updateInteractCache (data: Interact): void {
+    if (cacheValidator(data) && this.active) {
+      this.cache[data.type] = data
+    }
+  }
+
+  private sendInteracts (force?: boolean): void {
+    const query: string[] = []
+    this.interacts.forEach(data => {
+      const q = createInteractData(data)
+      if (q.length) {
+        query.push(`d=${q}`)
+      }
+    })
+
+    if (this.baseUrl && (query.length >= MAX_INTERACT || force)) {
+      const customState: any = this.get('custom')
+      get(
+        `${this.baseUrl}/${this.loadTime}/int.gif`,
+        query.concat(obj2query(customState)),
+        () => {
+          //
+        },
+        () => {
+          this.active = false
+        }
+      )
+      this.interacts.length = 0
+    }
+  }
+
+  private clear (): void {
+    this.cache = {
+      a: {},
+      l: {}
+    }
   }
 }

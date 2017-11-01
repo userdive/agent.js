@@ -7,10 +7,7 @@ function getFirstTouch (e: TouchEvent): Touch {
 }
 
 export default class TouchEvents extends EventBase {
-  start: Touch
-  validate (): boolean {
-    return validate(TOUCH)
-  }
+  private start: Touch
   on () {
     super.on(
       'touchstart',
@@ -46,5 +43,8 @@ export default class TouchEvents extends EventBase {
       },
       'a'
     )
+  }
+  protected validate (): boolean {
+    return validate(TOUCH)
   }
 }

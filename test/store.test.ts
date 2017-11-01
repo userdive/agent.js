@@ -6,12 +6,8 @@ import { CUSTOM_INDEX } from '../src/constants'
 describe('store', () => {
   const Store = require('../src/store').default
 
-  function createInstance () {
-    return new Store()
-  }
-
   it('merge', () => {
-    const store = createInstance()
+    const store = new Store()
     const env = {
       v: random.number(),
       uid: random.number(),
@@ -38,7 +34,7 @@ describe('store', () => {
 
   it('set', () => {
     const url = internet.url()
-    const store = createInstance()
+    const store = new Store()
     const state = store.set('page', url)
     assert(state.env.l === url)
 
@@ -48,17 +44,18 @@ describe('store', () => {
       store.set(dimention, random.alphaNumeric())
       store.set(metric, random.number({ min: 1, max: 99 }))
     }
+    const custom = store.get('custom')
     for (let i = 1; i <= CUSTOM_INDEX; i++) {
-      assert(store._state.custom[`cd${i}`])
-      assert(store._state.custom[`cm${i}`])
+      assert(custom[`cd${i}`])
+      assert(custom[`cm${i}`])
     }
-    assert(store._state.custom[`cd${CUSTOM_INDEX + 1}`] === undefined)
-    assert(store._state.custom[`cm${CUSTOM_INDEX + 1}`] === undefined)
+    assert(custom[`cd${CUSTOM_INDEX + 1}`] === undefined)
+    assert(custom[`cm${CUSTOM_INDEX + 1}`] === undefined)
   })
 
   it('mergeDeep', () => {
     const url = internet.url()
-    const store = createInstance()
+    const store = new Store()
 
     const state = store.mergeDeep({
       dimension1: random.alphaNumeric(),
@@ -79,7 +76,7 @@ describe('store', () => {
   })
 
   it('get', () => {
-    const store = createInstance()
+    const store = new Store()
     assert(store.get('env'))
     assert(store.get('custom'))
   })
