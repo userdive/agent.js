@@ -49,6 +49,8 @@ const base = {
 
 let override = {}
 
+console.log(!!process.env.SAUCE_USERNAME, process.env.TRAVIS_JOB_NUMBER)
+
 if (
   process.env.SAUCE_USERNAME &&
   process.env.SAUCE_ACCESS_KEY &&
