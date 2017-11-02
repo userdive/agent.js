@@ -14,17 +14,17 @@ export const customLaunchers = {
     platform: 'Windows 10',
     version: '51'
   },
-  SL_SAFARI10: { base: 'SauceLabs', browserName: 'safari', version: '10.0' },
+  // SL_SAFARI10: { base: 'SauceLabs', browserName: 'safari', version: '10.0' },
   SL_IE11: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
     version: '11'
-  },
-  SL_EDGE: {
-    base: 'SauceLabs',
-    browserName: 'MicrosoftEdge',
-    platform: 'Windows 10',
-    version: '14.14393'
+    //   },
+    //   SL_EDGE14: {
+    //     base: 'SauceLabs',
+    //     browserName: 'MicrosoftEdge',
+    //     platform: 'Windows 10',
+    //     version: '14.14393'
   }
 }
