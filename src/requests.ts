@@ -25,7 +25,9 @@ export function get (
 export function obj2query (data: { key: any; uriComponent: string }): string[] {
   const query: string[] = []
   Object.keys(data).forEach(key => {
-    query.push(`${key}=${encodeURIComponent(data.key)}`)
+    if (data.key) {
+      query.push(`${key}=${encodeURIComponent(data.key)}`)
+    }
   })
   return query
 }
