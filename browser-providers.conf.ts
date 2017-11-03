@@ -29,11 +29,11 @@ export const customLaunchers = {
     platform: 'Windows 10',
     version: '51'
   },
-  SL_FIREFOXBETA: {
+  SL_FIREFOXDEV: {
     base: 'SauceLabs',
     platform: 'Windows 10',
     browserName: 'firefox',
-    version: 'beta'
+    version: 'dev'
   },
   SL_SAFARI10: {
     base: 'SauceLabs',
