@@ -73,7 +73,7 @@ if (
       captureTimeout: 180000,
       browserDisconnectTimeout: 180000,
       browserDisconnectTolerance: 3,
-      browserNoActivityTimeout: 300000,
+      browserNoActivityTimeout: 180000,
       browsers: Object.keys(customLaunchers),
       reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
     }
