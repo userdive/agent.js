@@ -9,15 +9,20 @@ describe('requests', () => {
   }
 
   it('get', () => {
-    assert(requests.get(internet.url(), [], dummyHandler, dummyHandler) === undefined)
+    assert(
+      requests.get(internet.url(), [], dummyHandler, dummyHandler) === undefined
+    )
   })
 
   it('obj2query', () => {
     function isASCII (str: string) {
       return /^[\x00-\x7F]*$/.test(str)
     }
-    requests.obj2query({ foo: random.word() }).forEach(q => {
+    const queries = requests.obj2query({ foo: random.word() })
+    queries.forEach(q => {
       assert(isASCII(q))
     })
+
+    assert(queries.length === 1)
   })
 })
