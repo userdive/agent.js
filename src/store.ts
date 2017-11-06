@@ -77,6 +77,7 @@ export default class Store {
   public merge (obj: ClientEnvironments | Custom): State {
     const stateObj = initialState()
     this.state[obj.type] = objectAssign(
+      {},
       stateObj[obj.type],
       this.state[obj.type],
       obj.data
