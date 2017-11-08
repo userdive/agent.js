@@ -113,6 +113,10 @@ acorn-dynamic-import@^2.0.0:
   dependencies:
     acorn "^4.0.3"
 
+acorn-es7-plugin@^1.0.10:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/acorn-es7-plugin/-/acorn-es7-plugin-1.1.7.tgz#f2ee1f3228a90eead1245f9ab1922eb2e71d336b"
+
 acorn-es7-plugin@^1.0.12:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/acorn-es7-plugin/-/acorn-es7-plugin-1.1.5.tgz#f31e1a618f439bfdde8851dd875a3a163ca8201f"
@@ -287,6 +291,10 @@ array-filter@^1.0.0:
 array-filter@~0.0.0:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
+
+array-find@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/array-find/-/array-find-1.0.0.tgz#6c8e286d11ed768327f8e62ecee87353ca3e78b8"
 
 array-map@~0.0.0:
   version "0.0.0"
@@ -697,6 +705,15 @@ cacache@^10.0.0:
     unique-filename "^1.1.0"
     y18n "^3.2.1"
 
+call-matcher@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/call-matcher/-/call-matcher-1.0.1.tgz#5134d077984f712a54dad3cbf62de28dce416ca8"
+  dependencies:
+    core-js "^2.0.0"
+    deep-equal "^1.0.0"
+    espurify "^1.6.0"
+    estraverse "^4.0.0"
+
 call-signature@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/call-signature/-/call-signature-0.0.2.tgz#a84abc825a55ef4cb2b028bd74e205a65b9a4996"
@@ -959,7 +976,7 @@ content-type@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.2.tgz#b7d113aee7a8dd27bd21133c4dc2529df1721eed"
 
-convert-source-map@^1.5.0:
+convert-source-map@^1.1.1, convert-source-map@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.5.0.tgz#9acd70851c6d5dfdd93d9282e5edf94a03ff46b5"
 
@@ -1145,9 +1162,17 @@ decamelize@^1.0.0, decamelize@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
+deep-equal@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
+
 deep-extend@~0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.1.tgz#efe4113d08085f4e6f9687759810f807469e2253"
+
+deep-is@~0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -1278,6 +1303,12 @@ elliptic@^6.0.0:
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
+
+empower-assert@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/empower-assert/-/empower-assert-1.0.1.tgz#31e310abc065baa7c3a0487e6be5bbcc65f3c1de"
+  dependencies:
+    estraverse "^4.2.0"
 
 empower-core@^0.6.2:
   version "0.6.2"
@@ -1446,6 +1477,13 @@ es6-weak-map@^2.0.1:
     es6-iterator "2"
     es6-symbol "3"
 
+escallmatch@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/escallmatch/-/escallmatch-1.5.0.tgz#50099d86e8091b092df8ddfbc3f9a6fb05a024d0"
+  dependencies:
+    call-matcher "^1.0.0"
+    esprima "^2.0.0"
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -1454,7 +1492,18 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-escope@^3.6.0:
+escodegen@^1.6.1, escodegen@^1.7.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/escodegen/-/escodegen-1.9.0.tgz#9811a2f265dc1cd3894420ee3717064b632b8852"
+  dependencies:
+    esprima "^3.1.3"
+    estraverse "^4.2.0"
+    esutils "^2.0.2"
+    optionator "^0.8.1"
+  optionalDependencies:
+    source-map "~0.5.6"
+
+escope@^3.3.0, escope@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/escope/-/escope-3.6.0.tgz#e01975e812781a163a6dadfdd80398dc64c889c3"
   dependencies:
@@ -1463,13 +1512,63 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-esprima@^3.1.1:
+espower-location-detector@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/espower-location-detector/-/espower-location-detector-1.0.0.tgz#a17b7ecc59d30e179e2bef73fb4137704cb331b5"
+  dependencies:
+    is-url "^1.2.1"
+    path-is-absolute "^1.0.0"
+    source-map "^0.5.0"
+    xtend "^4.0.0"
+
+espower-source@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/espower-source/-/espower-source-2.2.0.tgz#7e005255ae47b5c136448644b3f3d802d503f752"
+  dependencies:
+    acorn "^5.0.0"
+    acorn-es7-plugin "^1.0.10"
+    convert-source-map "^1.1.1"
+    empower-assert "^1.0.0"
+    escodegen "^1.6.1"
+    espower "^2.0.0"
+    estraverse "^4.0.0"
+    merge-estraverse-visitors "^1.0.0"
+    multi-stage-sourcemap "^0.2.1"
+    path-is-absolute "^1.0.0"
+    xtend "^4.0.0"
+
+espower@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/espower/-/espower-2.1.0.tgz#ce1edb3d98702841fdf596d1cb8e85bdc4ae8e48"
+  dependencies:
+    array-find "^1.0.0"
+    escallmatch "^1.5.0"
+    escodegen "^1.7.0"
+    escope "^3.3.0"
+    espower-location-detector "^1.0.0"
+    espurify "^1.3.0"
+    estraverse "^4.1.0"
+    source-map "^0.5.0"
+    type-name "^2.0.0"
+    xtend "^4.0.0"
+
+esprima@^2.0.0:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
+
+esprima@^3.1.1, esprima@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
 esprima@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+
+espurify@^1.3.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/espurify/-/espurify-1.7.0.tgz#1c5cf6cbccc32e6f639380bd4f991fab9ba9d226"
+  dependencies:
+    core-js "^2.0.0"
 
 espurify@^1.6.0:
   version "1.6.0"
@@ -1484,7 +1583,7 @@ esrecurse@^4.1.0:
     estraverse "~4.1.0"
     object-assign "^4.0.1"
 
-estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
+estraverse@^4.0.0, estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.2.0.tgz#0dee3fed31fcd469618ce7342099fc1afa0bdb13"
 
@@ -1622,6 +1721,10 @@ fast-deep-equal@^0.1.0:
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
+
+fast-levenshtein@~2.0.4:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
 fd-slicer@~1.0.1:
   version "1.0.1"
@@ -2234,7 +2337,7 @@ is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
 
-is-url@^1.2.2:
+is-url@^1.2.1, is-url@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/is-url/-/is-url-1.2.2.tgz#498905a593bf47cc2d9e7f738372bbf7696c7f26"
 
@@ -2574,6 +2677,13 @@ leven@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
 
+levn@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
+  dependencies:
+    prelude-ls "~1.1.2"
+    type-check "~0.3.2"
+
 lint-staged@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-4.3.0.tgz#ed0779ad9a42c0dc62bb3244e522870b41125879"
@@ -2801,6 +2911,12 @@ memory-streams@^0.1.2:
   dependencies:
     readable-stream "~1.0.2"
 
+merge-estraverse-visitors@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/merge-estraverse-visitors/-/merge-estraverse-visitors-1.0.0.tgz#eb968338b5ded5ceed82cec0307decba2d8ea994"
+  dependencies:
+    estraverse "^4.0.0"
+
 micromatch@^2.1.5:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
@@ -2932,6 +3048,12 @@ ms@0.7.2:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
+multi-stage-sourcemap@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/multi-stage-sourcemap/-/multi-stage-sourcemap-0.2.1.tgz#b09fc8586eaa17f81d575c4ad02e0f7a3f6b1105"
+  dependencies:
+    source-map "^0.1.34"
 
 nan@^2.3.0:
   version "2.5.0"
@@ -3118,6 +3240,17 @@ optimist@^0.6.1:
   dependencies:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
+
+optionator@^0.8.1:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.2.tgz#364c5e409d3f4d6301d6c0b4c05bba50180aeb64"
+  dependencies:
+    deep-is "~0.1.3"
+    fast-levenshtein "~2.0.4"
+    levn "~0.3.0"
+    prelude-ls "~1.1.2"
+    type-check "~0.3.2"
+    wordwrap "~1.0.0"
 
 options@>=0.0.5:
   version "0.0.6"
@@ -3410,6 +3543,10 @@ power-assert@^1.4.4:
     power-assert-formatter "^1.3.1"
     universal-deep-strict-equal "^1.2.1"
     xtend "^4.0.0"
+
+prelude-ls@~1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
 
 preserve@^0.2.0:
   version "0.2.0"
@@ -3988,7 +4125,7 @@ source-map-support@^0.4.0:
   dependencies:
     source-map "^0.5.6"
 
-source-map@^0.1.41:
+source-map@^0.1.34, source-map@^0.1.41:
   version "0.1.43"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
   dependencies:
@@ -3999,6 +4136,10 @@ source-map@^0.4.4:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
   dependencies:
     amdefine ">=0.0.4"
+
+source-map@^0.5.0, source-map@~0.5.6:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
 source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
   version "0.5.6"
@@ -4417,6 +4558,12 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
 
+type-check@~0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
+  dependencies:
+    prelude-ls "~1.1.2"
+
 type-detect@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.0.tgz#62053883542a321f2f7b25746dc696478b18ff6b"
@@ -4428,7 +4575,7 @@ type-is@~1.6.14:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
-type-name@^2.0.1:
+type-name@^2.0.0, type-name@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/type-name/-/type-name-2.0.2.tgz#efe7d4123d8ac52afff7f40c7e4dec5266008fb4"
 
@@ -4673,6 +4820,14 @@ webpack-dev-middleware@^1.0.11:
     path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
 
+webpack-espower-loader@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/webpack-espower-loader/-/webpack-espower-loader-1.0.2.tgz#ad302e7b153df41e171613082da41869a29a01b3"
+  dependencies:
+    convert-source-map "^1.1.1"
+    espower-source "^2.0.0"
+    xtend "^4.0.0"
+
 webpack-sources@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.0.1.tgz#c7356436a4d13123be2e2426a05d1dad9cbe65cf"
@@ -4730,6 +4885,10 @@ window-size@0.1.0:
 wordwrap@0.0.2, wordwrap@~0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.2.tgz#b79669bb42ecb409f83d583cad52ca17eaa1643f"
+
+wordwrap@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
 
 worker-farm@^1.4.1:
   version "1.5.0"
