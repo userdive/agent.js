@@ -209,6 +209,23 @@ describe('core', () => {
     assert(url.split('/')[4].length === 32)
     assert(url.split('/')[5].length === 13)
     assert(url.split('/')[6] === 'env.gif')
+
+    const query = spy.getCall(0).args[1]
+    assert(query.length === 8)
+    assert(query[1] === `l=${encodeURIComponent(location.href)}`)
+    spy.restore()
+  })
+
+  it('send success pathname', () => {
+    const spy = sinonSpy(require('../src/requests'), 'get')
+    const autoAgent = agentFactory({ auto: true })
+    autoAgent.send('pageview', location.pathname)
+    autoAgent.active = true
+    autoAgent.listen()
+
+    const query = spy.getCall(0).args[1]
+    assert(query.length === 8)
+    assert(query[1] === `l=${encodeURIComponent(location.href)}`)
     spy.restore()
   })
 

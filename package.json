@@ -55,7 +55,8 @@
     "uglify-js": "^3.1.6",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "userdive": "^0.4.0",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-espower-loader": "^1.0.2"
   },
   "engine": {
     "node": "> 5"

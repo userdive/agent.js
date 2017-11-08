@@ -68,6 +68,13 @@ function createInteractData (d: Interact): string {
   )},${toInt(d.top)}`
 }
 
+function pathname2href (pathname: string) {
+  if (!/^http/.test(pathname)) {
+    pathname = `${location.protocol}//${location.host}${pathname}`
+  }
+  return pathname
+}
+
 export default class AgentCore extends Store {
   private baseUrl: string
   private cache: { a: Object; l: Object }
@@ -123,7 +130,7 @@ export default class AgentCore extends Store {
       case 'pageview':
         this.destroy(false)
 
-        const env = getEnv(page)
+        const env = getEnv(pathname2href(page))
         if (!env || !this.baseUrl) {
           return warning(`failed init`)
         }

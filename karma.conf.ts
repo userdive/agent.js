@@ -16,7 +16,7 @@ const base = {
       rules: [
         {
           test: /\.ts$/,
-          use: { loader: 'ts-loader' }
+          use: ['webpack-espower-loader', 'ts-loader']
         },
         {
           test: /\.ts$/,
