@@ -1,5 +1,5 @@
-import 'mocha'
 import * as assert from 'assert'
+import 'mocha'
 
 describe('constants', () => {
   it('INTERVAL', () => {

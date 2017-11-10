@@ -1,6 +1,6 @@
-import 'mocha'
-import { internet, random } from 'faker/locale/ja'
 import * as assert from 'assert'
+import { internet, random } from 'faker/locale/ja'
+import 'mocha'
 
 describe('requests', () => {
   const requests = require('../src/requests')

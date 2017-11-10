@@ -1,6 +1,6 @@
-import EventBase from '../events'
-import { validate, getOffset } from '../browser'
+import { getOffset, validate } from '../browser'
 import { SCROLL, TOUCH } from '../constants'
+import EventBase from '../events'
 import { Point } from '../types'
 
 function getPotision (w: Window): Point {

@@ -1,6 +1,6 @@
 import { VERSION } from './constants'
-import { Size, ClientEnvironmentsData } from './types'
 import { error } from './logger'
+import { ClientEnvironmentsData, Size } from './types'
 
 function getWindowSize (w: { innerHeight: number; innerWidth: number }): Size {
   return {

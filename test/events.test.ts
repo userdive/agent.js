@@ -1,8 +1,8 @@
+import * as assert from 'assert'
+import { throws } from 'assert-exception'
+import { random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
-import * as assert from 'assert'
 
 import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
