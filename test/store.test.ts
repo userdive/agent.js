@@ -1,6 +1,6 @@
-import 'mocha'
 import * as assert from 'assert'
 import { internet, random } from 'faker'
+import 'mocha'
 import { CUSTOM_INDEX } from '../src/constants'
 
 describe('store', () => {

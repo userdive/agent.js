@@ -1,17 +1,17 @@
-import { EventEmitter } from 'events'
-import { UIEventObserver } from 'ui-event-observer'
 import { find, save } from 'auto-cookie'
-import * as objectAssign from 'object-assign'
+import { EventEmitter } from 'events'
 import * as cookies from 'js-cookie'
+import * as objectAssign from 'object-assign'
+import { UIEventObserver } from 'ui-event-observer'
 import { v4 as uuid } from 'uuid'
 
-import { get, obj2query } from './requests'
 import { getEnv } from './browser'
-import { setup, raise, warning } from './logger'
 import {
-  INTERVAL as INTERVAL_DEFAULT_SETTING,
-  INTERACT as MAX_INTERACT
+  INTERACT as MAX_INTERACT,
+  INTERVAL as INTERVAL_DEFAULT_SETTING
 } from './constants'
+import { raise, setup, warning } from './logger'
+import { get, obj2query } from './requests'
 import Store from './store'
 
 import { Interact, SendType, Settings, State } from './types'

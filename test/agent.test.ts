@@ -1,7 +1,7 @@
-import 'mocha'
-import { random, internet } from 'faker'
-import { stub } from 'sinon'
 import * as assert from 'assert'
+import { internet, random } from 'faker'
+import 'mocha'
+import { stub } from 'sinon'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default

@@ -1,7 +1,7 @@
-import 'mocha'
-import { random, internet } from 'faker'
-import { stub as sinonStub } from 'sinon'
 import * as assert from 'assert'
+import { internet, random } from 'faker'
+import 'mocha'
+import { stub as sinonStub } from 'sinon'
 
 import * as ud from 'userdive'
 import { NAMESPACE } from '../src/constants'

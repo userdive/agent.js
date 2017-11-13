@@ -1,7 +1,7 @@
-import 'mocha'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
 import * as assert from 'assert'
+import { throws } from 'assert-exception'
+import { random } from 'faker'
+import 'mocha'
 
 describe('logger', () => {
   const args = [random.word(), new Error(random.word())]

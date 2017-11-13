@@ -1,6 +1,6 @@
-import EventBase from '../events'
 import { validate } from '../browser'
 import { TOUCH } from '../constants'
+import EventBase from '../events'
 
 function getFirstTouch (e: TouchEvent): Touch {
   return e.changedTouches ? e.changedTouches[0] : e.touches[0]

@@ -1,20 +1,20 @@
-import 'mocha'
-import { spy as sinonSpy, useFakeTimers, stub as sinonStub } from 'sinon'
-import { random } from 'faker'
-import { throws } from 'assert-exception'
 import * as assert from 'assert'
-import * as objectAssign from 'object-assign'
+import { throws } from 'assert-exception'
 import { EventEmitter } from 'events'
+import { random } from 'faker'
+import 'mocha'
+import * as objectAssign from 'object-assign'
+import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
 
 import {
-  SETTINGS as SETTINGS_DEFAULT,
+  INTERACT,
   INTERVAL,
-  INTERACT
+  SETTINGS as SETTINGS_DEFAULT
 } from '../src/constants'
-import { EventType } from '../src/types'
-import { getType } from './helpers/Event'
 import Agent from '../src/core'
 import Base from '../src/events'
+import { EventType } from '../src/types'
+import { getType } from './helpers/Event'
 
 describe('core', () => {
   const Agent = require('../src/core').default

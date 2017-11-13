@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 
-import { SETTINGS as SETTINGS_DEFAULT, LISTENER } from './constants'
 import { validate } from './browser'
+import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'

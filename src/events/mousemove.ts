@@ -1,5 +1,5 @@
-import EventBase from '../events'
 import { validate } from '../browser'
+import EventBase from '../events'
 
 export default class MouseMoveEvents extends EventBase {
   on () {

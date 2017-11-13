@@ -1,6 +1,6 @@
-import 'mocha'
-import { random } from 'faker'
 import * as assert from 'assert'
+import { random } from 'faker'
+import 'mocha'
 
 import { EventEmitter } from 'events'
 import { isTouchDevice } from './helpers/browser'

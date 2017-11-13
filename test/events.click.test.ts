@@ -1,7 +1,7 @@
-import 'mocha'
-import { random } from 'faker'
-import { spy as sinonSpy } from 'sinon'
 import * as assert from 'assert'
+import { random } from 'faker'
+import 'mocha'
+import { spy as sinonSpy } from 'sinon'
 
 import { EventEmitter } from 'events'
 import { createEvent } from './helpers/Event'

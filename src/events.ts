@@ -1,10 +1,10 @@
 import * as objectAssign from 'object-assign'
 
 import { EventEmitter } from 'events'
-import { error, warning, raise } from './logger'
+import { getOffset, validate } from './browser'
 import { LISTENER, SCROLL } from './constants'
-import { validate, getOffset } from './browser'
-import { EventType, CustomError, InteractType } from './types'
+import { error, raise, warning } from './logger'
+import { CustomError, EventType, InteractType } from './types'
 
 export default class Events {
   private emitter: EventEmitter
