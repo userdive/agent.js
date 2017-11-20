@@ -32,7 +32,6 @@ export const customLaunchers = {
   SL_SAFARI10: {
     base: 'SauceLabs',
     browserName: 'safari',
-    platform: 'OS X 10.12',
     version: '10.0'
   },
   SL_IE11: {
