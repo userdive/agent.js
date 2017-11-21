@@ -41,7 +41,7 @@ function findOrCreateClientIdAuto (
   const cookieAttr: cookies.CookieAttributes = {
     expires: cookieExpires
   }
-  const c = find(cookieName, cookieAttr)
+  const c = find(cookieName)
   if (c) {
     return c
   }
