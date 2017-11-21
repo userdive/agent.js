@@ -388,9 +388,9 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-auto-cookie@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/auto-cookie/-/auto-cookie-1.0.2.tgz#9abe924754719e8274220bfee8713ecdc17f948b"
+auto-cookie@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/auto-cookie/-/auto-cookie-1.1.0.tgz#5eeea7f23dc8c29e166644c75f137fa541d37553"
 
 aws-sign2@~0.6.0:
   version "0.6.0"
