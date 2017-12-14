@@ -1,8 +1,10 @@
 # @userdive/agent
 
-[![npm version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![codecov][codecov-image]][codecov-url]
+<p align='center'><a href="https://app.userdive.com/signup" alt="USERDIVE logo" target="_blank"><img src="http://style.uncovertruth.co.jp/assets/images/userdive/logo-text.svg" height="100"></a></p>
+
+[![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)
+[![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
+[![codecov](https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg)](https://codecov.io/gh/userdive/agent.js)
 [![dependencies Status](https://david-dm.org/userdive/agent.js/status.svg)](https://david-dm.org/userdive/agent.js)
 [![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev)
 [![Greenkeeper badge](https://badges.greenkeeper.io/userdive/agent.js.svg)](https://greenkeeper.io/)
@@ -14,7 +16,7 @@
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 
-> TBD
+> Official USERDIVE module for webpage analytics
 
 ## Table of Contents
 
@@ -31,7 +33,39 @@ npm install @userdive/agent --save
 
 ## Usage
 
-> TBD
+Standard Usage
+
+```js
+import Agent from '@userdive/agent'
+
+const agent = new Agent()
+agent.create('projectId', 'auto')
+agent.send('pageview')
+```
+
+## Feature
+
+Custom Dimensions and Metrics
+
+```js
+import Agent from '@userdive/agent'
+
+const agent = new Agent()
+agent.create('projectId', 'auto')
+agent.send('pageview', {
+  'dimension15':  'My Custom Dimension',
+  'metric18': 8000
+})
+```
+
+```js
+agent.set('set', {
+  'dimension15':  'My Custom Dimension',
+  'metric18': 8000
+})
+
+agent.set('set', 'dimension15', 'My Custom Dimension')
+```
 
 ## Contribute
 
@@ -40,10 +74,3 @@ PRs accepted. [join us](https://www.wantedly.com/companies/uncovertruth/projects
 ## License
 
 This library is licensed under GPLv3. Full license text is available in [LICENSE](https://github.com/userdive/agent.js/blob/master/LICENSE)
-
-[npm-image]: https://badge.fury.io/js/%40userdive%2Fagent.svg
-[npm-url]: https://www.npmjs.com/package/@userdive/agent
-[travis-image]: https://travis-ci.org/userdive/agent.js.svg?branch=master
-[travis-url]: https://travis-ci.org/userdive/agent.js
-[codecov-image]: https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/userdive/agent.js
