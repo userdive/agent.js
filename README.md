@@ -33,7 +33,7 @@ npm install @userdive/agent --save
 
 ## Usage
 
-#### Standard Usage
+#### Basic Usage
 
 ```js
 import Agent from '@userdive/agent'
@@ -71,15 +71,13 @@ agent.set('set', 'dimension15', 'My Custom Dimension')
 
 ```js
 class MyPlugin {
+  constructor (agent, opts) {
+    this.opts = opts || {msg: ''}
+  }
 
-	constructor (agent, opts) {
-		this.opts = opts || {msg: ''}
-	}
-
-	say () {
-		console.log('say: '+this.opts.msg)
-	}
-
+  say () {
+    console.log('say: '+this.opts.msg)
+  }
 }
 agent.provide('myplugin', MyPlugin)
 ```
@@ -93,7 +91,7 @@ import Agent from '@userdive/agent'
 const agent = new Agent()
 agent.create('projectId', 'auto')
 agent.require('myplugin')  // provided name
-agent.run('myplugin:say', { msg: 'hello'})
+agent.say({ msg: 'hello'})
   // => output 'say: hello'
 ```
 
