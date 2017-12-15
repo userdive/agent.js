@@ -33,7 +33,7 @@ npm install @userdive/agent --save
 
 ## Usage
 
-Standard Usage
+#### Standard Usage
 
 ```js
 import Agent from '@userdive/agent'
@@ -45,7 +45,7 @@ agent.send('pageview')
 
 ## Feature
 
-Custom Dimensions and Metrics
+#### Custom Dimensions and Metrics
 
 ```js
 import Agent from '@userdive/agent'
@@ -66,6 +66,33 @@ agent.set('set', {
 
 agent.set('set', 'dimension15', 'My Custom Dimension')
 ```
+
+#### Register Plugin ( in plugin code )
+
+```js
+import Agent from '@userdive/agent'
+
+export MyPlugin = function() {
+	this.say = function ( msg ) {
+		console.log( 'say: ' + msg )
+	}
+}
+agent.provide('myplugin', MyPlugin)
+```
+
+#### Use Plugin
+
+plugin function can call `'pluginName:functionName'`
+
+```js
+const agent = new Agent()
+agent.create('projectId', 'auto')
+agent.require('myplugin')  // provided name
+agent.run('myplugin:say', 'hello')
+  // => output 'say: hello'
+```
+
+
 
 ## Contribute
 
