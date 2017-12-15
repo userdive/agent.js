@@ -91,7 +91,7 @@ import Agent from '@userdive/agent'
 const agent = new Agent()
 agent.create('projectId', 'auto')
 agent.require('myplugin')  // provided name
-agent.myplugin.say({ msg: 'hello'})
+agent.run('myplugin:say', { msg: 'hello'})
   // => output 'say: hello'
 ```
 
