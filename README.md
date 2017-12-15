@@ -70,10 +70,16 @@ agent.set('set', 'dimension15', 'My Custom Dimension')
 #### Register Plugin ( in plugin code )
 
 ```js
-export MyPlugin = function() {
-	this.say = function ( msg ) {
-		console.log( 'say: ' + msg )
+class MyPlugin {
+
+	constructor (agent, opts) {
+		this.opts = opts || {msg: ''}
 	}
+
+	say () {
+		console.log('say: '+this.opts.msg)
+	}
+
 }
 agent.provide('myplugin', MyPlugin)
 ```
@@ -87,7 +93,7 @@ import Agent from '@userdive/agent'
 const agent = new Agent()
 agent.create('projectId', 'auto')
 agent.require('myplugin')  // provided name
-agent.run('myplugin:say', 'hello')
+agent.run('myplugin:say', { msg: 'hello'})
   // => output 'say: hello'
 ```
 
