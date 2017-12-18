@@ -79,7 +79,6 @@ class MyPlugin {
     console.log('say: '+this.opts.msg)
   }
 }
-agent.provide('myplugin', MyPlugin)
 ```
 
 #### Use Plugin
@@ -88,8 +87,10 @@ plugin function can call `'pluginName:functionName'`
 
 ```js
 import Agent from '@userdive/agent'
+improt Myplugin from 'path/to/plugin'
 const agent = new Agent()
 agent.create('projectId', 'auto')
+agent.provide('myplugin', MyPlugin)
 agent.require('myplugin')  // provided name
 agent.run('myplugin:say', { msg: 'hello'})
   // => output 'say: hello'
