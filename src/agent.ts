@@ -11,6 +11,8 @@ import { SendType, State } from './types'
 
 export default class Agent {
   private core: AgentCore
+  private plugins: { [name: string]: any }
+
   create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
@@ -40,5 +42,10 @@ export default class Agent {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)
+  }
+  run (context: string, args: any[]) {
+    const names = context.split(':')
+    const plugin = this.plugins[names[0]]
+    plugin[names[1]].apply(plugin, ...args)
   }
 }

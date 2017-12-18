@@ -155,3 +155,14 @@ export type EventType =
   | 'touchstart'
   | 'touchmove'
 export type CustomError = string | Error
+
+export type Command = {
+  callback: Function;
+  trackerName: string;
+  pluginName: string;
+  methodName: string;
+  methodArgs: any[];
+  callCreate: boolean;
+  callRequire: boolean;
+  callProvide: boolean;
+}
