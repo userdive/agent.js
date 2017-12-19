@@ -8,10 +8,15 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
+import { isUndefined } from 'util'
 
 export default class Agent {
   private core: AgentCore
   private plugins: { [name: string]: any }
+
+  constructor () {
+    this.plugins = {}
+  }
 
   create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
@@ -43,9 +48,24 @@ export default class Agent {
     }
     return this.core.mergeDeep(key)
   }
+  provide (name: string, pluginConstructor: ObjectConstructor): boolean {
+    try {
+      if (!this.plugins[name]) {
+        this.plugins[name] = new pluginConstructor()
+      }
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+
+  require (pluginName: string): boolean {
+    return !isUndefined(this.plugins[pluginName])
+  }
+
   run (context: string, args: any[]) {
     const names = context.split(':')
     const plugin = this.plugins[names[0]]
-    plugin[names[1]].apply(plugin, ...args)
+    plugin[names[1]](...args)
   }
 }

@@ -3,7 +3,6 @@ import { Command } from './types'
 
 const commandParse: RegExp = /^(?:(\w+)\.)?(?:(\w+):)?(\w+)$/
 
-// TODO Not return this
 export function parseCommand (queueCommand: any): Command {
   const cmd: any = {}
   if ('function' === typeof queueCommand[0]) {
@@ -24,14 +23,16 @@ export function parseCommand (queueCommand: any): Command {
 
     const target = queueCommand[1]
     const targetOption = queueCommand[2]
-    if (!cmd.methodName) throw new Error('invalid command')
-    if (
+    if (!cmd.methodName) {
+      throw new Error('invalid command')
+    } else if (
       cmd.callProvide &&
-      (!isFunction(target) || '' === target || !isString(targetOption))
+      !isString(target) &&
+      !isFunction(targetOption)
     ) {
       throw new Error('invalid command')
     }
-    if (cmd.callProvide && 'default' !== this.trackerName) {
+    if (cmd.callProvide && 'default' !== cmd.trackerName) {
       throw new Error('invalid provide cmd')
     }
   }

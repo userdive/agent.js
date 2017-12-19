@@ -13,7 +13,11 @@ executer.run = function () {
   let cmd: Command[] = executer.parse(arguments)
   cmd = executer.commandQueue.concat(cmd)
   for (executer.commandQueue = []; 0 < cmd.length;) {
-    if (executer.execute(cmd[0])) cmd.shift()
+    if (executer.execute(cmd[0])) {
+      cmd.shift()
+    } else {
+      break
+    }
   }
   executer.commandQueue = executer.commandQueue.concat(cmd)
 }
@@ -22,15 +26,14 @@ executer.parse = function (queueCommand: any): Command[] {
   let commands: Command[] = []
   try {
     let command = parseCommand(queueCommand)
-    if (command.callProvide) {
-      // TODO call Agent.provide after create
-    } else {
+    if (!command.callProvide) {
       commands.push(command)
-      if (command.callRequire) {
-        // TODO prepare require
-      } else if (command.callCreate && !executer.agents[command.trackerName]) {
+      if (command.callCreate && !executer.agents[command.trackerName]) {
         executer.agents[command.trackerName] = new executer.agent()
       }
+    } else {
+      const agent = executer.agents[command.trackerName]
+      agent.provide(...command.methodArgs)
     }
   } catch (e) {
     // do nothing
@@ -42,9 +45,13 @@ executer.execute = function (command: Command): boolean {
     const agent = executer.agents[command.trackerName]
     const args = command.methodArgs || []
     if (command.pluginName) {
-      agent.run(command.pluginName, args)
+      const context = command.pluginName + ':' + command.methodName
+      agent.run(context, args)
     } else {
-      agent[command.methodName](...args)
+      const result = agent[command.methodName](...args)
+      if (command.callRequire) {
+        return result
+      }
     }
     return true
   } catch (e) {
