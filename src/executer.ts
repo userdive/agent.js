@@ -20,6 +20,7 @@ executer.run = function (args: any) {
     }
   }
   executer.commandQueue = executer.commandQueue.concat(cmd)
+  return executer
 }
 
 executer.parse = function (queueCommand: any): Command[] {
@@ -45,7 +46,7 @@ executer.execute = function (command: Command): boolean {
     const agent = executer.agents[command.trackerName]
     const args = command.methodArgs || []
     if (command.pluginName) {
-      const context = command.pluginName + ':' + command.methodName
+      const context = `${command.pluginName}:${command.methodName}`
       agent.run(context, args)
     } else {
       const result = agent[command.methodName](...args)
