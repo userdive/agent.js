@@ -7,7 +7,7 @@ export default function (Agent: any) {
   const exe = executerFactory(Agent)
 
   function execute (): any {
-    exe.run.apply(exe, arguments)
+    exe.run(arguments)
   }
 
   ((global: any) => {
@@ -16,7 +16,7 @@ export default function (Agent: any) {
     if (global[name] && global[name].q) {
       const queue: TaskQueue[] = global[name].q
       for (let i = 0; i < queue.length; i++) {
-        exe.run.apply(this, queue[i])
+        exe.run(queue[i])
       }
       global[name] = execute
     }

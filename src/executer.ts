@@ -9,8 +9,8 @@ const executer: any = {
   }
 }
 
-executer.run = function () {
-  let cmd: Command[] = executer.parse(arguments)
+executer.run = function (args: any) {
+  let cmd: Command[] = executer.parse(args)
   cmd = executer.commandQueue.concat(cmd)
   for (executer.commandQueue = []; 0 < cmd.length;) {
     if (executer.execute(cmd[0])) {
