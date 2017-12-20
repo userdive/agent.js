@@ -15,6 +15,10 @@ export function parseCommand (queueCommand: any): Command {
       cmd.methodName = command[3]
       cmd.methodArgs = [].slice.call(queueCommand, 1)
       if (!cmd.pluginName) {
+        if (command[1]) {
+          cmd.trackerName = command[3]
+          cmd.methodName = command[1]
+        }
         cmd.callCreate = 'create' === cmd.methodName
         cmd.callRequire = 'require' === cmd.methodName
         cmd.callProvide = 'provide' === cmd.methodName

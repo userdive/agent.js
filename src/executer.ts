@@ -33,8 +33,8 @@ executer.parse = function (queueCommand: any): Command[] {
         executer.agents[command.trackerName] = new executer.agent()
       }
     } else {
-      const agent = executer.agents[command.trackerName]
-      agent.provide(...command.methodArgs)
+      const name = Object.keys(executer.agents)[0]
+      executer.agents[name].provide(...command.methodArgs)
     }
   } catch (e) {
     // do nothing
