@@ -35,24 +35,26 @@ describe('global async', () => {
       undefined
     )
     assert(window[GLOBAL_NAME]['q'].length)
+
     require('../src/entrypoint/')
     assert(window[GLOBAL_NAME]['q'] === undefined)
-
-    const agent = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.active)
+    let executer = window[GLOBAL_NAME]('send', 'pageview')
+    assert.equal(executer.commandQueue.length, 0)
+    assert.equal(Object.keys(executer.agents).length, 1)
+    const agent = executer.agents['default']
+    assert(agent)
+    assert(agent.getCore().active)
 
     const name = random.word()
-    const agent2 = window[GLOBAL_NAME](
+    executer = window[GLOBAL_NAME](
       `create.${name}`,
       random.alphaNumeric(),
       {},
       internet.url()
     )
-    assert(agent.id !== agent2.id)
+    assert.equal(Object.keys(executer.agents).length, 2)
+    assert(agent.getCore().id !== executer.agents[name].getCore().id)
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
-
-    const agent3 = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.id === agent3.id)
   })
 
   it('debug global', () => {
@@ -64,7 +66,7 @@ describe('global async', () => {
     require('../src/entrypoint/debug')
     assert(window[GLOBAL_NAME]['q'] === undefined)
 
-    const agent = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.active)
+    const executer = window[GLOBAL_NAME]('send', 'pageview')
+    assert(executer.agents['default'].getCore().active)
   })
 })

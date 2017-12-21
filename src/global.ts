@@ -7,7 +7,7 @@ export default function (Agent: any) {
   const exe = executerFactory(Agent)
 
   function execute (): any {
-    exe.run(arguments)
+    return exe.run(arguments)
   }
 
   ((global: any) => {

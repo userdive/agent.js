@@ -5,7 +5,7 @@ const executer: any = {
   init: function (Agent: any) {
     executer.agent = Agent
     executer.commandQueue = []
-    executer.agents = []
+    executer.agents = {}
   }
 }
 

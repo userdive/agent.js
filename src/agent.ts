@@ -76,4 +76,8 @@ export default class Agent {
     const plugin = this.plugins[names[0]]
     plugin[names[1]](...args)
   }
+
+  getCore (): AgentCore {
+    return this.core
+  }
 }
