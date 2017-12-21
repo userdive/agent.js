@@ -40,7 +40,6 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME]['q'] === undefined)
     let executer = window[GLOBAL_NAME]('send', 'pageview')
     assert.equal(executer.commandQueue.length, 0)
-    assert.equal(Object.keys(executer.agents).length, 1)
     const agent = executer.agents['default']
     assert(agent)
     assert(agent.getCore().active)
@@ -52,9 +51,8 @@ describe('global async', () => {
       {},
       internet.url()
     )
-    assert.equal(Object.keys(executer.agents).length, 2)
-    assert(agent.getCore().id !== executer.agents[name].getCore().id)
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
+    assert(agent.getCore().id !== executer.agents[name].getCore().id)
   })
 
   it('debug global', () => {
