@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { internet, random } from 'faker'
+import { internet, lorem, random } from 'faker'
 import 'mocha'
 import { stub as sinonStub } from 'sinon'
 
@@ -44,7 +44,7 @@ describe('global async', () => {
     assert(agent)
     assert(agent.getCore().active)
 
-    const name = random.word()
+    const name = lorem.word()
     executer = window[GLOBAL_NAME](
       `create.${name}`,
       random.alphaNumeric(),
@@ -52,7 +52,9 @@ describe('global async', () => {
       internet.url()
     )
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
-    assert(agent.getCore().id !== executer.agents[name].getCore().id)
+    const agent2 = executer.agents[name]
+    assert(agent2)
+    assert(agent.getCore().id !== agent2.getCore().id)
   })
 
   it('debug global', () => {
