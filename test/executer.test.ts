@@ -37,4 +37,10 @@ describe('executer', () => {
     executer.run([`${pluginName}:injectNumber`, n])
     assert(window['checkNumber'] === n)
   })
+
+  it('stop queue by invalid command', () => {
+    executer.run(['create', random.alphaNumeric(), {}])
+    executer = executer.run(['plugin:injectNumber', random.number(), {}])
+    assert.equal(executer.commandQueue.length, 1)
+  })
 })
