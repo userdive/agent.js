@@ -72,11 +72,12 @@ agent.set('set', 'dimension15', 'My Custom Dimension')
 ```js
 class MyPlugin {
   constructor (agent, opts) {
-    this.opts = opts || {msg: ''}
+    this.opts = opts || {msg: 'hi'}
   }
 
-  say () {
-    console.log('say: '+this.opts.msg)
+  greeting (target) {
+    const name = target || 'user'
+    console.log(this.opts.msg+', '+name)
   }
 }
 ```
@@ -91,9 +92,9 @@ improt Myplugin from 'path/to/plugin'
 const agent = new Agent()
 agent.create('projectId', 'auto')
 agent.provide('myplugin', MyPlugin)
-agent.require('myplugin')  // provided name
-agent.run('myplugin:say', { msg: 'hello'})
-  // => output 'say: hello'
+agent.require('myplugin', {msg: 'hello'})  // provided name
+agent.run('myplugin:greeting', 'everyone')
+  // => output 'hello, everyone'
 ```
 
 
