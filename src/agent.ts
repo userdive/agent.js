@@ -59,11 +59,15 @@ export default class Agent {
     }
   }
 
-  require (pluginName: string): boolean {
+  require (pluginName: string, options: any): boolean {
     const w: any = window
     try {
       if (!this.plugins[pluginName]) {
-        this.plugins[pluginName] = new w[GLOBAL_PLUGIN_NAME][pluginName]()
+        const opt: any = options || {}
+        this.plugins[pluginName] = new w[GLOBAL_PLUGIN_NAME][pluginName](
+          this,
+          opt
+        )
       }
     } catch (e) {
       return false
@@ -71,13 +75,17 @@ export default class Agent {
     return true
   }
 
-  run (context: string, args: any[]) {
+  run (context: string, args: any) {
     const names = context.split(':')
     const plugin = this.plugins[names[0]]
-    plugin[names[1]](...args)
+    plugin[names[1]](args)
   }
 
   getCore (): AgentCore {
     return this.core
+  }
+
+  getPlugin (name: string): any {
+    return this.plugins[name]
   }
 }

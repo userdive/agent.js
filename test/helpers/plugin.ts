@@ -1,9 +1,11 @@
+import Agent from '../../src/agent'
+
 export default class DummyPlugin {
   private id: string
-  constructor () {
-    this.id = 'id'
+  constructor (agent: Agent, options: any) {
+    this.id = options.id || 'testid'
   }
   injectNumber (num: number) {
-    window['checkNumber'] = num
+    window[this.id] = num
   }
 }

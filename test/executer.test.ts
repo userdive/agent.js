@@ -35,7 +35,7 @@ describe('executer', () => {
 
     const n: number = random.number()
     executer.run([`${pluginName}:injectNumber`, n])
-    assert(window['checkNumber'] === n)
+    assert(window['testid'] === n)
   })
 
   it('stop queue by invalid command', () => {
