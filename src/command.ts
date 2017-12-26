@@ -26,11 +26,6 @@ export function parseCommand (queueCommand: any): Command {
     }
 
     const target = queueCommand[1]
-    const targetOption = queueCommand[2]
-    if (cmd.callProvide) {
-      console.log(target)
-      console.log(targetOption)
-    }
     if (!cmd.methodName) {
       raise('invalid command')
     } else if (cmd.callProvide && typeof target !== 'string') {
