@@ -1,4 +1,5 @@
 import { Command } from './types'
+import { raise } from './logger'
 
 const commandParse: RegExp = /^(?:(\w+)\.)?(?:(\w+):)?(\w+)$/
 
@@ -31,12 +32,12 @@ export function parseCommand (queueCommand: any): Command {
       console.log(targetOption)
     }
     if (!cmd.methodName) {
-      throw new Error('invalid command')
+      raise('invalid command')
     } else if (cmd.callProvide && typeof target !== 'string') {
-      throw new Error('invalid command')
+      raise('invalid command')
     }
     if (cmd.callProvide && 'default' !== cmd.trackerName) {
-      throw new Error('invalid provide cmd')
+      raise('invalid provide cmd')
     }
   }
   return cmd
