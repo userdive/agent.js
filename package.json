@@ -6,6 +6,12 @@
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
+  "bundlesize": [
+    {
+      "path": "lib/build/agent.js",
+      "maxSize": "10 kB"
+    }
+  ],
   "dependencies": {
     "auto-cookie": "^1.1.0",
     "js-cookie": "^2.2.0",
@@ -27,6 +33,7 @@
     "@uncovertruth/eslint-config": "^3.2.1",
     "@uncovertruth/tslint-config": "^1.2.0",
     "assert-exception": "^1.1.0",
+    "bundlesize": "^0.15.3",
     "codecov": "^3.0.0",
     "cross-env": "^5.1.1",
     "eslint": "^4.15.0",

@@ -9,11 +9,13 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
 
+const PLUGINS = 'plugins'
+
 export default class Agent {
   private core: AgentCore
-  private plugins: any // FIXME type
+  private plugins: { [name: string]: any }
   constructor (projectId: string, settings: Object | 'auto') {
-    this.plugins = {}
+    this[PLUGINS] = {}
     this.create(projectId, settings)
   }
   create (projectId: string, settings: Object | 'auto'): AgentCore {
@@ -36,14 +38,11 @@ export default class Agent {
     }
     return this.core
   }
-  require (name: string, ...args: any[]) {
-    this.plugins[name] = args
+  require (pluginName: string, ...args: any[]) {
+    this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](...args)
   }
-  provide (pluginName: string, PluginConstuctor: any /* FIXME type */): void {
-    if (this.plugins[pluginName]) {
-      const [, args] = this.plugins[name]
-      this.plugins[pluginName] = new PluginConstuctor(...args)
-    }
+  provide (pluginName: string, PluginConstuctor: ObjectConstructor): void {
+    this[PLUGINS][pluginName] = PluginConstuctor
   }
   run (pluginName: string, methodName: string, ...args: any[]) {
     return this.plugins[pluginName][methodName](...args)

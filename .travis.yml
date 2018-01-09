@@ -9,10 +9,12 @@ env:
   matrix:
   - CMD=lint
   - CMD=test
+  - CMD=build
   - CMD=ci:sauce
 script:
 - npm run $CMD
 after_success:
+- '[ "$CMD" == "build" ] && npx bundlesize'
 - '[ "$CMD" == "test" ] && npm run coverage'
 notifications:
   email: false
