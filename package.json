@@ -29,6 +29,7 @@
     "assert-exception": "^1.1.0",
     "codecov": "^3.0.0",
     "cross-env": "^5.1.1",
+    "eslint": "^4.15.0",
     "faker": "^4.1.0",
     "husky": "^0.14.3",
     "is-url": "^1.2.2",
@@ -95,11 +96,12 @@
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -f ./coverage/lcov.info",
-    "lint": "tslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "run-p lint:*",
+    "lint:ts": "tslint {src,test}/**/*.ts",
     "postbuild": "cp robots.txt lib/build/.",
     "prebuild": "npm run clean",
     "precommit": "lint-staged",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "karma start --single-run"
   }
 }
