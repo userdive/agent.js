@@ -13,7 +13,6 @@ env:
   - CMD=ci:sauce
 script:
 - npm run $CMD
-- '[ "$CMD" == "build" ] && npx bundlesize'
 after_success:
 - '[ "$CMD" == "test" ] && npm run coverage'
 notifications:
