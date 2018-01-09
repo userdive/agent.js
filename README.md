@@ -11,7 +11,7 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![codebeat badge](https://codebeat.co/badges/248f31a1-c73e-45e4-b1e0-a6154c1baaca)](https://codebeat.co/projects/github-com-userdive-agent-js-master)
 [![CodeFactor](https://www.codefactor.io/repository/github/userdive/agent.js/badge)](https://www.codefactor.io/repository/github/userdive/agent.js)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=userdive/agent.js&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&utm_medium=referral&utm_content=userdive/agent.js&utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master)](https://bettercodehub.com/)
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
@@ -20,10 +20,10 @@
 
 ## Table of Contents
 
-- [Install](#install)
-- [Usage](#usage)
-- [Contribute](#contribute)
-- [License](#license)
+* [Install](#install)
+* [Usage](#usage)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## Install
 
@@ -33,51 +33,51 @@ npm install @userdive/agent --save
 
 ## Usage
 
-#### Basic Usage
+### Basic Usage
 
 ```js
-import Agent from '@userdive/agent'
+import Agent from "@userdive/agent";
 
-const agent = new Agent()
-agent.create('projectId', 'auto')
-agent.send('pageview')
+const agent = new Agent();
+agent.create("projectId", "auto");
+agent.send("pageview");
 ```
 
-## Feature
+### Feature
 
 #### Custom Dimensions and Metrics
 
 ```js
-import Agent from '@userdive/agent'
+import Agent from "@userdive/agent";
 
-const agent = new Agent()
-agent.create('projectId', 'auto')
-agent.send('pageview', {
-  'dimension15':  'My Custom Dimension',
-  'metric18': 8000
-})
+const agent = new Agent();
+agent.create("projectId", "auto");
+agent.send("pageview", {
+  dimension15: "My Custom Dimension",
+  metric18: 8000
+});
 ```
 
 ```js
-agent.set('set', {
-  'dimension15':  'My Custom Dimension',
-  'metric18': 8000
-})
+agent.set("set", {
+  dimension15: "My Custom Dimension",
+  metric18: 8000
+});
 
-agent.set('set', 'dimension15', 'My Custom Dimension')
+agent.set("set", "dimension15", "My Custom Dimension");
 ```
 
 #### Register Plugin ( in plugin code )
 
 ```js
 class MyPlugin {
-  constructor (agent, opts) {
-    this.opts = opts || {msg: 'hi'}
+  constructor(agent, opts) {
+    this.opts = opts || { msg: "hi" };
   }
 
-  greeting (target) {
-    const name = target || 'user'
-    console.log(this.opts.msg+', '+name)
+  greeting(target) {
+    const name = target || "user";
+    console.log(this.opts.msg + ", " + name);
   }
 }
 ```
@@ -87,17 +87,15 @@ class MyPlugin {
 plugin function can call `'pluginName:functionName'`
 
 ```js
-import Agent from '@userdive/agent'
-improt Myplugin from 'path/to/plugin'
-const agent = new Agent()
-agent.create('projectId', 'auto')
-agent.provide('myplugin', MyPlugin)
-agent.require('myplugin', {msg: 'hello'})  // provided name
-agent.run('myplugin:greeting', 'everyone')
-  // => output 'hello, everyone'
+import Agent from "@userdive/agent";
+import Myplugin from "path/to/plugin";
+const agent = new Agent();
+agent.create("projectId", "auto");
+agent.provide("myplugin", MyPlugin);
+agent.require("myplugin", { msg: "hello" }); // provided name
+agent.run("myplugin:greeting", "everyone");
+// => output 'hello, everyone'
 ```
-
-
 
 ## Contribute
 
