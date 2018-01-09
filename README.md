@@ -93,7 +93,7 @@ import Myplugin from "path/to/plugin";
 const agent = new Agent("projectId", "auto");
 agent.provide("myplugin", MyPlugin);
 agent.require("myplugin", { msg: "hello" }); // provided name
-agent.run("myplugin:greeting", "everyone");
+agent.run("myplugin", "greeting", "everyone");
 // => output 'hello, everyone'
 ```
 

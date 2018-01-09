@@ -36,14 +36,12 @@ export default class Agent {
     }
     return this.core
   }
-  require (name: string) {
-    this.plugins[name] = function () {
-      this.plugins[name].q = (this.plugins[name].q || []).push(arguments)
-    }
+  require (name: string, ...args: any[]) {
+    this.plugins[name] = args
   }
-  provide (name: string, PluginConstuctor: any /* FIXME type */): void {
-    if (this.plugins[name] && this.plugins[name].q) {
-      const [pluginName, ...args] = this.plugins[name].q
+  provide (pluginName: string, PluginConstuctor: any /* FIXME type */): void {
+    if (this.plugins[pluginName]) {
+      const [, args] = this.plugins[name]
       this.plugins[pluginName] = new PluginConstuctor(...args)
     }
   }
