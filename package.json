@@ -90,7 +90,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:bundle": "webpack --env=production",
-    "build:doc": "typedoc --out docs/ src/",
+    "build:doc": "typedoc --out docs/ src/ && touch .nojekyll",
     "build:ts": "tsc",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
