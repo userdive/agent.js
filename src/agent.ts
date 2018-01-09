@@ -9,8 +9,15 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
 
+const PLUGINS = 'plugins'
+
 export default class Agent {
   private core: AgentCore
+  private plugins: { [name: string]: any }
+  constructor (projectId: string, settings: Object | 'auto') {
+    this[PLUGINS] = {}
+    this.create(projectId, settings)
+  }
   create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
@@ -30,6 +37,15 @@ export default class Agent {
       )
     }
     return this.core
+  }
+  require (pluginName: string, ...args: any[]) {
+    this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](...args)
+  }
+  provide (pluginName: string, PluginConstuctor: ObjectConstructor): void {
+    this[PLUGINS][pluginName] = PluginConstuctor
+  }
+  run (pluginName: string, methodName: string, ...args: any[]) {
+    return this.plugins[pluginName][methodName](...args)
   }
   send (type: SendType, page?: string): AgentCore {
     this.core.send(type, page || location.href)

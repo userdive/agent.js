@@ -1,7 +1,8 @@
 import * as assert from 'assert'
+import { throws } from 'assert-exception'
 import { internet, random } from 'faker'
 import 'mocha'
-import { stub } from 'sinon'
+import { spy, stub } from 'sinon'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default
@@ -28,6 +29,25 @@ describe('agent', () => {
 
     listen.restore()
     get.restore()
+  })
+
+  it('provide', () => {
+    const pluginName = random.alphaNumeric()
+    const Plugin = spy()
+    agent.provide(pluginName, Plugin)
+    assert(agent.plugins[pluginName] === Plugin)
+  })
+
+  it('require', () => {
+    const pluginName = random.alphaNumeric()
+    assert(throws(() => agent.require(pluginName, Plugin)).message)
+  })
+
+  it('run', () => {
+    assert(
+      throws(() => agent.run(random.alphaNumeric(), random.alphaNumeric()))
+        .message
+    )
   })
 
   it('set', () => {

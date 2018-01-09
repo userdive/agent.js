@@ -9,6 +9,7 @@ env:
   matrix:
   - CMD=lint
   - CMD=test
+  - CMD=build
   - CMD=ci:sauce
 script:
 - npm run $CMD
