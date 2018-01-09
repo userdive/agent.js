@@ -89,8 +89,8 @@ plugin function can call `'pluginName:functionName'`
 ```js
 import Agent from "@userdive/agent";
 import Myplugin from "path/to/plugin";
-const agent = new Agent();
-agent.create("projectId", "auto");
+
+const agent = new Agent("projectId", "auto");
 agent.provide("myplugin", MyPlugin);
 agent.require("myplugin", { msg: "hello" }); // provided name
 agent.run("myplugin:greeting", "everyone");
