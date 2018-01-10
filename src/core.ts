@@ -77,7 +77,7 @@ function pathname2href (pathname: string) {
 
 export default class AgentCore extends Store {
   private baseUrl: string
-  private cache: { a: Object; l: Object }
+  private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
   private events: any[]
   private interactId: number
@@ -179,8 +179,8 @@ export default class AgentCore extends Store {
   }
 
   protected sendInteractsWithUpdate (): void {
-    Object.keys(this.cache).forEach((key: 'a' | 'l') => {
-      let cache: any = this.cache[key]
+    Object.keys(this.cache).forEach(key => {
+      const cache: any = this.cache[key]
       if (cacheValidator(cache)) {
         this.interacts.push(
           objectAssign({}, cache, {
