@@ -56,9 +56,8 @@ export default class Agent {
       const opt: any = options || {}
       this.plugins[pluginName] = new this.plugins[pluginName](this, opt)
       return true
-    } else {
-      return false
     }
+    return false
   }
 
   run (context: string, args: any) {
