@@ -59,12 +59,12 @@ agent.send("pageview", {
 ```
 
 ```js
-agent.set("set", {
+agent.set({
   dimension15: "My Custom Dimension",
   metric18: 8000
 });
 
-agent.set("set", "dimension15", "My Custom Dimension");
+agent.set("dimension15", "My Custom Dimension");
 ```
 
 #### Register Plugin ( in plugin code )
