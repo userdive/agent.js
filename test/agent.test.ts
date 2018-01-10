@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import { internet, random } from 'faker'
 import 'mocha'
-import { stub, spy as sinonSpy } from 'sinon'
+import { spy as sinonSpy, stub } from 'sinon'
 import Agent from '../src/agent'
 
 describe('agent', () => {
@@ -47,10 +47,9 @@ describe('agent', () => {
     assert(agent.plugins['dummy2'])
     assert.equal(Object.keys(agent.plugins).length, 2)
 
-    const spy = sinonSpy(agent.plugins['dummy'], 'injectNumber')
-    const n: number = random.number()
-    agent.run('dummy:injectNumber', n)
+    const spy = sinonSpy(agent.plugins['dummy'], 'injectLocation')
+    const l: string = internet.url()
+    agent.run('dummy:injectLocation', l)
     assert(spy.calledOnce)
-    assert(window['testid'] === n)
   })
 })

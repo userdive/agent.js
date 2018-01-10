@@ -2,8 +2,8 @@ import * as assert from 'assert'
 import { internet, lorem, random } from 'faker'
 import 'mocha'
 
-import executerFactory from '../src/executer'
 import { parseCommand } from '../src/command'
+import executerFactory from '../src/executer'
 
 describe('command', () => {
   const name = lorem.word()

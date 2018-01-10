@@ -1,15 +1,15 @@
-import { Command } from './types'
 import { raise } from './logger'
+import { Command } from './types'
 
 const commandParse: RegExp = /^(?:(\w+)\.)?(?:(\w+):)?(\w+)$/
 
 export function parseCommand (queueCommand: any): Command {
   const cmd: any = {}
-  if ('function' === typeof queueCommand[0]) {
+  if (typeof queueCommand[0] === 'function') {
     cmd.callback = queueCommand[0]
   } else {
     const command: RegExpExecArray | null = commandParse.exec(queueCommand[0])
-    if (command !== null && 4 === command.length) {
+    if (command !== null && command.length === 4) {
       cmd.trackerName = command[1] || 'default'
       cmd.pluginName = command[2] || ''
       cmd.methodName = command[3]
@@ -19,9 +19,9 @@ export function parseCommand (queueCommand: any): Command {
           cmd.trackerName = command[3]
           cmd.methodName = command[1]
         }
-        cmd.callCreate = 'create' === cmd.methodName
-        cmd.callRequire = 'require' === cmd.methodName
-        cmd.callProvide = 'provide' === cmd.methodName
+        cmd.callCreate = cmd.methodName === 'create'
+        cmd.callRequire = cmd.methodName === 'require'
+        cmd.callProvide = cmd.methodName === 'provide'
       }
     }
 
@@ -31,7 +31,7 @@ export function parseCommand (queueCommand: any): Command {
     } else if (cmd.callProvide && typeof target !== 'string') {
       raise('invalid command')
     }
-    if (cmd.callProvide && 'default' !== cmd.trackerName) {
+    if (cmd.callProvide && cmd.trackerName !== 'default') {
       raise('invalid provide cmd')
     }
   }

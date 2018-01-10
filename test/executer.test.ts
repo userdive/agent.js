@@ -2,8 +2,8 @@ import * as assert from 'assert'
 import { internet, lorem, random } from 'faker'
 import 'mocha'
 
-import executerFactory from '../src/executer'
 import Agent from '../src/agent'
+import executerFactory from '../src/executer'
 
 describe('executer', () => {
   let executer
@@ -33,15 +33,16 @@ describe('executer', () => {
     assert(executer.agents['default'].plugins[pluginName])
     assert.equal(executer.commandQueue.length, 0)
 
-    const n: number = random.number()
-    executer.run([`${pluginName}:injectNumber`, n])
-    assert(window['testid'] === n)
+    const l: string = internet.url()
+    executer.run([`${pluginName}:injectLocation`, l])
+    const agent: Agent = executer.agents['default']
+    assert(agent.getCore().get('env')['l'] === l)
   })
 
   it('thorow error if invalid command execute', () => {
     executer.run(['create', random.alphaNumeric(), {}])
     assert.throws(() => {
-      executer.run(['plugin:injectNumber', random.number(), {}])
+      executer.run(['plugin:injectLocation', internet.url()])
     })
   })
 })
