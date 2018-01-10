@@ -46,9 +46,6 @@ describe('command', () => {
       parseCommand([''])
     }, 'methodName is required')
     assert.throws(() => {
-      parseCommand(['provide', false, plugin])
-    }, 'provide name is string')
-    assert.throws(() => {
       const name = lorem.word()
       parseCommand([`provide.${name}`, 'plugin', plugin])
     }, 'named provide not accept')
