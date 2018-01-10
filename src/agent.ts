@@ -1,11 +1,7 @@
 import * as objectAssign from 'object-assign'
 
 import { validate } from './browser'
-import {
-  LISTENER,
-  SETTINGS as SETTINGS_DEFAULT,
-  GLOBAL_PLUGIN_NAME
-} from './constants'
+import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'
@@ -52,27 +48,17 @@ export default class Agent {
     return this.core.mergeDeep(key)
   }
   provide (name: string, pluginConstructor: ObjectConstructor) {
-    const w: any = window
-    w[GLOBAL_PLUGIN_NAME] = w[GLOBAL_PLUGIN_NAME] || {}
-    if (!w[GLOBAL_PLUGIN_NAME][name]) {
-      w[GLOBAL_PLUGIN_NAME][name] = pluginConstructor
-    }
+    this.plugins[name] = pluginConstructor
   }
 
   require (pluginName: string, options: any): boolean {
-    const w: any = window
-    try {
-      if (!this.plugins[pluginName]) {
-        const opt: any = options || {}
-        this.plugins[pluginName] = new w[GLOBAL_PLUGIN_NAME][pluginName](
-          this,
-          opt
-        )
-      }
-    } catch (e) {
+    if (this.plugins[pluginName]) {
+      const opt: any = options || {}
+      this.plugins[pluginName] = new this.plugins[pluginName](this, opt)
+      return true
+    } else {
       return false
     }
-    return true
   }
 
   run (context: string, args: any) {

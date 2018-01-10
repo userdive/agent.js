@@ -2,7 +2,6 @@ import * as assert from 'assert'
 import { internet, random } from 'faker'
 import 'mocha'
 import { stub, spy as sinonSpy } from 'sinon'
-import { GLOBAL_PLUGIN_NAME } from '../src/constants'
 import Agent from '../src/agent'
 
 describe('agent', () => {
@@ -40,12 +39,13 @@ describe('agent', () => {
 
   it('use plugin', () => {
     const dummyPlugin = require('./helpers/plugin').default
-    assert.equal(window[GLOBAL_PLUGIN_NAME], undefined)
     agent.provide('dummy', dummyPlugin)
+    assert.equal(agent.plugins['dummy'], dummyPlugin)
     assert(agent.require('dummy', {}))
 
     agent.provide('dummy2', dummyPlugin)
-    assert.equal(Object.keys(window[GLOBAL_PLUGIN_NAME]).length, 2)
+    assert(agent.plugins['dummy2'])
+    assert.equal(Object.keys(agent.plugins).length, 2)
 
     const spy = sinonSpy(agent.plugins['dummy'], 'injectNumber')
     const n: number = random.number()

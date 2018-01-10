@@ -23,4 +23,3 @@ export const SETTINGS = {
   RAVEN_DSN: '',
   Raven: undefined
 }
-export const GLOBAL_PLUGIN_NAME = '_udplugins'

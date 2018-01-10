@@ -30,7 +30,7 @@ describe('executer', () => {
 
     const plugin = require('./helpers/plugin').default
     executer = executer.run(['provide', pluginName, plugin])
-    assert(window['_udplugins'][pluginName])
+    assert(executer.agents['default'].plugins[pluginName])
     assert.equal(executer.commandQueue.length, 0)
 
     const n: number = random.number()
