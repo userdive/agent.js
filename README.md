@@ -93,7 +93,7 @@ const agent = new Agent();
 agent.create("projectId", "auto");
 agent.provide("myplugin", MyPlugin);
 agent.require("myplugin", { msg: "hello" }); // provided name
-agent.run("myplugin:greeting", "everyone");
+agent.run("myplugin", "greeting", "everyone");
 // => output 'hello, everyone'
 ```
 

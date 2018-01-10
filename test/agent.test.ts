@@ -49,7 +49,7 @@ describe('agent', () => {
 
     const spy = sinonSpy(agent.plugins['dummy'], 'injectLocation')
     const l: string = internet.url()
-    agent.run('dummy:injectLocation', l)
+    agent.run('dummy', 'injectLocation', l)
     assert(spy.calledOnce)
   })
 })

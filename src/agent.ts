@@ -60,10 +60,9 @@ export default class Agent {
     return false
   }
 
-  run (context: string, args: any) {
-    const names = context.split(':')
-    const plugin = this.plugins[names[0]]
-    plugin[names[1]](args)
+  run (pluginName: string, methodName: string, ...args: any[]) {
+    const plugin = this.plugins[pluginName]
+    plugin[methodName](...args)
   }
 
   getCore (): AgentCore {

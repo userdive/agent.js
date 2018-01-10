@@ -10,7 +10,7 @@ const executer: any = {
   run: function (args: any) {
     let cmd: Command[] = executer.parse(args)
     cmd = executer.commandQueue.concat(cmd)
-    for (executer.commandQueue = []; 0 < cmd.length;) {
+    for (executer.commandQueue = []; cmd.length > 0;) {
       if (executer.execute(cmd[0])) {
         cmd.shift()
       } else {
@@ -22,8 +22,8 @@ const executer: any = {
   },
 
   parse: function (queueCommand: any): Command[] {
-    let commands: Command[] = []
-    let command = parseCommand(queueCommand)
+    const commands: Command[] = []
+    const command = parseCommand(queueCommand)
 
     if (!command.callProvide) {
       commands.push(command)
@@ -43,8 +43,7 @@ const executer: any = {
       return agent.require(...args)
     }
     if (command.pluginName) {
-      const context = `${command.pluginName}:${command.methodName}`
-      agent.run(context, ...args)
+      agent.run(command.pluginName, command.methodName, ...args)
     } else {
       agent[command.methodName](...args)
     }
