@@ -23,7 +23,7 @@ const executer: any = {
 
   parse: function (queueCommand: any): Command[] {
     const commands: Command[] = []
-    const command = parseCommand(queueCommand)
+    const command: Command = parseCommand(queueCommand)
 
     if (!command.callProvide) {
       commands.push(command)
