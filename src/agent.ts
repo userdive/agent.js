@@ -63,8 +63,7 @@ export default class Agent {
   }
 
   run (pluginName: string, methodName: string, ...args: any[]) {
-    const plugin = this[PLUGINS][pluginName]
-    plugin[methodName](...args)
+    this.plugins[pluginName][methodName](...args)
   }
 
   getCore (): AgentCore {
