@@ -1,23 +1,26 @@
 import { TaskQueue } from './types'
 
+const QUEUE = 'commandQueue'
+const AGENTS = 'agents'
+
 const executer: any = {
   init: function (Agent: any) {
     this.agent = Agent
-    this.commandQueue = []
-    this.agents = {}
+    this[QUEUE] = []
+    this[AGENTS] = {}
   },
 
   run: function (args: any) {
     let cmd: TaskQueue[] = this.parse(args)
-    cmd = this.commandQueue.concat(cmd)
-    for (this.commandQueue = []; cmd.length > 0;) {
+    cmd = this[QUEUE].concat(cmd)
+    for (this[QUEUE] = []; cmd.length > 0;) {
       if (this.execute(cmd[0])) {
         cmd.shift()
       } else {
         break
       }
     }
-    this.commandQueue = this.commandQueue.concat(cmd)
+    this[QUEUE] = this[QUEUE].concat(cmd)
     return this
   },
 
@@ -28,20 +31,20 @@ const executer: any = {
     const api = tasks.shift().split('.')
     const name = api.length === 2 ? api[1] : 'default'
 
-    if (!this.agents[name]) {
-      this.agents[name] = new executer.agent()
+    if (!this[AGENTS][name]) {
+      this[AGENTS][name] = new executer.agent()
     }
     if (api[0] !== 'provide') {
       commands.push({ name: name, method: api[0], args: tasks })
     } else {
-      const name = Object.keys(executer.agents)[0]
-      this.agents[name][api[0]](...tasks)
+      const name = Object.keys(this[AGENTS])[0]
+      this[AGENTS][name][api[0]](...tasks)
     }
     return commands
   },
 
   execute: function (task: TaskQueue): boolean {
-    const agent = this.agents[task.name]
+    const agent = this[AGENTS][task.name]
     if (task.method === 'require') {
       return agent.require(...task.args)
     }
