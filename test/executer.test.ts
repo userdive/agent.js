@@ -29,12 +29,11 @@ describe('executer', () => {
 
     const plugin = require('./helpers/plugin').default
     executer = executer.run(['provide', pluginName, plugin])
-    console.log(executer.agents)
     assert(executer.agents[name].plugins[pluginName])
     assert.equal(executer.commandQueue.length, 0)
 
     const l: string = internet.url()
-    executer.run([`${name}.${pluginName}:injectLocation`, l])
+    executer.run([`run.${name}`, pluginName, 'injectLocation', l])
     const agent: Agent = executer.agents[name]
     assert(agent.getCore().get('env')['l'] === l)
   })
