@@ -1,0 +1,280 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@userdive/agent</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@userdive/agent</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @userdive/agent</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="-userdive-agent">@userdive/agent</h1>
+				<p align='center'><a href="https://app.userdive.com/signup" alt="USERDIVE logo" target="_blank"><img src="http://style.uncovertruth.co.jp/assets/images/userdive/logo-text.svg" height="100"></a></p>
+				<p><a href="https://www.npmjs.com/package/@userdive/agent"><img src="https://badge.fury.io/js/%40userdive%2Fagent.svg" alt="npm version"></a>
+					<a href="https://travis-ci.org/userdive/agent.js"><img src="https://travis-ci.org/userdive/agent.js.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codecov.io/gh/userdive/agent.js"><img src="https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg" alt="codecov"></a>
+					<a href="https://david-dm.org/userdive/agent.js"><img src="https://david-dm.org/userdive/agent.js/status.svg" alt="dependencies Status"></a>
+					<a href="https://david-dm.org/userdive/agent.js?type=dev"><img src="https://david-dm.org/userdive/agent.js/dev-status.svg" alt="devDependencies Status"></a>
+					<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/userdive/agent.js.svg" alt="Greenkeeper badge"></a>
+					<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="styled with prettier"></a>
+					<a href="https://codebeat.co/projects/github-com-userdive-agent-js-master"><img src="https://codebeat.co/badges/248f31a1-c73e-45e4-b1e0-a6154c1baaca" alt="codebeat badge"></a>
+					<a href="https://www.codefactor.io/repository/github/userdive/agent.js"><img src="https://www.codefactor.io/repository/github/userdive/agent.js/badge" alt="CodeFactor"></a>
+					<a href="https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=userdive/agent.js&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045" alt="Codacy Badge"></a>
+				<a href="https://bettercodehub.com/"><img src="https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master" alt="BCH compliance"></a></p>
+				<p><a href="https://saucelabs.com/open_sauce/user/userdive/builds"><img src="https://saucelabs.com/browser-matrix/userdive.svg" alt="Build Status"></a></p>
+				<blockquote>
+					<p>Official USERDIVE module for webpage analytics</p>
+				</blockquote>
+				<h2 id="table-of-contents">Table of Contents</h2>
+				<ul>
+					<li><a href="#install">Install</a></li>
+					<li><a href="#usage">Usage</a></li>
+					<li><a href="#contribute">Contribute</a></li>
+					<li><a href="#license">License</a></li>
+				</ul>
+				<h2 id="install">Install</h2>
+				<pre><code class="lang-sh">npm install @userdive/agent --save
+</code></pre>
+				<h2 id="usage">Usage</h2>
+				<h3 id="basic-usage">Basic Usage</h3>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> Agent <span class="hljs-keyword">from</span> <span class="hljs-string">"@userdive/agent"</span>;
+
+<span class="hljs-keyword">const</span> agent = <span class="hljs-keyword">new</span> Agent();
+agent.create(<span class="hljs-string">"projectId"</span>, <span class="hljs-string">"auto"</span>);
+agent.send(<span class="hljs-string">"pageview"</span>);
+</code></pre>
+				<h3 id="feature">Feature</h3>
+				<h4 id="custom-dimensions-and-metrics">Custom Dimensions and Metrics</h4>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> Agent <span class="hljs-keyword">from</span> <span class="hljs-string">"@userdive/agent"</span>;
+
+<span class="hljs-keyword">const</span> agent = <span class="hljs-keyword">new</span> Agent();
+agent.create(<span class="hljs-string">"projectId"</span>, <span class="hljs-string">"auto"</span>);
+agent.send(<span class="hljs-string">"pageview"</span>, {
+  <span class="hljs-attr">dimension15</span>: <span class="hljs-string">"My Custom Dimension"</span>,
+  <span class="hljs-attr">metric18</span>: <span class="hljs-number">8000</span>
+});
+</code></pre>
+				<pre><code class="lang-js">agent.set({
+  <span class="hljs-attr">dimension15</span>: <span class="hljs-string">"My Custom Dimension"</span>,
+  <span class="hljs-attr">metric18</span>: <span class="hljs-number">8000</span>
+});
+
+agent.set(<span class="hljs-string">"dimension15"</span>, <span class="hljs-string">"My Custom Dimension"</span>);
+</code></pre>
+				<h4 id="register-plugin-in-plugin-code-">Register Plugin ( in plugin code )</h4>
+				<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPlugin</span> </span>{
+  <span class="hljs-keyword">constructor</span>(agent, opts) {
+    <span class="hljs-keyword">this</span>.opts = opts || { <span class="hljs-attr">msg</span>: <span class="hljs-string">"hi"</span> };
+  }
+
+  greeting(target) {
+    <span class="hljs-keyword">const</span> name = target || <span class="hljs-string">"user"</span>;
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.opts.msg + <span class="hljs-string">", "</span> + name);
+  }
+}
+</code></pre>
+				<h4 id="use-plugin">Use Plugin</h4>
+				<p>plugin function can call <code>&#39;pluginName:functionName&#39;</code></p>
+				<pre><code class="lang-js"><span class="hljs-keyword">import</span> Agent <span class="hljs-keyword">from</span> <span class="hljs-string">"@userdive/agent"</span>;
+<span class="hljs-keyword">import</span> Myplugin <span class="hljs-keyword">from</span> <span class="hljs-string">"path/to/plugin"</span>;
+<span class="hljs-keyword">const</span> agent = <span class="hljs-keyword">new</span> Agent(<span class="hljs-string">"projectId"</span>, <span class="hljs-string">"auto"</span>);
+agent.provide(<span class="hljs-string">"myplugin"</span>, MyPlugin);
+agent.require(<span class="hljs-string">"myplugin"</span>, { <span class="hljs-attr">msg</span>: <span class="hljs-string">"hello"</span> }); <span class="hljs-comment">// provided name</span>
+agent.run(<span class="hljs-string">"myplugin"</span>, <span class="hljs-string">"greeting"</span>, <span class="hljs-string">"everyone"</span>);
+<span class="hljs-comment">// =&gt; output 'hello, everyone'</span>
+</code></pre>
+				<h2 id="contribute">Contribute</h2>
+				<p>PRs accepted. <a href="https://www.wantedly.com/companies/uncovertruth/projects">join us</a></p>
+				<h2 id="license">License</h2>
+				<p>This library is licensed under GPLv3. Full license text is available in <a href="https://github.com/userdive/agent.js/blob/master/LICENSE">LICENSE</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_agent_.html">"agent"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_browser_.html">"browser"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_constants_.html">"constants"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_.html">"core"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_entrypoint_debug_.html">"entrypoint/debug"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_entrypoint_index_.html">"entrypoint/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_events_.html">"events"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_events_click_.html">"events/click"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_events_mousemove_.html">"events/mousemove"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_events_scroll_.html">"events/scroll"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_events_touch_.html">"events/touch"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_executer_.html">"executer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_global_.html">"global"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_logger_.html">"logger"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_requests_.html">"requests"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_store_.html">"store"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_types_.html">"types"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
