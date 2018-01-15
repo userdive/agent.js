@@ -42,7 +42,7 @@ describe('global async', () => {
     assert.equal(executer.commandQueue.length, 0)
     const agent = executer.agents['default']
     assert(agent)
-    assert(agent.getCore().active)
+    assert(agent.core.active)
 
     const name = lorem.word()
     executer = window[GLOBAL_NAME](
@@ -54,7 +54,7 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
     const agent2 = executer.agents[name]
     assert(agent2)
-    assert(agent.getCore().id !== agent2.getCore().id)
+    assert(agent.core.id !== agent2.core.id)
   })
 
   it('debug global', () => {
@@ -67,6 +67,6 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME]['q'] === undefined)
 
     const executer = window[GLOBAL_NAME]('send', 'pageview')
-    assert(executer.agents['default'].getCore().active)
+    assert(executer.agents['default'].core.active)
   })
 })

@@ -1,10 +1,10 @@
 import { NAMESPACE } from './constants'
-import executerFactory from './executer'
+import Executer from './executer'
 
 type TaskQueue = any[]
 
 export default function (Agent: any) {
-  const exe = executerFactory(Agent)
+  const exe = new Executer(Agent)
 
   function execute (): any {
     return exe.run(arguments)

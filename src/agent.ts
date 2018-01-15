@@ -65,12 +65,4 @@ export default class Agent {
   run (pluginName: string, methodName: string, ...args: any[]) {
     this.plugins[pluginName][methodName](...args)
   }
-
-  getCore (): AgentCore {
-    return this.core
-  }
-
-  getPlugin (name: string): any {
-    return this[PLUGINS][name]
-  }
 }
