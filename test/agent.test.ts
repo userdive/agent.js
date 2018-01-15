@@ -9,6 +9,11 @@ describe('agent', () => {
   const Agent = require('../src/agent').default
   const agent: Agent = new Agent()
 
+  it('constructor', () => {
+    const agent = new Agent(random.uuid(), 'auto')
+    assert(agent.core)
+  })
+
   it('create', () => {
     assert(agent.create(random.uuid(), 'auto'))
     assert(agent.create(random.uuid(), { baseUrl: internet.url() }))

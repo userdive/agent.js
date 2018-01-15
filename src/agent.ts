@@ -15,8 +15,11 @@ export default class Agent {
   private core: AgentCore
   private plugins: { [name: string]: any }
 
-  constructor () {
+  constructor (projectId?: string, settings?: Object | 'auto') {
     this.plugins = {}
+    if (projectId && settings) {
+      this.create(projectId, settings)
+    }
   }
 
   create (projectId: string, settings: Object | 'auto'): AgentCore {
