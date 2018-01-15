@@ -16,7 +16,7 @@ export default class Executer {
 
   run (args: any) {
     let cmd: TaskQueue[] = this.parse(args)
-    cmd = this.commandQueue.concat(cmd)
+    cmd = [...this.commandQueue, ...cmd]
     for (this[QUEUE] = []; cmd.length > 0;) {
       if (this.execute(cmd[0])) {
         cmd.shift()
@@ -24,7 +24,7 @@ export default class Executer {
         break
       }
     }
-    this[QUEUE] = this[QUEUE].concat(cmd)
+    this[QUEUE] = [...this[QUEUE], ...cmd]
     return this
   }
   parse (command: any): TaskQueue[] {
