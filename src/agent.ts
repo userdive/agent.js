@@ -9,8 +9,19 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
 
+const PLUGINS = 'plugins'
+
 export default class Agent {
   private core: AgentCore
+  private plugins: { [name: string]: any }
+
+  constructor (projectId?: string, settings?: Object | 'auto') {
+    this.plugins = {}
+    if (projectId && settings) {
+      this.create(projectId, settings)
+    }
+  }
+
   create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
@@ -40,5 +51,21 @@ export default class Agent {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)
+  }
+  provide (name: string, pluginConstructor: ObjectConstructor) {
+    this[PLUGINS][name] = pluginConstructor
+  }
+
+  require (pluginName: string, options: any): boolean {
+    if (this[PLUGINS][pluginName]) {
+      const opt: any = options || {}
+      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](this, opt)
+      return true
+    }
+    return false
+  }
+
+  run (pluginName: string, methodName: string, ...args: any[]) {
+    this.plugins[pluginName][methodName](...args)
   }
 }

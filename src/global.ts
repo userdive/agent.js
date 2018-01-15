@@ -1,28 +1,13 @@
 import { NAMESPACE } from './constants'
+import Executer from './executer'
 
 type TaskQueue = any[]
 
 export default function (Agent: any) {
-  const agents: any = {}
+  const exe = new Executer(Agent)
 
   function execute (): any {
-    const tasks: any[] = []
-    tasks.push.apply(tasks, arguments)
-    let name = 'default'
-    let api: string[] = []
-    const t: string | undefined = tasks.shift()
-    if (t !== undefined) {
-      api = t.split('.')
-      if (api.length === 2) {
-        name = api[1]
-      }
-    }
-
-    if (!agents[name]) {
-      agents[name] = new Agent()
-    }
-
-    return agents[name][api[0]](...tasks)
+    return exe.run(arguments)
   }
 
   ((global: any) => {
@@ -31,7 +16,7 @@ export default function (Agent: any) {
     if (global[name] && global[name].q) {
       const queue: TaskQueue[] = global[name].q
       for (let i = 0; i < queue.length; i++) {
-        execute.apply(this, queue[i])
+        exe.run(queue[i])
       }
       global[name] = execute
     }

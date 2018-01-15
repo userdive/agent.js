@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { internet, random } from 'faker'
+import { internet, lorem, random } from 'faker'
 import 'mocha'
 import { stub as sinonStub } from 'sinon'
 
@@ -35,24 +35,26 @@ describe('global async', () => {
       undefined
     )
     assert(window[GLOBAL_NAME]['q'].length)
+
     require('../src/entrypoint/')
     assert(window[GLOBAL_NAME]['q'] === undefined)
+    let executer = window[GLOBAL_NAME]('send', 'pageview')
+    assert.equal(executer.commandQueue.length, 0)
+    const agent = executer.agents['default']
+    assert(agent)
+    assert(agent.core.active)
 
-    const agent = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.active)
-
-    const name = random.word()
-    const agent2 = window[GLOBAL_NAME](
+    const name = lorem.word()
+    executer = window[GLOBAL_NAME](
       `create.${name}`,
       random.alphaNumeric(),
       {},
       internet.url()
     )
-    assert(agent.id !== agent2.id)
     assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
-
-    const agent3 = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.id === agent3.id)
+    const agent2 = executer.agents[name]
+    assert(agent2)
+    assert(agent.core.id !== agent2.core.id)
   })
 
   it('debug global', () => {
@@ -64,7 +66,7 @@ describe('global async', () => {
     require('../src/entrypoint/debug')
     assert(window[GLOBAL_NAME]['q'] === undefined)
 
-    const agent = window[GLOBAL_NAME]('send', 'pageview')
-    assert(agent.active)
+    const executer = window[GLOBAL_NAME]('send', 'pageview')
+    assert(executer.agents['default'].core.active)
   })
 })
