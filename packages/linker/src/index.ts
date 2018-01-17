@@ -1,0 +1,3 @@
+function linker () {
+  return true
+}
