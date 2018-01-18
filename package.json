@@ -12,7 +12,7 @@
     "object-assign": "^4.1.1",
     "raven-js": "^3.22.1",
     "ui-event-observer": "^1.2.2",
-    "uuid": "^3.1.0"
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "@types/faker": "^4.1.2",
