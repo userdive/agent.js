@@ -10,7 +10,7 @@
     "auto-cookie": "^1.1.0",
     "js-cookie": "^2.2.0",
     "object-assign": "^4.1.1",
-    "raven-js": "^3.22.0",
+    "raven-js": "^3.22.1",
     "ui-event-observer": "^1.2.2",
     "uuid": "^3.1.0"
   },
