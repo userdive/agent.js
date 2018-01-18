@@ -73,17 +73,6 @@
     "userdive"
   ],
   "license": "GPL-3.0",
-  "lint-staged": {
-    "*.ts": [
-      "prettier-eslint --parser typescript --write",
-      "tslint --fix",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --parser markdown --write",
-      "git add"
-    ]
-  },
   "main": "lib/agent.js",
   "repository": {
     "type": "git",
@@ -97,11 +86,8 @@
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -f ./coverage/lcov.info",
-    "lint": "run-p lint:*",
-    "lint:ts": "tslint {src,test}/**/*.ts",
     "postbuild": "cp robots.txt lib/build/.",
     "prebuild": "npm run clean",
-    "precommit": "lint-staged",
     "prepare": "npm run build",
     "test": "karma start --single-run"
   },
