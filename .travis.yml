@@ -7,9 +7,10 @@ cache:
   - node_modules
 env:
   matrix:
+  - CMD=build
+  - CMD=ci:sauce
   - CMD=lint
   - CMD=test
-  - CMD=ci:sauce
 script:
 - npm run $CMD
 after_success:
