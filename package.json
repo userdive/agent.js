@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@userdive/userdive-agent",
   "description": "webpage tracking agent",
   "version": "0.11.0",
@@ -43,5 +44,8 @@
     "test": "lerna run test",
     "postinstall": "lerna bootstrap --hoist",
     "precommit": "lint-staged"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
