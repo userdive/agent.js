@@ -15,6 +15,9 @@ script:
 - npm run $CMD
 after_success:
 - '[ "$CMD" == "test" ] && npm run coverage'
+- 'if [ "$TRAVIS_TAG" != "" ] && [ "$CMD" = "ci:sauce" ]; then
+      echo 'TODO call npm publish';
+  fi'
 notifications:
   email: false
   slack:
@@ -22,15 +25,6 @@ notifications:
 before_deploy:
 - npm run build
 deploy:
-- provider: npm
-  skip_cleanup: true
-  email: develop@uncovertruth.co.jp
-  api_key:
-    secure: jzz8+ZB4Gp9gSNC9hIIKZDyybtdF9IoLu6civhAhkTTXuC2fYMoylcouDOQnABT3n1jinGjml68I+/o3zJgapMd0RbKQ2EbwiF8g5drfxVBFqUrZk8r67dZVEU/0C4cpEe26fic05FPHDzYaFMWGlLE+mElaSq1vDbwAolatoM2o0Ovb1FlerAKwFinI5PFPe4Mi80eqwuAYhLgStDEQdr6UaTYcy/30aEOJ2mFhMhQvOplIZMxUraJl1mKsCDmfmZwJemMrcKnb5xusvTFKgWfm+AiRksUCfc7i6vc8IlLyzTF2L/Q+ShEbm1a97wEG+oQ3viL7TnnLoR1iCtqiLnJAJszxvqzyOG440V54X0TvPOEQ3yz8MSVADkZ5D8g+yyOE11lHjhyzrA71/v3abt/DwaVZas2fraZLTU1HAvmckNiBIEN/B2DAb50L7anQ410YCy6PRZLvChsa9RWG7LqhEgRVUTDslMu/judaRJMjes36YYRfviymTzBeAf55MEZiPCP+qqdCTOcT3S9pvctK5L2s65K1Z1j2lJ9IsZh00trFlPx1ux/PNqFWI2M5cAxVQRfFlFIx4ABWqF+idua8EJvyABVgLyXhH/uqwuIzQ1EwQgR2F/SMSfYWQcQUbgWKsSkZTXcyZRdgOSecCXe2yuDKG3nR53kAh9BZY+o=
-  on:
-    tags: true
-    repo: userdive/agent.js
-    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA

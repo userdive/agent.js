@@ -44,7 +44,9 @@
     "prepare": "lerna run prepare",
     "test": "lerna run test",
     "postinstall": "lerna bootstrap --hoist",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "bump": "lerna publish --skip-npm",
+    "publish": "lerna publish --skip-git"
   },
   "workspaces": [
     "packages/*"

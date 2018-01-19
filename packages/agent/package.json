@@ -68,6 +68,9 @@
   "files": [
     "lib/"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/userdive/agent.js#readme",
   "keywords": [
     "userdive"
