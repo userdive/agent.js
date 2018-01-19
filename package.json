@@ -8,7 +8,8 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "devDependencies": {
-    "lerna": "^2.7.1"
+    "lerna": "^2.7.1",
+    "rimraf": "^2.6.2"
   },
   "engine": {
     "node": "> 5"
@@ -36,7 +37,7 @@
   "scripts": {
     "build": "lerna run build",
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
-    "clean": "lerna clean --yes && lerna run clean",
+    "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "lerna run coverage",
     "lint": "run-p lint:*",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
