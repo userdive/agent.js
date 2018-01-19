@@ -15,8 +15,8 @@ script:
 - npm run $CMD
 after_success:
 - '[ "$CMD" == "test" ] && npm run coverage'
-- 'if [ "$TRAVIS_TAG" != "" ] && [ "$CMD" = "ci:sauce" ]; then
-      echo 'TODO call npm publish';
+- 'if [ "${TRAVIS_TAG}" != "" ] && [ "$CMD" = "ci:sauce" ]; then
+      echo "TODO call npm publish";
   fi'
 notifications:
   email: false
