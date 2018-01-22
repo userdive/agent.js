@@ -11,13 +11,12 @@ env:
   - CMD=ci:sauce
   - CMD=lint
   - CMD=test
+  global:
+    secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
 script:
 - npm run $CMD
 after_success:
 - '[ "$CMD" == "test" ] && npm run coverage'
-- 'if [ "${TRAVIS_TAG}" != "" ] && [ "$CMD" = "ci:sauce" ]; then
-      npm run publish;
-  fi'
 notifications:
   email: false
   slack:
@@ -32,7 +31,7 @@ deploy:
     secure: aTQLdKpTJORmb60PYD20AAp8D7hc6J9slNHewuqUcfIWO7KVq7PQovvJ0gRaBIcz3uPd0SZ5u8/sfrO4YXH4ChiFje/Qgwsgci6nqEwKtIULCqTNREkkTPqKKssYYq/6d3a35+9oXHsRroUa2qybX4YJHk6IXmY7QhQryn2RIN6eXpCX9pGnji7Ql30cq9QaH3sstE4pvjZux71+U6ee7OZtRJxZ13TvGQLGdhziQog10/8QVlRKgwQzYSIu5Ikga01I+ToMlkjJVGqku4KDCvXIdz7IL9KvUYIGgNGPeDIBy2rVNeP95UhYcPu9W41CM5zMVT0aO0n7CdfJ7/zoWkiI4O3uxOkmLk9noVzApClSVsYWTTz7uGJumPgM/URYlboxLoSA6PcSwvtQhrJ0RZTNtFpYPfreSveQhaQFF8F80S9C1ZSPBInMJB386Hp6/9a9ZZ9pbwK+zzKVAX2lNv+F7bavi1nBFd1vrW/tfMqJfMoiynZqZWAjPQdvNnMRO2cXM8vvJg9IOixRaOcU9UE/bDL2/6gOZ5BjrDcecOuLfTwp9M0F8ISUEBlZrFvecaYHKXZYoT8vHxW4APo7BCXCts/hcS2JzN3IL/U2hDtW5D030kphtTrzUmOs7J3SxMevl8m5yMjAjY2ma8Wz/y6ZHhEQ38o3atv0nwPsrzk=
   bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
   local-dir: cdn
-  upload-dir: "agent/$TRAVIS_BRANCH"
+  upload-dir: agent/$TRAVIS_BRANCH
   on:
     all_branches: true
     repo: userdive/agent.js
