@@ -89,7 +89,7 @@
     "ci:sauce": "cross-env CI_MODE=sauce npm run test",
     "clean": "rimraf coverage lib docs",
     "coverage": "codecov -f ./coverage/lcov.info",
-    "postbuild": "cp robots.txt lib/build/. && cp -r lib/build ../../cdn",
+    "postbuild": "cp -r lib/build ../../cdn",
     "prebuild": "npm run clean",
     "prepare": "npm run build",
     "test": "karma start --single-run"
