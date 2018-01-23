@@ -43,7 +43,6 @@
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "prepare": "lerna run prepare",
     "test": "lerna run test",
-    "postinstall": "lerna bootstrap --hoist",
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "bump": "lerna publish --skip-npm",
