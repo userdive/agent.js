@@ -24,6 +24,13 @@ notifications:
 before_deploy:
 - npm run build
 deploy:
+- provider: script
+  script: script/publish
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: userdive/agent.js
+    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
