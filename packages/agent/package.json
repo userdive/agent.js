@@ -77,6 +77,7 @@
   ],
   "license": "GPL-3.0",
   "main": "lib/agent.js",
+  "types": "lib/typings/agent.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
