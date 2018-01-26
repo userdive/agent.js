@@ -45,7 +45,7 @@
     "test": "lerna run test",
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "bump": "lerna publish --skip-npm",
+    "bump": "lerna publish --skip-npm --skip-git",
     "publish": "lerna publish --skip-git"
   },
   "workspaces": [
