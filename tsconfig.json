@@ -8,7 +8,7 @@
       "es2015.core",
       "es2015.collection"
     ],
-    "declaration": true,
+    "declaration": false,
     "sourceMap": true,
     "allowUnreachableCode": true,
     "alwaysStrict": true,
@@ -20,13 +20,10 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "moduleResolution": "node",
-    "outDir": "lib"
+    "moduleResolution": "node"
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "packages"
   ]
 }
