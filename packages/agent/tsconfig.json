@@ -1,28 +1,8 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": [
-      "es5",
-      "dom",
-      "es2015.core",
-      "es2015.collection"
-    ],
     "declaration": true,
-    "sourceMap": true,
-    "allowUnreachableCode": true,
-    "alwaysStrict": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "moduleResolution": "node",
-    "outDir": "lib/js",
-    "declarationDir": "lib/typings"
+    "outDir": "lib"
   },
   "include": [
     "src/**/*"
