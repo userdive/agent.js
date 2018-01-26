@@ -8,6 +8,7 @@ cache:
 env:
   matrix:
   - CMD=build
+  - CMD=ci:sauce
   - CMD=lint
   - CMD=test
   global:
@@ -29,7 +30,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = test
+    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
@@ -41,7 +42,7 @@ deploy:
   on:
     all_branches: true
     repo: userdive/agent.js
-    condition: $CMD = test
+    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
@@ -52,7 +53,7 @@ deploy:
   on:
     branch: master
     repo: userdive/agent.js
-    condition: $CMD = test
+    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJF4LQ6ECJ6VAO76Q
@@ -63,7 +64,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = test
+    condition: $CMD = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAIFPFPDK4BGODWSXA
@@ -74,4 +75,4 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = test
+    condition: $CMD = ci:sauce
