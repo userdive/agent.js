@@ -71,7 +71,7 @@ deploy:
   secret_access_key:
     secure: Y9Y6UAVfpKl4yAbRROtMWTj4D6dIFvMdvCyDLcXnE8RGDHapp0kclDP86y0fH91/UOn7BFo2YEgw2CChmHWOXId1nJhcw6YnKtqMTzQAzDhdiEQ4BaCDzqELgwP5f96IH4hXmZ5AJIJ8kwy0cXhoL9FAoVfiX0i5srNJX5GXB34zAt2itpPoQqE3N++fn3odsxfdXUqTB2couMr/2duAzbJQEJ2eCu2JCO1bj2g0xzTPw7gHvqhheUOxHtV4i6NgvAG6ZJMHDj7JMZ4E+amh+zHhtKaFOOGlLLidhB9/DH9yh6ibzQtXHKGYZvgRhjT5b6PLWi25KnWk28vnu7+lgCOCXWpvtPNsGjRUb2bbyawY02aWh+cNUyU1qCpKeCWCjZTGfsXsokL8c6QQn9KcurPGyQj+bICJasUCLOuzXUdXS4OuJcStoh3sW+w3jJ+74RMM01XPcSCcFsJOQSvooQzByXC52kruV9PnYN76zSfcLClhsFwL5DjcvDyQh10/FKcHT0LCHwHBGR/9tu9xC7El8mqvFQtAVlEG5maA1ygyUt21tAkgTegxMAYM4ty/qm4QQ4WY8jqx1fk5zLqcET8+uzS001JfeNKjpXJH1eD2rwV3sSQ9w4qwWWmtvfLrJ5/CiL5wvoxYrNf74bSgzH1KzokBhYx37VtVVLZxyoQ=
   bucket: s3-bucket-cdn-s3bucket-9dacuvdjwe43
-  local-dir: packages/agent/lib/build
+  local-dir: cdn
   on:
     tags: true
     repo: userdive/agent.js
