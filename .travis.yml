@@ -11,6 +11,8 @@ env:
   - CMD=ci:sauce
   - CMD=lint
   - CMD=test
+  global:
+    secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
 script:
 - npm run $CMD
 after_success:
@@ -22,11 +24,9 @@ notifications:
 before_deploy:
 - npm run build
 deploy:
-- provider: npm
+- provider: script
+  script: script/publish
   skip_cleanup: true
-  email: develop@uncovertruth.co.jp
-  api_key:
-    secure: jzz8+ZB4Gp9gSNC9hIIKZDyybtdF9IoLu6civhAhkTTXuC2fYMoylcouDOQnABT3n1jinGjml68I+/o3zJgapMd0RbKQ2EbwiF8g5drfxVBFqUrZk8r67dZVEU/0C4cpEe26fic05FPHDzYaFMWGlLE+mElaSq1vDbwAolatoM2o0Ovb1FlerAKwFinI5PFPe4Mi80eqwuAYhLgStDEQdr6UaTYcy/30aEOJ2mFhMhQvOplIZMxUraJl1mKsCDmfmZwJemMrcKnb5xusvTFKgWfm+AiRksUCfc7i6vc8IlLyzTF2L/Q+ShEbm1a97wEG+oQ3viL7TnnLoR1iCtqiLnJAJszxvqzyOG440V54X0TvPOEQ3yz8MSVADkZ5D8g+yyOE11lHjhyzrA71/v3abt/DwaVZas2fraZLTU1HAvmckNiBIEN/B2DAb50L7anQ410YCy6PRZLvChsa9RWG7LqhEgRVUTDslMu/judaRJMjes36YYRfviymTzBeAf55MEZiPCP+qqdCTOcT3S9pvctK5L2s65K1Z1j2lJ9IsZh00trFlPx1ux/PNqFWI2M5cAxVQRfFlFIx4ABWqF+idua8EJvyABVgLyXhH/uqwuIzQ1EwQgR2F/SMSfYWQcQUbgWKsSkZTXcyZRdgOSecCXe2yuDKG3nR53kAh9BZY+o=
   on:
     tags: true
     repo: userdive/agent.js
@@ -37,8 +37,8 @@ deploy:
   secret_access_key:
     secure: aTQLdKpTJORmb60PYD20AAp8D7hc6J9slNHewuqUcfIWO7KVq7PQovvJ0gRaBIcz3uPd0SZ5u8/sfrO4YXH4ChiFje/Qgwsgci6nqEwKtIULCqTNREkkTPqKKssYYq/6d3a35+9oXHsRroUa2qybX4YJHk6IXmY7QhQryn2RIN6eXpCX9pGnji7Ql30cq9QaH3sstE4pvjZux71+U6ee7OZtRJxZ13TvGQLGdhziQog10/8QVlRKgwQzYSIu5Ikga01I+ToMlkjJVGqku4KDCvXIdz7IL9KvUYIGgNGPeDIBy2rVNeP95UhYcPu9W41CM5zMVT0aO0n7CdfJ7/zoWkiI4O3uxOkmLk9noVzApClSVsYWTTz7uGJumPgM/URYlboxLoSA6PcSwvtQhrJ0RZTNtFpYPfreSveQhaQFF8F80S9C1ZSPBInMJB386Hp6/9a9ZZ9pbwK+zzKVAX2lNv+F7bavi1nBFd1vrW/tfMqJfMoiynZqZWAjPQdvNnMRO2cXM8vvJg9IOixRaOcU9UE/bDL2/6gOZ5BjrDcecOuLfTwp9M0F8ISUEBlZrFvecaYHKXZYoT8vHxW4APo7BCXCts/hcS2JzN3IL/U2hDtW5D030kphtTrzUmOs7J3SxMevl8m5yMjAjY2ma8Wz/y6ZHhEQ38o3atv0nwPsrzk=
   bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
-  local-dir: lib/build
-  upload-dir: "agent/$TRAVIS_BRANCH"
+  local-dir: cdn
+  upload-dir: agent/$TRAVIS_BRANCH
   on:
     all_branches: true
     repo: userdive/agent.js
@@ -49,7 +49,7 @@ deploy:
   secret_access_key:
     secure: aTQLdKpTJORmb60PYD20AAp8D7hc6J9slNHewuqUcfIWO7KVq7PQovvJ0gRaBIcz3uPd0SZ5u8/sfrO4YXH4ChiFje/Qgwsgci6nqEwKtIULCqTNREkkTPqKKssYYq/6d3a35+9oXHsRroUa2qybX4YJHk6IXmY7QhQryn2RIN6eXpCX9pGnji7Ql30cq9QaH3sstE4pvjZux71+U6ee7OZtRJxZ13TvGQLGdhziQog10/8QVlRKgwQzYSIu5Ikga01I+ToMlkjJVGqku4KDCvXIdz7IL9KvUYIGgNGPeDIBy2rVNeP95UhYcPu9W41CM5zMVT0aO0n7CdfJ7/zoWkiI4O3uxOkmLk9noVzApClSVsYWTTz7uGJumPgM/URYlboxLoSA6PcSwvtQhrJ0RZTNtFpYPfreSveQhaQFF8F80S9C1ZSPBInMJB386Hp6/9a9ZZ9pbwK+zzKVAX2lNv+F7bavi1nBFd1vrW/tfMqJfMoiynZqZWAjPQdvNnMRO2cXM8vvJg9IOixRaOcU9UE/bDL2/6gOZ5BjrDcecOuLfTwp9M0F8ISUEBlZrFvecaYHKXZYoT8vHxW4APo7BCXCts/hcS2JzN3IL/U2hDtW5D030kphtTrzUmOs7J3SxMevl8m5yMjAjY2ma8Wz/y6ZHhEQ38o3atv0nwPsrzk=
   bucket: s3-bucket-cdn-s3bucket-1rr97tspu1fmp
-  local-dir: lib/build
+  local-dir: cdn
   on:
     branch: master
     repo: userdive/agent.js
@@ -60,7 +60,7 @@ deploy:
   secret_access_key:
     secure: ghhqHQK8bSCXAvnMuPk8n+uvJQUwaS0YOouGpmPTGU5shG2gzgitfEOz93g5S3EfuDhP8n2uGJXkqb9ORTJYyOJVNRqqCHKumk8a9Sf1DGGEpU+KMcoR0H7zY/Wi0noVMDvsxR1ZIgRxwj523nOaOCn/2eSKgtz7O1kqHDVCsY5VBznbv8Z1heyS3WQT9SXe52EGmQDo1qdpYfgZMWdqiqOCnzJZQ2LZ6TWguI4EfVDgtsJ7ptWNV3Ybik3CxPLw3Ozuweqwdo9KvBOD9JeUth41jTEbSLleTtvC+nheWAW38HjCT9D1HH9caMZpfF77wQuunjjRhDXttwBDCX8nYDKL6lZ6rpeelNqmQDgQQezsXlv5ZulLzlKuH3YaVMqIVTyZRDVrdzrDc2xnGal04PB8Y1ewgp9BtX44uLk1NsvKX3rcSGV34INQWGLzKQULLH0JdX4e9tQG6OZbZokLt1gvSqCv1r6gEHuRh6+EjYo+OL85qjd1rSHhL3vga9fYhxf/CblQI1EwxDwB7nzzSVjTovnXJN7dRrmxCbfKBpq4U/xzGxmvmvHuNY9bYAiTRK+2DIf5jdatkU8+/fEYcEWUQyOB3NPXYlGYV2i7w+7ixN9Uk/aNFLQxtoxODGHEdhICZqRSF9juKQj/ECi3RFH/WLiCmhaJQJOOhKrql2Q=
   bucket: s3-bucket-cdn-s3bucket-jhnl18vt4xcz
-  local-dir: lib/build
+  local-dir: cdn
   on:
     tags: true
     repo: userdive/agent.js
@@ -71,7 +71,7 @@ deploy:
   secret_access_key:
     secure: Y9Y6UAVfpKl4yAbRROtMWTj4D6dIFvMdvCyDLcXnE8RGDHapp0kclDP86y0fH91/UOn7BFo2YEgw2CChmHWOXId1nJhcw6YnKtqMTzQAzDhdiEQ4BaCDzqELgwP5f96IH4hXmZ5AJIJ8kwy0cXhoL9FAoVfiX0i5srNJX5GXB34zAt2itpPoQqE3N++fn3odsxfdXUqTB2couMr/2duAzbJQEJ2eCu2JCO1bj2g0xzTPw7gHvqhheUOxHtV4i6NgvAG6ZJMHDj7JMZ4E+amh+zHhtKaFOOGlLLidhB9/DH9yh6ibzQtXHKGYZvgRhjT5b6PLWi25KnWk28vnu7+lgCOCXWpvtPNsGjRUb2bbyawY02aWh+cNUyU1qCpKeCWCjZTGfsXsokL8c6QQn9KcurPGyQj+bICJasUCLOuzXUdXS4OuJcStoh3sW+w3jJ+74RMM01XPcSCcFsJOQSvooQzByXC52kruV9PnYN76zSfcLClhsFwL5DjcvDyQh10/FKcHT0LCHwHBGR/9tu9xC7El8mqvFQtAVlEG5maA1ygyUt21tAkgTegxMAYM4ty/qm4QQ4WY8jqx1fk5zLqcET8+uzS001JfeNKjpXJH1eD2rwV3sSQ9w4qwWWmtvfLrJ5/CiL5wvoxYrNf74bSgzH1KzokBhYx37VtVVLZxyoQ=
   bucket: s3-bucket-cdn-s3bucket-9dacuvdjwe43
-  local-dir: lib/build
+  local-dir: cdn
   on:
     tags: true
     repo: userdive/agent.js

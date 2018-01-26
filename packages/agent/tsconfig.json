@@ -21,7 +21,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "outDir": "lib"
+    "outDir": "lib/js",
+    "declarationDir": "lib/typings"
   },
   "include": [
     "src/**/*"

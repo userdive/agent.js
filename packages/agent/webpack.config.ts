@@ -1,12 +1,7 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const {
-  version,
-  name: moduleName,
-  author,
-  license
-} = require('./package.json')
+const { version, name: moduleName, author, license } = require('./package.json')
 
 const date = new Date()
 

@@ -1,0 +1,12 @@
+#!/bin/bash
+set -eu
+echo "publish to npm"
+
+echo "setting publish account"
+npm config set "//registry.npmjs.org/:_authToken=\${NPM_API_KEY}"
+npm whoami
+
+echo "publish"
+npm run publish
+
+echo "done."
