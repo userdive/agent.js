@@ -1,17 +1,22 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const { version, name: moduleName, author, license } = require('./package.json')
+const {
+  version,
+  name: moduleName,
+  author,
+  license
+} = require('./packages/agent/package.json')
 
 const date = new Date()
 
 module.exports = {
   entry: {
-    'agent.d': path.join(__dirname, 'src/entrypoint/debug.ts'),
-    agent: path.join(__dirname, 'src/entrypoint/index.ts')
+    'agent.d': path.join(__dirname, 'packages/agent/src/entrypoint/debug.ts'),
+    agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts')
   },
   output: {
-    path: path.join(__dirname, 'lib/build/'),
+    path: path.join(__dirname, 'cdn'),
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
