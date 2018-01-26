@@ -37,7 +37,7 @@
       "tslint --fix",
       "git add"
     ],
-    "*.md": [
+    "*.{md,js}": [
       "prettier --write",
       "git add"
     ]
@@ -61,6 +61,7 @@
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "publish": "lerna publish --skip-git",
+    "start": "cd website && npm start",
     "test": "lerna run test"
   },
   "size-limit": [
