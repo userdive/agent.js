@@ -7922,6 +7922,19 @@ uglifyjs-webpack-plugin@^1.1.6:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
+uglifyjs-webpack-plugin@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.1.8.tgz#1302fb9471a7daf3d0a5174da6d65f0f415e75ad"
+  dependencies:
+    cacache "^10.0.1"
+    find-cache-dir "^1.0.0"
+    schema-utils "^0.4.2"
+    serialize-javascript "^1.4.0"
+    source-map "^0.6.1"
+    uglify-es "^3.3.4"
+    webpack-sources "^1.1.0"
+    worker-farm "^1.5.2"
+
 ui-event-observer@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ui-event-observer/-/ui-event-observer-1.2.2.tgz#bf5b330463c04b0ed92a4d943301ece43a07d291"
