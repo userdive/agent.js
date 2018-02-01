@@ -2,6 +2,7 @@ import { find, save } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import * as cookies from 'js-cookie'
 import * as objectAssign from 'object-assign'
+import { parse } from 'query-string'
 import { UIEventObserver } from 'ui-event-observer'
 import { v4 as uuid } from 'uuid'
 
@@ -48,6 +49,11 @@ function findOrCreateClientIdAuto (
   return save(cookieName, generateId(), cookieAttr)
 }
 
+function findClientIdFromQueryString (): string | undefined {
+  const query = parse(location.search)
+  return query['_ud']
+}
+
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
   if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
@@ -77,6 +83,7 @@ function pathname2href (pathname: string) {
 
 export default class AgentCore extends Store {
   private baseUrl: string
+  private linkParam: { [key: string]: string }
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
   private events: any[]
@@ -96,7 +103,8 @@ export default class AgentCore extends Store {
       cookieDomain,
       cookieExpires,
       cookieName,
-      auto
+      auto,
+      allowLink
     }: Settings
   ) {
     super()
@@ -114,12 +122,16 @@ export default class AgentCore extends Store {
     eventsClass.forEach(Class => {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
-    let userId
-    if (auto) {
+
+    let userId: any
+    if (allowLink) {
+      userId = findClientIdFromQueryString()
+    } else if (auto) {
       userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
     } else {
       userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
     }
+    this.linkParam = { _ud: userId }
     if (id && userId) {
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
@@ -172,6 +184,10 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
     this.events.forEach(e => e.on())
     this.sendInteractsWithUpdate()
+  }
+
+  getLinkParam (): { [key: string]: string } {
+    return this.linkParam
   }
 
   protected sendInteractsWithUpdate (): void {
