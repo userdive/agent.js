@@ -116,7 +116,7 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8 KB"
+      "limit": "10 KB"
     }
   ],
   "workspaces": [

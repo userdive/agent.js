@@ -27,8 +27,8 @@ export function submitHandler (
   domains: any[],
   agent: Agent
 ): EventListenerOrEventListenerObject {
-  return (evnet: Event) => {
-    const e = event || window.event
+  return (event: Event) => {
+    const e: any = event || window.event
     if (e) {
       const eventElement: any = e.target || e.srcElement
       if (addableForm(domains, eventElement)) {

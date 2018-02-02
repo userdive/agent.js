@@ -7,7 +7,7 @@ export default class Linker {
     this.agent = agent
   }
 
-  autoLink (domains: any[], decorateForms?: boolean) {
+  autoLink (domains: any[]) {
     ['mousedown', 'keyup'].forEach(event => {
       this.setListener(event, linkHandler(domains, this.agent), false)
     })

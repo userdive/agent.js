@@ -1,4 +1,3 @@
-// TODO
 const NAMESPACE = 'data-ud-namespace'
 
 export default function (pluginName: string, pluginConstructor: any) {
