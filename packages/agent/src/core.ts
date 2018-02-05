@@ -126,10 +126,13 @@ export default class AgentCore extends Store {
     let userId: any
     if (allowLink) {
       userId = findClientIdFromQueryString()
-    } else if (auto) {
-      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
-    } else {
-      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+    }
+    if (!userId) {
+      if (auto) {
+        userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
+      } else {
+        userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+      }
     }
     this.linkParam = { _ud: userId }
     if (id && userId) {

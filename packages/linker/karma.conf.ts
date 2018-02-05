@@ -1,4 +1,3 @@
-const webpackConfig = require('./webpack.config')
 const path = require('path')
 const { customLaunchers } = require('./browser-providers.conf')
 const base = {
@@ -26,7 +25,9 @@ const base = {
         }
       ]
     },
-    resolve: webpackConfig.resolve,
+    resolve: {
+      extensions: ['.ts', '.js']
+    },
     node: { fs: 'empty' }
   },
   coverageIstanbulReporter: {

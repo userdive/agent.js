@@ -12,6 +12,10 @@ describe('agent', () => {
   it('constructor', () => {
     const agent = new Agent(random.uuid(), 'auto')
     assert(agent.core)
+    assert(agent.getLinkParam())
+
+    const agent2 = new Agent(random.uuid(), { allowLink: true })
+    assert(agent.getLinkParam())
   })
 
   it('create', () => {

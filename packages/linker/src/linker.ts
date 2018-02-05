@@ -19,8 +19,9 @@ export default class Linker {
     listener: EventListenerOrEventListenerObject,
     options: any
   ) {
-    if (document.addEventListener) {
-      document.addEventListener(event, listener, options)
-    }
+    const d: any = document
+    d.addEventListener
+      ? d.addEventListener(event, listener, options)
+      : d.attachEvent && d.attachEvent(`on${event}`, listener)
   }
 }
