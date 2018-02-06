@@ -4,6 +4,7 @@ import { random } from 'faker'
 import 'mocha'
 import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
+import { spy as sinonSpy } from 'sinon'
 import Linker from '../src/linker'
 
 describe('linker', () => {
@@ -17,6 +18,10 @@ describe('linker', () => {
     linker = new Linker(agent)
     linker.autoLink([/^.*\.?example\.org/, 'example.com'])
   })
+
+  const itIgnoreEvent = (listenerName: string): Function => {
+    return listenerName in window ? it : it.skip
+  }
 
   const createLink = (href: string) => {
     let link = document.createElement('a')
@@ -40,7 +45,12 @@ describe('linker', () => {
     assert(linker.agent)
   })
 
-  it('mousedown', () => {
+  it('event listener', () => {
+    const hasListener = 'onmousedown' in window || 'onkeyup' in window
+    assert(hasListener)
+  })
+
+  itIgnoreEvent('onmousedown')('mousedown', () => {
     const link = createLink('http://example.com/example')
     const before = link.href
     const mousedown = simulateEvent('MouseEvents', 'mousedown')
@@ -49,7 +59,7 @@ describe('linker', () => {
     assert(`${before}?${query}` === link.href)
   })
 
-  it('keyup', () => {
+  itIgnoreEvent('onkeyup')('keyup', () => {
     const link = createLink('http://example.com/example')
     const before = link.href
     const keyup = simulateEvent('KeyboardEvent', 'keyup')
@@ -58,7 +68,7 @@ describe('linker', () => {
     assert(`${before}?${query}` === link.href)
   })
 
-  it('keep query', () => {
+  itIgnoreEvent('onmousedown')('keep query', () => {
     const params = { key1: 'value1', key2: 'value2' }
     const link = createLink(`http://example.org/example?${stringify(params)}`)
     const before = link.href
