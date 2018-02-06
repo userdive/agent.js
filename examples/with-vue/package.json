@@ -1,8 +1,6 @@
 {
   "name": "with-vue",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
   "dependencies": {
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"

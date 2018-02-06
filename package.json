@@ -58,7 +58,8 @@
       "git add"
     ],
     "package.json": [
-      "fixpack"
+      "fixpack",
+      "git add"
     ],
     "*.md": [
       "prettier --write",
