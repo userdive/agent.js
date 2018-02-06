@@ -42,7 +42,7 @@ function scanLinkElement (
   domains: any[],
   node: any
 ): HTMLAnchorElement | undefined {
-  for (let i = 100; 0 < i; i++) {
+  for (let i = 100; node && 0 < i; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
       return node
@@ -53,11 +53,9 @@ function scanLinkElement (
 }
 
 function linkable (domains: any[], linkElement: HTMLAnchorElement): boolean {
-  if (
-    linkElement.protocol === 'http:' ||
-    linkElement.protocol === 'https:' ||
-    !linkElement.href
-  ) {
+  const protocol: boolean =
+    linkElement.protocol === 'http:' || linkElement.protocol === 'https:'
+  if (!linkElement.href || !protocol) {
     return false
   }
   const to = linkElement.href || ''
@@ -72,15 +70,14 @@ function addableForm (domains: any[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: any[], domain: string): boolean {
-  if (domain === document.location.hostname) {
+function matchDomain (domains: any[], test: string): boolean {
+  if (test === document.location.hostname) {
     return false
   }
   for (let i = 0; i < domains.length; i++) {
-    if (domains[i] instanceof RegExp && domains[i].test(domain)) {
-      return true
-    }
-    if (0 <= domains[0].indexOf) {
+    if (domains[i] instanceof RegExp) {
+      if (domains[i].test(test)) return true
+    } else if (0 <= test.indexOf(domains[i])) {
       return true
     }
   }
@@ -89,7 +86,7 @@ function matchDomain (domains: any[], domain: string): boolean {
 
 function linkUrl (urlString: string, agent: Agent): string {
   const url: string[] = urlString.split('?')
-  const queryObj: object = url.length > 2 ? parse(url[1]) : {}
+  const queryObj: object = url.length > 1 ? parse(url[1]) : {}
   const query: string = stringify(
     objectAssign({}, queryObj, agent.getLinkParam())
   )
