@@ -15,7 +15,7 @@ describe('agent', () => {
   beforeEach(() => {
     agent = new Agent(random.uuid(), { allowLink: true })
     linker = new Linker(agent)
-    linker.autoLink([/^.*\.example\.org/, 'example.com'])
+    linker.autoLink([/^.*\.?example\.org/, 'example.com'])
   })
 
   const createLink = (href: string) => {
