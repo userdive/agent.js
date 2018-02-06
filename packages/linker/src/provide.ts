@@ -10,5 +10,5 @@ export default function (pluginName: string, pluginConstructor: any) {
       (w[name].q = w[name].q || []).push(args)
     }
 
-  w[name](pluginName, pluginConstructor)
+  w[name]('provide', pluginName, pluginConstructor)
 }
