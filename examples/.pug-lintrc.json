@@ -1,0 +1,4 @@
+{
+  "extends": "uncovertruth",
+  "disallowIdLiterals": null
+}

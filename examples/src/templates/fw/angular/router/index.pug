@@ -1,0 +1,11 @@
+extends ../../../index.pug
+
+block content
+  ul(ui-view)
+    li
+      app
+
+block footer_content
+  script.
+    document.write('<base href="' + document.location + '" />');
+  script(src="../../../assets/angular.bundle.js")
