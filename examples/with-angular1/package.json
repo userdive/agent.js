@@ -1,0 +1,11 @@
+{
+  "name": "with-angular1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/angular": "^1.6.42",
+    "@uirouter/angularjs": "^1.0.14",
+    "angular": "^1.6.9"
+  }
+}

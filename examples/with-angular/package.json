@@ -1,0 +1,22 @@
+{
+  "name": "with-angular",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/common": "^5.2.0",
+    "@angular/compiler": "^5.2.0",
+    "@angular/core": "^5.2.0",
+    "@angular/forms": "^5.2.0",
+    "@angular/http": "^5.2.0",
+    "@angular/platform-browser": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.0",
+    "@angular/router": "^5.2.0",
+    "@angular/upgrade": "^5.2.0",
+    "core-js": "^2.5.3",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.5.6",
+    "systemjs": "^0.20.19",
+    "zone.js": "^0.8.20"
+  }
+}
