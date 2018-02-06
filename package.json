@@ -4,7 +4,7 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "devDependencies": {
-    "@uncovertruth/eslint-config": "^3.3.0",
+    "@uncovertruth/eslint-config": "^3.4.0",
     "@uncovertruth/tslint-config": "^1.3.0",
     "codecov": "^3.0.0",
     "cross-env": "^5.1.3",
