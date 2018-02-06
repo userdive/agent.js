@@ -88,7 +88,8 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "npm run tsc && run-p build:*",
+    "prebuild": "lerna run build",
+    "build": "run-p build:*",
     "build:cdn": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm",
     "build:examplejs": "cd examples && webpack",
     "build:examples": "pug examples -o examples/build -P -s",
@@ -109,8 +110,7 @@
     "precommit": "lint-staged",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
-    "tsc": "lerna run build",
-    "pretest": "npm run tsc",
+    "pretest": "lerna run build",
     "test": "lerna run test",
     "version": "lerna publish --skip-npm --skip-git",
     "website": "cd website && npm start"

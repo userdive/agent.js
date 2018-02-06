@@ -6,7 +6,7 @@ import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
 import Linker from '../src/linker'
 
-describe('agent', () => {
+describe('linker', () => {
   const Agent = require('@userdive/agent').default
   const Linker = require('../src/linker').default
 
