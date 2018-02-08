@@ -8,8 +8,13 @@ export default class Linker {
   }
 
   autoLink (domains: any[]) {
-    ['mousedown', 'keyup'].forEach(event => {
-      this.setListener(event, linkHandler(domains, this.agent), false)
+    const linkListener: EventListenerOrEventListenerObject = linkHandler(
+      domains,
+      this.agent
+    )
+    const events: string[] = ['mousedown', 'keyup']
+    events.forEach(event => {
+      this.setListener(event, linkListener, false)
     })
     this.setListener('submit', submitHandler(domains, this.agent), false)
   }
