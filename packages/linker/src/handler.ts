@@ -2,6 +2,7 @@ import Agent from '@userdive/agent'
 import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
 
+const queryKey = '_ud' // TODO
 const matchUrl = /^https?:\/\/([^\/:]+)/
 
 export function linkHandler (
@@ -12,13 +13,7 @@ export function linkHandler (
     const e = event || window.event
     if (e) {
       const eventElement: any = e.target || e.srcElement
-      const node: HTMLAnchorElement | undefined = scanLinkElement(
-        domains,
-        eventElement
-      )
-      if (node) {
-        node.href = linkUrl(node.href, agent)
-      }
+      scanLinkElement(agent, domains, eventElement)
     }
   }
 }
@@ -38,18 +33,15 @@ export function submitHandler (
   }
 }
 
-function scanLinkElement (
-  domains: any[],
-  node: any
-): HTMLAnchorElement | undefined {
+function scanLinkElement (agent: Agent, domains: any[], node: any) {
   for (let i = 100; node && 0 < i; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
-      return node
+      node.href = linkUrl(node.href, agent)
+      return
     }
     node = node.parentNode
   }
-  return
 }
 
 function linkable (domains: any[], linkElement: HTMLAnchorElement): boolean {
@@ -95,27 +87,26 @@ function linkUrl (urlString: string, agent: Agent): string {
 
 function formLink (form: HTMLFormElement, agent: Agent) {
   if (form.method.toLocaleLowerCase() === 'get') {
-    const param: { [key: string]: string } = agent.getLinkParam()
-    const name: string = Object.keys(param)[0]
-    const value: string = param[name]
-    const nodes: any = form.childNodes
-
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].name === name) {
-        nodes[i].setAttribute('value', value)
-        return
-      }
-    }
-    addHiddenInput(form, name, value)
+    addHiddenInput(form, agent)
   } else if (form.method.toLocaleLowerCase() === 'post') {
     form.action = linkUrl(form.action, agent)
   }
 }
 
-function addHiddenInput (form: HTMLFormElement, name: string, value: string) {
+function addHiddenInput (form: HTMLFormElement, agent: Agent) {
+  const param: { [key: string]: string } = agent.getLinkParam()
+  const value: string = param[queryKey]
+  const nodes: any = form.childNodes
+
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].name === queryKey) {
+      nodes[i].setAttribute('value', value)
+      return
+    }
+  }
   const i: HTMLInputElement = document.createElement('input')
   i.setAttribute('type', 'hidden')
-  i.setAttribute('name', name)
+  i.setAttribute('name', queryKey)
   i.setAttribute('value', value)
   form.appendChild(i)
 }
