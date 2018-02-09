@@ -6,7 +6,6 @@ import { stringify } from 'querystring'
 import { spy as sinonSpy } from 'sinon'
 import { linkHandler, submitHandler } from '../src/handler'
 import { createForm, createLink } from './helpers/dom'
-import { createEvent } from './helpers/event'
 
 describe('handler', () => {
   const Agent = require('@userdive/agent').default
@@ -23,55 +22,45 @@ describe('handler', () => {
 
   function setUpLinkEvent (
     href: string,
-    domains: Array<string | RegExp>,
-    e: Event
+    domains: Array<string | RegExp>
   ): string {
     const handler: any = linkHandler(domains, agent)
     const a = createLink(href)
-    a.dispatchEvent(e)
-    handler(e)
+    handler({ target: a })
     return a.href
   }
 
   it('mousedown', () => {
-    const e = createEvent('MouseEvents', 'mousedown')
-    const url = setUpLinkEvent(comUrl, [domain], e)
+    const url = setUpLinkEvent(comUrl, [domain])
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === url)
   })
 
   it('regexp match domain', () => {
-    const e = createEvent('MouseEvents', 'mousedown')
-    const url = setUpLinkEvent(orgUrl, [/^.*\.?example\.org/], e)
+    const url = setUpLinkEvent(orgUrl, [/^.*\.?example\.org/])
     assert(`${orgUrl}?${stringify(agent.getLinkParam())}` === url)
   })
 
   it('keyup', () => {
-    const e = createEvent('KeyboardEvent', 'keyup')
-    const url = setUpLinkEvent(comUrl, [domain], e)
+    const url = setUpLinkEvent(comUrl, [domain])
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === url)
   })
 
   it('not match domain', () => {
-    const e = createEvent('KeyboardEvent', 'keyup')
-    const url = setUpLinkEvent(comUrl, ['example.net'], e)
+    const url = setUpLinkEvent(comUrl, ['example.net'])
     assert(comUrl === url)
   })
 
   it('submit post', () => {
     const handler: any = submitHandler([domain], agent)
     const form = createForm(comUrl, 'post')
-    const e = createEvent('Event', 'submit')
-    form.dispatchEvent(e)
-    handler(e)
+    handler({ target: form })
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === form.action)
   })
 
   it('submit get', () => {
     const handler: any = submitHandler([domain], agent)
     const form = createForm(comUrl, 'get')
-    const e = createEvent('Event', 'submit')
-    form.dispatchEvent(e)
-    handler(e)
+    handler({ target: form })
     const hidden = form.firstElementChild
     assert(hidden.getAttribute('type') === 'hidden')
     assert(hidden.getAttribute('name') === '_ud')
