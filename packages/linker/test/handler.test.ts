@@ -17,7 +17,7 @@ describe('handler', () => {
   let agent
   let linker
   beforeEach(() => {
-    agent = new Agent(random.uuid(), { allowLink: true })
+    agent = new Agent(random.uuid(), 'auto')
   })
 
   function setUpLinkEvent (

@@ -12,7 +12,7 @@ describe('linker', () => {
   let agent
   let linker
   beforeEach(() => {
-    agent = new Agent(random.uuid(), { allowLink: true })
+    agent = new Agent(random.uuid(), 'auto')
     linker = new Linker(agent)
   })
 

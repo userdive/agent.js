@@ -24,11 +24,9 @@ export function submitHandler (
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
     const e: any = event || window.event
-    if (e) {
-      const eventElement: any = e.target || e.srcElement
-      if (addableForm(domains, eventElement)) {
-        formLink(eventElement, agent)
-      }
+    const eventElement: any = e.target || e.srcElement
+    if (addableForm(domains, eventElement)) {
+      formLink(eventElement, agent)
     }
   }
 }

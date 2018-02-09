@@ -101,6 +101,7 @@
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
+    "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",

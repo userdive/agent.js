@@ -81,6 +81,27 @@ function pathname2href (pathname: string) {
   return pathname
 }
 
+function findUserId (
+  allowLink: boolean,
+  auto: boolean,
+  cookieName: string,
+  cookieDomain: string,
+  cookieExpires: number
+) {
+  let userId
+  if (allowLink) {
+    userId = findClientIdFromQueryString()
+  }
+  if (!userId) {
+    if (auto) {
+      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
+    } else {
+      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+    }
+  }
+  return userId
+}
+
 export default class AgentCore extends Store {
   private baseUrl: string
   private linkParam: { [key: string]: string }
@@ -123,17 +144,13 @@ export default class AgentCore extends Store {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
 
-    let userId: any
-    if (allowLink) {
-      userId = findClientIdFromQueryString()
-    }
-    if (!userId) {
-      if (auto) {
-        userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
-      } else {
-        userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
-      }
-    }
+    const userId: any = findUserId(
+      allowLink,
+      auto,
+      cookieName,
+      cookieDomain,
+      cookieExpires
+    )
     this.linkParam = { _ud: userId }
     if (id && userId) {
       this.baseUrl = `${baseUrl}/${id}/${userId}`
