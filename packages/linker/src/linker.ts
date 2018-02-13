@@ -2,21 +2,21 @@ import Agent from '@userdive/agent'
 import { linkHandler, submitHandler } from './handler'
 
 export default class Linker {
-  private agent: Agent
+  private param: { [key: string]: string }
   constructor (agent: Agent) {
-    this.agent = agent
+    this.param = agent.getLinkParam()
   }
 
   autoLink (domains: any[]) {
     const linkListener: EventListenerOrEventListenerObject = linkHandler(
       domains,
-      this.agent
+      this.param
     )
     const events: string[] = ['mousedown', 'keyup']
     events.forEach(event => {
       this.setListener(event, linkListener, false)
     })
-    this.setListener('submit', submitHandler(domains, this.agent), false)
+    this.setListener('submit', submitHandler(domains, this.param), false)
   }
 
   setListener (

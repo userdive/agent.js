@@ -17,7 +17,7 @@ describe('linker', () => {
   })
 
   it('constructor', () => {
-    assert(linker.agent)
+    assert(linker.param)
   })
 
   it('event listener', () => {

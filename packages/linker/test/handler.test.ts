@@ -15,7 +15,6 @@ describe('handler', () => {
   const orgUrl = 'https://example.org/example'
 
   let agent
-  let linker
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
   })
@@ -24,7 +23,7 @@ describe('handler', () => {
     href: string,
     domains: Array<string | RegExp>
   ): string {
-    const handler: any = linkHandler(domains, agent)
+    const handler: any = linkHandler(domains, agent.getLinkParam())
     const a = createLink(href)
     handler({ target: a })
     return a.href
@@ -41,7 +40,7 @@ describe('handler', () => {
   })
 
   it('bubbling', () => {
-    const handler: any = linkHandler([domain], agent)
+    const handler: any = linkHandler([domain], agent.getLinkParam())
     const a = document.createElement('a')
     a.href = comUrl
     const img = document.createElement('img')
@@ -62,7 +61,7 @@ describe('handler', () => {
   })
 
   it('submit post', () => {
-    const handler: any = submitHandler([domain], agent)
+    const handler: any = submitHandler([domain], agent.getLinkParam())
     const form = createForm(comUrl, 'post')
     handler({ target: form })
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === form.action)
@@ -70,14 +69,14 @@ describe('handler', () => {
 
   it('not cross domain', () => {
     const url = document.location.href
-    const handler: any = submitHandler([domain], agent)
+    const handler: any = submitHandler([domain], agent.getLinkParam())
     const form = createForm(document.location.href, 'post')
     handler({ target: form })
     assert(url === form.action, 'not added query string')
   })
 
   it('submit get', () => {
-    const handler: any = submitHandler([domain], agent)
+    const handler: any = submitHandler([domain], agent.getLinkParam())
     const form = createForm(comUrl, 'get')
     handler({ target: form })
     const hidden = form.firstElementChild

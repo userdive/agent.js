@@ -1,4 +1,3 @@
-import Agent from '@userdive/agent'
 import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
 
@@ -7,33 +6,37 @@ const matchUrl = /^https?:\/\/([^\/:]+)/
 
 export function linkHandler (
   domains: any[],
-  agent: Agent
+  param: { [key: string]: string }
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
     if (event) {
       const eventElement: any = event.target || event.srcElement
-      scanLinkElement(agent, domains, eventElement)
+      scanLinkElement(param, domains, eventElement)
     }
   }
 }
 
 export function submitHandler (
   domains: any[],
-  agent: Agent
+  param: { [key: string]: string }
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
     const eventElement: any = event.target || event.srcElement
     if (addableForm(domains, eventElement)) {
-      formLink(eventElement, agent)
+      formLink(eventElement, param)
     }
   }
 }
 
-function scanLinkElement (agent: Agent, domains: any[], node: any) {
+function scanLinkElement (
+  param: { [key: string]: string },
+  domains: any[],
+  node: any
+) {
   for (let i = 100; node && 0 < i; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
-      node.href = linkUrl(node.href, agent)
+      node.href = linkUrl(node.href, param)
       return
     }
     node = node.parentNode
@@ -72,25 +75,25 @@ function matchDomain (domains: any[], test: string): boolean {
   return false
 }
 
-function linkUrl (urlString: string, agent: Agent): string {
+function linkUrl (urlString: string, param: { [key: string]: string }): string {
   const url: string[] = urlString.split('?')
   const queryObj: object = url.length > 1 ? parse(url[1]) : {}
-  const query: string = stringify(
-    objectAssign({}, queryObj, agent.getLinkParam())
-  )
+  const query: string = stringify(objectAssign({}, queryObj, param))
   return `${url[0]}?${query}`
 }
 
-function formLink (form: HTMLFormElement, agent: Agent) {
+function formLink (form: HTMLFormElement, param: { [key: string]: string }) {
   if (form.method.toLocaleLowerCase() === 'get') {
-    addHiddenInput(form, agent)
+    addHiddenInput(form, param)
   } else if (form.method.toLocaleLowerCase() === 'post') {
-    form.action = linkUrl(form.action, agent)
+    form.action = linkUrl(form.action, param)
   }
 }
 
-function addHiddenInput (form: HTMLFormElement, agent: Agent) {
-  const param: { [key: string]: string } = agent.getLinkParam()
+function addHiddenInput (
+  form: HTMLFormElement,
+  param: { [key: string]: string }
+) {
   const value: string = param[queryKey]
   const nodes: any = form.childNodes
 
