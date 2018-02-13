@@ -37,7 +37,8 @@ function findOrCreateClientId (
 
 function findOrCreateClientIdAuto (
   cookieName: string,
-  cookieExpires: number
+  cookieExpires: number,
+  value?: string
 ): string | undefined {
   const cookieAttr: cookies.CookieAttributes = {
     expires: cookieExpires
@@ -46,12 +47,13 @@ function findOrCreateClientIdAuto (
   if (c) {
     return c
   }
-  return save(cookieName, generateId(), cookieAttr)
+  const v = value || generateId()
+  return save(cookieName, v, cookieAttr)
 }
 
 function findClientIdFromQueryString (): string | undefined {
-  const query = parse(location.search)
-  return query['_ud']
+  const id: any = parse(location.search)['_ud']
+  return id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/) ? id : undefined
 }
 
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
@@ -81,23 +83,30 @@ function pathname2href (pathname: string) {
   return pathname
 }
 
-function findUserId (
-  allowLink: boolean,
+function cookieClientId (
   auto: boolean,
   cookieName: string,
   cookieDomain: string,
   cookieExpires: number
 ) {
   let userId
-  if (allowLink) {
-    userId = findClientIdFromQueryString()
-  }
   if (!userId) {
     if (auto) {
       userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
     } else {
       userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
     }
+  }
+  return userId
+}
+
+function queryStringClientId (
+  cookieName: string,
+  cookieExpires: number
+): string | undefined {
+  const userId = findClientIdFromQueryString()
+  if (userId) {
+    findOrCreateClientIdAuto(cookieName, cookieExpires, userId)
   }
   return userId
 }
@@ -144,15 +153,14 @@ export default class AgentCore extends Store {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
 
-    const userId: any = findUserId(
-      allowLink,
-      auto,
-      cookieName,
-      cookieDomain,
-      cookieExpires
-    )
-    this.linkParam = { _ud: userId }
+    let userId: any = allowLink
+      ? queryStringClientId(cookieName, cookieExpires)
+      : undefined
+    if (!userId) {
+      userId = cookieClientId(auto, cookieName, cookieDomain, cookieExpires)
+    }
     if (id && userId) {
+      this.linkParam = { _ud: userId }
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
   }
