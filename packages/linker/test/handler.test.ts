@@ -40,6 +40,17 @@ describe('handler', () => {
     assert(`${orgUrl}?${stringify(agent.getLinkParam())}` === url)
   })
 
+  it('bubbling', () => {
+    const handler: any = linkHandler([domain], agent)
+    const a = document.createElement('a')
+    a.href = comUrl
+    const img = document.createElement('img')
+    a.appendChild(img)
+    document.body.appendChild(a)
+    handler({ target: img })
+    assert(`${comUrl}?${stringify(agent.getLinkParam())}` === a.href)
+  })
+
   it('not match domain', () => {
     const url = setUpLinkEvent(comUrl, ['example.net'])
     assert(comUrl === url)
