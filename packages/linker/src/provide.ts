@@ -1,4 +1,4 @@
-const NAMESPACE = 'data-ud-namespace'
+export const NAMESPACE = 'data-ud-namespace'
 
 export default function (pluginName: string, pluginConstructor: any) {
   const element: any = document.querySelector(`[${NAMESPACE}]`)
