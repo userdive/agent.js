@@ -10,9 +10,8 @@ export function linkHandler (
   agent: Agent
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
-    const e = event || window.event
-    if (e) {
-      const eventElement: any = e.target || e.srcElement
+    if (event) {
+      const eventElement: any = event.target || event.srcElement
       scanLinkElement(agent, domains, eventElement)
     }
   }
@@ -23,8 +22,7 @@ export function submitHandler (
   agent: Agent
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
-    const e: any = event || window.event
-    const eventElement: any = e.target || e.srcElement
+    const eventElement: any = event.target || event.srcElement
     if (addableForm(domains, eventElement)) {
       formLink(eventElement, agent)
     }
@@ -48,7 +46,7 @@ function linkable (domains: any[], linkElement: HTMLAnchorElement): boolean {
   if (!linkElement.href || !protocol) {
     return false
   }
-  const to = linkElement.href || ''
+  const to = linkElement.href
   return matchDomain(domains, to)
 }
 

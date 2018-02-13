@@ -30,7 +30,7 @@ describe('handler', () => {
     return a.href
   }
 
-  it('mousedown', () => {
+  it('string domain', () => {
     const url = setUpLinkEvent(comUrl, [domain])
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === url)
   })
@@ -40,14 +40,14 @@ describe('handler', () => {
     assert(`${orgUrl}?${stringify(agent.getLinkParam())}` === url)
   })
 
-  it('keyup', () => {
-    const url = setUpLinkEvent(comUrl, [domain])
-    assert(`${comUrl}?${stringify(agent.getLinkParam())}` === url)
-  })
-
   it('not match domain', () => {
     const url = setUpLinkEvent(comUrl, ['example.net'])
     assert(comUrl === url)
+  })
+
+  it('not have href', () => {
+    const url = setUpLinkEvent(undefined, ['example.net'])
+    assert(url === '')
   })
 
   it('submit post', () => {
@@ -55,6 +55,14 @@ describe('handler', () => {
     const form = createForm(comUrl, 'post')
     handler({ target: form })
     assert(`${comUrl}?${stringify(agent.getLinkParam())}` === form.action)
+  })
+
+  it('not cross domain', () => {
+    const url = document.location.href
+    const handler: any = submitHandler([domain], agent)
+    const form = createForm(document.location.href, 'post')
+    handler({ target: form })
+    assert(url === form.action, 'not added query string')
   })
 
   it('submit get', () => {

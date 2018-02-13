@@ -1,6 +1,8 @@
-export function createLink (href: string) {
+export function createLink (href: string | undefined) {
   const link = document.createElement('a')
-  link.href = href
+  if (href) {
+    link.href = href
+  }
   document.body.appendChild(link)
   return link
 }
