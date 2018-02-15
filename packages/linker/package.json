@@ -7,8 +7,7 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "query-string": "^5.0.1",
-    "userdive": "^0.4.1"
+    "query-string": "^5.0.1"
   },
   "devDependencies": {
     "@types/faker": "^4.1.2",

@@ -1,4 +1,4 @@
-import { find, save } from 'auto-cookie'
+import { save } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import * as cookies from 'js-cookie'
 import * as objectAssign from 'object-assign'
@@ -43,7 +43,7 @@ function findOrCreateClientIdAuto (
   const cookieAttr: cookies.CookieAttributes = {
     expires: cookieExpires
   }
-  const c = find(cookieName)
+  const c = cookies.get(cookieName)
   if (c) {
     return c
   }
