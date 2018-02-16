@@ -64,14 +64,14 @@
   dependencies:
     "@types/node" "*"
 
-"@types/webpack@^3.8.7":
-  version "3.8.7"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.7.tgz#c8c0dd1af73e566f8f10fa8f95d4232e6d80d6e9"
+"@types/webpack@^3.8.8":
+  version "3.8.8"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.8.tgz#fd9483edf2d6935eaab52aa530b1f737c188cd9a"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
     "@types/uglify-js" "*"
-    source-map "^0.7.0"
+    source-map "^0.6.0"
 
 "@uncovertruth/eslint-config@^3.4.0":
   version "3.4.0"
@@ -7295,10 +7295,6 @@ source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.3, sour
 source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
-
-source-map@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.1.tgz#493620ba1692945d680b93862435bf0ed95a2aa4"
 
 source-map@~0.5.1:
   version "0.5.6"
