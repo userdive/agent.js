@@ -78,6 +78,12 @@ describe('store', () => {
   it('get', () => {
     const store = new Store()
     assert(store.get('env'))
-    assert(store.get('custom'))
+    assert(store.get('env'), 'To be defined')
+    assert(store.get('custom'), 'To be defined')
+    assert.deepEqual(
+      store.get('custom'),
+      {},
+      'The second time has been cleared cache'
+    )
   })
 })
