@@ -46,6 +46,11 @@
       "prettier --write",
       "git add"
     ],
+    "*.css": [
+      "prettier --write",
+      "stylelint --fix",
+      "git add"
+    ],
     "package.json": [
       "fixpack",
       "git add"
@@ -67,6 +72,8 @@
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
     "lint": "run-p lint:*",
+    "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
+    "lint:js": "eslint -c website/.eslintrc.json website",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
