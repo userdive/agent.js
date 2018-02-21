@@ -57,7 +57,11 @@ export default class Store {
     this.state = initialState()
   }
   public get (key: 'env' | 'custom'): ClientEnvironmentsData | CustomData {
-    return this.state[key]
+    const data = this.state[key]
+    if (key === 'custom') {
+      this.state[key] = {}
+    }
+    return data
   }
   public set (type: SetType, data: any): State {
     switch (type) {

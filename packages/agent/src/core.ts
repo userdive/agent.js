@@ -130,22 +130,22 @@ export default class AgentCore extends Store {
       case 'pageview':
         this.destroy(false)
 
-        const env = getEnv(pathname2href(page))
-        if (!env || !this.baseUrl) {
+        const data = getEnv(pathname2href(page))
+        if (!data || !this.baseUrl) {
           return warning(`failed init`)
         }
-        const state: State = this.merge({
-          type: 'env',
-          data: env
-        })
+        this.merge({ type: 'env', data })
 
         this.interval = INTERVAL_DEFAULT_SETTING.concat()
         this.interactId = 0
-        const data: any = objectAssign({}, state.env, state.custom)
         this.loadTime = Date.now()
         get(
           `${this.baseUrl}/${this.loadTime}/env.gif`,
-          obj2query(data),
+          obj2query(objectAssign(
+            {},
+            this.get('env'),
+            this.get('custom')
+          ) as any),
           () => {
             this.active = true
             this.listen()
@@ -160,9 +160,7 @@ export default class AgentCore extends Store {
   destroy (isPageHide: boolean): void {
     this.sendInteracts(isPageHide)
     this.emitter.removeAllListeners(this.id)
-    this.events.forEach(e => {
-      e.off()
-    })
+    this.events.forEach(e => e.off())
     this.active = false
     this.loadTime = 0
   }
@@ -172,9 +170,7 @@ export default class AgentCore extends Store {
       return raise('need send pageview')
     }
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
-    this.events.forEach(e => {
-      e.on()
-    })
+    this.events.forEach(e => e.on())
     this.sendInteractsWithUpdate()
   }
 

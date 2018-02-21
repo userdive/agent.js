@@ -60,7 +60,6 @@
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "prepare": "lerna run bootstrap",
     "publish": "lerna publish --skip-git",
     "test": "lerna run test"
   },
