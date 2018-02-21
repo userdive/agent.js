@@ -180,7 +180,7 @@ const Showcase = ({ language }) => {
   )
 }
 
-export function Index ({ language }) {
+module.exports = function Index ({ language }) {
   return (
     <div>
       <HomeSplash language={language || ''} />
