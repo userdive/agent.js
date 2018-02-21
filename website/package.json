@@ -1,14 +1,24 @@
 {
-  "scripts": {
-    "examples": "docusaurus-examples",
-    "start": "docusaurus-start",
-    "build": "docusaurus-build",
-    "publish-gh-pages": "docusaurus-publish",
-    "write-translations": "docusaurus-write-translations",
-    "version": "docusaurus-version",
-    "rename-version": "docusaurus-rename-version"
+  "name": "@userdive/developer-website",
+  "version": "0.0.0",
+  "dependencies": {
+    "docusaurus": "^1.0.5"
   },
   "devDependencies": {
-    "docusaurus": "^1.0.5"
+    "babel-eslint": "^8.2.2",
+    "crowdin-cli": "^0.3.0"
+  },
+  "private": true,
+  "scripts": {
+    "build": "docusaurus-build",
+    "crowdin-download": "crowdin --config ../crowdin.yaml download -b master",
+    "crowdin-upload": "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
+    "examples": "docusaurus-examples",
+    "prepare": "yarn write-translations",
+    "publish-gh-pages": "docusaurus-publish",
+    "rename-version": "docusaurus-rename-version",
+    "start": "docusaurus-start",
+    "version": "docusaurus-version",
+    "write-translations": "docusaurus-write-translations"
   }
 }

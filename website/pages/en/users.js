@@ -1,15 +1,7 @@
-/**
- * Copyright (c) 2017-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 const React = require("react");
-
+const { translate } = require('../../server/translate.js')
 const CompLibrary = require("../../core/CompLibrary.js");
-const Container = CompLibrary.Container;
-
+const { Container } = require("../../core/CompLibrary.js");
 const siteConfig = require(process.cwd() + "/siteConfig.js");
 
 class Users extends React.Component {
@@ -27,16 +19,16 @@ class Users extends React.Component {
         <Container padding={["bottom", "top"]}>
           <div className="showcaseSection">
             <div className="prose">
-              <h1>Who's Using This?</h1>
-              <p>This project is used by many folks</p>
+              <h1><translate>Who's Using This?</translate></h1>
+              <p><translate>This project is used by many folks</translate></p>
             </div>
             <div className="logos">{showcase}</div>
-            <p>Are you using this project?</p>
+            <p><translate>Are you using this project?</translate></p>
             <a
-              href="https://github.com/facebook/docusaurus/edit/master/website/siteConfig.js"
+              href="https://github.com/userdive/agent.js/edit/master/website/siteConfig.js"
               className="button"
             >
-              Add your company
+              <translate>Add your company</translate>
             </a>
           </div>
         </Container>
