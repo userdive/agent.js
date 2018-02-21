@@ -49,7 +49,7 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:cdn": "webpack --env=production && size-limit",
+    "build:cdn": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm",
     "build:packages": "lerna run build",
     "bump": "npm run publish -- --skip-npm",
     "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
