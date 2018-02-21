@@ -37,8 +37,7 @@ function findOrCreateClientId (
 
 function findOrCreateClientIdAuto (
   cookieName: string,
-  cookieExpires: number,
-  value?: string
+  cookieExpires: number
 ): string | undefined {
   const cookieAttr: cookies.CookieAttributes = {
     expires: cookieExpires
@@ -47,8 +46,7 @@ function findOrCreateClientIdAuto (
   if (c) {
     return c
   }
-  const v = value || generateId()
-  return save(cookieName, v, cookieAttr)
+  return save(cookieName, generateId(), cookieAttr)
 }
 
 function findClientIdFromQueryString (): string | undefined {
@@ -99,14 +97,13 @@ function cookieClientId (
   }
   return userId
 }
-
 function queryStringClientId (
   cookieName: string,
   cookieExpires: number
 ): string | undefined {
   const userId = findClientIdFromQueryString()
   if (userId) {
-    findOrCreateClientIdAuto(cookieName, cookieExpires, userId)
+    save(cookieName, userId, { expires: cookieExpires })
   }
   return userId
 }
