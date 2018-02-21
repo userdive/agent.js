@@ -1,19 +1,19 @@
 /* List of projects/orgs using your project for the users page */
 const users = [
-  {
-    caption: "User1",
-    image: "/test-site/img/docusaurus.svg",
-    infoLink: "https://www.facebook.com",
-    pinned: true
-  }
+  // {
+  //   caption: "User1",
+  //   image: "/test-site/img/docusaurus.svg",
+  //   infoLink: "https://www.facebook.com",
+  //   pinned: true
+  // }
 ];
 
 const siteConfig = {
-  title: "@userdive/agent",
-  tagline: "A website for testing",
+  title: "USERDIVE",
+  tagline: "",
   url: "https://userdive.github.io/agent.js/",
-  baseUrl: "/test-site/",
-  projectName: "@userdive/agent",
+  baseUrl: "/agent.js/",
+  projectName: "USERDIVE",
   headerLinks: [
     // {doc: 'doc1', label: 'Docs'},
     // {doc: 'doc4', label: 'API'},

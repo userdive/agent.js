@@ -71,6 +71,7 @@
     }
   ],
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "website"
   ]
 }
