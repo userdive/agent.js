@@ -39,7 +39,7 @@
       "git add"
     ],
     "website/**/*.js": [
-      "prettier-eslint --eslint-config-path ./website/.eslintrc.json",
+      "prettier-eslint --eslint-config-path ./website/.eslintrc.json --write",
       "git add"
     ],
     "*.md": [
