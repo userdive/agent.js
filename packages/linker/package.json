@@ -7,7 +7,9 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "query-string": "^5.0.1"
+    "object-assign": "^4.1.1",
+    "query-string": "^5.0.1",
+    "userdive": "^0.4.1"
   },
   "devDependencies": {
     "@types/faker": "^4.1.2",
@@ -30,7 +32,6 @@
     "karma-sauce-launcher": "^1.2.0",
     "karma-webpack": "^2.0.9",
     "mocha": "^4.1.0",
-    "object-assign": "^4.1.1",
     "power-assert": "^1.4.4",
     "sinon": "^4.1.5",
     "ts-node": "^4.1.0",

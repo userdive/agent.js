@@ -1,14 +1,10 @@
+import { q } from 'userdive'
+
 export const NAMESPACE = 'data-ud-namespace'
-
 export default function (pluginName: string, pluginConstructor: any) {
-  const element: any = document.querySelector(`[${NAMESPACE}]`)
-  const name: string = element.getAttribute(NAMESPACE)
+  const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
+  const name: string = element.getAttribute(NAMESPACE) || '_ud'
   const w: any = window
-  w[name] =
-    w[name] ||
-    function (...args: any[]) {
-      (w[name].q = w[name].q || []).push(args)
-    }
-
+  q(name, w)
   w[name]('provide', pluginName, pluginConstructor)
 }

@@ -9,10 +9,8 @@ export function linkHandler (
   param: { [key: string]: string }
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
-    if (event) {
-      const eventElement: any = event.target || event.srcElement
-      scanLinkElement(param, domains, eventElement)
-    }
+    const eventElement: any = event.target || event.srcElement
+    scanLinkElement(param, domains, eventElement)
   }
 }
 
