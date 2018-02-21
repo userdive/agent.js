@@ -14,7 +14,7 @@ import { raise, setup, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
-import { Interact, SendType, Settings, State } from './types'
+import { Interact, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')

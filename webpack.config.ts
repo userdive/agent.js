@@ -1,7 +1,8 @@
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
-const { version, author, license } = require('./packages/agent/package.json')
+const { author, license } = require('./package.json')
+const { version } = require('./lerna.json')
 
 const date = new Date()
 
