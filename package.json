@@ -51,7 +51,7 @@
     "build": "run-p build:*",
     "build:cdn": "webpack --env=production && size-limit",
     "build:packages": "lerna run build",
-    "bump": "lerna publish --skip-npm --skip-git",
+    "bump": "npm run publish -- --skip-npm",
     "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
