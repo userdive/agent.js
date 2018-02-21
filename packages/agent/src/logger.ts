@@ -15,7 +15,7 @@ export function setup (DSN: string, raven?: ravenjs.RavenStatic): void {
   }
   Raven = raven
   Raven.config(DSN).install()
-  Raven.setRelease('USERDIVE_AGENT_VERSION')
+  Raven.setRelease(process.env.VERSION as string)
 }
 
 function capture (err: CustomError, options?: ravenjs.RavenOptions): void {

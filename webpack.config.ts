@@ -25,23 +25,13 @@ module.exports = {
   },
   devtool: 'cheap-source-map',
   module: {
-    rules: [
-      { test: /\.ts$/, loader: 'ts-loader' },
-      {
-        test: /logger\.ts$/,
-        loader: 'string-replace-loader',
-        exclude: /node_modules/,
-        options: {
-          search: 'USERDIVE_AGENT_VERSION',
-          replace: version
-        }
-      }
-    ]
+    rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.VERSION': JSON.stringify(version)
     }),
     new UglifyJSPlugin({
       sourceMap: true,
