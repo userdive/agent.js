@@ -1,6 +1,10 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "@uncovertruth/eslint-config"
-  ]
+    "@uncovertruth/eslint-config",
+    "@uncovertruth/eslint-config-react"
+  ],
+  "rules": {
+    "react/prop-types": 1
+  }
 }

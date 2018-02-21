@@ -1,7 +1,6 @@
 const React = require('react')
 const { translate } = require('../../server/translate.js')
 const { Container, GridBlock } = require('../../core/CompLibrary.js')
-const siteConfig = require(process.cwd() + '/siteConfig.js')
 
 class Help extends React.Component {
   render () {
@@ -22,10 +21,10 @@ class Help extends React.Component {
     ]
 
     return (
-      <div className="docMainWrapper wrapper">
-        <Container className="mainContainer documentContainer postContainer">
-          <div className="post">
-            <header className="postHeader">
+      <div className='docMainWrapper wrapper'>
+        <Container className='mainContainer documentContainer postContainer'>
+          <div className='post'>
+            <header className='postHeader'>
               <h2>
                 <translate>Need help?</translate>
               </h2>
@@ -35,7 +34,7 @@ class Help extends React.Component {
                 This project is maintained by a dedicated group of people.
               </translate>
             </p>
-            <GridBlock contents={supportLinks} layout="threeColumn" />
+            <GridBlock contents={supportLinks} layout='threeColumn' />
           </div>
         </Container>
       </div>

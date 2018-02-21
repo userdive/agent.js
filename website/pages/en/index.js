@@ -19,88 +19,71 @@ function pageUrl (page, language) {
   return siteConfig.baseUrl + (language ? language + '/' : '') + page
 }
 
-class Button extends React.Component {
-  render () {
-    return (
-      <div className="pluginWrapper buttonWrapper">
-        <a className="button" href={this.props.href} target={this.props.target}>
-          {this.props.children}
-        </a>
-      </div>
-    )
-  }
-}
+const Button = ({ href, target, children }) => (
+  <div className='pluginWrapper buttonWrapper'>
+    <a className='button' href={href} target={target || '_self'}>
+      {children}
+    </a>
+  </div>
+)
 
-Button.defaultProps = {
-  target: '_self'
-}
-
-const SplashContainer = props => (
-  <div className="homeContainer">
-    <div className="homeSplashFade">
-      <div className="wrapper homeWrapper">{props.children}</div>
+const SplashContainer = ({ children }) => (
+  <div className='homeContainer'>
+    <div className='homeSplashFade'>
+      <div className='wrapper homeWrapper'>{children}</div>
     </div>
   </div>
 )
 
-const Logo = props => (
-  <div className="projectLogo">
-    <img src={props.img_src} />
+const Logo = ({ img_src: src }) => (
+  <div className='projectLogo'>
+    <img src={src} />
   </div>
 )
 
 const ProjectTitle = props => (
-  <h2 className="projectTitle">
+  <h2 className='projectTitle'>
     {siteConfig.title}
     <small>{siteConfig.tagline}</small>
   </h2>
 )
 
 const PromoSection = props => (
-  <div className="section promoSection">
-    <div className="promoRow">
-      <div className="pluginRowBlock">{props.children}</div>
+  <div className='section promoSection'>
+    <div className='promoRow'>
+      <div className='pluginRowBlock'>{props.children}</div>
     </div>
   </div>
 )
 
-class HomeSplash extends React.Component {
-  render () {
-    const language = this.props.language || ''
-    return (
-      <SplashContainer>
-        <Logo img_src={imgUrl('docusaurus.svg')} />
-        <div className="inner">
-          <ProjectTitle />
-          <PromoSection>
-            <Button href="#try">
-              <translate>Try It Out</translate>
-            </Button>
-            <Button href={docUrl('doc1.html', language)}>
-              <translate>Example Link</translate>
-            </Button>
-            <Button href={docUrl('doc2.html', language)}>
-              <translate>Example Link 2</translate>
-            </Button>
-          </PromoSection>
-        </div>
-      </SplashContainer>
-    )
-  }
-}
+const HomeSplash = ({ language }) => (
+  <SplashContainer>
+    <Logo img_src={imgUrl('docusaurus.svg')} />
+    <div className='inner'>
+      <ProjectTitle />
+      <PromoSection>
+        <Button href='#try'>
+          <translate>Try It Out</translate>
+        </Button>
+        <Button href={docUrl('doc1.html', language || '')}>
+          <translate>Example Link</translate>
+        </Button>
+        <Button href={docUrl('doc2.html', language || '')}>
+          <translate>Example Link 2</translate>
+        </Button>
+      </PromoSection>
+    </div>
+  </SplashContainer>
+)
 
-const Block = props => (
-  <Container
-    padding={['bottom', 'top']}
-    id={props.id}
-    background={props.background}
-  >
-    <GridBlock align="center" contents={props.children} layout={props.layout} />
+const Block = ({ id, background, children, layout }) => (
+  <Container padding={['bottom', 'top']} id={id} background={background}>
+    <GridBlock align='center' contents={children} layout={layout} />
   </Container>
 )
 
 const Features = props => (
-  <Block layout="fourColumn">
+  <Block layout='fourColumn'>
     {[
       {
         content: 'This is the content of my feature',
@@ -120,7 +103,7 @@ const Features = props => (
 
 const FeatureCallout = props => (
   <div
-    className="productShowcaseSection paddingBottom"
+    className='productShowcaseSection paddingBottom'
     style={{ textAlign: 'center' }}
   >
     <h2>Feature Callout</h2>
@@ -129,7 +112,7 @@ const FeatureCallout = props => (
 )
 
 const LearnHow = props => (
-  <Block background="light">
+  <Block background='light'>
     {[
       {
         content: 'Talk about learning how to use this',
@@ -142,7 +125,7 @@ const LearnHow = props => (
 )
 
 const TryOut = props => (
-  <Block id="try">
+  <Block id='try'>
     {[
       {
         content: 'Talk about trying this out',
@@ -155,7 +138,7 @@ const TryOut = props => (
 )
 
 const Description = props => (
-  <Block background="dark">
+  <Block background='dark'>
     {[
       {
         content: 'This is another description of how this project is useful',
@@ -167,7 +150,7 @@ const Description = props => (
   </Block>
 )
 
-const Showcase = props => {
+const Showcase = ({ language }) => {
   if ((siteConfig.users || []).length === 0) {
     return null
   }
@@ -184,12 +167,12 @@ const Showcase = props => {
     })
 
   return (
-    <div className="productShowcaseSection paddingBottom">
+    <div className='productShowcaseSection paddingBottom'>
       <h2>{"Who's Using This?"}</h2>
       <p>This project is used by all these people</p>
-      <div className="logos">{showcase}</div>
-      <div className="more-users">
-        <a className="button" href={pageUrl('users.html', props.language)}>
+      <div className='logos'>{showcase}</div>
+      <div className='more-users'>
+        <a className='button' href={pageUrl('users.html', language)}>
           More {siteConfig.title} Users
         </a>
       </div>
@@ -197,24 +180,18 @@ const Showcase = props => {
   )
 }
 
-class Index extends React.Component {
-  render () {
-    const language = this.props.language || ''
-
-    return (
-      <div>
-        <HomeSplash language={language} />
-        <div className="mainContainer">
-          <Features />
-          <FeatureCallout />
-          <LearnHow />
-          <TryOut />
-          <Description />
-          <Showcase language={language} />
-        </div>
+export function Index ({ language }) {
+  return (
+    <div>
+      <HomeSplash language={language || ''} />
+      <div className='mainContainer'>
+        <Features />
+        <FeatureCallout />
+        <LearnHow />
+        <TryOut />
+        <Description />
+        <Showcase language={language || ''} />
       </div>
-    )
-  }
+    </div>
+  )
 }
-
-module.exports = Index

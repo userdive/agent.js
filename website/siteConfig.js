@@ -6,37 +6,37 @@ const users = [
   //   infoLink: "https://www.facebook.com",
   //   pinned: true
   // }
-];
+]
 
 const siteConfig = {
-  title: "USERDIVE",
-  tagline: "",
-  url: "https://userdive.github.io/agent.js/",
-  baseUrl: "/agent.js/",
-  projectName: "USERDIVE",
+  title: 'USERDIVE',
+  tagline: '',
+  url: 'https://userdive.github.io/agent.js/',
+  baseUrl: '/agent.js/',
+  projectName: 'USERDIVE',
   headerLinks: [
     // {doc: 'doc1', label: 'Docs'},
     // {doc: 'doc4', label: 'API'},
     // {page: 'help', label: 'Help'},
-    { blog: true, label: "Blog" }
+    { blog: true, label: 'Blog' }
   ],
   users,
-  headerIcon: "img/docusaurus.svg",
-  footerIcon: "img/docusaurus.svg",
-  favicon: "img/favicon.png",
+  headerIcon: 'img/docusaurus.svg',
+  footerIcon: 'img/docusaurus.svg',
+  favicon: 'img/favicon.png',
   colors: {
-    primaryColor: "#2E8555",
-    secondaryColor: "#205C3B"
+    primaryColor: '#2E8555',
+    secondaryColor: '#205C3B'
   },
-  copyright: "Copyright © " + new Date().getFullYear() + " UNCOVER TRUTH",
-  organizationName: "userdive",
+  copyright: 'Copyright © ' + new Date().getFullYear() + ' UNCOVER TRUTH',
+  organizationName: 'userdive',
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks
-    theme: "default"
+    theme: 'default'
   },
-  scripts: ["https://cdn.userdive.com/agent.js"],
+  scripts: ['https://cdn.userdive.com/agent.js'],
   // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: "https://github.com/userdive/agent.js"
-};
+  repoUrl: 'https://github.com/userdive/agent.js'
+}
 
-module.exports = siteConfig;
+module.exports = siteConfig
