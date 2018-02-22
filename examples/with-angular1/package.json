@@ -1,0 +1,10 @@
+{
+  "name": "with-angular1",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/angular": "^1.6.42",
+    "@uirouter/angularjs": "^1.0.14",
+    "angular": "^1.6.9"
+  }
+}
