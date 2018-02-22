@@ -101,7 +101,7 @@
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
-    "lint:examples": "tslint 'examples/**/*.ts{,x}'",
+    "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
     "lint:js": "eslint -c website/.eslintrc.json website",
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
