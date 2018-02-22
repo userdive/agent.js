@@ -2,8 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "es2015",
+    "experimentalDecorators": true,
     "jsx": "react",
     "outDir": "./tmp"
-  },
-  "include": ["test"]
+  }
 }

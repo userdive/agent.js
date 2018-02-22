@@ -1,6 +1,7 @@
 {
   "name": "with-angular",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": true,
   "dependencies": {
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",

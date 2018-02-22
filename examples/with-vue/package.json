@@ -1,6 +1,7 @@
 {
   "name": "with-vue",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": true,
   "dependencies": {
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"

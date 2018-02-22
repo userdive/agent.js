@@ -2,8 +2,8 @@ import * as React from 'react'
 import { HashRouter, Redirect, Route } from 'react-router-dom'
 
 import userdive from 'userdive'
-import Sample1 from './components/sample1'
-import Sample2 from './components/sample2'
+import Sample1 from '../components/sample1'
+import Sample2 from '../components/sample2'
 
 type Props = {}
 
