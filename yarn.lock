@@ -608,9 +608,9 @@ atob@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.0.3.tgz#19c7a760473774468f20b2d2d03372ad7d4cbf5d"
 
-auto-cookie@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/auto-cookie/-/auto-cookie-1.1.0.tgz#5eeea7f23dc8c29e166644c75f137fa541d37553"
+auto-cookie@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/auto-cookie/-/auto-cookie-2.0.0.tgz#d82cb196dac8c2680b954febbc6212a7225d6863"
 
 autolinker@~0.15.0:
   version "0.15.3"
