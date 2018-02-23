@@ -7,6 +7,6 @@ npm config set "//registry.npmjs.org/:_authToken=\${NPM_API_KEY}"
 npm whoami
 
 echo "publish"
-npm run publish
+npm run release
 
 echo "done."

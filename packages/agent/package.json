@@ -65,7 +65,7 @@
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
     "prebuild": "npm run clean",
-    "prepare": "npm run build",
+    "prepublish": "npm run build",
     "test": "karma start --single-run"
   },
   "types": "lib/agent.d.ts"
