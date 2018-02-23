@@ -88,9 +88,7 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "declare": "lerna run build --scope @userdive/agent",
-    "prebuild": "npm run declare",
-    "build": "run-p build:*",
+    "build": "run-s build:*",
     "build:cdn": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm",
     "build:examplejs": "cd examples && webpack",
     "build:examples": "pug examples -o examples/build -P -s",
@@ -100,8 +98,8 @@
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
-    "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
+    "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
@@ -111,8 +109,8 @@
     "postbuild": "cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "pretest": "npm run declare",
+    "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
     "version": "lerna publish --skip-npm --skip-git",
     "website": "cd website && npm start"
