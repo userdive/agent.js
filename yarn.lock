@@ -9274,9 +9274,9 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
 
-selenium-server-standalone-jar@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/selenium-server-standalone-jar/-/selenium-server-standalone-jar-3.8.1.tgz#24efe8a130f07a074b7c1a2ca3d6cd50c06ccb7d"
+selenium-server-standalone-jar@^3.9.1:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/selenium-server-standalone-jar/-/selenium-server-standalone-jar-3.9.1.tgz#6f623c23c6492cd3b0723d9af430e7f0f84fa072"
 
 selfsigned@^1.9.1:
   version "1.10.2"

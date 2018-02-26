@@ -26,7 +26,7 @@
     "pug-lint": "^2.5.0",
     "pug-lint-config-uncovertruth": "^0.0.2",
     "rimraf": "^2.6.2",
-    "selenium-server-standalone-jar": "^3.8.1",
+    "selenium-server-standalone-jar": "^3.9.1",
     "size-limit": "^0.15.1",
     "stylelint": "^9.1.0",
     "ts-loader": "^3.5.0",
