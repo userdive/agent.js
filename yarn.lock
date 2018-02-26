@@ -237,15 +237,15 @@
     "@types/uglify-js" "*"
     source-map "^0.6.0"
 
-"@uirouter/angularjs@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@uirouter/angularjs/-/angularjs-1.0.14.tgz#00e6b4652d6df9a4fbdffff9c31e0d17b4841d78"
+"@uirouter/angularjs@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@uirouter/angularjs/-/angularjs-1.0.15.tgz#06d7a350576301f8897f5132b37e69756872139e"
   dependencies:
-    "@uirouter/core" "5.0.16"
+    "@uirouter/core" "5.0.17"
 
-"@uirouter/core@5.0.16":
-  version "5.0.16"
-  resolved "https://registry.yarnpkg.com/@uirouter/core/-/core-5.0.16.tgz#c6f9e2041df1b6ad3bc28b089e55241a1cb4610f"
+"@uirouter/core@5.0.17":
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/@uirouter/core/-/core-5.0.17.tgz#c85d422b1e9a45df885be8b84f9b7f53233a7973"
 
 "@uncovertruth/eslint-config-react@^0.3.0":
   version "0.3.0"
