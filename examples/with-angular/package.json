@@ -9,7 +9,7 @@
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
     "@angular/platform-browser": "^5.2.0",
-    "@angular/platform-browser-dynamic": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.6",
     "@angular/router": "^5.2.0",
     "@angular/upgrade": "^5.2.0",
     "core-js": "^2.5.3",
