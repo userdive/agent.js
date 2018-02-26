@@ -1,6 +1,6 @@
 {
   "name": "@userdive/developer-website",
-  "version": "0.0.0",
+  "version": "0.12.0",
   "dependencies": {
     "docusaurus": "^1.0.5"
   },
@@ -18,7 +18,6 @@
     "publish-gh-pages": "docusaurus-publish",
     "rename-version": "docusaurus-rename-version",
     "start": "docusaurus-start",
-    "version": "docusaurus-version",
     "write-translations": "docusaurus-write-translations"
   }
 }
