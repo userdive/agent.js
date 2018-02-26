@@ -265,9 +265,9 @@
     eslint-plugin-promise "^3.6.0"
     eslint-plugin-standard "^3.0.1"
 
-"@uncovertruth/stylelint-config@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@uncovertruth/stylelint-config/-/stylelint-config-0.10.0.tgz#5f445fa6e2e1c9b75d964bf7221eddbf9dd5280e"
+"@uncovertruth/stylelint-config@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@uncovertruth/stylelint-config/-/stylelint-config-4.0.0.tgz#7acb909f4bc2b5d29b619c4b510dc72b14efbdce"
   dependencies:
     stylelint-config-standard "^18.0.0"
 
@@ -4893,11 +4893,7 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-hosted-git-info@^2.1.4:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.1.5.tgz#0ba81d90da2e25ab34a332e6ec77936e1598118b"
-
-hosted-git-info@^2.5.0:
+hosted-git-info@^2.1.4, hosted-git-info@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
