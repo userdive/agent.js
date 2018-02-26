@@ -259,9 +259,9 @@
   dependencies:
     stylelint-config-standard "^18.0.0"
 
-"@uncovertruth/tslint-config@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@uncovertruth/tslint-config/-/tslint-config-1.3.0.tgz#a7723254416f1edd822a94bdfff8f20ab2b50a49"
+"@uncovertruth/tslint-config@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@uncovertruth/tslint-config/-/tslint-config-4.0.0.tgz#cfb3a14efe935e24c407f8baac8ae55a5bdfbb13"
   dependencies:
     tslint-config-standard "^7.0.0"
 
