@@ -24,7 +24,7 @@
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
     "pug-lint": "^2.5.0",
-    "pug-lint-config-uncovertruth": "^0.0.2",
+    "pug-lint-config-uncovertruth": "^4.0.0",
     "rimraf": "^2.6.2",
     "selenium-server-standalone-jar": "^3.8.1",
     "size-limit": "^0.15.1",
