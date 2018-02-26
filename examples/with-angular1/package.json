@@ -3,7 +3,7 @@
   "version": "0.12.0",
   "private": true,
   "dependencies": {
-    "@types/angular": "^1.6.42",
+    "@types/angular": "^1.6.43",
     "@uirouter/angularjs": "^1.0.15",
     "angular": "^1.6.9"
   }
