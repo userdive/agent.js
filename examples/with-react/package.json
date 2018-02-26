@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/react": "^16.0.36",
-    "@types/react-dom": "^16.0.3",
+    "@types/react-dom": "^16.0.4",
     "@types/react-router": "^4.0.21",
     "@types/react-router-dom": "^4.2.3",
     "react": "^16.2.0",
