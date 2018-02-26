@@ -68,4 +68,8 @@ export default class Agent {
   run (pluginName: string, methodName: string, ...args: any[]) {
     this.plugins[pluginName][methodName](...args)
   }
+
+  getLinkParam () {
+    return this.core.getLinkParam()
+  }
 }

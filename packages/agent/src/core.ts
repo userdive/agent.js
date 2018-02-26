@@ -1,7 +1,8 @@
-import { find, save } from 'auto-cookie'
+import { save } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import * as cookies from 'js-cookie'
 import * as objectAssign from 'object-assign'
+import { parse } from 'query-string'
 import { UIEventObserver } from 'ui-event-observer'
 import { v4 as uuid } from 'uuid'
 
@@ -41,11 +42,16 @@ function findOrCreateClientIdAuto (
   const cookieAttr: cookies.CookieAttributes = {
     expires: cookieExpires
   }
-  const c = find(cookieName)
+  const c = cookies.get(cookieName)
   if (c) {
     return c
   }
   return save(cookieName, generateId(), cookieAttr)
+}
+
+function findClientIdFromQueryString (): string | undefined {
+  const id: any = parse(location.search)['_ud']
+  return id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/) ? id : undefined
 }
 
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
@@ -75,8 +81,36 @@ function pathname2href (pathname: string) {
   return pathname
 }
 
+function cookieClientId (
+  auto: boolean,
+  cookieName: string,
+  cookieDomain: string,
+  cookieExpires: number
+) {
+  let userId
+  if (!userId) {
+    if (auto) {
+      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
+    } else {
+      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+    }
+  }
+  return userId
+}
+function queryStringClientId (
+  cookieName: string,
+  cookieExpires: number
+): string | undefined {
+  const userId = findClientIdFromQueryString()
+  if (userId) {
+    save(cookieName, userId, { expires: cookieExpires })
+  }
+  return userId
+}
+
 export default class AgentCore extends Store {
   private baseUrl: string
+  private linkParam: { [key: string]: string }
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
   private events: any[]
@@ -96,7 +130,8 @@ export default class AgentCore extends Store {
       cookieDomain,
       cookieExpires,
       cookieName,
-      auto
+      auto,
+      allowLink
     }: Settings
   ) {
     super()
@@ -114,13 +149,15 @@ export default class AgentCore extends Store {
     eventsClass.forEach(Class => {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
-    let userId
-    if (auto) {
-      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
-    } else {
-      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
+
+    let userId: any = allowLink
+      ? queryStringClientId(cookieName, cookieExpires)
+      : undefined
+    if (!userId) {
+      userId = cookieClientId(auto, cookieName, cookieDomain, cookieExpires)
     }
     if (id && userId) {
+      this.linkParam = { _ud: userId }
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
   }
@@ -172,6 +209,10 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
     this.events.forEach(e => e.on())
     this.sendInteractsWithUpdate()
+  }
+
+  getLinkParam (): { [key: string]: string } {
+    return this.linkParam
   }
 
   protected sendInteractsWithUpdate (): void {

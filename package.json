@@ -88,16 +88,18 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "run-p build:*",
+    "build": "run-s build:*",
     "build:cdn": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm",
     "build:examplejs": "cd examples && webpack",
     "build:examples": "pug examples -o examples/build -P -s",
     "build:packages": "lerna run build",
     "build:website": "cd website && yarn build",
-    "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
+    "ci:sauce": "npm run declare && cross-env CI_MODE=sauce lerna run test",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
+    "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
+    "declare": "lerna run build --scope @userdive/agent",
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
@@ -106,8 +108,10 @@
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "cp robots.txt ./cdn",
+    "prebuild": "npm run declare",
     "precommit": "lint-staged",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
+    "pretest": "npm run declare",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
     "version": "lerna publish --skip-npm --skip-git",
@@ -116,7 +120,7 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8 KB"
+      "limit": "10 KB"
     }
   ],
   "workspaces": [

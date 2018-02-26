@@ -16,7 +16,7 @@ export default class Executer {
 
   run (args: any) {
     let cmd: TaskQueue[] = this.parse(args)
-    cmd = [...this.commandQueue, ...cmd]
+    cmd = [...this[QUEUE], ...cmd]
     for (this[QUEUE] = []; cmd.length > 0;) {
       if (this.execute(cmd[0])) {
         cmd.shift()

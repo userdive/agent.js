@@ -9,7 +9,8 @@ const date = new Date()
 module.exports = {
   entry: {
     'agent.d': path.join(__dirname, 'packages/agent/src/entrypoint/debug.ts'),
-    agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts')
+    agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts'),
+    linker: path.join(__dirname, 'packages/linker/src/index.ts')
   },
   output: {
     path: path.join(__dirname, 'cdn'),

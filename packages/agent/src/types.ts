@@ -6,6 +6,7 @@ export type Settings = {
   cookieExpires: number
   cookieName: string
   RAVEN_DSN: string
+  allowLink: boolean
   Raven?: Raven.RavenStatic
 }
 
