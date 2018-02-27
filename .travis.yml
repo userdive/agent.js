@@ -11,12 +11,12 @@ jobs:
       script: npm run lint
     - stage: Build
       script: npm run build
+    - stage: Test
+      script:
+      - npm run test
+      - npm run coverage
     - stage: Sauce
-      script: npm run test
-      env: CI_MODE ='sauce'
-    - stage: Coverage
-      script: npm run coverage
-      if: env(CMD) = 'test'
+      script: npm run ci:sauce
   exclude:
     - stage: Sauce
       if: NOT (branch =~ ^dependabot AND type = push)
