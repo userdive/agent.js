@@ -3,21 +3,23 @@ sudo: false
 node_js: stable
 cache: yarn
 env:
-  matrix:
-  - CMD=build
-  - CMD=ci:sauce
-  - CMD=lint
-  - CMD=test
   global:
     secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
 jobs:
   include:
-    - stage: Tests
-      script: npm run $CMD
-      if: NOT (env(CMD) = 'ci:sauce' AND branch =~ ^dependabot)
+    - stage: Lint
+      script: npm run lint
+    - stage: Build
+      script: npm run build
+    - stage: Sauce
+      script: npm run test
+      env: CI_MODE ='sauce'
     - stage: Coverage
       script: npm run coverage
       if: env(CMD) = 'test'
+  exclude:
+    - stage: Sauce
+      if: NOT (branch =~ ^dependabot AND type = push)
 notifications:
   email: false
   slack:
@@ -31,7 +33,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = ci:sauce
+    condition: $CI_MODE = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
@@ -43,7 +45,7 @@ deploy:
   on:
     all_branches: true
     repo: userdive/agent.js
-    condition: $CMD = ci:sauce
+    condition: $CI_MODE = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJGRQLUF4DJQRRPGA
@@ -54,7 +56,7 @@ deploy:
   on:
     branch: master
     repo: userdive/agent.js
-    condition: $CMD = ci:sauce
+    condition: $CI_MODE = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAJF4LQ6ECJ6VAO76Q
@@ -65,7 +67,7 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = ci:sauce
+    condition: $CI_MODE = ci:sauce
 - provider: s3
   skip_cleanup: true
   access_key_id: AKIAIFPFPDK4BGODWSXA
@@ -76,4 +78,4 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
-    condition: $CMD = ci:sauce
+    condition: $CI_MODE = ci:sauce
