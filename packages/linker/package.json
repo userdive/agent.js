@@ -8,12 +8,12 @@
   },
   "dependencies": {
     "object-assign": "^4.1.1",
+    "userdive": "^0.4.1",
     "query-string": "^5.1.0",
-    "userdive": "^0.4.1"
+    "@userdive/agent":"file:../agent"
   },
   "devDependencies": {
-    "@types/query-string": "^5.0.1",
-    "@userdive/agent": "file:../agent"
+    "@types/query-string": "^5.0.1"
   },
   "engine": {
     "node": "> 5"
@@ -35,9 +35,6 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
-    "prebuild": "run-s clean base",
-    "base": "npm rm @userdive/agent && npm i",
-    "pretest": "npm run base",
     "test": "karma start --single-run"
   }
 }
