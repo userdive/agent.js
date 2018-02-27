@@ -287,9 +287,8 @@
   dependencies:
     tslint-config-standard "^7.0.0"
 
-"@userdive/agent@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@userdive/agent/-/agent-0.12.1.tgz#c8ef8bba7ec559a5c524b6976d93275ea48eb5a6"
+"@userdive/agent@file:packages/agent":
+  version "0.13.0-beta1"
   dependencies:
     auto-cookie "^1.1.0"
     js-cookie "^2.2.0"

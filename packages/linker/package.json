@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/query-string": "^5.0.1",
-    "@userdive/agent": "^0.12.1"
+    "@userdive/agent": "file:../agent"
   },
   "engine": {
     "node": "> 5"
@@ -36,7 +36,7 @@
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
     "prebuild": "npm run clean",
-    "prepare": "npm run build",
+    "prepare": "npm rm @userdive/agent && npm i",
     "test": "karma start --single-run"
   }
 }
