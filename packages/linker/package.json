@@ -35,8 +35,9 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
-    "prebuild": "npm run clean",
-    "pretest": "npm rm @userdive/agent && npm i",
+    "prebuild": "run-s clean base",
+    "base": "npm rm @userdive/agent && npm i",
+    "pretest": "npm run base",
     "test": "karma start --single-run"
   }
 }
