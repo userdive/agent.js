@@ -1,24 +1,60 @@
 import { NAMESPACE } from './constants'
-import Executer from './executer'
 
-type TaskQueue = any[]
+const agents: any = {}
 
-export default function (Agent: any) {
-  const exe = new Executer(Agent)
+const parse = (
+  queue: any[]
+): {
+  cmd: string
+  args: any[]
+  name: string
+} => {
+  let args = []
+  let cmd = queue[0]
 
-  function execute (): any {
-    return exe.run(arguments)
+  if (queue.length > 1) {
+    [cmd, args] = queue
   }
 
-  ((global: any) => {
-    const element: any = document.querySelector(`[${NAMESPACE}]`)
-    const name: string = element.getAttribute(NAMESPACE)
-    if (global[name] && global[name].q) {
-      const queue: TaskQueue[] = global[name].q
-      for (let i = 0; i < queue.length; i++) {
-        exe.run(queue[i])
-      }
-      global[name] = execute
+  const [command, name] = cmd.split('.')
+  if (name) {
+    return {
+      cmd: command,
+      args,
+      name
     }
-  })(window)
+  }
+  return {
+    cmd,
+    args,
+    name: 'default'
+  }
+}
+
+const execute = (queue: any[], Agent: any): void => {
+  const { cmd, args, name } = parse(queue)
+  /**
+   * _ud('create', 'id', 'auto', 'myTracker') Valid
+   * _ud('create.myTracker', 'id', 'auto') Old syntax
+   * _ud('create', 'id', 'auto') Valid
+   */
+  if (cmd === 'create' && (name || args[1])) {
+    agents[args[1] || name] = new Agent(args[0])
+    return
+  }
+  if (typeof agents[name][cmd] === 'function') {
+    return agents[name][cmd](...args)
+  }
+}
+
+export default function (Agent: any) {
+  const w: any = window
+  const element: any = document.querySelector(`[${NAMESPACE}]`)
+  const name: string = element.getAttribute(NAMESPACE)
+  const res: any = []
+  if (w[name] && w[name].q) {
+    w[name].q.forEach((q: any[]) => res.push(execute(q, Agent)))
+    w[name] = execute
+  }
+  return res
 }

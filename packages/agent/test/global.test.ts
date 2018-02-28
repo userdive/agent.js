@@ -31,7 +31,7 @@ describe('global async', () => {
 
   it('find global', () => {
     assert.equal(
-      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url()),
+      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}),
       undefined
     )
     assert(window[GLOBAL_NAME]['q'].length)
@@ -43,30 +43,15 @@ describe('global async', () => {
     const agent = executer.agents['default']
     assert(agent)
     assert(agent.core.loadTime)
-
-    const name = lorem.word()
-    executer = window[GLOBAL_NAME](
-      `create.${name}`,
-      random.alphaNumeric(),
-      {},
-      internet.url()
-    )
-    assert(window[GLOBAL_NAME](`send.${name}`, 'pageview'))
-    const agent2 = executer.agents[name]
-    assert(agent2)
-    assert(agent.core.id !== agent2.core.id)
   })
 
   it('debug global', () => {
     assert.equal(
-      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}, internet.url()),
+      window[GLOBAL_NAME]('create', random.alphaNumeric(), {}),
       undefined
     )
     assert(window[GLOBAL_NAME]['q'].length)
     require('../src/entrypoint/debug')
     assert(window[GLOBAL_NAME]['q'] === undefined)
-
-    const executer = window[GLOBAL_NAME]('send', 'pageview')
-    assert(executer.agents['default'].core.loadTime)
   })
 })

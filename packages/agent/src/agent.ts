@@ -42,10 +42,12 @@ export default class Agent {
     }
     return this.core
   }
+
   send (type: SendType, page?: string): AgentCore {
     this.core.send(type, page || location.href)
     return this.core
   }
+
   set (key: any, value?: string | number): State {
     if (key && value) {
       return this.core.set(key, value)
@@ -61,10 +63,9 @@ export default class Agent {
     this[PLUGINS][name] = pluginConstructor
   }
 
-  require (pluginName: string, options: any): boolean {
+  require (pluginName: string, args: any): boolean {
     if (this[PLUGINS][pluginName]) {
-      const opt: any = options || {}
-      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](this, opt)
+      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](this, ...args)
       return true
     }
     return false
