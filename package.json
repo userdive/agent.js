@@ -5,7 +5,7 @@
   },
   "devDependencies": {
     "@uncovertruth/eslint-config": "^4.0.0",
-    "@uncovertruth/eslint-config-react": "^0.3.0",
+    "@uncovertruth/eslint-config-react": "^4.0.0",
     "@uncovertruth/stylelint-config": "^4.0.0",
     "@uncovertruth/tslint-config": "^4.0.0",
     "can-npm-publish": "^1.0.2",
