@@ -1,0 +1,9 @@
+{
+  "name": "@userdive/bundle",
+  "version": "0.0.0",
+  "main": "n/a",
+  "dependencies": {
+    "@userdive/agent": "0.13.0-beta1"
+  },
+  "license": "MIT"
+}

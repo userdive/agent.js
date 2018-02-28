@@ -34,7 +34,7 @@ const execute = (queue: any[], Agent: any): void => {
    * _ud('create', 'id', { name: 'myTracker' })
    * _ud('create', 'id', 'auto')
    */
-  if (cmd === 'create' && (name || args[1])) {
+  if (cmd === 'create') {
     agents[args[1] ? args[1].name : name] = new Agent(args[0], args[1])
     return
   }

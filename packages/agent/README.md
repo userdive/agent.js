@@ -47,18 +47,15 @@ agent.send("pageview");
 ```js
 import Agent from "@userdive/agent";
 
-const agent = new Agent();
-agent.create("projectId", "auto");
+const agent = new Agent("projectId", "auto");
 agent.send("pageview", {
-    dimension15: "My Custom Dimension",
-    metric18: 8000
+    dimension15: "My Custom Dimension"
 });
 ```
 
 ```js
 agent.set({
-    dimension15: "My Custom Dimension",
-    metric18: 8000
+    dimension15: "My Custom Dimension"
 });
 
 agent.set("dimension15", "My Custom Dimension");
@@ -81,11 +78,10 @@ class MyPlugin {
 
 #### Use Plugin
 
-plugin function can call `'pluginName:functionName'`
-
 ```js
 import Agent from "@userdive/agent";
 import Myplugin from "path/to/plugin";
+
 const agent = new Agent("projectId", "auto");
 agent.provide("myplugin", MyPlugin);
 agent.require("myplugin", { msg: "hello" }); // provided name
