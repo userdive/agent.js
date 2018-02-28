@@ -9,6 +9,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/userdive/agent.js/badge)](https://www.codefactor.io/repository/github/userdive/agent.js)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&utm_medium=referral&utm_content=userdive/agent.js&utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master)](https://bettercodehub.com/)
+[![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev)
 
 > Official USERDIVE module for webpage analytics
 

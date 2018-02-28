@@ -7,10 +7,10 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
+    "@userdive/agent": "file:../agent",
     "object-assign": "^4.1.1",
-    "userdive": "^0.4.1",
     "query-string": "^5.1.0",
-    "@userdive/agent":"file:../agent"
+    "userdive": "^0.4.1"
   },
   "devDependencies": {
     "@types/query-string": "^5.0.1"
@@ -33,7 +33,8 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm i file:../agent && tsc",
+    "pretest": "npm run build",
     "clean": "rimraf coverage lib docs",
     "test": "karma start --single-run"
   }
