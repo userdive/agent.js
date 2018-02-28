@@ -33,7 +33,7 @@
     "karma-webpack": "^2.0.9",
     "mocha": "^4.1.0",
     "power-assert": "^1.4.4",
-    "sinon": "^4.1.5",
+    "sinon": "^4.4.2",
     "ts-node": "^4.1.0",
     "userdive": "^0.4.1",
     "webpack-espower-loader": "^1.0.2"
