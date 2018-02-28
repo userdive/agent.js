@@ -27,11 +27,6 @@ describe('agent', () => {
     assert(agent.get(random.word()) === '', 'undefined key')
   })
 
-  it('create', () => {
-    assert(agent.create(random.uuid(), 'auto'))
-    assert(agent.create(random.uuid(), { baseUrl: internet.url() }))
-  })
-
   it('send', () => {
     const core = agent.send('pageview')
     assert(core.interactId === 1)

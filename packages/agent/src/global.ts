@@ -31,6 +31,10 @@ export default function (Agent: any) {
   if (w[name] && w[name].q) {
     const { q } = w[name]
     w[name] = execute(Agent)
-    q.forEach((args: any) => execute(Agent)(...args))
+    q.forEach((args: any[]) => {
+      const cmd = args[0]
+      delete args[0]
+      execute(Agent)(cmd, ...args)
+    })
   }
 }

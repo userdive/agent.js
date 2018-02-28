@@ -38,10 +38,18 @@ describe('global async', () => {
     const agent: any = window[GLOBAL_NAME]('send', 'pageview')
     assert(agent.core.loadTime)
 
-    const name = lorem.word()
+    let name = lorem.word()
     window[GLOBAL_NAME](`create`, lorem.word(), {}, name)
     const agent2 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
-    assert(agent.core.id !== agent2.core.id)
+    assert(agent2.active)
+    assert(agent.id !== agent2.id)
+
+    name = lorem.word()
+    window[GLOBAL_NAME](`create`, lorem.word(), { name })
+    const agent3 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
+    assert(agent3.active)
+    assert(agent.id !== agent3.id)
+    assert(agent2.id !== agent3.id)
   })
 
   it('debug global', () => {

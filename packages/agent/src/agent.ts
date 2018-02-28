@@ -15,14 +15,8 @@ export default class Agent {
   private core: AgentCore
   private plugins: { [name: string]: any }
 
-  constructor (projectId?: string, settings?: Object | 'auto') {
+  constructor (projectId: string, settings?: Object | 'auto') {
     this.plugins = {}
-    if (projectId && settings) {
-      this.create(projectId, settings)
-    }
-  }
-
-  create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
@@ -40,7 +34,6 @@ export default class Agent {
         false
       )
     }
-    return this.core
   }
 
   send (type: SendType, page?: string): AgentCore {
