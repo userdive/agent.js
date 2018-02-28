@@ -9,7 +9,6 @@
     "@types/react-router-dom": "^4.2.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2",
-    "userdive": "^0.4.1"
+    "react-router-dom": "^4.2.2"
   }
 }
