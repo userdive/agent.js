@@ -16,30 +16,26 @@ const parse = (
     [cmd, args] = queue
   }
 
-  const [command, name] = cmd.split('.')
-  if (name) {
-    return {
-      cmd: command,
-      args,
-      name
-    }
+  const [trackerName, command] = cmd.split('.')
+  if (trackerName && command) {
+    cmd = command
   }
   return {
     cmd,
     args,
-    name: 'default'
+    name: command ? trackerName : 'default'
   }
 }
 
 const execute = (queue: any[], Agent: any): void => {
   const { cmd, args, name } = parse(queue)
   /**
-   * _ud('create', 'id', 'auto', 'myTracker') Valid
-   * _ud('create.myTracker', 'id', 'auto') Old syntax
-   * _ud('create', 'id', 'auto') Valid
+   * _ud('create', 'id', 'auto', 'myTracker')
+   * _ud('create', 'id', { name: 'myTracker' })
+   * _ud('create', 'id', 'auto')
    */
   if (cmd === 'create' && (name || args[1])) {
-    agents[args[1] || name] = new Agent(args[0])
+    agents[args[1] ? args[1].name : name] = new Agent(args[0], args[1])
     return
   }
   if (typeof agents[name][cmd] === 'function') {
@@ -51,10 +47,8 @@ export default function (Agent: any) {
   const w: any = window
   const element: any = document.querySelector(`[${NAMESPACE}]`)
   const name: string = element.getAttribute(NAMESPACE)
-  const res: any = []
   if (w[name] && w[name].q) {
-    w[name].q.forEach((q: any[]) => res.push(execute(q, Agent)))
+    w[name].q.forEach((q: any[]) => execute(q, Agent))
     w[name] = execute
   }
-  return res
 }
