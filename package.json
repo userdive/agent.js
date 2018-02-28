@@ -4,22 +4,42 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.2",
+    "@types/is-url": "^1.2.28",
+    "@types/mocha": "^2.2.46",
+    "@types/node": "^9.3.0",
+    "@types/object-assign": "^4.0.30",
+    "@types/sinon": "^4.1.3",
+    "@types/webpack": "^3.8.2",
     "@uncovertruth/eslint-config": "^4.0.0",
     "@uncovertruth/eslint-config-react": "^4.0.0",
     "@uncovertruth/stylelint-config": "^4.0.0",
     "@uncovertruth/tslint-config": "^4.0.0",
+    "assert-exception": "^1.1.0",
     "can-npm-publish": "^1.0.2",
     "chromedriver": "^2.35.0",
     "codecov": "^3.0.0",
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.3",
     "eslint": "^4.18.1",
+    "faker": "^4.1.0",
     "fixpack": "^2.3.1",
     "husky": "^0.14.3",
+    "is-url": "^1.2.2",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "karma": "^2.0.0",
+    "karma-coverage-istanbul-reporter": "^1.3.3",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sauce-launcher": "^1.2.0",
+    "karma-webpack": "^2.0.9",
     "lerna": "^2.9.0",
     "lint-staged": "^7.0.0",
+    "mocha": "^4.1.0",
     "nightwatch": "^0.9.19",
     "npm-run-all": "^4.1.2",
+    "power-assert": "^1.4.4",
     "prettier-eslint-cli": "^4.7.1",
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
@@ -27,9 +47,11 @@
     "pug-lint-config-uncovertruth": "^4.0.0",
     "rimraf": "^2.6.2",
     "selenium-server-standalone-jar": "^3.8.1",
+    "sinon": "^4.1.5",
     "size-limit": "^0.15.1",
     "stylelint": "^9.1.0",
     "ts-loader": "^3.5.0",
+    "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
     "tslint-react": "^3.5.1",
     "typescript": "^2.7.2",
@@ -37,7 +59,8 @@
     "uglify-js": "^3.3.12",
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "webpack-espower-loader": "^1.0.2"
   },
   "engine": {
     "node": "> 5"
@@ -88,18 +111,16 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "run-s build:*",
-    "build:cdn": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm",
+    "build": "run-p build:*",
     "build:examplejs": "cd examples && webpack",
     "build:examples": "pug examples -o examples/build -P -s",
     "build:packages": "lerna run build",
     "build:website": "cd website && yarn build",
-    "ci:sauce": "npm run declare && cross-env CI_MODE=sauce lerna run test",
+    "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
-    "declare": "lerna run build --scope @userdive/agent",
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
@@ -107,11 +128,10 @@
     "lint:js": "eslint -c website/.eslintrc.json website",
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
-    "postbuild": "cp robots.txt ./cdn",
-    "prebuild": "npm run declare",
+    "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
+    "prepare": "lerna run build --scope @userdive/agent",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "pretest": "npm run declare",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
     "version": "lerna publish --skip-npm --skip-git",
@@ -120,7 +140,11 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "10 KB"
+      "limit": "9.1 KB"
+    },
+    {
+      "path": "cdn/linker.js",
+      "limit": "2.6 KB"
     }
   ],
   "workspaces": [
