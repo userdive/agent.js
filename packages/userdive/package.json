@@ -4,13 +4,13 @@
   "version": "0.4.1",
   "author": "UNCOVER TRUTH Inc",
   "bugs": {
-    "url": "https://github.com/userdive/userdive.js/issues"
+    "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {},
   "files": [
     "lib/"
   ],
-  "homepage": "https://github.com/userdive/userdive.js#readme",
+  "homepage": "https://github.com/userdive/agent.js#readme",
   "keywords": [
     "userdive"
   ],
@@ -18,7 +18,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/userdive/userdive.js.git"
+    "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
     "build": "tsc",
