@@ -122,6 +122,7 @@
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
+    "coverage:userdive": "codecov -f ./packages/userdive/coverage/lcov.info -F userdive",
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
