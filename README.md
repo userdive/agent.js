@@ -20,6 +20,7 @@ This repository is managed as monorepo.
 | Package                                | Version                                                                                                           |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | **[@userdive/agent](/packages/agent)** | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent) |
+| **[userdive](/packages/userdive)**     | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                   |
 
 ## Contribute
 
