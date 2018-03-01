@@ -1,3 +1,16 @@
+## v0.13.0 (2018-03-01)
+
+#### :rocket: Enhancement
+
+*   `agent`, `linker`
+    *   [#212](https://github.com/userdive/agent.js/pull/212) linker plugin. ([@shoota](https://github.com/shoota))
+
+#### Committers: 3
+
+*   Keisuke Kan ([9renpoto](https://github.com/9renpoto))
+*   Shoota Kumano ([shoota](https://github.com/shoota))
+*   [dependabot[bot]](https://github.com/apps/dependabot)
+
 ## v0.12.0 (2018-02-26)
 
 #### :rocket: Enhancement
