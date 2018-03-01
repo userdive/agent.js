@@ -132,7 +132,7 @@
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "prepare": "lerna run build --scope @userdive/agent",
+    "prepare": "lerna run build",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
