@@ -37,5 +37,6 @@
     "pretest": "npm run build",
     "clean": "rimraf coverage lib docs",
     "test": "karma start --single-run"
-  }
+  },
+  "types": "lib/linker.d.ts"
 }

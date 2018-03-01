@@ -122,6 +122,7 @@
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
+    "coverage:userdive": "codecov -f ./packages/userdive/coverage/lcov.info -F userdive",
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
@@ -131,11 +132,11 @@
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "prepare": "lerna run build --scope @userdive/agent",
+    "prepare": "lerna run build",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
-    "version": "lerna publish --skip-npm --skip-git",
+    "version": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "website": "cd website && npm start"
   },
   "size-limit": [
