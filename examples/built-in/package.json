@@ -1,7 +1,8 @@
 {
-  "name": "@userdive/bundle",
+  "name": "@userdive/built-in",
   "version": "0.0.0",
   "main": "n/a",
+  "private": true,
   "dependencies": {
     "@userdive/agent": "0.13.0-beta1"
   },
