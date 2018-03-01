@@ -15,7 +15,7 @@ export default class Agent {
   private core: AgentCore
   private plugins: { [name: string]: any }
 
-  constructor (projectId: string, settings?: Object | 'auto') {
+  constructor (projectId: string, settings: Object | 'auto') {
     this.plugins = {}
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
