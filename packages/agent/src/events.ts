@@ -6,10 +6,20 @@ import { LISTENER, SCROLL } from './constants'
 import { error, raise, warning } from './logger'
 import { CustomError, EventType, InteractType } from './types'
 
-export default class Events {
+export interface AgentEventBase {
+  observer: any
+  on (eventName: EventType, handler: Function, type: InteractType): void
+  off (): void
+}
+
+export interface AgentEvent extends AgentEventBase {
+  on (): void
+}
+
+export default class Events implements AgentEventBase {
+  observer: any
   private emitter: EventEmitter
   private name: string
-  private observer: any
   private type: InteractType
   constructor (
     emitName: string,

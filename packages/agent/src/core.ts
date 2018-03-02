@@ -12,6 +12,7 @@ import {
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   LINKER
 } from './constants'
+import { AgentEvent } from './events'
 import { raise, setup, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
@@ -53,7 +54,7 @@ export default class AgentCore extends Store {
   private baseUrl: string
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
-  private events: any[]
+  private events: AgentEvent[]
   private interactId: number
   private interacts: Interact[]
   private interval: number[]
@@ -74,7 +75,22 @@ export default class AgentCore extends Store {
       allowLink
     }: Settings
   ) {
-    super()
+    let userId = getCookie(cookieName) as string
+    if (allowLink) {
+      const { [LINKER]: id } = parse(location.search)[LINKER]
+      if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
+        userId = id
+      }
+    }
+    const saveCookie = auto ? save : setCookie
+    if (!userId || allowLink) {
+      saveCookie(cookieName, userId, {
+        domain,
+        expires
+      })
+    }
+    super(userId)
+
     setup(RAVEN_DSN, Raven)
 
     this.id = generateId()
@@ -90,20 +106,6 @@ export default class AgentCore extends Store {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
 
-    let userId = getCookie(cookieName) as string
-    if (allowLink) {
-      const { [LINKER]: id } = parse(location.search)[LINKER]
-      if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
-        userId = id
-      }
-    }
-    const saveCookie = auto ? save : setCookie
-    if (!userId || allowLink) {
-      saveCookie(cookieName, userId, {
-        domain,
-        expires
-      })
-    }
     if (id && userId) {
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
