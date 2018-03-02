@@ -19,6 +19,12 @@ const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
     ] = new Agent(args[0], args[1])
     return
   }
+
+  const [pluginName, pluginFunctionName]: string[] = cmd.split(':')
+  if (pluginName && pluginFunctionName) {
+    return agents[trackerName].run(pluginName, pluginFunctionName, ...args)
+  }
+
   if (typeof agents[trackerName][cmd] === 'function') {
     return agents[trackerName][cmd](...args)
   }
@@ -26,15 +32,15 @@ const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
 
 export default function (Agent: any) {
   const w: any = window
-  const element: any = document.querySelector(`[${NAMESPACE}]`)
-  const name: string = element.getAttribute(NAMESPACE)
+  const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
+  const name = element.getAttribute(NAMESPACE) as string
   if (w[name] && w[name].q) {
     const { q } = w[name]
-    w[name] = execute(Agent)
     q.forEach((args: any[]) => {
       const cmd = args[0]
       delete args[0]
       execute(Agent)(cmd, ...args)
     })
   }
+  w[name] = execute(Agent)
 }

@@ -52,6 +52,26 @@ describe('global async', () => {
     assert(agent2.id !== agent3.id)
   })
 
+  it('call plugins', () => {
+    require('../src/entrypoint/')
+    window[GLOBAL_NAME]('create', lorem.word(), {})
+    const name = lorem.word()
+    class Plugin {
+      tracker: any
+      constructor (tracker) {
+        assert(tracker.plugins.length === 1)
+      }
+      echo (value: string) {
+        assert(value === 'hello')
+      }
+    }
+    window[GLOBAL_NAME]('provide', name, Plugin)
+    window[GLOBAL_NAME]('require', name)
+
+    const url: string = internet.url()
+    window[GLOBAL_NAME](`${name}:echo`, 'hello')
+  })
+
   it('debug global', () => {
     assert.equal(window[GLOBAL_NAME]('create', lorem.word(), {}), undefined)
     assert(window[GLOBAL_NAME]['q'].length)
