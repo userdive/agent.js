@@ -1,6 +1,6 @@
 import { save } from 'auto-cookie'
 import { EventEmitter } from 'events'
-import * as cookies from 'js-cookie'
+import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { parse } from 'query-string'
 import { UIEventObserver } from 'ui-event-observer'
@@ -9,7 +9,8 @@ import { v4 as uuid } from 'uuid'
 import { getEnv } from './browser'
 import {
   INTERACT as MAX_INTERACT,
-  INTERVAL as INTERVAL_DEFAULT_SETTING
+  INTERVAL as INTERVAL_DEFAULT_SETTING,
+  LINKER
 } from './constants'
 import { raise, setup, warning } from './logger'
 import { get, obj2query } from './requests'
@@ -19,39 +20,6 @@ import { Interact, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
-}
-
-function findOrCreateClientId (
-  cookieName: string,
-  cookieDomain: string,
-  cookieExpires?: number
-): string | undefined {
-  const options = { domain: cookieDomain, expires: cookieExpires }
-  const c = cookies.get(cookieName)
-  if (c) {
-    return c
-  }
-  cookies.set(cookieName, generateId(), options)
-  return cookies.get(cookieName)
-}
-
-function findOrCreateClientIdAuto (
-  cookieName: string,
-  cookieExpires: number
-): string | undefined {
-  const cookieAttr: cookies.CookieAttributes = {
-    expires: cookieExpires
-  }
-  const c = cookies.get(cookieName)
-  if (c) {
-    return c
-  }
-  return save(cookieName, generateId(), cookieAttr)
-}
-
-function findClientIdFromQueryString (): string | undefined {
-  const id: any = parse(location.search)['_ud']
-  return id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/) ? id : undefined
 }
 
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
@@ -81,36 +49,8 @@ function pathname2href (pathname: string) {
   return pathname
 }
 
-function cookieClientId (
-  auto: boolean,
-  cookieName: string,
-  cookieDomain: string,
-  cookieExpires: number
-) {
-  let userId
-  if (!userId) {
-    if (auto) {
-      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
-    } else {
-      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
-    }
-  }
-  return userId
-}
-function queryStringClientId (
-  cookieName: string,
-  cookieExpires: number
-): string | undefined {
-  const userId = findClientIdFromQueryString()
-  if (userId) {
-    save(cookieName, userId, { expires: cookieExpires })
-  }
-  return userId
-}
-
 export default class AgentCore extends Store {
   private baseUrl: string
-  private linkParam: { [key: string]: string }
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
   private events: any[]
@@ -127,8 +67,8 @@ export default class AgentCore extends Store {
       RAVEN_DSN,
       Raven,
       baseUrl,
-      cookieDomain,
-      cookieExpires,
+      cookieDomain: domain,
+      cookieExpires: expires,
       cookieName,
       auto,
       allowLink
@@ -150,14 +90,21 @@ export default class AgentCore extends Store {
       this.events.push(new Class(this.id, this.emitter, observer))
     })
 
-    let userId: any = allowLink
-      ? queryStringClientId(cookieName, cookieExpires)
-      : undefined
-    if (!userId) {
-      userId = cookieClientId(auto, cookieName, cookieDomain, cookieExpires)
+    let userId = getCookie(cookieName) as string
+    if (allowLink) {
+      const { [LINKER]: id } = parse(location.search)[LINKER]
+      if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
+        userId = id
+      }
+    }
+    const saveCookie = auto ? save : setCookie
+    if (!userId || allowLink) {
+      saveCookie(cookieName, userId, {
+        domain,
+        expires
+      })
     }
     if (id && userId) {
-      this.linkParam = { _ud: userId }
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }
   }
@@ -209,10 +156,6 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
     this.events.forEach(e => e.on())
     this.sendInteractsWithUpdate()
-  }
-
-  getLinkParam (): { [key: string]: string } {
-    return this.linkParam
   }
 
   protected sendInteractsWithUpdate (): void {

@@ -1,23 +1,23 @@
 import * as Raven from 'raven-js'
 export type Settings = {
-  auto: boolean
-  baseUrl: string
-  cookieDomain: string
-  cookieExpires: number
-  cookieName: string
-  RAVEN_DSN: string
-  allowLink: boolean
-  Raven?: Raven.RavenStatic
+  readonly auto: boolean
+  readonly baseUrl: string
+  readonly cookieDomain: string
+  readonly cookieExpires: number
+  readonly cookieName: string
+  readonly RAVEN_DSN: string
+  readonly allowLink: boolean
+  readonly Raven?: Raven.RavenStatic
 }
 
 export type Point = {
-  x: number
-  y: number
+  readonly x: number
+  readonly y: number
 }
 
 export type Size = {
-  h: number
-  w: number
+  readonly h: number
+  readonly w: number
 }
 
 export type SendType = 'pageview'
@@ -114,17 +114,17 @@ export type Custom = {
 }
 
 export type ClientEnvironmentsData = {
-  v: number
-  uid?: number
+  readonly v: number
+  readonly uid?: number
   l: string
-  n: string
-  r: string
-  sw: number
-  sh: number
-  ww: number
-  wh: number
-  h: number
-  w: number
+  readonly n: string
+  readonly r: string
+  readonly sw: number
+  readonly sh: number
+  readonly ww: number
+  readonly wh: number
+  readonly h: number
+  readonly w: number
 }
 
 export type ClientEnvironments = {
@@ -133,6 +133,7 @@ export type ClientEnvironments = {
 }
 
 export type State = {
+  userId: string
   env: ClientEnvironmentsData
   custom: CustomData
 }
@@ -140,12 +141,12 @@ export type State = {
 export type InteractType = 'l' | 'a'
 
 export type Interact = {
-  id: number
-  left: number
-  top: number
-  type: InteractType
-  x: number
-  y: number
+  readonly id: number
+  readonly left: number
+  readonly top: number
+  readonly type: InteractType
+  readonly x: number
+  readonly y: number
 }
 
 export type EventType =

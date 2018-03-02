@@ -6,6 +6,7 @@ function push (t: number, n: number) {
 }
 push(2, 300)
 
+export const LINKER = '_ud' // TODO
 export const CUSTOM_INDEX = 20
 export const INTERACT = 5
 export const INTERVAL = intervals.sort()
