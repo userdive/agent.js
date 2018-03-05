@@ -61,7 +61,7 @@
     "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1",
-    "webpack-espower-loader": "^1.0.2"
+    "webpack-espower-loader": "^2.0.0"
   },
   "engine": {
     "node": "> 5"
