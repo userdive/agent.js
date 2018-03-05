@@ -16,16 +16,19 @@ export default class Linker {
 
   autoLink (domains: string[]) {
     const events: string[] = ['mousedown', 'keyup']
-    const id = this.agent.getLinkParam()
-    events.forEach(event =>
+    const param: any = {}
+    param[LINKER] = this.agent.getLinkParam()
+    events.forEach((event: string) =>
       this.agent.core.observer.subscribe(
+        document,
         event,
-        linkHandler(domains, { [LINKER]: id })
+        linkHandler(domains, param)
       )
     )
     this.agent.core.observer.subscribe(
+      document,
       'submit',
-      submitHandler(domains, { [LINKER]: id })
+      submitHandler(domains, param)
     )
   }
 }

@@ -18,7 +18,7 @@ export const VERSION = 1
 export const SETTINGS = {
   auto: false,
   baseUrl: 'https://v1.userdive.com',
-  cookieName: '_ud', // TODO
+  cookieName: '_ud',
   cookieDomain: '',
   cookieExpires: 730, // TODO
   RAVEN_DSN: '',

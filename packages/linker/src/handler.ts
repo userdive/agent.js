@@ -8,7 +8,7 @@ export type DOMAIN = string | RegExp
 export function linkHandler (
   domains: DOMAIN[],
   param: { [key: string]: string }
-): EventListenerOrEventListenerObject {
+) {
   return (event: Event) => {
     const eventElement: any = event.target || event.srcElement
     scanLinkElement(param, domains, eventElement)
@@ -18,7 +18,7 @@ export function linkHandler (
 export function submitHandler (
   domains: DOMAIN[],
   param: { [key: string]: string }
-): EventListenerOrEventListenerObject {
+) {
   return (event: Event) => {
     const eventElement: any = event.target || event.srcElement
     if (addableForm(domains, eventElement)) {
