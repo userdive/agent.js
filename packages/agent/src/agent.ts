@@ -12,7 +12,7 @@ import { SendType, State } from './types'
 const PLUGINS = 'plugins'
 
 export default class Agent {
-  private core: AgentCore
+  core: AgentCore
   private plugins: { [name: string]: any }
 
   constructor (projectId?: string, settings?: Object | 'auto') {
