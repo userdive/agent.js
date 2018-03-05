@@ -1,7 +1,7 @@
-import { LINKER } from '@userdive/agent/lib/constants'
 import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
 
+const queryKey = '_ud' // TODO
 const matchUrl = /^https?:\/\/([^\/:]+)/
 export type DOMAIN = string | RegExp
 
@@ -32,7 +32,7 @@ function scanLinkElement (
   domains: DOMAIN[],
   node: any
 ) {
-  for (let i = 100; node && i > 0; i++) {
+  for (let i = 0; i < 100 && node; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
       node.href = linkUrl(node.href, param)
@@ -90,18 +90,18 @@ function addHiddenInput (
   form: HTMLFormElement,
   param: { [key: string]: string }
 ) {
-  const value: string = param[LINKER]
+  const value: string = param[queryKey]
   const nodes: any = form.childNodes
 
   for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].name === LINKER) {
+    if (nodes[i].name === queryKey) {
       nodes[i].setAttribute('value', value)
       return
     }
   }
   const i: HTMLInputElement = document.createElement('input')
   i.setAttribute('type', 'hidden')
-  i.setAttribute('name', LINKER)
+  i.setAttribute('name', queryKey)
   i.setAttribute('value', value)
   form.appendChild(i)
 }

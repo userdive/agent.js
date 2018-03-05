@@ -11,12 +11,13 @@ export function enable (): boolean {
 export function get (
   url: string,
   query: string[],
-  onload: (this: HTMLElement, ev: Event) => any,
-  onerror: (this: HTMLElement, ev: ErrorEvent) => any
+  onerror: (this: HTMLElement, ev: ErrorEvent) => void
 ): void {
   if (enable() && query.length > 0) {
     const img: HTMLImageElement = document.createElement('img')
-    img.onload = onload
+    img.onload = () => {
+      // nothing todo
+    }
     img.onerror = onerror
     img.src = `${url}?${query.join('&')}`
   }

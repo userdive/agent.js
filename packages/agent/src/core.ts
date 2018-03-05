@@ -60,7 +60,6 @@ export default class AgentCore extends Store {
   private interacts: Interact[]
   private interval: number[]
   private loadTime: number
-  private active: boolean
   private id: string
   constructor (
     id: string,
@@ -106,15 +105,20 @@ export default class AgentCore extends Store {
     eventsClass.forEach(Class => {
       this.events.push(new Class(this.id, this.emitter, this.observer))
     })
-    if (id && userId) {
-      this.baseUrl = `${baseUrl}/${id}/${userId}`
+    if (!id || !userId) {
+      raise('need generated id')
+      return
     }
+    this.baseUrl = `${baseUrl}/${id}/${userId}`
+    this.emitter.on(this.id, this.updateInteractCache.bind(this))
+    this.events.forEach(e => e.on())
+    this.sendInteractsWithUpdate()
   }
 
   send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
-        this.destroy(false)
+        this.sendInteracts(true)
 
         const data = getEnv(pathname2href(page))
         if (!data || !this.baseUrl) {
@@ -133,31 +137,38 @@ export default class AgentCore extends Store {
             this.get('custom')
           ) as any),
           () => {
-            this.active = true
-            this.listen()
-          },
-          () => {
-            this.active = false
+            this.destroy()
           }
         )
     }
   }
 
-  destroy (isPageHide: boolean): void {
-    this.sendInteracts(isPageHide)
+  destroy (): void {
     this.emitter.removeAllListeners(this.id)
     this.events.forEach(e => e.off())
-    this.active = false
     this.loadTime = 0
   }
 
-  listen (): void {
-    if (!this.active || !this.loadTime) {
-      return raise('need send pageview')
+  sendInteracts (force?: boolean): void {
+    const query: string[] = []
+    this.interacts.forEach(data => {
+      const q = createInteractData(data)
+      if (q.length) {
+        query.push(`d=${q}`)
+      }
+    })
+
+    if (this.baseUrl && (query.length >= MAX_INTERACT || force)) {
+      const customState: any = this.get('custom')
+      get(
+        `${this.baseUrl}/${this.loadTime}/int.gif`,
+        query.concat(obj2query(customState)),
+        () => {
+          this.destroy()
+        }
+      )
+      this.interacts.length = 0
     }
-    this.emitter.on(this.id, this.updateInteractCache.bind(this))
-    this.events.forEach(e => e.on())
-    this.sendInteractsWithUpdate()
   }
 
   protected sendInteractsWithUpdate (): void {
@@ -175,7 +186,7 @@ export default class AgentCore extends Store {
     this.clear()
     this.sendInteracts()
 
-    if (this.active) {
+    if (this.loadTime) {
       const delay = this.interval.shift()
       if (delay !== undefined && delay >= 0) {
         setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
@@ -185,33 +196,8 @@ export default class AgentCore extends Store {
   }
 
   private updateInteractCache (data: Interact): void {
-    if (cacheValidator(data) && this.active) {
+    if (cacheValidator(data) && this.loadTime) {
       this.cache[data.type] = data
-    }
-  }
-
-  private sendInteracts (force?: boolean): void {
-    const query: string[] = []
-    this.interacts.forEach(data => {
-      const q = createInteractData(data)
-      if (q.length) {
-        query.push(`d=${q}`)
-      }
-    })
-
-    if (this.baseUrl && (query.length >= MAX_INTERACT || force)) {
-      const customState: any = this.get('custom')
-      get(
-        `${this.baseUrl}/${this.loadTime}/int.gif`,
-        query.concat(obj2query(customState)),
-        () => {
-          //
-        },
-        () => {
-          this.active = false
-        }
-      )
-      this.interacts.length = 0
     }
   }
 
