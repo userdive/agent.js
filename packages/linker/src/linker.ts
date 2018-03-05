@@ -1,39 +1,31 @@
 import Agent from '@userdive/agent'
 import { LINKER } from '@userdive/agent/lib/constants'
-import { AgentEvent } from '@userdive/agent/lib/event'
+import MethodChain from 'autotrack/lib/method-chein'
 import { linkHandler, submitHandler } from './handler'
-
-const factory = (id: string, domains: string[]): AgentEvent => {
-  return class LinkerEvent implements AgentEvent {
-    observer: any
-    constructor ({ observer }: { observer: any }) {
-      this.observer = observer
-    }
-    on () {
-      const linkListener: EventListenerOrEventListenerObject = linkHandler(
-        domains,
-        { [LINKER]: id }
-      )
-      const events: string[] = ['mousedown', 'keyup']
-      events.forEach(event => {
-        this.observer.subscribe(event, linkListener, false)
-      })
-      this.observer.subscribe(
-        'submit',
-        submitHandler(domains, { [LINKER]: id }),
-        false
-      )
-    }
-  }
-}
 
 export default class Linker {
   private agent: Agent
   constructor (agent: Agent) {
     this.agent = agent
+    const cb = () => {
+      this.agent.observer.unsubscribeAll()
+      MethodChain.remove(this.agent.core, 'destory', cb)
+    }
+    MethodChain.add(this.agent.core, 'destory', cb)
   }
 
-  autoLink (domains: any[]) {
-    this.agent.bind(factory(this.agent.getLinkParam(), domains))
+  autoLink (domains: string[]) {
+    const events: string[] = ['mousedown', 'keyup']
+    const id = this.agent.getLinkParam()
+    events.forEach(event =>
+      this.agent.observer.subscribe(
+        event,
+        linkHandler(domains, { [LINKER]: id })
+      )
+    )
+    this.agent.observer.subscribe(
+      'submit',
+      submitHandler(domains, { [LINKER]: id })
+    )
   }
 }

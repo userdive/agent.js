@@ -69,7 +69,7 @@ export default class Agent {
     this.plugins[pluginName][methodName](...args)
   }
 
-  getLinkerParam () {
+  getLinkParam () {
     return this.core.get('userId')
   }
 }

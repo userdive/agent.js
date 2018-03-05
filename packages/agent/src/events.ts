@@ -7,7 +7,6 @@ import { error, raise, warning } from './logger'
 import { CustomError, EventType, InteractType } from './types'
 
 export interface AgentEventBase {
-  observer: any
   on (eventName: EventType, handler: Function, type: InteractType): void
   off (): void
 }
@@ -17,7 +16,7 @@ export interface AgentEvent extends AgentEventBase {
 }
 
 export default class Events implements AgentEventBase {
-  observer: any
+  private observer: any
   private emitter: EventEmitter
   private name: string
   private type: InteractType

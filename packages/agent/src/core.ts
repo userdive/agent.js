@@ -51,6 +51,7 @@ function pathname2href (pathname: string) {
 }
 
 export default class AgentCore extends Store {
+  observer: UIEventObserver
   private baseUrl: string
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
@@ -63,7 +64,7 @@ export default class AgentCore extends Store {
   private id: string
   constructor (
     id: string,
-    eventsClass: any[],
+    eventsClass: any[], // TODO
     {
       RAVEN_DSN,
       Raven,
@@ -75,15 +76,16 @@ export default class AgentCore extends Store {
       allowLink
     }: Settings
   ) {
-    let userId = getCookie(cookieName) as string
+    let userId = getCookie(cookieName)
     if (allowLink) {
-      const { [LINKER]: id } = parse(location.search)[LINKER]
+      const { [LINKER]: id } = parse(location.search)
       if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
         userId = id
       }
     }
     const saveCookie = auto ? save : setCookie
     if (!userId || allowLink) {
+      userId = userId || generateId()
       saveCookie(cookieName, userId, {
         domain,
         expires
@@ -100,12 +102,10 @@ export default class AgentCore extends Store {
     this.interval = []
     this.interactId = 0
     this.emitter = new EventEmitter()
-
-    const observer = new UIEventObserver() // singleton
+    this.observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      this.events.push(new Class(this.id, this.emitter, observer))
+      this.events.push(new Class(this.id, this.emitter, this.observer))
     })
-
     if (id && userId) {
       this.baseUrl = `${baseUrl}/${id}/${userId}`
     }

@@ -1,11 +1,12 @@
+import { LINKER } from '@userdive/agent/lib/constants'
 import * as objectAssign from 'object-assign'
 import { parse, stringify } from 'query-string'
 
-const queryKey = '_ud' // TODO
 const matchUrl = /^https?:\/\/([^\/:]+)/
+export type DOMAIN = string | RegExp
 
 export function linkHandler (
-  domains: any[],
+  domains: DOMAIN[],
   param: { [key: string]: string }
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
@@ -15,7 +16,7 @@ export function linkHandler (
 }
 
 export function submitHandler (
-  domains: any[],
+  domains: DOMAIN[],
   param: { [key: string]: string }
 ): EventListenerOrEventListenerObject {
   return (event: Event) => {
@@ -28,10 +29,10 @@ export function submitHandler (
 
 function scanLinkElement (
   param: { [key: string]: string },
-  domains: any[],
+  domains: DOMAIN[],
   node: any
 ) {
-  for (let i = 100; node && 0 < i; i++) {
+  for (let i = 100; node && i > 0; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
       node.href = linkUrl(node.href, param)
@@ -41,17 +42,18 @@ function scanLinkElement (
   }
 }
 
-function linkable (domains: any[], linkElement: HTMLAnchorElement): boolean {
-  const protocol: boolean =
-    linkElement.protocol === 'http:' || linkElement.protocol === 'https:'
-  if (!linkElement.href || !protocol) {
+function linkable (
+  domains: DOMAIN[],
+  { protocol, href }: HTMLAnchorElement
+): boolean {
+  const isHttp: boolean = protocol === 'http:' || protocol === 'https:'
+  if (!href || !isHttp) {
     return false
   }
-  const to = linkElement.href
-  return matchDomain(domains, to)
+  return matchDomain(domains, href)
 }
 
-function addableForm (domains: any[], element: any) {
+function addableForm (domains: DOMAIN[], element: any) {
   let match
   if (element instanceof HTMLFormElement && element.action) {
     match = element.action.match(matchUrl)
@@ -59,18 +61,14 @@ function addableForm (domains: any[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: any[], test: string): boolean {
+function matchDomain (domains: DOMAIN[], test: string): boolean {
   if (test === document.location.hostname) {
     return false
   }
-  for (let i = 0; i < domains.length; i++) {
-    if (domains[i] instanceof RegExp) {
-      if (domains[i].test(test)) return true
-    } else if (0 <= test.indexOf(domains[i])) {
-      return true
-    }
-  }
-  return false
+
+  return domains.some(
+    (d: any) => (d instanceof RegExp && d.test(test)) || test.indexOf(d) >= 0
+  )
 }
 
 function linkUrl (urlString: string, param: { [key: string]: string }): string {
@@ -92,18 +90,18 @@ function addHiddenInput (
   form: HTMLFormElement,
   param: { [key: string]: string }
 ) {
-  const value: string = param[queryKey]
+  const value: string = param[LINKER]
   const nodes: any = form.childNodes
 
   for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].name === queryKey) {
+    if (nodes[i].name === LINKER) {
       nodes[i].setAttribute('value', value)
       return
     }
   }
   const i: HTMLInputElement = document.createElement('input')
   i.setAttribute('type', 'hidden')
-  i.setAttribute('name', queryKey)
+  i.setAttribute('name', LINKER)
   i.setAttribute('value', value)
   form.appendChild(i)
 }
