@@ -4,6 +4,8 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "",
+    "custom-variables": "custom-variables",
+    "getting-started": "getting-started",
     "Blog": "Blog",
     "Docusaurus": "Docusaurus",
     "First Category": "First Category",
