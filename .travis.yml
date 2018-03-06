@@ -17,7 +17,7 @@ jobs:
       script: npm run ci:sauce
   exclude:
     - stage: Sauce
-      if: NOT (branch =~ ^dependabot AND type = push)
+      if: type = pr
 notifications:
   email: false
   slack:
