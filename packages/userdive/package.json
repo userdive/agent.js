@@ -1,12 +1,11 @@
 {
   "name": "userdive",
   "description": "load @userdve/agent from cdn",
-  "version": "0.4.1",
+  "version": "0.14.0-beta1",
   "author": "UNCOVER TRUTH Inc",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
-  "dependencies": {},
   "files": [
     "lib/"
   ],
