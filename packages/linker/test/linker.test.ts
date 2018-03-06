@@ -2,7 +2,6 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
-import { spy as sinonSpy } from 'sinon'
 import Linker from '../src/linker'
 
 describe('linker', () => {
@@ -25,9 +24,9 @@ describe('linker', () => {
     assert(hasListener)
   })
 
-  it('set  litener', () => {
-    const spy = sinonSpy(linker, 'setListener')
+  it('handlers', () => {
     linker.autoLink([/^.*\.?example\.org/, 'example.com'])
-    assert(spy.callCount === 3)
+    assert(agent.core.observer.hasSubscriber(document, 'mousedown'))
+    assert(agent.core.observer.hasSubscriber(document, 'keyup'))
   })
 })
