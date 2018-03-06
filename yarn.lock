@@ -11713,12 +11713,13 @@ webpack-dev-server@^2.11.1:
     webpack-dev-middleware "1.12.2"
     yargs "6.6.0"
 
-webpack-espower-loader@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/webpack-espower-loader/-/webpack-espower-loader-1.0.2.tgz#ad302e7b153df41e171613082da41869a29a01b3"
+webpack-espower-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-espower-loader/-/webpack-espower-loader-2.0.0.tgz#d4f8c6065781d31c3c7bf37bb81568c10e4126dc"
   dependencies:
     convert-source-map "^1.1.1"
     espower-source "^2.0.0"
+    loader-utils "^1.1.0"
     xtend "^4.0.0"
 
 webpack-sources@^1.0.1, webpack-sources@^1.1.0:
