@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/js-cookie": "^2.1.0",
     "@types/uuid": "^3.4.3",
-    "userdive": "^0.14.0-beta1"
+    "userdive": "^0.4.1"
   },
   "engine": {
     "node": "> 5"
