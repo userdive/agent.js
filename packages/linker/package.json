@@ -10,7 +10,7 @@
     "@userdive/agent": "^0.14.0-beta1",
     "object-assign": "^4.1.1",
     "query-string": "^5.1.0",
-    "userdive": "^0.14.0-beta1"
+    "userdive": "^0.4.1"
   },
   "devDependencies": {
     "@types/query-string": "^5.0.1"
