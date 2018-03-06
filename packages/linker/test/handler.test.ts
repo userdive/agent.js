@@ -6,7 +6,7 @@ import { spy as sinonSpy } from 'sinon'
 import { link, submit } from '../src/handler'
 import { createForm, createLink } from './helpers/dom'
 
-describe.only('handler', () => {
+describe('handler', () => {
   const Agent = require('@userdive/agent').default
   const Linker = require('../src/linker').default
   const domain = 'example.com'
