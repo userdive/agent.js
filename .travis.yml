@@ -15,7 +15,7 @@ jobs:
       - npm run coverage
     - stage: Sauce
       script: npm run ci:sauce
-      if: type = pr
+      if: type = pr or branch = master
 notifications:
   email: false
   slack:
