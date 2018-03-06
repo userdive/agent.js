@@ -2,12 +2,11 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
-import { stringify } from 'query-string'
 import { spy as sinonSpy } from 'sinon'
-import { linkHandler, submitHandler } from '../src/handler'
+import { link, submit } from '../src/handler'
 import { createForm, createLink } from './helpers/dom'
 
-describe('handler', () => {
+describe.only('handler', () => {
   const Agent = require('@userdive/agent').default
   const Linker = require('../src/linker').default
   const domain = 'example.com'
@@ -19,11 +18,11 @@ describe('handler', () => {
     agent = new Agent(random.uuid(), 'auto')
   })
 
-  function setUpLinkEvent (
+  const setUpLinkEvent = (
     href: string,
     domains: Array<string | RegExp>
-  ): string {
-    const handler: any = linkHandler(domains, agent.getLinkParam())
+  ): string => {
+    const handler: any = link(domains, agent.get('linkerParam'))
     const a = createLink(href)
     handler({ target: a })
     return a.href
@@ -31,23 +30,23 @@ describe('handler', () => {
 
   it('string domain', () => {
     const url = setUpLinkEvent(comUrl, [domain])
-    assert(`${comUrl}?${stringify(agent.getLinkParam())}` === url)
+    assert(`${comUrl}?${agent.get('linkerParam')}` === url)
   })
 
   it('regexp match domain', () => {
     const url = setUpLinkEvent(orgUrl, [/^.*\.?example\.org/])
-    assert(`${orgUrl}?${stringify(agent.getLinkParam())}` === url)
+    assert(`${orgUrl}?${agent.get('linkerParam')}` === url)
   })
 
   it('bubbling', () => {
-    const handler: any = linkHandler([domain], agent.getLinkParam())
+    const handler = link([domain], agent.get('linkerParam'))
     const a = document.createElement('a')
     a.href = comUrl
     const img = document.createElement('img')
     a.appendChild(img)
     document.body.appendChild(a)
-    handler({ target: img })
-    assert(`${comUrl}?${stringify(agent.getLinkParam())}` === a.href)
+    handler({ target: img } as any)
+    assert(`${comUrl}?${agent.get('linkerParam')}` === a.href)
   })
 
   it('not match domain', () => {
@@ -61,27 +60,31 @@ describe('handler', () => {
   })
 
   it('submit post', () => {
-    const handler: any = submitHandler([domain], agent.getLinkParam())
+    const handler = submit([domain], agent.get('linkerParam'))
     const form = createForm(comUrl, 'post')
-    handler({ target: form })
-    assert(`${comUrl}?${stringify(agent.getLinkParam())}` === form.action)
+    handler({ target: form } as any)
+    assert(`${comUrl}?${agent.get('linkerParam')}` === form.action)
   })
 
   it('not cross domain', () => {
     const url = document.location.href
-    const handler: any = submitHandler([domain], agent.getLinkParam())
+    const handler = submit([domain], agent.get('linkerParam'))
     const form = createForm(document.location.href, 'post')
-    handler({ target: form })
+    handler({ target: form } as any)
     assert(url === form.action, 'not added query string')
   })
 
   it('submit get', () => {
-    const handler: any = submitHandler([domain], agent.getLinkParam())
+    const handler = submit([domain], agent.get('linkerParam'))
     const form = createForm(comUrl, 'get')
-    handler({ target: form })
+    handler({ target: form } as any)
     const hidden = form.firstElementChild
     assert(hidden.getAttribute('type') === 'hidden')
-    assert(hidden.getAttribute('name') === '_ud')
-    assert(hidden.getAttribute('value') === agent.getLinkParam()['_ud'])
+    assert(
+      hidden.getAttribute('name') === agent.get('linkerParam').split('=')[0]
+    )
+    assert(
+      hidden.getAttribute('value') === agent.get('linkerParam').split('=')[1]
+    )
   })
 })

@@ -2,7 +2,6 @@ import { save } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
-import { parse } from 'query-string'
 import { UIEventObserver } from 'ui-event-observer'
 import { v4 as uuid } from 'uuid'
 
@@ -77,7 +76,11 @@ export default class AgentCore extends Store {
   ) {
     let userId = getCookie(cookieName)
     if (allowLink) {
-      const { [LINKER]: id } = parse(location.search)
+      const qs = location.search.trim().replace(/^[?#&]/, '')
+      const [linkerParam] = qs
+        .split('&')
+        .filter(s => s.length && s.split('=')[0] === LINKER)
+      const id = linkerParam ? linkerParam.split('=')[1] : undefined
       if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
         userId = id
       }
