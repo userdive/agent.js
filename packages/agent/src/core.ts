@@ -111,14 +111,15 @@ export default class AgentCore extends Store {
     }
     this.baseUrl = `${baseUrl}/${id}/${userId}`
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
-    this.events.forEach(e => e.on())
-    this.sendInteractsWithUpdate()
   }
 
   send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
         this.sendInteracts(true)
+        if (!this.loadTime) {
+          this.bind()
+        }
 
         const data = getEnv(pathname2href(page))
         if (!data || !this.baseUrl) {
@@ -129,6 +130,7 @@ export default class AgentCore extends Store {
         this.interval = INTERVAL_DEFAULT_SETTING.concat()
         this.interactId = 0
         this.loadTime = Date.now()
+        this.sendInteractsWithUpdate()
         get(
           `${this.baseUrl}/${this.loadTime}/env.gif`,
           obj2query(objectAssign(
@@ -158,7 +160,10 @@ export default class AgentCore extends Store {
       }
     })
 
-    if (this.baseUrl && (query.length >= MAX_INTERACT || force)) {
+    if (
+      this.baseUrl &&
+      (query.length >= MAX_INTERACT || (force && query.length > 0))
+    ) {
       const customState: any = this.get('custom')
       get(
         `${this.baseUrl}/${this.loadTime}/int.gif`,
@@ -193,6 +198,10 @@ export default class AgentCore extends Store {
       }
       this.interactId++
     }
+  }
+
+  private bind () {
+    this.events.forEach(e => e.on())
   }
 
   private updateInteractCache (data: Interact): void {

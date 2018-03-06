@@ -3,11 +3,16 @@ import { internet, random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy, stub } from 'sinon'
 import Agent from '../src/agent'
+import { INTERVAL } from '../src/constants'
 
 describe('agent', () => {
   const AgentCore = require('../src/core').default
   const Agent = require('../src/agent').default
-  const agent: Agent = new Agent()
+  let agent
+
+  beforeEach(() => {
+    agent = new Agent(random.uuid(), 'auto')
+  })
 
   it('constructor', () => {
     const agent = new Agent(random.uuid(), 'auto')
@@ -24,21 +29,9 @@ describe('agent', () => {
   })
 
   it('send', () => {
-    const listen = stub(AgentCore.prototype, 'listen')
-
-    const get = stub(require('../src/requests'), 'get')
-    get.callsFake((url, query, onload, onerror) => {
-      onload()
-    })
-
-    let core = agent.send('pageview')
-    assert(core.active)
-
-    core = agent.send('pageview')
-    assert(core.active, 'take2')
-
-    listen.restore()
-    get.restore()
+    const core = agent.send('pageview')
+    assert(core.interactId === 1)
+    assert(core.interval.length === INTERVAL.length - 1)
   })
 
   it('set', () => {
