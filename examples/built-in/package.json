@@ -4,7 +4,7 @@
   "main": "n/a",
   "private": true,
   "dependencies": {
-    "@userdive/agent": "^0.13.0"
+    "@userdive/agent": "^0.14.0-beta2"
   },
   "license": "MIT"
 }
