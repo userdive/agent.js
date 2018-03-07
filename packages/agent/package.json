@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "0.13.0-beta1",
+  "version": "0.14.0-beta1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -10,14 +10,14 @@
     "auto-cookie": "^1.1.0",
     "js-cookie": "^2.2.0",
     "object-assign": "^4.1.1",
-    "raven-js": "^3.22.3",
+    "raven-js": "^3.23.1",
     "ui-event-observer": "^1.2.2",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.1.0",
     "@types/uuid": "^3.4.3",
-    "userdive": "^0.4.1"
+    "userdive": "^0.14.0-beta1"
   },
   "engine": {
     "node": "> 5"

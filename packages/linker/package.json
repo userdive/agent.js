@@ -1,16 +1,16 @@
 {
   "name": "@userdive/linker",
   "description": "webpage tracking agent linker plugin",
-  "version": "0.13.0-beta1",
+  "version": "0.14.0-beta1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "0.13.0-beta1",
+    "@userdive/agent": "^0.14.0-beta1",
     "object-assign": "^4.1.1",
     "query-string": "^5.1.0",
-    "userdive": "^0.4.1"
+    "userdive": "^0.14.0-beta1"
   },
   "devDependencies": {
     "@types/query-string": "^5.0.1"
@@ -37,5 +37,6 @@
     "pretest": "npm run build",
     "clean": "rimraf coverage lib docs",
     "test": "karma start --single-run"
-  }
+  },
+  "types": "lib/linker.d.ts"
 }

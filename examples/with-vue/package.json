@@ -1,9 +1,10 @@
 {
   "name": "with-vue",
-  "version": "0.12.0",
-  "private": true,
+  "version": "0.14.0-beta1",
   "dependencies": {
+    "userdive": "^0.14.0-beta1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
-  }
+  },
+  "private": true
 }

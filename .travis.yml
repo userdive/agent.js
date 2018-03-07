@@ -9,17 +9,13 @@ jobs:
   include:
     - stage: Lint
       script: npm run lint
-    - stage: Build
-      script: npm run build
     - stage: Test
       script:
       - npm run test
       - npm run coverage
     - stage: Sauce
       script: npm run ci:sauce
-  exclude:
-    - stage: Sauce
-      if: NOT (branch =~ ^dependabot AND type = push)
+      if: type = pr
 notifications:
   email: false
   slack:

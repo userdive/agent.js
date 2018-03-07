@@ -1,5 +1,7 @@
 package-lock.json
 *.html
+.envrc
+.changelog/
 cdn/
 dist/
 lib/
