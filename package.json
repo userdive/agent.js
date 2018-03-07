@@ -146,11 +146,11 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "7.9 KB"
+      "limit": "8.1 KB"
     },
     {
       "path": "cdn/linker.js",
-      "limit": "800 B"
+      "limit": "1.1 KB"
     }
   ],
   "workspaces": [
