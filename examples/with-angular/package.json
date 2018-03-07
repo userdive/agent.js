@@ -27,9 +27,9 @@
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "build": "tsc ./*.test.ts --lib es6 --outDir tests",
+    "ts": "tsc ./*.test.ts --lib es6 --outDir tests",
     "test": "nightwatch",
     "prebuild": "rimraf ./*.test.js",
-    "pretest": "npm run build"
+    "pretest": "npm run ts"
   }
 }
