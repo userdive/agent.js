@@ -2,5 +2,18 @@
   "name": "simple",
   "version": "0.12.0",
   "main": "n/a",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "chromedriver": "^2.35.0",
+    "nightwatch": "^0.9.20",
+    "rimraf": "^2.6.2",
+    "selenium-server-standalone-jar": "^3.9.1",
+    "typescript": "^2.7.2"
+  },
+  "scripts": {
+    "build": "tsc ./*.test.ts --lib es6,dom --outDir tests",
+    "test": "nightwatch",
+    "prebuild": "rimraf ./*.test.js",
+    "pretest": "npm run build"
+  }
 }

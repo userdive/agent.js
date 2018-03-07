@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["examples/**/*.test.ts"],
+  "src_folders" : ["tests"],
   "test_runner" : {
     "type" : "mocha",
     "options" : {
