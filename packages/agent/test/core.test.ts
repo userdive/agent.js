@@ -19,8 +19,8 @@ import { getType } from './helpers/Event'
 describe('core', () => {
   const Agent = require('../src/core').default
   const Base = require('../src/events').default
-  function eventFactory (type, emitter) {
-    return class DummyEvents extends Base {
+  const eventFactory = (type, emitter) =>
+    class DummyEvents extends Base {
       validate () {
         return true
       }
@@ -35,15 +35,13 @@ describe('core', () => {
         emitter.on(type, data => super.emit(data))
       }
     }
-  }
 
-  function agentFactory (options = {}) {
-    return new Agent(
+  const agentFactory = (options = {}) =>
+    new Agent(
       random.uuid(),
       [eventFactory('click', emitter), eventFactory('scroll', emitter)],
       objectAssign({}, SETTINGS_DEFAULT, options)
     )
-  }
 
   let agent
   let emitter
@@ -56,7 +54,7 @@ describe('core', () => {
 
   afterEach(() => {
     timer.restore()
-    agent.destroy(false)
+    agent.destroy()
     assert(agent.emitter.listenerCount(agent.id) === 0)
   })
 
@@ -64,23 +62,7 @@ describe('core', () => {
     assert(agent)
   })
 
-  it('listen before send pageview', () => {
-    assert(
-      throws(() => {
-        agent.listen()
-      }).message === 'need send pageview'
-    )
-
-    agent.active = true
-
-    assert(
-      throws(() => {
-        agent.listen()
-      }).message === 'need send pageview'
-    )
-  })
-
-  function failedUpdateCache (x: number, y: number, type: EventType) {
+  const failedUpdateCache = (x: number, y: number, type: EventType) => {
     agent.send('pageview', location.href)
 
     emitter.emit(type, { x, y })
@@ -106,11 +88,6 @@ describe('core', () => {
   })
 
   it('cache success action', () => {
-    const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onload, onerror) => {
-      onload()
-    })
-
     agent.send('pageview', location.href)
     assert(agent.emitter.listenerCount(agent.id) === 1)
     emitter.emit('click', {
@@ -129,16 +106,9 @@ describe('core', () => {
 
     assert.deepEqual(agent.cache.a, {})
     assert.deepEqual(agent.cache.l, {})
-
-    stub.restore()
   })
 
   it('cache success looks', () => {
-    const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onload, onerror) => {
-      onload()
-    })
-
     agent.send('pageview', location.href)
     emitter.emit('scroll', {
       x: random.number({ min: 1 }),
@@ -156,22 +126,20 @@ describe('core', () => {
 
     assert.deepEqual(agent.cache.a, {})
     assert.deepEqual(agent.cache.l, {})
-
-    stub.restore()
   })
 
   it('send success', () => {
     agent.send('pageview', location.href)
-    agent.active = true
-    agent.listen()
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 
+    assert(agent.interacts.length === 0)
     emitter.emit('scroll', {
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
     timer.tick(INTERVAL[1] * 1000)
+    assert(agent.interacts.length === 1)
     assert.deepEqual(agent.cache.a, {})
     assert.deepEqual(agent.cache.l, {})
 
@@ -201,8 +169,6 @@ describe('core', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
     const autoAgent = agentFactory({ auto: true })
     autoAgent.send('pageview', location.href)
-    autoAgent.active = true
-    autoAgent.listen()
 
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 7)
@@ -220,8 +186,6 @@ describe('core', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
     const autoAgent = agentFactory({ auto: true })
     autoAgent.send('pageview', location.pathname)
-    autoAgent.active = true
-    autoAgent.listen()
 
     const query = spy.getCall(0).args[1]
     assert(query.length === 8)
@@ -231,23 +195,12 @@ describe('core', () => {
 
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onload, onerror) => {
+    stub.callsFake((url, query, onerror) => {
       onerror()
     })
 
     agent.send('pageview', location.href)
-    assert(agent.active === false)
-    stub.restore()
-  })
-
-  it('sendInteract fail', () => {
-    const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onload, onerror) => {
-      onerror()
-    })
-
-    agent.sendInteracts(true)
-    assert(agent.active === false)
+    assert(agent.loadTime === 0)
     stub.restore()
   })
 })

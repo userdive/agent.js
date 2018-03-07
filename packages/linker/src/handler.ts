@@ -1,57 +1,45 @@
-import * as objectAssign from 'object-assign'
-import { parse, stringify } from 'query-string'
-
-const queryKey = '_ud' // TODO
 const matchUrl = /^https?:\/\/([^\/:]+)/
+export type Domain = string | RegExp
 
-export function linkHandler (
-  domains: any[],
-  param: { [key: string]: string }
-): EventListenerOrEventListenerObject {
-  return (event: Event) => {
-    const eventElement: any = event.target || event.srcElement
-    scanLinkElement(param, domains, eventElement)
+export function link (domains: Domain[], linkerParam: string) {
+  return ({ target, srcElement }: Event) => {
+    const eventElement: any = target || srcElement
+    scanLinkElement(linkerParam, domains, eventElement)
   }
 }
 
-export function submitHandler (
-  domains: any[],
-  param: { [key: string]: string }
-): EventListenerOrEventListenerObject {
-  return (event: Event) => {
-    const eventElement: any = event.target || event.srcElement
+export function submit (domains: Domain[], linkerParam: string) {
+  return ({ target, srcElement }: Event) => {
+    const eventElement: any = target || srcElement
     if (addableForm(domains, eventElement)) {
-      formLink(eventElement, param)
+      formLink(eventElement, linkerParam)
     }
   }
 }
 
-function scanLinkElement (
-  param: { [key: string]: string },
-  domains: any[],
-  node: any
-) {
-  for (let i = 100; node && 0 < i; i++) {
+function scanLinkElement (linkerParam: string, domains: Domain[], node: any) {
+  for (let i = 0; i < 100 && node; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
-      node.href = linkUrl(node.href, param)
+      node.href = linkUrl(node.href, linkerParam)
       return
     }
     node = node.parentNode
   }
 }
 
-function linkable (domains: any[], linkElement: HTMLAnchorElement): boolean {
-  const protocol: boolean =
-    linkElement.protocol === 'http:' || linkElement.protocol === 'https:'
-  if (!linkElement.href || !protocol) {
+function linkable (
+  domains: Domain[],
+  { protocol, href }: HTMLAnchorElement
+): boolean {
+  const isHttp = protocol === 'http:' || protocol === 'https:'
+  if (!href || !isHttp) {
     return false
   }
-  const to = linkElement.href
-  return matchDomain(domains, to)
+  return matchDomain(domains, href)
 }
 
-function addableForm (domains: any[], element: any) {
+function addableForm (domains: Domain[], element: any) {
   let match
   if (element instanceof HTMLFormElement && element.action) {
     match = element.action.match(matchUrl)
@@ -59,51 +47,53 @@ function addableForm (domains: any[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: any[], test: string): boolean {
+function matchDomain (domains: Domain[], test: string): boolean {
   if (test === document.location.hostname) {
     return false
   }
-  for (let i = 0; i < domains.length; i++) {
-    if (domains[i] instanceof RegExp) {
-      if (domains[i].test(test)) return true
-    } else if (0 <= test.indexOf(domains[i])) {
-      return true
-    }
+
+  return domains.some(
+    (d: any) => (d instanceof RegExp && d.test(test)) || test.indexOf(d) >= 0
+  )
+}
+
+function linkUrl (href: string, linkerParam: string): string {
+  const e = document.createElement('a')
+  e.href = href
+  const qs = e.search.trim().replace(/^[?#&]/, '')
+  if (
+    !qs
+      .split('&')
+      .filter(
+        link => link.length && link.split('=')[0] === linkerParam.split('=')[0]
+      ).length
+  ) {
+    e.search = e.search ? `${e.search}&${linkerParam}` : linkerParam
   }
-  return false
+  return e.href
 }
 
-function linkUrl (urlString: string, param: { [key: string]: string }): string {
-  const url: string[] = urlString.split('?')
-  const queryObj: object = url.length > 1 ? parse(url[1]) : {}
-  const query: string = stringify(objectAssign({}, queryObj, param))
-  return `${url[0]}?${query}`
-}
-
-function formLink (form: HTMLFormElement, param: { [key: string]: string }) {
+function formLink (form: HTMLFormElement, linkerParam: string) {
   if (form.method.toLocaleLowerCase() === 'get') {
-    addHiddenInput(form, param)
+    addHiddenInput(form, linkerParam)
   } else if (form.method.toLocaleLowerCase() === 'post') {
-    form.action = linkUrl(form.action, param)
+    form.action = linkUrl(form.action, linkerParam)
   }
 }
 
-function addHiddenInput (
-  form: HTMLFormElement,
-  param: { [key: string]: string }
-) {
-  const value: string = param[queryKey]
+function addHiddenInput (form: HTMLFormElement, linkerParam: string) {
+  const [key, value]: string[] = linkerParam.split('=')
   const nodes: any = form.childNodes
 
   for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].name === queryKey) {
+    if (nodes[i].name === key) {
       nodes[i].setAttribute('value', value)
       return
     }
   }
   const i: HTMLInputElement = document.createElement('input')
   i.setAttribute('type', 'hidden')
-  i.setAttribute('name', queryKey)
+  i.setAttribute('name', key)
   i.setAttribute('value', value)
   form.appendChild(i)
 }

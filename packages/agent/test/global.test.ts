@@ -19,8 +19,8 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
     stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onload, onerror) => {
-      onload()
+    stub.callsFake((url, query, onerror) => {
+      // nothing todo
     })
   })
 
@@ -42,7 +42,7 @@ describe('global async', () => {
     assert.equal(executer.commandQueue.length, 0)
     const agent = executer.agents['default']
     assert(agent)
-    assert(agent.core.active)
+    assert(agent.core.loadTime)
 
     const name = lorem.word()
     executer = window[GLOBAL_NAME](
@@ -67,6 +67,6 @@ describe('global async', () => {
     assert(window[GLOBAL_NAME]['q'] === undefined)
 
     const executer = window[GLOBAL_NAME]('send', 'pageview')
-    assert(executer.agents['default'].core.active)
+    assert(executer.agents['default'].core.loadTime)
   })
 })

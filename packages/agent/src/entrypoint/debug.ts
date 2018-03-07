@@ -1,4 +1,4 @@
-import objectAssign = require('object-assign')
+import * as objectAssign from 'object-assign'
 import * as Raven from 'raven-js'
 import Agent from '../agent'
 import factory from '../global'

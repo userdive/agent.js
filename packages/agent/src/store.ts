@@ -32,6 +32,7 @@ function parseCustomData (
 
 function initialState (): State {
   return {
+    userId: '',
     env: {
       v,
       l: '',
@@ -50,13 +51,16 @@ function initialState (): State {
 
 export default class Store {
   private state: State
-  constructor () {
+  constructor (id: string) {
     this.reset()
+    this.state.userId = id
   }
   public reset (): void {
     this.state = initialState()
   }
-  public get (key: 'env' | 'custom'): ClientEnvironmentsData | CustomData {
+  public get (
+    key: 'env' | 'custom' | 'userId'
+  ): ClientEnvironmentsData | CustomData | string {
     const data = this.state[key]
     if (key === 'custom') {
       this.state[key] = {}

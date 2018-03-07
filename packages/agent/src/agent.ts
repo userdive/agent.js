@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 
 import { validate } from './browser'
-import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
+import { LINKER, LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'
@@ -12,7 +12,7 @@ import { SendType, State } from './types'
 const PLUGINS = 'plugins'
 
 export default class Agent {
-  private core: AgentCore
+  core: AgentCore
   private plugins: { [name: string]: any }
 
   constructor (projectId?: string, settings?: Object | 'auto') {
@@ -35,7 +35,7 @@ export default class Agent {
       window.addEventListener(
         'pagehide',
         () => {
-          this.core.destroy(true)
+          this.core.sendInteracts(true)
         },
         false
       )
@@ -52,6 +52,11 @@ export default class Agent {
     }
     return this.core.mergeDeep(key)
   }
+
+  get (key: string): string {
+    return key === 'linkerParam' ? `${LINKER}=${this.core.get('userId')}` : ''
+  }
+
   provide (name: string, pluginConstructor: ObjectConstructor) {
     this[PLUGINS][name] = pluginConstructor
   }
@@ -67,9 +72,5 @@ export default class Agent {
 
   run (pluginName: string, methodName: string, ...args: any[]) {
     this.plugins[pluginName][methodName](...args)
-  }
-
-  getLinkParam () {
-    return this.core.getLinkParam()
   }
 }

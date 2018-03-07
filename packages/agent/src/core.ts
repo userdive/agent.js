@@ -1,16 +1,17 @@
 import { save } from 'auto-cookie'
 import { EventEmitter } from 'events'
-import * as cookies from 'js-cookie'
+import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
-import { parse } from 'query-string'
 import { UIEventObserver } from 'ui-event-observer'
 import { v4 as uuid } from 'uuid'
 
 import { getEnv } from './browser'
 import {
   INTERACT as MAX_INTERACT,
-  INTERVAL as INTERVAL_DEFAULT_SETTING
+  INTERVAL as INTERVAL_DEFAULT_SETTING,
+  LINKER
 } from './constants'
+import { AgentEvent } from './events'
 import { raise, setup, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
@@ -19,39 +20,6 @@ import { Interact, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
-}
-
-function findOrCreateClientId (
-  cookieName: string,
-  cookieDomain: string,
-  cookieExpires?: number
-): string | undefined {
-  const options = { domain: cookieDomain, expires: cookieExpires }
-  const c = cookies.get(cookieName)
-  if (c) {
-    return c
-  }
-  cookies.set(cookieName, generateId(), options)
-  return cookies.get(cookieName)
-}
-
-function findOrCreateClientIdAuto (
-  cookieName: string,
-  cookieExpires: number
-): string | undefined {
-  const cookieAttr: cookies.CookieAttributes = {
-    expires: cookieExpires
-  }
-  const c = cookies.get(cookieName)
-  if (c) {
-    return c
-  }
-  return save(cookieName, generateId(), cookieAttr)
-}
-
-function findClientIdFromQueryString (): string | undefined {
-  const id: any = parse(location.search)['_ud']
-  return id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/) ? id : undefined
 }
 
 function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
@@ -81,60 +49,52 @@ function pathname2href (pathname: string) {
   return pathname
 }
 
-function cookieClientId (
-  auto: boolean,
-  cookieName: string,
-  cookieDomain: string,
-  cookieExpires: number
-) {
-  let userId
-  if (!userId) {
-    if (auto) {
-      userId = findOrCreateClientIdAuto(cookieName, cookieExpires)
-    } else {
-      userId = findOrCreateClientId(cookieName, cookieDomain, cookieExpires)
-    }
-  }
-  return userId
-}
-function queryStringClientId (
-  cookieName: string,
-  cookieExpires: number
-): string | undefined {
-  const userId = findClientIdFromQueryString()
-  if (userId) {
-    save(cookieName, userId, { expires: cookieExpires })
-  }
-  return userId
-}
-
 export default class AgentCore extends Store {
+  observer: UIEventObserver
   private baseUrl: string
-  private linkParam: { [key: string]: string }
   private cache: { a: Object; l: Object; [key: string]: Object }
   private emitter: EventEmitter
-  private events: any[]
+  private events: AgentEvent[]
   private interactId: number
   private interacts: Interact[]
   private interval: number[]
   private loadTime: number
-  private active: boolean
   private id: string
   constructor (
     id: string,
-    eventsClass: any[],
+    eventsClass: any[], // TODO
     {
       RAVEN_DSN,
       Raven,
       baseUrl,
-      cookieDomain,
-      cookieExpires,
+      cookieDomain: domain,
+      cookieExpires: expires,
       cookieName,
       auto,
       allowLink
     }: Settings
   ) {
-    super()
+    let userId = getCookie(cookieName)
+    if (allowLink) {
+      const qs = location.search.trim().replace(/^[?#&]/, '')
+      const [linkerParam] = qs
+        .split('&')
+        .filter(s => s.length && s.split('=')[0] === LINKER)
+      const id = linkerParam ? linkerParam.split('=')[1] : undefined
+      if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
+        userId = id
+      }
+    }
+    const saveCookie = auto ? save : setCookie
+    if (!userId || allowLink) {
+      userId = userId || generateId()
+      saveCookie(cookieName, userId, {
+        domain,
+        expires
+      })
+    }
+    super(userId)
+
     setup(RAVEN_DSN, Raven)
 
     this.id = generateId()
@@ -144,28 +104,25 @@ export default class AgentCore extends Store {
     this.interval = []
     this.interactId = 0
     this.emitter = new EventEmitter()
-
-    const observer = new UIEventObserver() // singleton
+    this.observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
-      this.events.push(new Class(this.id, this.emitter, observer))
+      this.events.push(new Class(this.id, this.emitter, this.observer))
     })
-
-    let userId: any = allowLink
-      ? queryStringClientId(cookieName, cookieExpires)
-      : undefined
-    if (!userId) {
-      userId = cookieClientId(auto, cookieName, cookieDomain, cookieExpires)
+    if (!id || !userId) {
+      raise('need generated id')
+      return
     }
-    if (id && userId) {
-      this.linkParam = { _ud: userId }
-      this.baseUrl = `${baseUrl}/${id}/${userId}`
-    }
+    this.baseUrl = `${baseUrl}/${id}/${userId}`
+    this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
   send (type: SendType, page: string): void {
     switch (type) {
       case 'pageview':
-        this.destroy(false)
+        this.sendInteracts(true)
+        if (!this.loadTime) {
+          this.bind()
+        }
 
         const data = getEnv(pathname2href(page))
         if (!data || !this.baseUrl) {
@@ -176,6 +133,7 @@ export default class AgentCore extends Store {
         this.interval = INTERVAL_DEFAULT_SETTING.concat()
         this.interactId = 0
         this.loadTime = Date.now()
+        this.sendInteractsWithUpdate()
         get(
           `${this.baseUrl}/${this.loadTime}/env.gif`,
           obj2query(objectAssign(
@@ -184,35 +142,41 @@ export default class AgentCore extends Store {
             this.get('custom')
           ) as any),
           () => {
-            this.active = true
-            this.listen()
-          },
-          () => {
-            this.active = false
+            this.destroy()
           }
         )
     }
   }
 
-  destroy (isPageHide: boolean): void {
-    this.sendInteracts(isPageHide)
+  destroy (): void {
     this.emitter.removeAllListeners(this.id)
     this.events.forEach(e => e.off())
-    this.active = false
     this.loadTime = 0
   }
 
-  listen (): void {
-    if (!this.active || !this.loadTime) {
-      return raise('need send pageview')
-    }
-    this.emitter.on(this.id, this.updateInteractCache.bind(this))
-    this.events.forEach(e => e.on())
-    this.sendInteractsWithUpdate()
-  }
+  sendInteracts (force?: boolean): void {
+    const query: string[] = []
+    this.interacts.forEach(data => {
+      const q = createInteractData(data)
+      if (q.length) {
+        query.push(`d=${q}`)
+      }
+    })
 
-  getLinkParam (): { [key: string]: string } {
-    return this.linkParam
+    if (
+      this.baseUrl &&
+      (query.length >= MAX_INTERACT || (force && query.length > 0))
+    ) {
+      const customState: any = this.get('custom')
+      get(
+        `${this.baseUrl}/${this.loadTime}/int.gif`,
+        query.concat(obj2query(customState)),
+        () => {
+          this.destroy()
+        }
+      )
+      this.interacts.length = 0
+    }
   }
 
   protected sendInteractsWithUpdate (): void {
@@ -230,7 +194,7 @@ export default class AgentCore extends Store {
     this.clear()
     this.sendInteracts()
 
-    if (this.active) {
+    if (this.loadTime) {
       const delay = this.interval.shift()
       if (delay !== undefined && delay >= 0) {
         setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
@@ -239,34 +203,13 @@ export default class AgentCore extends Store {
     }
   }
 
-  private updateInteractCache (data: Interact): void {
-    if (cacheValidator(data) && this.active) {
-      this.cache[data.type] = data
-    }
+  private bind () {
+    this.events.forEach(e => e.on())
   }
 
-  private sendInteracts (force?: boolean): void {
-    const query: string[] = []
-    this.interacts.forEach(data => {
-      const q = createInteractData(data)
-      if (q.length) {
-        query.push(`d=${q}`)
-      }
-    })
-
-    if (this.baseUrl && (query.length >= MAX_INTERACT || force)) {
-      const customState: any = this.get('custom')
-      get(
-        `${this.baseUrl}/${this.loadTime}/int.gif`,
-        query.concat(obj2query(customState)),
-        () => {
-          //
-        },
-        () => {
-          this.active = false
-        }
-      )
-      this.interacts.length = 0
+  private updateInteractCache (data: Interact): void {
+    if (cacheValidator(data) && this.loadTime) {
+      this.cache[data.type] = data
     }
   }
 
