@@ -1,14 +1,14 @@
 const matchUrl = /^https?:\/\/([^\/:]+)/
-export type DOMAIN = string | RegExp
+export type Domain = string | RegExp
 
-export function link (domains: DOMAIN[], linkerParam: string) {
+export function link (domains: Domain[], linkerParam: string) {
   return ({ target, srcElement }: Event) => {
     const eventElement: any = target || srcElement
     scanLinkElement(linkerParam, domains, eventElement)
   }
 }
 
-export function submit (domains: DOMAIN[], linkerParam: string) {
+export function submit (domains: Domain[], linkerParam: string) {
   return ({ target, srcElement }: Event) => {
     const eventElement: any = target || srcElement
     if (addableForm(domains, eventElement)) {
@@ -17,7 +17,7 @@ export function submit (domains: DOMAIN[], linkerParam: string) {
   }
 }
 
-function scanLinkElement (linkerParam: string, domains: DOMAIN[], node: any) {
+function scanLinkElement (linkerParam: string, domains: Domain[], node: any) {
   for (let i = 0; i < 100 && node; i++) {
     // TODO need area tag support?
     if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
@@ -29,17 +29,17 @@ function scanLinkElement (linkerParam: string, domains: DOMAIN[], node: any) {
 }
 
 function linkable (
-  domains: DOMAIN[],
+  domains: Domain[],
   { protocol, href }: HTMLAnchorElement
 ): boolean {
-  const isHttp: boolean = protocol === 'http:' || protocol === 'https:'
+  const isHttp = protocol === 'http:' || protocol === 'https:'
   if (!href || !isHttp) {
     return false
   }
   return matchDomain(domains, href)
 }
 
-function addableForm (domains: DOMAIN[], element: any) {
+function addableForm (domains: Domain[], element: any) {
   let match
   if (element instanceof HTMLFormElement && element.action) {
     match = element.action.match(matchUrl)
@@ -47,7 +47,7 @@ function addableForm (domains: DOMAIN[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: DOMAIN[], test: string): boolean {
+function matchDomain (domains: Domain[], test: string): boolean {
   if (test === document.location.hostname) {
     return false
   }
@@ -60,7 +60,16 @@ function matchDomain (domains: DOMAIN[], test: string): boolean {
 function linkUrl (href: string, linkerParam: string): string {
   const e = document.createElement('a')
   e.href = href
-  e.search = e.search ? `${e.search}&{linkerParam}` : linkerParam
+  const qs = e.search.trim().replace(/^[?#&]/, '')
+  if (
+    !qs
+      .split('&')
+      .filter(
+        link => link.length && link.split('=')[0] === linkerParam.split('=')[0]
+      ).length
+  ) {
+    e.search = e.search ? `${e.search}&${linkerParam}` : linkerParam
+  }
   return e.href
 }
 

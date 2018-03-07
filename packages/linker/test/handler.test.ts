@@ -3,11 +3,10 @@ import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
-import { link, submit } from '../src/handler'
 import { createForm, createLink } from './helpers/dom'
 
 describe('handler', () => {
-  const Agent = require('@userdive/agent').default
+  const { link, submit } = require('../src/handler')
   const Linker = require('../src/linker').default
   const domain = 'example.com'
   const comUrl = `http://${domain}/example`
@@ -45,7 +44,10 @@ describe('handler', () => {
     const img = document.createElement('img')
     a.appendChild(img)
     document.body.appendChild(a)
+    // idempotence
     handler({ target: img } as any)
+    handler({ target: img } as any)
+
     assert(`${comUrl}?${agent.get('linkerParam')}` === a.href)
   })
 
@@ -77,7 +79,12 @@ describe('handler', () => {
   it('submit get', () => {
     const handler = submit([domain], agent.get('linkerParam'))
     const form = createForm(comUrl, 'get')
+
+    // idempotence
     handler({ target: form } as any)
+    handler({ target: form } as any)
+
+    assert(document.getElementsByTagName('input').length === 1)
     const hidden = form.firstElementChild
     assert(hidden.getAttribute('type') === 'hidden')
     assert(
