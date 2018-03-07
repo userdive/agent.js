@@ -1,3 +1,8 @@
 {
-  "extends": "@uncovertruth/tslint-config"
+  "extends": "@uncovertruth/tslint-config",
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**"
+    ]
+  }
 }
