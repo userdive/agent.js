@@ -1,6 +1,6 @@
 {
   "name": "@userdive/developer-website",
-  "version": "0.14.0-beta2",
+  "version": "0.14.0-beta3",
   "dependencies": {
     "docusaurus": "^1.0.5"
   },

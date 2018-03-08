@@ -43,6 +43,14 @@ describe('agent', () => {
     assert(agent.set({ key: 'value' }))
   })
 
+  it('subscribe', () => {
+    assert(
+      agent.subscribe(window, random.word(), function () {
+        // nothing todo
+      })
+    )
+  })
+
   it('use plugin', () => {
     const dummyPlugin = require('./helpers/plugin').default
     agent.provide('dummy', dummyPlugin)

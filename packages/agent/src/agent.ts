@@ -12,7 +12,7 @@ import { SendType, State } from './types'
 const PLUGINS = 'plugins'
 
 export default class Agent {
-  core: AgentCore
+  private core: AgentCore
   private plugins: { [name: string]: any }
 
   constructor (projectId?: string, settings?: Object | 'auto') {
@@ -72,5 +72,9 @@ export default class Agent {
 
   run (pluginName: string, methodName: string, ...args: any[]) {
     this.plugins[pluginName][methodName](...args)
+  }
+
+  subscribe (target: any, eventName: string, handler: Function): Function {
+    return this.core.observer.subscribe(target, eventName, handler)
   }
 }

@@ -11235,9 +11235,9 @@ uglifyjs-webpack-plugin@^1.1.1, uglifyjs-webpack-plugin@^1.2.0:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-ui-event-observer@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/ui-event-observer/-/ui-event-observer-1.2.2.tgz#bf5b330463c04b0ed92a4d943301ece43a07d291"
+ui-event-observer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ui-event-observer/-/ui-event-observer-2.0.0.tgz#a1537eacc08eda64a1ffeb338f3860cc0b8b33d8"
   dependencies:
     map-like "^2.0.0"
 
