@@ -120,6 +120,7 @@
     "build:examples": "pug examples -o examples/build -P -s",
     "build:packages": "lerna run build",
     "build:website": "cd website && yarn build",
+    "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
@@ -140,7 +141,6 @@
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website' 'npm run build:examples -- -w'",
     "test": "lerna run test",
-    "version": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "website": "cd website && npm start"
   },
   "size-limit": [
