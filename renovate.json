@@ -1,6 +1,9 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    "monorepo:angular",
+    "monorepo:angular1",
+    "monorepo:react"
   ],
   "automerge": true,
   "major": {
@@ -8,5 +11,12 @@
   },
   "devDependencies": {
     "automerge": true
-  }
+  },
+  "pathRules": [
+    {
+      "paths": [
+        "examples/**"
+      ]
+    }
+  ]
 }
