@@ -1,6 +1,6 @@
-describe('ReactTraining', function () {
+describe('with-react', function () {
   const linkQuery: string = '#content ul li a'
-  const root = 'http://localhost:8080/fw/ReactTraining/react-router/#'
+  const root = 'http://localhost:8080/with-react/#'
 
   function displayTop (client: any): any {
     return client.url(root).waitForElementVisible(linkQuery, 1000)

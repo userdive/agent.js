@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["tmp"],
+  "src_folders" : ["tests"],
   "test_runner" : {
     "type" : "mocha",
     "options" : {
@@ -10,11 +10,11 @@
   "output_folder" : "reports",
   "selenium" : {
     "start_process" : true,
-    "server_path" : "./node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.8.1.jar",
+    "server_path" : "../../node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.9.1.jar",
     "host" : "127.0.0.1",
     "port" : 4444,
     "cli_args" : {
-      "webdriver.chrome.driver" : "./node_modules/.bin/chromedriver"
+      "webdriver.chrome.driver" : "../../node_modules/.bin/chromedriver"
     }
   },
   "test_settings" : {
