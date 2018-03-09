@@ -8,7 +8,6 @@
       "es2015.core",
       "es2015.collection"
     ],
-    "jsx": "react",
     "declaration": false,
     "sourceMap": true,
     "allowUnreachableCode": true,
