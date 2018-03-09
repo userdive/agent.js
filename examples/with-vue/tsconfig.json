@@ -1,11 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "tests",
-    "module": "es2015",
-    "target": "es5",
-    "sourceMap": true,
-    "experimentalDecorators": true
+    "outDir": "tests"
   },
   "include": [
     "*.test.ts"
