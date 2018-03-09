@@ -18,5 +18,11 @@
     "userdive": "^0.14.0-beta3",
     "zone.js": "^0.8.20"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "e2e": "nightwatch",
+    "prebuild": "rimraf tests",
+    "pree2e": "npm run build"
+  }
 }

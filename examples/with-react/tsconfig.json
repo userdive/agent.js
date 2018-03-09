@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./tests",
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "sourceMap": true
+  },
+  "include": [
+    "pages/*.test.ts"
+  ]
+}
