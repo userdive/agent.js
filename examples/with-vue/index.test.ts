@@ -1,4 +1,4 @@
-describe('vue-router', function () {
+describe('with-vue', function () {
   const linkQuery: string = '#app li a'
   const root = 'http://localhost:8080/with-vue/#'
 

@@ -1,4 +1,4 @@
-describe('angular-ui router', function () {
+describe('with-angular1', function () {
   const linkQuery: string = 'div[ui-view] ul li a'
   const root = 'http://localhost:8080/with-angular1/#!'
 

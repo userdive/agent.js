@@ -1,4 +1,4 @@
-describe('ReactTraining', function () {
+describe('with-react', function () {
   const linkQuery: string = '#content ul li a'
   const root = 'http://localhost:8080/with-react/#'
 
