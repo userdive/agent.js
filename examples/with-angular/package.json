@@ -18,5 +18,11 @@
     "userdive": "^0.14.0-beta3",
     "zone.js": "^0.8.20"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "ts": "tsc ./*.test.ts --lib es6 --outDir tests",
+    "test": "nightwatch",
+    "prebuild": "rimraf ./*.test.js",
+    "pretest": "npm run ts"
+  }
 }

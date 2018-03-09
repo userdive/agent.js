@@ -1,6 +1,6 @@
-describe('angular router', function () {
+describe('angular', function () {
   const linkQuery: string = 'app a'
-  const root: string = 'http://localhost:8080/fw/angular/router/#'
+  const root: string = 'http://localhost:8080/with-angular/#'
 
   function displayTop (client: any): any {
     return client.url(root).waitForElementVisible(linkQuery, 1000)

@@ -11,5 +11,11 @@
     "react-router-dom": "^4.2.2",
     "userdive": "^0.14.0-beta3"
   },
-  "private": true
+  "private": true,
+  "scripts": {
+    "ts": "tsc ./pages/*.test.ts --lib es6,dom --outDir tests",
+    "test": "nightwatch",
+    "prebuild": "rimraf ./*.test.js",
+    "pretest": "npm run ts"
+  }
 }

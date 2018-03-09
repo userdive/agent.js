@@ -2,5 +2,11 @@
   "name": "simple",
   "version": "0.12.0",
   "main": "n/a",
-  "private": true
+  "private": true,
+  "scripts": {
+    "ts": "tsc ./*.test.ts --lib es6,dom --outDir tests",
+    "test": "nightwatch",
+    "prebuild": "rimraf ./*.test.js",
+    "pretest": "npm run ts"
+  }
 }
