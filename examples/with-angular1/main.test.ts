@@ -1,6 +1,6 @@
 describe('angular-ui router', function () {
   const linkQuery: string = 'div[ui-view] ul li a'
-  const root = 'http://localhost:8080/fw/angular-ui/ui-router/#!'
+  const root = 'http://localhost:8080/with-angular1/#!'
 
   function displayTop (client: any): any {
     return client.url(root).waitForElementVisible(linkQuery, 1000)
