@@ -1,0 +1,109 @@
+/* your custom css */
+body {
+  background: #fff;
+  font-family: "Apple SD Gothic Neo", "AppleSDGothicNeo", -apple-system,
+    "Hiragino Kaku Gothic ProN", "メイリオ", Helvetica, Arial, sans-serif;
+}
+
+.fixedHeaderContainer header h2 {
+  display: none;
+}
+
+.fixedHeaderContainer header img {
+  height: 1.563rem;
+}
+
+.mainContainer {
+  background: #fff;
+}
+
+.homeContainer {
+  background: #272e37;
+}
+
+.homeContainer .homeWrapper {
+  padding: 5rem 0;
+}
+
+.homeContainer h2 {
+  color: #fff;
+}
+
+.homeContainer .homeWrapper .projectLogo {
+  position: static;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.homeContainer .homeWrapper .projectLogo img {
+  max-height: 9.375rem;
+}
+
+.imageAlignTop .blockImage {
+  max-width: 10rem;
+}
+
+.productShowcaseSection {
+  background: #272e37;
+  color: #fff;
+  padding: 5rem 0;
+}
+
+.productShowcaseSection.darkBackground {
+  background: #232930;
+}
+
+.promoSection .buttonWrapper:nth-of-type(1) .button {
+  background: #e85f61;
+}
+
+.promoSection .buttonWrapper:nth-of-type(2) .button {
+  background: #edae53;
+}
+
+.promoSection .buttonWrapper:nth-of-type(3) .button {
+  background: #3fa080;
+}
+
+.toolSection .container .wrapper h2 {
+  color: #fff;
+}
+
+.functionSection h2 {
+  color: #e85f61;
+}
+
+.collaborationSection .container .wrapper .imageAlignSide h2 {
+  color: #edae53;
+}
+
+.container .wrapper .imageAlignSide p {
+  text-align: left;
+}
+
+footer.nav-footer {
+  background: #272e37;
+  box-shadow: none;
+}
+
+footer .sitemap .nav-home {
+  width: 1.875rem;
+}
+
+@media only screen and (max-width: 46rem) {
+  .introSection .blockElement + .blockElement {
+    margin-top: 3.125rem;
+  }
+}
+
+@media only screen and (min-width: 64rem) {
+  .homeContainer .inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .homeContainer .homeWrapper .projectLogo {
+    justify-content: center;
+    z-index: 1;
+  }
+}
