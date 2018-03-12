@@ -3,7 +3,7 @@
   "version": "0.14.0-beta3",
   "dependencies": {
     "userdive": "^0.14.0-beta3",
-    "vue": "2.5.13",
+    "vue": "2.5.15",
     "vue-router": "3.0.1"
   },
   "private": true,
