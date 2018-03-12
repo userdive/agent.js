@@ -41,13 +41,6 @@ const Logo = ({ img_src: src }) => (
   </div>
 )
 
-const ProjectTitle = props => (
-  <h2 className='projectTitle'>
-    {siteConfig.title}
-    <small>{siteConfig.tagline}</small>
-  </h2>
-)
-
 const PromoSection = props => (
   <div className='section promoSection'>
     <div className='promoRow'>
@@ -58,9 +51,8 @@ const PromoSection = props => (
 
 const HomeSplash = ({ language }) => (
   <SplashContainer>
-    <Logo img_src={imgUrl('docusaurus.svg')} />
+    <Logo img_src={imgUrl('logo.svg')} />
     <div className='inner'>
-      <ProjectTitle />
       <PromoSection>
         <Button href='#try'>
           <translate>Try It Out</translate>
@@ -77,42 +69,41 @@ const HomeSplash = ({ language }) => (
 )
 
 const Block = ({ id, background, children, layout }) => (
-  <Container padding={['bottom', 'top']} id={id} background={background}>
+  <Container className='productShowcaseSection' background={background}>
     <GridBlock align='center' contents={children} layout={layout} />
   </Container>
 )
 
 const Features = props => (
-  <Block layout='fourColumn'>
-    {[
-      {
-        content: 'This is the content of my feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature One'
-      },
-      {
-        content: 'The content of my second feature',
-        image: imgUrl('docusaurus.svg'),
-        imageAlign: 'top',
-        title: 'Feature Two'
-      }
-    ]}
-  </Block>
+  <div className='toolSection'>
+    <Block layout='fourColumn' background='dark'>
+      {[
+        {
+          content: 'This is the content of my feature',
+          image: imgUrl('pic01.png'),
+          imageAlign: 'top',
+          title: 'Feature One'
+        },
+        {
+          content: 'The content of my second feature',
+          image: imgUrl('pic02.png'),
+          imageAlign: 'top',
+          title: 'Feature Two'
+        }
+      ]}
+    </Block>
+  </div>
 )
 
 const FeatureCallout = props => (
-  <div
-    className='productShowcaseSection paddingBottom'
-    style={{ textAlign: 'center' }}
-  >
+  <div className='productShowcaseSection functionSection'>
     <h2>Feature Callout</h2>
     <MarkdownBlock>These are features of this project</MarkdownBlock>
   </div>
 )
 
 const LearnHow = props => (
-  <Block background='light'>
+  <Block background='dark'>
     {[
       {
         content: 'Talk about learning how to use this',
@@ -187,9 +178,11 @@ module.exports = function Index ({ language }) {
       <div className='mainContainer'>
         <Features />
         <FeatureCallout />
-        <LearnHow />
-        <TryOut />
-        <Description />
+        <div className='collaborationSection'>
+          <LearnHow />
+          <TryOut />
+          <Description />
+        </div>
         <Showcase language={language || ''} />
       </div>
     </div>

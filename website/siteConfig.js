@@ -21,12 +21,12 @@ const siteConfig = {
     { blog: true, label: 'Blog' }
   ],
   users,
-  headerIcon: 'img/docusaurus.svg',
-  footerIcon: 'img/docusaurus.svg',
+  headerIcon: 'img/logo_horizontal_white.png',
+  footerIcon: 'img/logo.svg',
   favicon: 'img/favicon.png',
   colors: {
-    primaryColor: '#2E8555',
-    secondaryColor: '#205C3B'
+    primaryColor: '#272e37',
+    secondaryColor: '#232930'
   },
   copyright: 'Copyright © ' + new Date().getFullYear() + ' UNCOVER TRUTH',
   organizationName: 'userdive',
