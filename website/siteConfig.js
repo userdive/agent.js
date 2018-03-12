@@ -8,17 +8,20 @@ const users = [
   // }
 ]
 
+const repoUrl = `https://github.com/userdive`
 const siteConfig = {
   title: 'USERDIVE',
   tagline: '',
-  url: 'https://userdive.github.io/agent.js/',
-  baseUrl: '/agent.js/',
+  url: 'https://developers.userdive.com/',
+  baseUrl: '/',
   projectName: 'USERDIVE',
   headerLinks: [
-    // {doc: 'doc1', label: 'Docs'},
+    { doc: 'getting-started', label: 'Usage' },
     // {doc: 'doc4', label: 'API'},
     // {page: 'help', label: 'Help'},
-    { blog: true, label: 'Blog' }
+    { href: repoUrl, label: 'GitHub' },
+    { blog: true, label: 'Blog' },
+    { search: true }
   ],
   users,
   headerIcon: 'img/logo_horizontal_white.png',
@@ -35,8 +38,7 @@ const siteConfig = {
     theme: 'default'
   },
   scripts: ['https://cdn.userdive.com/agent.js'],
-  // You may provide arbitrary config keys to be used as needed by your template.
-  repoUrl: 'https://github.com/userdive/agent.js'
+  repoUrl
 }
 
 module.exports = siteConfig

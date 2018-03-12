@@ -5,20 +5,13 @@ const {
   GridBlock,
   MarkdownBlock
 } = require('../../core/CompLibrary.js')
-const siteConfig = require(process.cwd() + '/siteConfig.js')
+const { baseUrl, users, title } = require(process.cwd() + '/siteConfig.js')
 
-function imgUrl (img) {
-  return siteConfig.baseUrl + 'img/' + img
-}
-
-function docUrl (doc, language) {
-  return siteConfig.baseUrl + 'docs/' + (language ? language + '/' : '') + doc
-}
-
-function pageUrl (page, language) {
-  return siteConfig.baseUrl + (language ? language + '/' : '') + page
-}
-
+const imgUrl = img => `${baseUrl}img/${img}`
+const docUrl = (doc, language) =>
+  `${baseUrl}docs/${language ? language + '/' : ''}${doc}`
+const pageUrl = (page, language) =>
+  `${baseUrl}${language ? language + '/' : ''}${page} `
 const Button = ({ href, target, children }) => (
   <div className='pluginWrapper buttonWrapper'>
     <a className='button' href={href} target={target || '_self'}>
@@ -41,10 +34,10 @@ const Logo = ({ img_src: src }) => (
   </div>
 )
 
-const PromoSection = props => (
+const PromoSection = ({ children }) => (
   <div className='section promoSection'>
     <div className='promoRow'>
-      <div className='pluginRowBlock'>{props.children}</div>
+      <div className='pluginRowBlock'>{children}</div>
     </div>
   </div>
 )
@@ -54,14 +47,14 @@ const HomeSplash = ({ language }) => (
     <Logo img_src={imgUrl('logo.svg')} />
     <div className='inner'>
       <PromoSection>
-        <Button href='#try'>
-          <translate>Try It Out</translate>
+        <Button href={docUrl('getting-started.html', language || '')}>
+          <translate>Getting Started</translate>
         </Button>
-        <Button href={docUrl('doc1.html', language || '')}>
-          <translate>Example Link</translate>
+        <Button href={docUrl('plugins.html', language || '')}>
+          <translate>Plugins</translate>
         </Button>
-        <Button href={docUrl('doc2.html', language || '')}>
-          <translate>Example Link 2</translate>
+        <Button href={docUrl('integrations.html', language || '')}>
+          <translate>Integrations</translate>
         </Button>
       </PromoSection>
     </div>
@@ -142,10 +135,10 @@ const Description = props => (
 )
 
 const Showcase = ({ language }) => {
-  if ((siteConfig.users || []).length === 0) {
+  if ((users || []).length === 0) {
     return null
   }
-  const showcase = siteConfig.users
+  const showcase = users
     .filter(user => {
       return user.pinned
     })
@@ -164,7 +157,7 @@ const Showcase = ({ language }) => {
       <div className='logos'>{showcase}</div>
       <div className='more-users'>
         <a className='button' href={pageUrl('users.html', language)}>
-          More {siteConfig.title} Users
+          More {title} Users
         </a>
       </div>
     </div>

@@ -1,4 +1,7 @@
-# Custom Dimensions
+---
+id: custom-variables
+title: Custom Dimensions
+---
 
 | Field            | Type   | Required | Description                                              |
 | :--------------- | :----- | :------- | :------------------------------------------------------- |
