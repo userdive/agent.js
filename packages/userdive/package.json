@@ -23,7 +23,8 @@
     "build": "tsc",
     "prepublish": "npm run build",
     "clean": "rimraf lib coverage build",
-    "test": "karma start"
+    "test": "karma start karma.conf.phantom.ts",
+    "test:appveyor": "karma start karma.conf.ie.ts"
   },
   "types": "lib/index.d.ts"
 }

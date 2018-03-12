@@ -31,7 +31,8 @@
     "build": "tsc",
     "pretest": "npm run build",
     "clean": "rimraf coverage lib docs",
-    "test": "karma start --single-run"
+    "test": "karma start --single-run karma.conf.phantom.ts",
+    "test:appveyor": "karma start --single-run karma.conf.ie.ts"
   },
   "types": "lib/linker.d.ts"
 }

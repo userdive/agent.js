@@ -44,7 +44,13 @@ const base = {
   mochaReporter: {
     showDiff: true
   },
-  browsers: ['PhantomJS'],
+  customLaunchers: {
+    IE_no_addons: {
+      base: 'IE',
+      browser_version: '11',
+      flags: ['-extoff']
+    }
+  },
   singleRun: true
 }
 
