@@ -12,11 +12,14 @@
   "devDependencies": {
     "automerge": true
   },
-  "pathRules": [
-    {
-      "paths": [
-        "examples/**"
-      ]
-    }
+  "labels": [
+    "dependencies"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**"
   ]
 }
