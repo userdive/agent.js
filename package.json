@@ -115,6 +115,7 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
+    "appveyor": "lerna run test:appveyor",
     "build": "run-p build:*",
     "build:examplejs": "cd examples && webpack",
     "build:examples": "pug examples -o examples/build -P -s",

@@ -42,7 +42,8 @@
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
     "prepublish": "npm run build",
-    "test": "karma start --single-run"
+    "test": "karma start --single-run karma.conf.phantom.ts",
+    "test:appveyor": "karma start --single-run karma.conf.ie.ts"
   },
   "types": "lib/agent.d.ts"
 }

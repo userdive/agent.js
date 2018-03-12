@@ -5,5 +5,5 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - yarn
 test_script:
-  - npm run test
+  - npm run appveyor
 build: off
