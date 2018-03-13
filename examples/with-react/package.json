@@ -1,6 +1,6 @@
 {
   "name": "with-react",
-  "version": "0.14.0-beta3",
+  "version": "0.14.0",
   "dependencies": {
     "@types/react": "16.0.40",
     "@types/react-dom": "16.0.4",
@@ -9,7 +9,7 @@
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-router-dom": "4.2.2",
-    "userdive": "^0.14.0-beta3"
+    "userdive": "^0.14.0"
   },
   "private": true,
   "scripts": {

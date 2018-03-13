@@ -1,14 +1,14 @@
 {
   "name": "@userdive/linker",
   "description": "webpage tracking agent linker plugin",
-  "version": "0.14.0-beta3",
+  "version": "0.14.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^0.14.0-beta3",
-    "userdive": "^0.14.0-beta3"
+    "@userdive/agent": "^0.14.0",
+    "userdive": "^0.14.0"
   },
   "engine": {
     "node": "> 5"
@@ -21,11 +21,13 @@
     "userdive"
   ],
   "license": "GPL-3.0",
-  "private": true,
   "main": "lib/linker.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
