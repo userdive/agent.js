@@ -2,7 +2,7 @@
   "name": "@userdive/developers",
   "version": "0.14.0-beta3",
   "dependencies": {
-    "docusaurus": "1.0.7"
+    "docusaurus": "1.0.8"
   },
   "devDependencies": {
     "babel-eslint": "8.2.2",
