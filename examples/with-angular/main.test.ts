@@ -1,6 +1,6 @@
 describe('with-angular', function () {
   const linkQuery: string = 'app a'
-  const root: string = 'http://localhost:8080/with-angular/#'
+  const root = `${process.env.BASE_URL}/with-angular/#`
 
   function displayTop (client: any): any {
     return client.url(root).waitForElementVisible(linkQuery, 1000)

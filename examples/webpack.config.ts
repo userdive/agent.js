@@ -1,6 +1,7 @@
+const webpack = require('webpack')
 const path = require('path')
 
-module.exports = {
+module.exports = ({ BASE_URL }: { BASE_URL: string }) => ({
   entry: {
     react: path.join(__dirname, 'with-react/pages/index.tsx'),
     angular1: path.join(__dirname, 'with-angular1/main.ts'),
@@ -23,5 +24,12 @@ module.exports = {
   },
   module: {
     rules: [{ test: /\.tsx?$/, use: 'ts-loader' }]
-  }
-}
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.BASE_URL': JSON.stringify(
+        BASE_URL || 'http://localhost:8080'
+      )
+    })
+  ]
+})

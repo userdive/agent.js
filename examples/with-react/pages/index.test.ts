@@ -1,6 +1,6 @@
 describe('with-react', function () {
   const linkQuery: string = '#content ul li a'
-  const root = 'http://localhost:8080/with-react/#'
+  const root = `${process.env.BASE_URL}/with-react/#`
 
   function displayTop (client: any): any {
     return client.url(root).waitForElementVisible(linkQuery, 1000)

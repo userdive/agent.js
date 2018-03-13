@@ -6,7 +6,7 @@ const { version } = require('./lerna.json')
 
 const date = new Date()
 
-module.exports = {
+module.exports = ({ NODE_ENV }: { NODE_ENV: string }) => ({
   entry: {
     'agent.d': path.join(__dirname, 'packages/agent/src/entrypoint/debug.ts'),
     agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts'),
@@ -27,7 +27,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
       'process.env.VERSION': JSON.stringify(version)
     }),
     new UglifyJSPlugin({
@@ -42,4 +42,4 @@ module.exports = {
       banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
     })
   ]
-}
+})
