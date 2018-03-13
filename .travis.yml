@@ -86,7 +86,7 @@ jobs:
         local-dir: website/build/USERDIVE
         acl: public_read
         on:
-          branch: master
+          tags: true
           repo: userdive/agent.js
 notifications:
   email: false
