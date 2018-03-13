@@ -44,7 +44,7 @@ const base = {
   mochaReporter: {
     showDiff: true
   },
-  browsers: ['PhantomJS'],
+  browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'PhantomJS'],
   singleRun: true
 }
 
