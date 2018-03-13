@@ -20,7 +20,10 @@ export type Size = {
   readonly w: number
 }
 
-export type SendType = 'pageview'
+export type SendType = 'pageview' | 'event'
+export type SendData =
+  | string
+  | { category: string; action: string; label?: string; value?: number }
 export type Dimension =
   | 'dimension1'
   | 'dimension2'

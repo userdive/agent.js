@@ -15,7 +15,7 @@ import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
-import { Interact, SendType, Settings } from './types'
+import { Interact, SendData, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -55,6 +55,7 @@ export default class AgentCore extends Store {
   private emitter: EventEmitter
   private events: AgentEvent[]
   private interactId: number
+  private eventId: number
   private interacts: Interact[]
   private interval: number[]
   private loadTime: number
@@ -112,7 +113,7 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  send (type: SendType, page: string): void {
+  send (type: SendType, sendData: SendData): void {
     switch (type) {
       case 'pageview':
         this.sendInteracts(true)
@@ -120,7 +121,7 @@ export default class AgentCore extends Store {
           this.bind()
         }
 
-        const data = getEnv(pathname2href(page))
+        const data = getEnv(pathname2href(sendData as string))
         if (!data || !this.baseUrl) {
           return warning(`failed init`)
         }
@@ -141,6 +142,10 @@ export default class AgentCore extends Store {
             this.destroy()
           }
         )
+        break
+      case 'event':
+        // TODO implement event data cache
+        break
     }
   }
 
