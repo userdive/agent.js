@@ -81,3 +81,4 @@ deploy:
   on:
     all_branches: true
     repo: userdive/agent.js
+    condition: stage = Test
