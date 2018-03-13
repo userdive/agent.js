@@ -1,4 +1,7 @@
-# Starting to tracking web site
+---
+id: getting-started
+title: Getting started
+---
 
 You use [agent.js](https://cdn.userdive.com/agent.js) to measure the action of USERDIVE’s user.
 In the following, I explain a method to add to for a site.
