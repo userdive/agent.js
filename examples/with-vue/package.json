@@ -6,11 +6,5 @@
     "vue": "2.5.15",
     "vue-router": "3.0.1"
   },
-  "private": true,
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "e2e": "nightwatch",
-    "prebuild": "rimraf tests",
-    "pree2e": "npm run build"
-  }
+  "private": true
 }

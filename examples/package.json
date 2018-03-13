@@ -1,0 +1,23 @@
+{
+  "name": "@userdive/examples",
+  "version": "0.0.0",
+  "main": "n/a",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/nightwatch": "^0.9.7",
+    "pug": "2.0.1",
+    "pug-cli": "1.0.0-alpha6",
+    "chromedriver": "2.36.0",
+    "nightwatch": "0.9.20",
+    "selenium-server-standalone-jar": "3.9.1"
+  },
+  "scripts": {
+    "build": "run-p build:*",
+    "build:test": "tsc -m commonjs",
+    "build:js": "webpack",
+    "build:html": "pug . -o build -P -s",
+    "e2e": "nightwatch",
+    "clean": "rimraf tests build"
+  }
+}

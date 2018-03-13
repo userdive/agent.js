@@ -1,15 +1,23 @@
 # @userdive/examples
 
-[![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
+[![CircleCI](https://circleci.com/gh/userdive/agent.js/tree/master.svg?style=svg)](https://circleci.com/gh/userdive/agent.js/tree/master)
 
-## Setup
+## Table of Contents
 
-    npm install
+*   [Install](#install)
+*   [Usage](#usage)
+*   [Build](#build)
+
+cd <PROJECT_ROOT>
+
+## Install
+
+    yarn install
+
+## Usage
+
+    yarn examples
 
 ## Build
 
-    npm run build
-
-## Auther
-
-UNCOVER TRUTH Inc.
+    yarn build
