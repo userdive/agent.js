@@ -4,6 +4,9 @@ echo "publish to npm"
 
 echo "setting publish account"
 npm config set "//registry.npmjs.org/:_authToken=\${NPM_API_KEY}"
+npm config set init.author.name userdive
+npm config set init.author.email develop@uncovertruth.jp
+npm config set init.author.url https://www.uncovertruth.co.jp
 npm whoami
 
 echo "publish"
