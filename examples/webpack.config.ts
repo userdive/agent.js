@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
@@ -24,12 +23,5 @@ module.exports = {
   },
   module: {
     rules: [{ test: /\.tsx?$/, use: 'ts-loader' }]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.BASE_URL': JSON.stringify(
-        process.env.BASE_URL || 'http://localhost:8080'
-      )
-    })
-  ]
+  }
 }

@@ -2,13 +2,7 @@
   "src_folders": [
     "tests"
   ],
-  "test_runner": {
-    "type": "mocha",
-    "options": {
-      "ui": "bdd",
-      "reporter": "spec"
-    }
-  },
+  "test_workers": "auto",
   "output_folder": "reports",
   "selenium": {
     "start_process": true,
@@ -21,7 +15,7 @@
   },
   "test_settings": {
     "default": {
-      "launch_url": "http://localhost",
+      "launch_url": "http://localhost:8080",
       "selenium_port": 4444,
       "selenium_host": "localhost",
       "silent": true,

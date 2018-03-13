@@ -278,6 +278,10 @@
   version "2.2.48"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
 
+"@types/nightwatch@^0.9.7":
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.7.tgz#690993008374228a0c825d3920bdfe3721c079fe"
+
 "@types/node@*":
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"

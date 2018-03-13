@@ -1,23 +1,24 @@
-describe('example', function () {
-  const root = 'http://localhost:8080'
-  const email: string = 'userdive@example.com'
-  const formQuery: string = '.form-group:first-of-type .form-controll'
+import { NightwatchAPI } from 'nightwatch'
 
-  function displayRoot (client: any): any {
-    return client.url(root).waitForElementVisible('body', 1000)
-  }
+const email: string = 'userdive@example.com'
+const formQuery: string = '.form-group:first-of-type .form-controll'
 
-  it('set input form elements', (client: any) => {
-    displayRoot(client)
-      .setValue(formQuery, email.split(''))
+export default {
+  before: (_: any, done: Function) => {
+    done()
+  },
+  'set input form elements': (browser: NightwatchAPI) =>
+    browser
+      .url(browser.launch_url)
+      .waitForElementVisible('body', 1000)
+      .setValue(formQuery, email)
       .assert.value(formQuery, email)
-      .end()
-  })
-
-  it('select a value', (client: any) => {
-    displayRoot(client)
+      .end(),
+  'select a value': (browser: NightwatchAPI) =>
+    browser
+      .url(browser.launch_url)
+      .waitForElementVisible('body', 1000)
       .click('select[class="form-control"] option:nth-child(2)')
       .assert.value('select[class="form-control"]', 'example2')
       .end()
-  })
-})
+}

@@ -5,10 +5,13 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "nightwatch": "0.9.20"
+    "@types/nightwatch": "^0.9.7",
+    "chromedriver": "2.36.0",
+    "nightwatch": "0.9.20",
+    "selenium-server-standalone-jar": "3.9.1"
   },
   "scripts": {
-    "build": "tsc && webpack",
+    "build": "tsc -m commonjs && webpack",
     "e2e": "nightwatch",
     "clean": "rimraf tests"
   }
