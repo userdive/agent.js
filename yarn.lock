@@ -6227,7 +6227,7 @@ karma-coverage-istanbul-reporter@1.4.2:
     istanbul-api "^1.1.14"
     minimatch "^3.0.4"
 
-karma-ie-launcher@^1.0.0:
+karma-ie-launcher@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/karma-ie-launcher/-/karma-ie-launcher-1.0.0.tgz#497986842c490190346cd89f5494ca9830c6d59c"
   dependencies:
