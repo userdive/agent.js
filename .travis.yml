@@ -79,5 +79,5 @@ deploy:
   local-dir: website/build/USERDIVE
   acl: public_read
   on:
-    branch: master
+    all_branches: true
     repo: userdive/agent.js
