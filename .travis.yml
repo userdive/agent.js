@@ -16,6 +16,10 @@ jobs:
     - stage: Sauce
       script: npm run ci:sauce
       if: type = pr or branch = master
+    - stage: deploy
+      script: skip     # usually you do not want to rerun any tests
+      deploy:
+        provider: s3
 notifications:
   email: false
   slack:
@@ -81,4 +85,3 @@ deploy:
   on:
     all_branches: true
     repo: userdive/agent.js
-    condition: stage = Test
