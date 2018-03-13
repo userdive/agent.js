@@ -2,7 +2,6 @@
   "src_folders": [
     "tests"
   ],
-  "test_workers": "auto",
   "output_folder": "reports",
   "selenium": {
     "start_process": true,
