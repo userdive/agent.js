@@ -1,0 +1,15 @@
+{
+  "name": "@userdive/examples",
+  "version": "0.0.0",
+  "main": "n/a",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "nightwatch": "0.9.20"
+  },
+  "scripts": {
+    "build": "tsc && webpack",
+    "e2e": "nightwatch",
+    "clean": "rimraf tests"
+  }
+}

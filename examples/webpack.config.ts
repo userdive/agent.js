@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = ({ BASE_URL }: { BASE_URL: string }) => ({
+module.exports = {
   entry: {
     react: path.join(__dirname, 'with-react/pages/index.tsx'),
     angular1: path.join(__dirname, 'with-angular1/main.ts'),
@@ -28,8 +28,8 @@ module.exports = ({ BASE_URL }: { BASE_URL: string }) => ({
   plugins: [
     new webpack.DefinePlugin({
       'process.env.BASE_URL': JSON.stringify(
-        BASE_URL || 'http://localhost:8080'
+        process.env.BASE_URL || 'http://localhost:8080'
       )
     })
   ]
-})
+}

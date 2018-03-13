@@ -7,11 +7,5 @@
     "angular": "1.6.9",
     "userdive": "^0.14.0"
   },
-  "private": true,
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "e2e": "nightwatch",
-    "prebuild": "rimraf tests",
-    "pree2e": "npm run build"
-  }
+  "private": true
 }
