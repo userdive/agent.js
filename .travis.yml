@@ -75,7 +75,18 @@ jobs:
         local-dir: website/build/USERDIVE
         acl: public_read
         on:
-          all_branches: true
+          branch: master
+          repo: userdive/agent.js
+      - provider: s3
+        access_key_id: AKIAJLR4F33XRHF7DKJQ
+        secret_access_key:
+          secure: L/WzXUReP1JeT8RSMc1LoMo0in+Z0RhT0WecmIUxgAOG6dcrp7hjRUPECWq9W8RFaF1owVaZOUA/LDtyrjbzOf/Ah2VcPjj5PzKSXy4dg29jRwORw/bP/Uc+IIw8I4JADXbBUlpZKr4kCfoauGHTZtmSjOHySqTqOTKOxyXSdAx7GZyNt91uBESELV8fd5Gf4mD6/vUiAgAH1B5VJ5IewBTHZn8uNkI3rwUbwaMMvNz4ZGsqiQ8zIBktyZsBeKYvZN3I9mqmgX5diB+a8qxAruxyEBLCMc5tUqr/BkZAjPZbR5eK8++xh3TIJLAJMUQYadHYfMDJYKT8EECy2IIdi0fWw6OQkSauP3HjEeH3yUEQemcWthMQjsdE5YVAHW8YsQKcVWH2EhZPPjuUCF9eAimqtF80jbEF8GuXOcbxmGJzZIbXqExe5lVlUpHcdVFmEXCaFJb68lPywR9LJjp6xO5keB0RGb7dwrEW6TgN+8tvrF9jVV5l01JJ6to2LMzPwLhtWjkmQ/oK8nyBxEw7S/MuMuY7hJdUZhokAQcLZH72PhnqW/hQcAeVs2HP9UZNgh1Rms6asJq3RGtR90iG5kAX6xlo4I+JfHzNtVyweVqlCQH9B58+q4tbT/IRtlgaT34ficKYeOnzW2JTtjkMPiDyPlEOqXyv7TVzlGCDzww=
+        skip_cleanup: true
+        bucket: s3-bucket-developers-s3bucket-nm8a5fhkdfnh
+        local-dir: website/build/USERDIVE
+        acl: public_read
+        on:
+          branch: master
           repo: userdive/agent.js
 notifications:
   email: false
