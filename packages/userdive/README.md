@@ -38,4 +38,4 @@ PRs accepted. [join us](https://www.wantedly.com/companies/uncovertruth/projects
 
 ## License
 
-This library is licensed under GPLv3. Full license text is available in [LICENSE](https://github.com/userdive/userdive.js/blob/master/LICENSE)
+GPLv3. Full license text is available in [LICENSE](https://github.com/userdive/agent.js/blob/master/packages/userdive/LICENSE)

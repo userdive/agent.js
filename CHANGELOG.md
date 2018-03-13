@@ -1,3 +1,29 @@
+## v0.14.0 (2018-03-13)
+
+#### :rocket: Enhancement
+
+*   Other
+    *   [#328](https://github.com/userdive/agent.js/pull/328) nightwatch. ([@taka-sho](https://github.com/taka-sho))
+    *   [#304](https://github.com/userdive/agent.js/pull/304) feat(docs) Added getting started. ([@9renpoto](https://github.com/9renpoto))
+*   `agent`
+    *   [#325](https://github.com/userdive/agent.js/pull/325) build: update ui-event-observer requirement to ^2.0.0 in /packages/agent. ([@dependabot[bot]](https://github.com/apps/dependabot))
+
+#### :bug: Bug Fix
+
+*   Other
+    *   [#329](https://github.com/userdive/agent.js/pull/329) refactor(examples) use es2015. ([@9renpoto](https://github.com/9renpoto))
+*   `agent`, `linker`, `userdive`
+    *   [#326](https://github.com/userdive/agent.js/pull/326) fix(packages/agent) fix core scope . ([@9renpoto](https://github.com/9renpoto))
+    *   [#303](https://github.com/userdive/agent.js/pull/303) Fixed linker lifecycle. ([@9renpoto](https://github.com/9renpoto))
+
+#### Committers: 5
+
+*   Keisuke Kan ([9renpoto](https://github.com/9renpoto))
+*   Shotaro Takahara ([taka-sho](https://github.com/taka-sho))
+*   [dependabot[bot]](https://github.com/apps/dependabot)
+*   [renovate[bot]](https://github.com/apps/renovate)
+*   [sae1116](https://github.com/sae1116)
+
 ## v0.13.0 (2018-03-01)
 
 #### :rocket: Enhancement

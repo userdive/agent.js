@@ -74,42 +74,6 @@
     "userdive"
   ],
   "license": "GPL-3.0",
-  "lint-staged": {
-    "*.ts": [
-      "prettier-eslint --write",
-      "tslint --fix",
-      "tslint",
-      "git add"
-    ],
-    "*.tsx": [
-      "prettier-eslint --eslint-config-path ./website/.eslintrc.json --write",
-      "tslint --fix -c ./examples/tslint.json",
-      "tslint -c ./examples/tslint.json",
-      "git add"
-    ],
-    "website/**/*.js": [
-      "prettier-eslint --eslint-config-path ./website/.eslintrc.json --write",
-      "eslint ./website/.eslintrc.json",
-      "git add"
-    ],
-    "*.pug": [
-      "pug-lint"
-    ],
-    "package.json": [
-      "fixpack",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --write",
-      "textlint",
-      "git add"
-    ],
-    "*.css": [
-      "prettier --write",
-      "stylelint --fix",
-      "git add"
-    ]
-  },
   "private": true,
   "repository": {
     "type": "git",
@@ -136,6 +100,7 @@
     "lint:docs": "textlint docs",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
     "lint:js": "eslint -c website/.eslintrc.json website",
+    "lint:packagemd": "textlint 'packages/*/*.md' README.md",
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",

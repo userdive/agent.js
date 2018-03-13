@@ -8,7 +8,7 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![codebeat badge](https://codebeat.co/badges/248f31a1-c73e-45e4-b1e0-a6154c1baaca)](https://codebeat.co/projects/github-com-userdive-agent-js-master)
 [![CodeFactor](https://www.codefactor.io/repository/github/userdive/agent.js/badge)](https://www.codefactor.io/repository/github/userdive/agent.js)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://www.codacy.com/app/develop_2/agent.js?utm_source=github.com&utm_medium=referral&utm_content=userdive/agent.js&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://app.codacy.com/app/USERDIVE/agent.js/dashboard)
 [![BCH compliance](https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master)](https://bettercodehub.com/)
 [![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev)
 
@@ -16,7 +16,7 @@
 
 ## Packages
 
-This repository is managed as monorepo.
+This repository is a monorepo that we manage using [Lerna](https://github.com/lerna/lerna). That means that we actually publish [packages](./packages) to npm from the same codebase, including:
 
 | Package                                | Version                                                                                                           |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -29,4 +29,4 @@ PRs accepted. [join us](https://www.wantedly.com/companies/uncovertruth/projects
 
 ## License
 
-This library is licensed under GPLv3. Full license text is available in [LICENSE](https://github.com/userdive/agent.js/blob/master/packages/agent/LICENSE)
+GPLv3. Full license text is available in [LICENSE](./LICENSE)
