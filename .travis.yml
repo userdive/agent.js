@@ -70,3 +70,14 @@ deploy:
   on:
     tags: true
     repo: userdive/agent.js
+- provider: s3
+  access_key_id: AKIAIPY6VYMCAAHTH4GA
+  secret_access_key:
+    secure: KkSvOhNHSND3YLSwUj5F0BZ/eUhW/0wvxSnMqKoP6Lc1kCqM0HEoysn359A4yByaBn9Gs+/7JF0o9sFZNfeQpYDXaydTlbHmobJEATQAG0D+Oozt3CYE9InQiVBWo+jMV/ia+CUxpbJDuig/uwoxrS5pqe+1LNkHwar47cT2k5XBUwtrFe36qnEDGfmJin3NIVt/MgIoBpNtf6G9ctjBpFcDaO5FhXaZwiyM2Mgnqno+9S2LAd0xPbOAOZijtKKiRObiY4ZdRSTXwkTfbfGfChcE2DghTh5bl0EjMQsSV3I8gdV6TyC7HGbbj/Q5EoLNbOYtJ8deMvwKzL3fh3wYXC9ZZYQm7TcY0nZ+62APZQsYkDl+tS0Fyteq9pWVy8OL3tfsecpmPWf/XtCOB11OnAcwPMYCANQnB6zpAlwIKSWW0fXL/4MKg4qG5S+PRLvxiUXFPMufFSZI+3dRf+OW1//ql37O+2p3hsbw2ZURytQHwy6g2pITWIYx86BId1Bd9Fx1typQpPJHgJJyARJ9TpWqv4/5N5WxHsJpGbs5MH+FIEInqxzflQUSqi0ncHsmBNSHFzLxs9GSXF/6bf/3SwqJhtrzQqRReBH9+oPzu96jw+1duy2jzXXGKmWFbtULrEA6h1A8CKkZr9r1RZ5LE8XcIMPOCRN5fPth99fNHjY=
+  skip_cleanup: true
+  bucket: s3-bucket-developers-s3bucket-3mp1ibbucnso
+  local-dir: website/build/USERDIVE
+  acl: public_read
+  on:
+    branch: master
+    repo: userdive/agent.js
