@@ -2,13 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
-      - image: selenium/standalone-chrome
+      - image: circleci/node:8-node-browsers
     working_directory: ~/repo
     steps:
       - checkout
-      - run: apt-get update -qq && apt-get install -y apt-transport-https build-essential postgresql-contrib software-properties-common memcached unzip xvfb
       - run: yarn install
-      - run: yarn examples &
+      - run:
+        name: start SPAs
+        command: yarn examples
+        background: true
       - run: sleep 30
       - run: yarn e2e
