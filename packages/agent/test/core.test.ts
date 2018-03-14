@@ -193,6 +193,24 @@ describe('core', () => {
     spy.restore()
   })
 
+  it('send event', () => {
+    const agent = agentFactory({ auto: true })
+    agent.send('pageview', location.href)
+    const spy = sinonSpy(require('../src/requests'), 'get')
+    agent.send('event', {
+      category: 'DummyCategory',
+      action: 'DummyAction',
+      label: 'DummyLabel',
+      value: 100
+    })
+    const query = spy.getCall(0).args[1]
+    const [key, value] = query[0].split('=')
+    const eventParams = value.split(',')
+    assert(key === 'e')
+    assert(eventParams.length === 5)
+    spy.restore()
+  })
+
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
     stub.callsFake((url, query, onerror) => {

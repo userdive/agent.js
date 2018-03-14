@@ -8,14 +8,15 @@ import { v4 as uuid } from 'uuid'
 import { getEnv } from './browser'
 import {
   INTERACT as MAX_INTERACT,
-  INTERVAL as INTERVAL_DEFAULT_SETTING
+  INTERVAL as INTERVAL_DEFAULT_SETTING,
+  MAX_EVENT_SEQ
 } from './constants'
 import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
-import { Interact, SendData, SendType, Settings } from './types'
+import { Interact, SendData, SendEvent, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -100,6 +101,7 @@ export default class AgentCore extends Store {
     this.interacts = []
     this.interval = []
     this.interactId = 0
+    this.eventId = 0
     this.emitter = new EventEmitter()
     this.observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
@@ -144,7 +146,15 @@ export default class AgentCore extends Store {
         )
         break
       case 'event':
-        // TODO implement event data cache
+        const event = sendData as SendEvent
+        if (
+          event.category &&
+          event.action &&
+          (!event.value || event.value > 0)
+        ) {
+          this.eventId++
+          this.sendEvent(event)
+        }
         break
     }
   }
@@ -155,8 +165,8 @@ export default class AgentCore extends Store {
     this.loadTime = 0
   }
 
-  sendInteracts (force?: boolean): void {
-    const query: string[] = []
+  sendInteracts (force?: boolean, optionalQuery?: string[]): void {
+    const query: string[] = optionalQuery || []
     this.interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -180,7 +190,18 @@ export default class AgentCore extends Store {
     }
   }
 
-  protected sendInteractsWithUpdate (): void {
+  protected sendEvent (e: SendEvent) {
+    if (this.eventId <= MAX_EVENT_SEQ) {
+      this.cacheToInteracts()
+      const { category, action, label, value } = e
+      const query = `e=${this.eventId},${category},${action},${label ||
+        ''},${value || ''}`
+      this.sendInteracts(true, [query])
+      this.interactId++
+    }
+  }
+
+  protected cacheToInteracts () {
     Object.keys(this.cache).forEach(key => {
       const cache: any = this.cache[key]
       if (cacheValidator(cache)) {
@@ -191,8 +212,11 @@ export default class AgentCore extends Store {
         )
       }
     })
-
     this.clear()
+  }
+
+  protected sendInteractsWithUpdate (): void {
+    this.cacheToInteracts()
     this.sendInteracts()
 
     if (this.loadTime) {
