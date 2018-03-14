@@ -5,18 +5,19 @@ import userdive from 'userdive'
 
 type Props = {
   linkTo: string
+  linkValue: string
   match: any
   location: any
   history: any
 }
 const _ud = userdive()
 
-function Sample ({ linkTo, location: { href } }: Props) {
+function Sample ({ linkTo, linkValue, location: { href } }: Props) {
   _ud('send', 'pageview', href)
   return (
     <ul>
       <li>
-        <Link to={linkTo}>{linkTo}</Link>
+        <Link to={linkTo}>{linkValue}</Link>
       </li>
     </ul>
   )

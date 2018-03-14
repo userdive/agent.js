@@ -18,6 +18,7 @@
     "build:js": "webpack",
     "build:html": "pug . -o build -P -s",
     "e2e": "nightwatch",
-    "clean": "rimraf tests build"
+    "clean": "rimraf tests build",
+    "prebuild": "npm run clean"
   }
 }

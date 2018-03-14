@@ -20,7 +20,7 @@ export default function (suffix: string): NightwatchTests {
         .click(linkQuery)
         .pause(500)
         .assert.containsText(linkQuery, 'Sample1')
-        .assert.urlEquals(`${toUrl(browser.launch_url)}/sample2`)
+        .assert.urlEquals(`${toUrl(browser.launch_url)}sample2`)
         .end()
   }
 }

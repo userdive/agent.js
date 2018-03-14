@@ -3,4 +3,4 @@ import { render } from 'react-dom'
 import App from './Routes'
 
 const Application: any = App // FIXME hard cast
-render(<Application />, document.getElementById('content'))
+render(<Application />, document.getElementById('app'))
