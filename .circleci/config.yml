@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:8-stretch-browsers
+      - image: selenium/standalone-chrome:latest
     working_directory: ~/repo
     steps:
       - checkout
