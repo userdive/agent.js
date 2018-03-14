@@ -19,7 +19,6 @@
     "build:html": "pug . -o build -P -s",
     "e2e": "nightwatch",
     "clean": "rimraf tests build",
-    "prebuild": "npm run clean",
-    "pree2e": "npm run build"
+    "prebuild": "npm run clean"
   }
 }
