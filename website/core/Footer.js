@@ -1,7 +1,8 @@
 const React = require('react')
 
 module.exports = function Footer ({
-  config: { baseUrl, footerIcon, title, repoUrl }
+  language,
+  config: { baseUrl, footerIcon, title, repoUrl, url }
 }) {
   return (
     <footer className='nav-footer' id='footer'>
@@ -15,7 +16,20 @@ module.exports = function Footer ({
           />
         </a>
         <div>
+          <h5>Docs</h5>
+          <a href={`${baseUrl}docs/${language}/getting-started.html`}>Usage</a>
+          <a href={`${baseUrl}docs/${language}/plugins.html`}>Plugins</a>
+          <a href={`${baseUrl}docs/${language}/integrations.html`}>
+            Integrations
+          </a>
+        </div>
+        <div>
+          <h5>Community</h5>
+          <a href='https://github.com/userdive'>Organization</a>
+        </div>
+        <div>
           <h5>More</h5>
+          <a href={`https://www.uncovertruth.co.jp/${language}/`}>Company</a>
           <a href={`${baseUrl}blog`}>Blog</a>
           <a href={repoUrl}>GitHub</a>
           <a
