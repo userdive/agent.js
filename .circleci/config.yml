@@ -2,14 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8-node-browsers
+      - image: circleci/node:8-browsers
     working_directory: ~/repo
     steps:
       - checkout
       - run: yarn install
       - run:
-        name: start SPAs
-        command: yarn examples
-        background: true
+          name: start SPAs
+          command: yarn examples
+          background: true
       - run: sleep 30
       - run: yarn e2e
