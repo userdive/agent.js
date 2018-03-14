@@ -28,6 +28,8 @@ export function q (name: string, global: any) {
   return global[name]
 }
 
+export const namespace = 'data-ud-namespace'
+
 export default function (
   name?: string,
   source?: string,
@@ -39,6 +41,6 @@ export default function (
   if (global[name]) {
     return global[name]
   }
-  inject(source, { 'data-ud-namespace': name })
+  inject(source, { [namespace]: name })
   return q(name, global)
 }

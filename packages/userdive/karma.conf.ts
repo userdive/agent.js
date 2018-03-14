@@ -1,4 +1,4 @@
 import { setting } from '../../karma.conf.base'
-module.exports = function (config: any) {
+export default function (config: any) {
   config.set(setting)
 }
