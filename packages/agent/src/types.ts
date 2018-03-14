@@ -1,12 +1,13 @@
 import * as Raven from 'raven-js'
 export type Settings = {
+  readonly allowLink: boolean
   readonly auto: boolean
   readonly baseUrl: string
   readonly cookieDomain: string
   readonly cookieExpires: number
   readonly cookieName: string
+  readonly linkerName: string
   readonly RAVEN_DSN: string
-  readonly allowLink: boolean
   readonly Raven?: Raven.RavenStatic
 }
 

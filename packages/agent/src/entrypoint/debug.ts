@@ -5,7 +5,13 @@ import factory from '../global'
 
 class DebugAgent extends Agent {
   constructor (projectId: string, options: Object) {
-    super(projectId, objectAssign({}, options, { Raven }))
+    super(
+      projectId,
+      objectAssign({}, options, {
+        Raven,
+        RAVEN_DSN: process.env.RAVEN_DSN
+      })
+    )
   }
 }
 

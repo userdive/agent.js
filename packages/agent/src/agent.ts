@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 
 import { validate } from './browser'
-import { LINKER, LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
+import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'
@@ -13,6 +13,7 @@ const PLUGINS = 'plugins'
 
 export default class Agent {
   private core: AgentCore
+  private linkerName: string
   private plugins: { [name: string]: any }
 
   constructor (projectId: string, settings: Object | 'auto') {
@@ -20,11 +21,13 @@ export default class Agent {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
+    const config = objectAssign({}, SETTINGS_DEFAULT, settings)
     this.core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
-      objectAssign({}, SETTINGS_DEFAULT, settings)
+      config
     )
+    this.linkerName = config.linkerName
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(
         'pagehide',
@@ -49,7 +52,9 @@ export default class Agent {
   }
 
   get (key: string): string {
-    return key === 'linkerParam' ? `${LINKER}=${this.core.get('userId')}` : ''
+    return key === 'linkerParam'
+      ? `${this.linkerName}=${this.core.get('userId')}`
+      : ''
   }
 
   provide (name: string, pluginConstructor: ObjectConstructor) {
