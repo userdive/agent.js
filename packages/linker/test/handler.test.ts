@@ -67,9 +67,12 @@ describe('handler', () => {
     assert(`${comUrl}?${agent.get('linkerParam')}` === form.action)
   })
 
-  it('not found form', () => {
+  it('submit javascript:void(0);', () => {
+    const action = 'javascript:void(0)'
+    const form = createForm(comUrl, action)
     const handler = submit([domain], agent.get('linkerParam'))
     handler({ target: document } as any)
+    assert(action === form.action)
   })
 
   it('not cross domain', () => {
