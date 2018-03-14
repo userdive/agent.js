@@ -274,6 +274,10 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.1.0.tgz#a8916246aa994db646c66d54c854916213300a51"
 
+"@types/karma-fixture@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@types/karma-fixture/-/karma-fixture-0.2.3.tgz#fec335d7e5bf5557361b46ea5511c6bd13149193"
+
 "@types/mocha@2.2.48":
   version "2.2.48"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.48.tgz#3523b126a0b049482e1c3c11877460f76622ffab"
@@ -6226,6 +6230,10 @@ karma-coverage-istanbul-reporter@1.4.2:
   dependencies:
     istanbul-api "^1.1.14"
     minimatch "^3.0.4"
+
+karma-fixture@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/karma-fixture/-/karma-fixture-0.2.6.tgz#971cea8c216d73f07043964cb73f10e0830018ef"
 
 karma-ie-launcher@1.0.0:
   version "1.0.0"

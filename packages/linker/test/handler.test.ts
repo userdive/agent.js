@@ -16,6 +16,10 @@ describe('handler', () => {
     agent = new Agent(random.uuid(), 'auto')
   })
 
+  afterEach(() => {
+    fixture.cleanup()
+  })
+
   const setUpLinkEvent = (
     href: string,
     domains: Array<string | RegExp>
@@ -69,9 +73,13 @@ describe('handler', () => {
 
   it('submit javascript:void(0);', () => {
     const action = 'javascript:void(0)'
-    const form = createForm(comUrl, action)
+    fixture.set(
+      `<form action=${action}><input type="submit" value="test" ></form>`,
+      true
+    )
     const handler = submit([domain], agent.get('linkerParam'))
-    handler({ target: document } as any)
+    const form: any = document.getElementsByTagName('form')[0]
+    handler({ target: form } as any)
     assert(action === form.action)
   })
 
