@@ -3,7 +3,7 @@
   "localized-strings": {
     "next": "Next",
     "previous": "Previous",
-    "tagline": "",
+    "tagline": "Knowing it, makes the world better.",
     "custom-variables": "Custom Dimensions",
     "getting-started": "Getting started",
     "integrations": "Integrations",
@@ -20,6 +20,7 @@
     "Getting Started|no description given": "Getting Started",
     "Plugins|no description given": "Plugins",
     "Integrations|no description given": "Integrations",
+    "This project is used by all these people|no description given": "This project is used by all these people",
     "Who's Using This?|no description given": "Who's Using This?",
     "This project is used by many folks|no description given": "This project is used by many folks",
     "Are you using this project?|no description given": "Are you using this project?",

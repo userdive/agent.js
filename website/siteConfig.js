@@ -8,10 +8,10 @@ const users = [
   // }
 ]
 
-const repoUrl = `https://github.com/userdive`
+const repoUrl = `https://github.com/userdive/agent.js`
 const siteConfig = {
   title: 'USERDIVE',
-  tagline: '',
+  tagline: 'Knowing it, makes the world better.',
   url: 'https://developers.userdive.com/',
   baseUrl: '/',
   projectName: 'USERDIVE',
@@ -38,7 +38,9 @@ const siteConfig = {
     theme: 'default'
   },
   scripts: ['https://cdn.userdive.com/agent.js'],
-  repoUrl
+  repoUrl,
+  twitter: true,
+  gaTrackingId: 'UA-89961506-1'
 }
 
 module.exports = siteConfig
