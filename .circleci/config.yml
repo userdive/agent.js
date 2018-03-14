@@ -4,6 +4,9 @@ jobs:
     docker:
       - image: circleci/node:8
       - image: selenium/standalone-chrome:3.1.0
+        environment:
+          - DISPLAY=:99
+          - CHROME_BIN=/usr/bin/google-chrome
     working_directory: ~/repo
     steps:
       - checkout
