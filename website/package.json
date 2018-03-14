@@ -12,8 +12,7 @@
   "scripts": {
     "build": "docusaurus-build",
     "crowdin-download": "crowdin --config ../crowdin.yaml download -b master",
-    "crowdin-upload":
-      "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
+    "crowdin-upload": "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
     "prepare": "yarn write-translations",
     "rename-version": "docusaurus-rename-version",
     "start": "docusaurus-start",

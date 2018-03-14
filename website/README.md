@@ -1,4 +1,4 @@
-# @userdive/developers document
+# @userdive/developers documentation
 
 > USERDIVE Agent developers document
 
