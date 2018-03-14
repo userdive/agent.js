@@ -2,14 +2,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8
-      - image: selenium/standalone-chrome:3.1.0
-        environment:
-          - DISPLAY=:99
-          - CHROME_BIN=/usr/bin/google-chrome
+      - image: circleci/node:8-browsers
     working_directory: ~/repo
     steps:
       - checkout
       - run: yarn install
       - run: yarn examples &
+      - run: sleep 30
       - run: yarn e2e
