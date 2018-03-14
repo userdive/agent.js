@@ -150,7 +150,7 @@ export default class AgentCore extends Store {
         if (
           event.category &&
           event.action &&
-          (!event.value || event.value > 0)
+          (!event.value || event.value >= 0)
         ) {
           this.eventId++
           this.sendEvent(event)
