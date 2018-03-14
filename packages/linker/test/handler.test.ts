@@ -7,7 +7,6 @@ import { createForm, createLink } from './helpers/dom'
 
 describe('handler', () => {
   const { link, submit } = require('../src/handler')
-  const Linker = require('../src/linker').default
   const domain = 'example.com'
   const comUrl = `http://${domain}/example`
   const orgUrl = 'https://example.org/example'
@@ -66,6 +65,11 @@ describe('handler', () => {
     const form = createForm(comUrl, 'post')
     handler({ target: form } as any)
     assert(`${comUrl}?${agent.get('linkerParam')}` === form.action)
+  })
+
+  it('not found form', () => {
+    const handler = submit([domain], agent.get('linkerParam'))
+    handler({ target: document } as any)
   })
 
   it('not cross domain', () => {

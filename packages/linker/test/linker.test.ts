@@ -5,9 +5,6 @@ import 'mocha'
 import Linker from '../src/linker'
 
 describe('linker', () => {
-  const Agent = require('@userdive/agent').default
-  const Linker = require('../src/linker').default
-
   let agent
   let linker
   beforeEach(() => {
