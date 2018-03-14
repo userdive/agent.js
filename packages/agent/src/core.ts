@@ -194,8 +194,9 @@ export default class AgentCore extends Store {
     if (this.eventId <= MAX_EVENT_SEQ) {
       this.cacheToInteracts()
       const { category, action, label, value } = e
-      const query = `e=${this.eventId},${category},${action},${label ||
-        ''},${value || ''}`
+      let query = `e=${this.eventId},${category},${action}`
+      query = label || value ? `${query},${label || ''}` : query
+      query = value ? `${query},${value}` : query
       this.sendInteracts(true, [query])
       this.interactId++
     }
