@@ -25,7 +25,7 @@ describe('handler', () => {
 
   it('string domain', () => {
     const l = toLink(internet.url())
-    fixture.set(`<a href=${l.href} />`, true)
+    fixture.set(`<a href="${l.href}" />`, true)
     const a = document.getElementsByTagName('a')[0]
     link([l.hostname], param)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
@@ -33,7 +33,7 @@ describe('handler', () => {
 
   it('regexp match domain', () => {
     const l = toLink(internet.url())
-    fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
+    fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
     link([new RegExp(`${l.hostname}`)], param)({ target: a } as any)
@@ -50,7 +50,7 @@ describe('handler', () => {
   })
 
   it('match domain', () => {
-    fixture.set(`<a href=${location.href}>${random.word()}</a>`, true)
+    fixture.set(`<a href="${location.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
     link([location.hostname], param)({ target: a } as any)
@@ -60,7 +60,7 @@ describe('handler', () => {
   it('is defined query', () => {
     // FIXME https://github.com/Microsoft/TypeScript/issues/21943
     const l: any = toLink(`${internet.url()}?a=b#anker`)
-    fixture.set(`<a href=${l.href} />`, true)
+    fixture.set(`<a href="${l.href}" />`, true)
     const a = document.getElementsByTagName('a')[0]
     link([l.hostname], param)({ target: a } as any)
     assert(`${l.origin}${l.pathname}${l.search}&${param}${l.hash}` === a.href)
