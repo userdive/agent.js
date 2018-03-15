@@ -60,7 +60,7 @@ describe('handler', () => {
   it('is defined query', () => {
     // FIXME https://github.com/Microsoft/TypeScript/issues/21943
     const l: any = toLink(`${internet.url()}?a=b#anker`)
-    fixture.set(`<a href="${l.href}" />`, true)
+    fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
     const a = document.getElementsByTagName('a')[0]
     link([l.hostname], param, 10)({ target: a } as any)
     assert(`${l.origin}${l.pathname}${l.search}&${param}${l.hash}` === a.href)
