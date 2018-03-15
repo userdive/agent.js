@@ -51,13 +51,13 @@ function addableForm (domains: Domain[], element: any) {
 }
 
 const re = new RegExp(location.hostname)
-function matchDomain (domains: Domain[], href: string): boolean {
-  if (href.match(re)) {
+function matchDomain (domains: Domain[], link: string): boolean {
+  if (link.match(re)) {
     return false
   }
 
   return domains.some(
-    (d: any) => (d instanceof RegExp && d.test(href)) || href.indexOf(d) >= 0
+    (d: any) => (d instanceof RegExp && d.test(link)) || link.indexOf(d) >= 0
   )
 }
 

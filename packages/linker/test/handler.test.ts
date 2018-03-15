@@ -58,12 +58,17 @@ describe('handler', () => {
   })
 
   it('is defined query', () => {
-    // FIXME https://github.com/Microsoft/TypeScript/issues/21943
-    const l: any = toLink(`${internet.url()}?a=b#anker`)
-    fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
+    const domain = internet.domainName()
+    const search = `?a=b`
+    const hash = `#anker`
+    fixture.set(
+      `<a href="https://${domain}/${search + hash}">${random.word()}</a>`,
+      true
+    )
+
     const a = document.getElementsByTagName('a')[0]
-    link([l.hostname], param, 10)({ target: a } as any)
-    assert(`${l.origin}${l.pathname}${l.search}&${param}${l.hash}` === a.href)
+    link([domain], param, 10)({ target: a } as any)
+    assert(`https://${domain}/${search}&${param}${hash}` === a.href)
   })
 
   it('bubbling', () => {
@@ -102,22 +107,18 @@ describe('handler', () => {
     const l = toLink(internet.url())
     const action = 'javascript:void(0)'
     fixture.set(
-      `<form action="${action}"><input type="submit" value="test" ></form>`,
+      `
+      <form action="${action}">
+        <input type="submit" value="test" >
+        <a href="${l.href}">${random.word()}</a>
+      </form>
+      `,
       true
     )
 
     const form = document.getElementsByTagName('form')[0]
     submit([l.hostname], param)({ target: form } as any)
     assert(action === form.action)
-  })
-
-  it('not cross domain', () => {
-    const l = toLink(internet.url())
-    fixture.set(`<form method="get" action="${l.href}"><form>`, true)
-
-    const form = document.getElementsByTagName('form')[0]
-    submit([internet.domainName()], param)({ target: form } as any)
-    assert(l.href === form.action, 'not added query string')
   })
 
   it('submit get', () => {
