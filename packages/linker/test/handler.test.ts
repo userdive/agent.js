@@ -1,84 +1,131 @@
 import Agent from '@userdive/agent'
 import * as assert from 'assert'
-import { random } from 'faker'
+import { image, internet, random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
-import { createForm, createLink } from './helpers/dom'
+import { link, submit } from '../src/handler'
+
+const toLink = (href: string) => {
+  const link = document.createElement('a')
+  link.href = href
+  return link
+}
 
 describe('handler', () => {
-  const { link, submit } = require('../src/handler')
-  const Linker = require('../src/linker').default
-  const domain = 'example.com'
-  const comUrl = `http://${domain}/example`
-  const orgUrl = 'https://example.org/example'
-
   let agent
+  let param
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
+    param = agent.get('linkerParam')
   })
 
-  const setUpLinkEvent = (
-    href: string,
-    domains: Array<string | RegExp>
-  ): string => {
-    const handler: any = link(domains, agent.get('linkerParam'))
-    const a = createLink(href)
-    handler({ target: a })
-    return a.href
-  }
+  afterEach(() => {
+    fixture.cleanup()
+  })
 
   it('string domain', () => {
-    const url = setUpLinkEvent(comUrl, [domain])
-    assert(`${comUrl}?${agent.get('linkerParam')}` === url)
+    const l = toLink(internet.url())
+    fixture.set(`<a href="${l.href}" />`, true)
+    const a = document.getElementsByTagName('a')[0]
+    link([l.hostname], param, 10)({ target: a } as any)
+    assert(`${l.href}?${param}` === a.href)
   })
 
   it('regexp match domain', () => {
-    const url = setUpLinkEvent(orgUrl, [/^.*\.?example\.org/])
-    assert(`${orgUrl}?${agent.get('linkerParam')}` === url)
+    const l = toLink(internet.url())
+    fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
+
+    const a = document.getElementsByTagName('a')[0]
+    link([new RegExp(`${l.hostname}`)], param, 10)({ target: a } as any)
+    assert(`${l.href}?${param}` === a.href)
+  })
+
+  it('email link', () => {
+    const l = toLink(`mailto:${internet.email()}`)
+    fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
+
+    const a = document.getElementsByTagName('a')[0]
+    link([l.hostname], param, 10)({ target: a } as any)
+    assert(l.href === a.href)
+  })
+
+  it('match domain', () => {
+    fixture.set(`<a href="${location.href}">${random.word()}</a>`, true)
+
+    const a = document.getElementsByTagName('a')[0]
+    link([location.hostname], param, 10)({ target: a } as any)
+    assert(location.href === a.href)
+  })
+
+  it('is defined query', () => {
+    const domain = internet.domainName()
+    const search = `?a=b`
+    const hash = `#anker`
+    fixture.set(
+      `<a href="https://${domain}/${search + hash}">${random.word()}</a>`,
+      true
+    )
+
+    const a = document.getElementsByTagName('a')[0]
+    link([domain], param, 10)({ target: a } as any)
+    assert(`https://${domain}/${search}&${param}${hash}` === a.href)
   })
 
   it('bubbling', () => {
-    const handler = link([domain], agent.get('linkerParam'))
-    const a = document.createElement('a')
-    a.href = comUrl
-    const img = document.createElement('img')
-    a.appendChild(img)
-    document.body.appendChild(a)
-    // idempotence
-    handler({ target: img } as any)
-    handler({ target: img } as any)
+    const l = toLink(internet.url())
+    fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
 
-    assert(`${comUrl}?${agent.get('linkerParam')}` === a.href)
-  })
+    link([l.hostname], param, 10)({
+      target: document.getElementsByTagName('img')[0]
+    } as any)
+    assert(`${l.href}?${param}` === document.getElementsByTagName('a')[0].href)
 
-  it('not match domain', () => {
-    const url = setUpLinkEvent(comUrl, ['example.net'])
-    assert(comUrl === url)
-  })
+    fixture.cleanup()
+    fixture.set(
+      `<a href="${l.href}"><div><img src="${image.imageUrl()}"></div></a>`
+    )
 
-  it('not have href', () => {
-    const url = setUpLinkEvent(undefined, ['example.net'])
-    assert(url === '')
+    link([l.hostname], param, 1)({
+      target: document.getElementsByTagName('img')[0]
+    } as any)
+    assert(
+      l.href === document.getElementsByTagName('a')[0].href,
+      'already checked max parentNode'
+    )
   })
 
   it('submit post', () => {
-    const handler = submit([domain], agent.get('linkerParam'))
-    const form = createForm(comUrl, 'post')
-    handler({ target: form } as any)
-    assert(`${comUrl}?${agent.get('linkerParam')}` === form.action)
+    const l = toLink(internet.url())
+    fixture.set(`<form method="post" action="${l.href}"><form>`, true)
+
+    const form = document.getElementsByTagName('form')[0]
+    submit([l.hostname], param)({ target: form } as any)
+    assert(`${l.href}?${param}` === form.action)
   })
 
-  it('not cross domain', () => {
-    const url = document.location.href
-    const handler = submit([domain], agent.get('linkerParam'))
-    const form = createForm(document.location.href, 'post')
-    handler({ target: form } as any)
-    assert(url === form.action, 'not added query string')
+  it('submit javascript:void(0);', () => {
+    const l = toLink(internet.url())
+    const action = 'javascript:void(0)'
+    fixture.set(
+      `
+      <form action="${action}">
+        <input type="submit" value="test" >
+        <a href="${l.href}">${random.word()}</a>
+      </form>
+      `,
+      true
+    )
+
+    const form = document.getElementsByTagName('form')[0]
+    submit([l.hostname], param)({ target: form } as any)
+    assert(action === form.action)
   })
 
   it('submit get', () => {
-    const handler = submit([domain], agent.get('linkerParam'))
-    const form = createForm(comUrl, 'get')
+    const link = toLink(internet.url())
+    const handler = submit([link.hostname], param)
+    fixture.set(`<form method="get" action="${link.href}"><form>`, true)
+    const form = document.getElementsByTagName('form')[0]
 
     // idempotence
     handler({ target: form } as any)
@@ -86,12 +133,9 @@ describe('handler', () => {
 
     assert(document.getElementsByTagName('input').length === 1)
     const hidden = form.firstElementChild
+    const [key, value] = param.split('=')
     assert(hidden.getAttribute('type') === 'hidden')
-    assert(
-      hidden.getAttribute('name') === agent.get('linkerParam').split('=')[0]
-    )
-    assert(
-      hidden.getAttribute('value') === agent.get('linkerParam').split('=')[1]
-    )
+    assert(hidden.getAttribute('name') === key)
+    assert(hidden.getAttribute('value') === value)
   })
 })

@@ -11,7 +11,7 @@ export default class Linker {
     const events: string[] = ['mousedown', 'keyup']
     const param = this.agent.get('linkerParam')
     events.forEach((event: string) =>
-      this.agent.subscribe(document, event, link(domains, param))
+      this.agent.subscribe(document, event, link(domains, param, 100))
     )
     this.agent.subscribe(document, 'submit', submit(domains, param))
   }

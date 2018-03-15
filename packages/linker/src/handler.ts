@@ -1,30 +1,32 @@
-const matchUrl = /^https?:\/\/([^\/:]+)/
 export type Domain = string | RegExp
 
-export function link (domains: Domain[], linkerParam: string) {
+export function link (domains: Domain[], linkerParam: string, max: number) {
   return ({ target, srcElement }: Event) => {
-    const eventElement: any = target || srcElement
-    scanLinkElement(linkerParam, domains, eventElement)
+    let node = (target || srcElement) as Node
+    for (let i = 0; i < max && node; i++) {
+      // TODO need area tag support?
+      if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
+        node.href = linkUrl(node.href, linkerParam)
+        return
+      }
+      node = node.parentNode as Node
+    }
   }
 }
 
 export function submit (domains: Domain[], linkerParam: string) {
   return ({ target, srcElement }: Event) => {
-    const eventElement: any = target || srcElement
-    if (addableForm(domains, eventElement)) {
-      formLink(eventElement, linkerParam)
-    }
-  }
-}
-
-function scanLinkElement (linkerParam: string, domains: Domain[], node: any) {
-  for (let i = 0; i < 100 && node; i++) {
-    // TODO need area tag support?
-    if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
-      node.href = linkUrl(node.href, linkerParam)
+    const form = (target || srcElement) as HTMLFormElement
+    if (!addableForm(domains, form)) {
       return
     }
-    node = node.parentNode
+    const method = form.method.toLocaleLowerCase()
+    if (method === 'get') {
+      addHiddenInput(form, linkerParam)
+    }
+    if (method === 'post') {
+      form.action = linkUrl(form.action, linkerParam)
+    }
   }
 }
 
@@ -39,6 +41,7 @@ function linkable (
   return matchDomain(domains, href)
 }
 
+const matchUrl = /^https?:\/\/([^\/:]+)/
 function addableForm (domains: Domain[], element: any) {
   let match
   if (element instanceof HTMLFormElement && element.action) {
@@ -47,13 +50,14 @@ function addableForm (domains: Domain[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: Domain[], test: string): boolean {
-  if (test === document.location.hostname) {
+const re = new RegExp(location.hostname)
+function matchDomain (domains: Domain[], link: string): boolean {
+  if (link.match(re)) {
     return false
   }
 
   return domains.some(
-    (d: any) => (d instanceof RegExp && d.test(test)) || test.indexOf(d) >= 0
+    (d: any) => (d instanceof RegExp && d.test(link)) || link.indexOf(d) >= 0
   )
 }
 
@@ -71,14 +75,6 @@ function linkUrl (href: string, linkerParam: string): string {
     e.search = e.search ? `${e.search}&${linkerParam}` : linkerParam
   }
   return e.href
-}
-
-function formLink (form: HTMLFormElement, linkerParam: string) {
-  if (form.method.toLocaleLowerCase() === 'get') {
-    addHiddenInput(form, linkerParam)
-  } else if (form.method.toLocaleLowerCase() === 'post') {
-    form.action = linkUrl(form.action, linkerParam)
-  }
 }
 
 function addHiddenInput (form: HTMLFormElement, linkerParam: string) {

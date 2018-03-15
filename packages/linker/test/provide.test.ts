@@ -2,8 +2,7 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { internet, lorem, random } from 'faker'
 import 'mocha'
-import * as ud from 'userdive'
-import { NAMESPACE } from '../src/provide'
+import { inject, namespace as NAMESPACE, q } from 'userdive'
 
 describe('provide', () => {
   const name = random.word()
@@ -12,7 +11,7 @@ describe('provide', () => {
   })
 
   it('if not exist queue', () => {
-    ud.inject('', { [NAMESPACE]: name })
+    inject('', { [NAMESPACE]: name })
     const provide = require('../src/provide').default
     const Linker = require('../src/linker').default
     provide('linker', Linker)
@@ -24,8 +23,8 @@ describe('provide', () => {
   })
 
   it('if queue already exists', () => {
-    ud.inject('', { [NAMESPACE]: name })
-    window[name] = ud.q(name, window)
+    inject('', { [NAMESPACE]: name })
+    window[name] = q(name, window)
     const provide = require('../src/provide').default
     const Linker = require('../src/linker').default
     provide('linker', Linker)
