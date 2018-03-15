@@ -47,8 +47,9 @@ function addableForm (domains: Domain[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
+const re = new RegExp(location.hostname)
 function matchDomain (domains: Domain[], href: string): boolean {
-  if (href.match(new RegExp(location.hostname))) {
+  if (href.match(re)) {
     return false
   }
 
