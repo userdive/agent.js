@@ -27,29 +27,33 @@ describe('handler', () => {
     const l = toLink(internet.url())
     fixture.set(`<a href=${l.href} />`, true)
     const a = document.getElementsByTagName('a')[0]
-    link([l.hostname], param)(a as any)
+    link([l.hostname], param)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
   })
 
   it('regexp match domain', () => {
     const l = toLink(internet.url())
-    fixture.set(`<a href=${l.href} />`, true)
+    fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
+
     const a = document.getElementsByTagName('a')[0]
-    link([new RegExp(`${l.hostname}`)], param)(a as any)
+    link([new RegExp(`${l.hostname}`)], param)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
   })
 
   it('bubbling', () => {
     const l = toLink(internet.url())
-    fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"`)
-    link([l.hostname], param)(document.getElementsByTagName('img')[0] as any)
+    fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
 
+    link([l.hostname], param)({
+      target: document.getElementsByTagName('img')[0]
+    } as any)
     assert(`${l.href}?${param}` === document.getElementsByTagName('a')[0].href)
   })
 
   it('submit post', () => {
     const l = toLink(internet.url())
     fixture.set(`<form method="post" action="${l.href}"><form>`, true)
+
     const form = document.getElementsByTagName('form')[0]
     submit([l.href], param)({ target: form } as any)
     assert(`${l.href}?${param}` === form.action)
@@ -62,18 +66,18 @@ describe('handler', () => {
       `<form action="${action}"><input type="submit" value="test" ></form>`,
       true
     )
-    const handler = submit([l.hostname], param)
-    const form: any = document.getElementsByTagName('form')[0]
-    handler({ target: form } as any)
+
+    const form = document.getElementsByTagName('form')[0]
+    submit([l.hostname], param)({ target: form } as any)
     assert(action === form.action)
   })
 
   it('not cross domain', () => {
     const l = toLink(internet.url())
-    const handler = submit([internet.domainName()], param)
     fixture.set(`<form method="get" action="${l.href}"><form>`, true)
+
     const form = document.getElementsByTagName('form')[0]
-    handler({ target: form } as any)
+    submit([internet.domainName()], param)({ target: form } as any)
     assert(l.href === form.action, 'not added query string')
   })
 
