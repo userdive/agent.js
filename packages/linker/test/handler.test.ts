@@ -27,7 +27,7 @@ describe('handler', () => {
     const l = toLink(internet.url())
     fixture.set(`<a href="${l.href}" />`, true)
     const a = document.getElementsByTagName('a')[0]
-    link([l.hostname], param)({ target: a } as any)
+    link([l.hostname], param, 10)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
   })
 
@@ -36,7 +36,7 @@ describe('handler', () => {
     fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
-    link([new RegExp(`${l.hostname}`)], param)({ target: a } as any)
+    link([new RegExp(`${l.hostname}`)], param, 10)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
   })
 
@@ -45,7 +45,7 @@ describe('handler', () => {
     fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
-    link([l.hostname], param)({ target: a } as any)
+    link([l.hostname], param, 10)({ target: a } as any)
     assert(l.href === a.href)
   })
 
@@ -53,7 +53,7 @@ describe('handler', () => {
     fixture.set(`<a href="${location.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
-    link([location.hostname], param)({ target: a } as any)
+    link([location.hostname], param, 10)({ target: a } as any)
     assert(location.href === a.href)
   })
 
@@ -62,7 +62,7 @@ describe('handler', () => {
     const l: any = toLink(`${internet.url()}?a=b#anker`)
     fixture.set(`<a href="${l.href}" />`, true)
     const a = document.getElementsByTagName('a')[0]
-    link([l.hostname], param)({ target: a } as any)
+    link([l.hostname], param, 10)({ target: a } as any)
     assert(`${l.origin}${l.pathname}${l.search}&${param}${l.hash}` === a.href)
   })
 
@@ -70,10 +70,23 @@ describe('handler', () => {
     const l = toLink(internet.url())
     fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
 
-    link([l.hostname], param)({
+    link([l.hostname], param, 10)({
       target: document.getElementsByTagName('img')[0]
     } as any)
     assert(`${l.href}?${param}` === document.getElementsByTagName('a')[0].href)
+
+    fixture.cleanup()
+    fixture.set(
+      `<a href="${l.href}"><div><img src="${image.imageUrl()}"></div></a>`
+    )
+
+    link([l.hostname], param, 1)({
+      target: document.getElementsByTagName('img')[0]
+    } as any)
+    assert(
+      l.href === document.getElementsByTagName('a')[0].href,
+      'already checked max parentNode'
+    )
   })
 
   it('submit post', () => {
