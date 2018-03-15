@@ -47,13 +47,13 @@ function addableForm (domains: Domain[], element: any) {
   return match ? matchDomain(domains, match[1]) : false
 }
 
-function matchDomain (domains: Domain[], test: string): boolean {
-  if (test === document.location.hostname) {
+function matchDomain (domains: Domain[], href: string): boolean {
+  if (href.match(new RegExp(location.hostname))) {
     return false
   }
 
   return domains.some(
-    (d: any) => (d instanceof RegExp && d.test(test)) || test.indexOf(d) >= 0
+    (d: any) => (d instanceof RegExp && d.test(href)) || href.indexOf(d) >= 0
   )
 }
 

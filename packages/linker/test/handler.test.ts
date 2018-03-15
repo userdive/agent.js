@@ -40,6 +40,32 @@ describe('handler', () => {
     assert(`${l.href}?${param}` === a.href)
   })
 
+  it('email link', () => {
+    const l = toLink(`mailto:${internet.email()}`)
+    fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
+
+    const a = document.getElementsByTagName('a')[0]
+    link([l.hostname], param)({ target: a } as any)
+    assert(l.href === a.href)
+  })
+
+  it('match domain', () => {
+    fixture.set(`<a href=${location.href}>${random.word()}</a>`, true)
+
+    const a = document.getElementsByTagName('a')[0]
+    link([location.hostname], param)({ target: a } as any)
+    assert(location.href === a.href)
+  })
+
+  it('is defined query', () => {
+    // FIXME https://github.com/Microsoft/TypeScript/issues/21943
+    const l: any = toLink(`${internet.url()}?a=b#anker`)
+    fixture.set(`<a href=${l.href} />`, true)
+    const a = document.getElementsByTagName('a')[0]
+    link([l.hostname], param)({ target: a } as any)
+    assert(`${l.origin}${l.pathname}${l.search}&${param}${l.hash}` === a.href)
+  })
+
   it('bubbling', () => {
     const l = toLink(internet.url())
     fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
@@ -55,7 +81,7 @@ describe('handler', () => {
     fixture.set(`<form method="post" action="${l.href}"><form>`, true)
 
     const form = document.getElementsByTagName('form')[0]
-    submit([l.href], param)({ target: form } as any)
+    submit([l.hostname], param)({ target: form } as any)
     assert(`${l.href}?${param}` === form.action)
   })
 
