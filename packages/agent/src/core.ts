@@ -203,20 +203,6 @@ export default class AgentCore extends Store {
     }
   }
 
-  protected cacheToInteracts () {
-    Object.keys(this.cache).forEach(key => {
-      const cache: any = this.cache[key]
-      if (cacheValidator(cache)) {
-        this.interacts.push(
-          objectAssign({}, cache, {
-            id: this.interactId
-          })
-        )
-      }
-    })
-    this.clear()
-  }
-
   protected sendInteractsWithUpdate (): void {
     this.cacheToInteracts()
     this.sendInteracts()
@@ -228,6 +214,20 @@ export default class AgentCore extends Store {
       }
       this.interactId++
     }
+  }
+
+  private cacheToInteracts () {
+    Object.keys(this.cache).forEach(key => {
+      const cache: any = this.cache[key]
+      if (cacheValidator(cache)) {
+        this.interacts.push(
+          objectAssign({}, cache, {
+            id: this.interactId
+          })
+        )
+      }
+    })
+    this.clear()
   }
 
   private bind () {
