@@ -131,6 +131,7 @@ export default class AgentCore extends Store {
 
         this.interval = INTERVAL_DEFAULT_SETTING.concat()
         this.interactId = 0
+        this.eventId = 0
         this.loadTime = Date.now()
         this.sendInteractsWithUpdate()
         get(
