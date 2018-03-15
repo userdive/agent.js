@@ -196,7 +196,7 @@ describe('core', () => {
   it('send event', () => {
     const agent = agentFactory({ auto: true })
     agent.send('pageview', location.href)
-    let spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(require('../src/requests'), 'get')
     agent.send('event', {
       category: 'DummyCategory',
       action: 'DummyAction',
@@ -209,9 +209,8 @@ describe('core', () => {
     assert(key === 'e')
     assert(eventParams.length === 5)
     assert(eventParams[0] === '1')
-    spy.restore()
+    spy.reset()
 
-    spy = sinonSpy(require('../src/requests'), 'get')
     agent.send('event', {
       category: 'DummyCategory',
       action: 'DummyAction',
@@ -223,9 +222,8 @@ describe('core', () => {
     assert(key2 === 'e')
     assert(eventParams2.length === 4)
     assert(eventParams2[0] === '2')
-    spy.restore()
+    spy.reset()
 
-    spy = sinonSpy(require('../src/requests'), 'get')
     agent.send('event', {
       category: 'DummyCategory',
       action: 'DummyAction',
