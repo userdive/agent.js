@@ -197,45 +197,43 @@ describe('core', () => {
     const agent = agentFactory({ auto: true })
     agent.send('pageview', location.href)
     const spy = sinonSpy(require('../src/requests'), 'get')
-    agent.send('event', {
+
+    const sendEvent = function (eventObj) {
+      agent.send('event', eventObj)
+      const query = spy.getCall(0).args[1]
+      const [key, value] = query[0].split('=')
+      const eventParams = value.split(',')
+      assert(key === 'e')
+      return eventParams
+    }
+
+    let eventParams = sendEvent({
       category: 'DummyCategory',
       action: 'DummyAction',
       label: 'DummyLabel',
       value: 100
     })
-    const query = spy.getCall(0).args[1]
-    const [key, value] = query[0].split('=')
-    const eventParams = value.split(',')
-    assert(key === 'e')
     assert(eventParams.length === 5)
     assert(eventParams[0] === '1')
     spy.reset()
 
-    agent.send('event', {
+    eventParams = sendEvent({
       category: 'DummyCategory',
       action: 'DummyAction',
       label: 'DummyLabel'
     })
-    const query2 = spy.getCall(0).args[1]
-    const [key2, value2] = query2[0].split('=')
-    const eventParams2 = value2.split(',')
-    assert(key2 === 'e')
-    assert(eventParams2.length === 4)
-    assert(eventParams2[0] === '2')
+    assert(eventParams.length === 4)
+    assert(eventParams[0] === '2')
     spy.reset()
 
-    agent.send('event', {
+    eventParams = sendEvent({
       category: 'DummyCategory',
       action: 'DummyAction',
       value: 100
     })
-    const query3 = spy.getCall(0).args[1]
-    const [key3, value3] = query3[0].split('=')
-    const eventParams3 = value3.split(',')
-    assert(key3 === 'e')
-    assert(eventParams3.length === 5)
-    assert(eventParams3[0] === '3')
-    assert(eventParams3[3] === '')
+    assert(eventParams.length === 5)
+    assert(eventParams[0] === '3')
+    assert(eventParams[3] === '')
     spy.restore()
   })
 
