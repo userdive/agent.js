@@ -57,13 +57,19 @@ export default class Agent {
       : ''
   }
 
-  provide (name: string, pluginConstructor: ObjectConstructor) {
+  provide (
+    name: string,
+    pluginConstructor: new (tracker: Agent, pluginOptions?: Object) => void
+  ) {
     this[PLUGINS][name] = pluginConstructor
   }
 
-  require (pluginName: string, args: any): boolean {
+  require (pluginName: string, pluginOptions?: any): boolean {
     if (this[PLUGINS][pluginName]) {
-      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](this, ...args)
+      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](
+        this,
+        pluginOptions
+      )
       return true
     }
     return false

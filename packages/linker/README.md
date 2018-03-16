@@ -26,23 +26,11 @@
 
 ## Usage
 
-### Basic Usage
-
-```js
-import Linker from "@userdive/linker";
-
-const linker = new Linker();
-linker.autoLink(["developers.userdive.com"]);
-```
-
-### Usage as Agent Plugin
-
 ```js
 import Agent from "@userdive/agent";
 import Linker from "@userdive/linker";
 
-const agent = new Agent();
-agent.create("projectId", "auto");
+const agent = new Agent("projectId", "auto");
 agent.provide("linker", Linker);
 agent.require("linker");
 agent.run("linker", "autoLink", ["developers.userdive.com"]);

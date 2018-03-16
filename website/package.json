@@ -1,5 +1,5 @@
 {
-  "name": "@userdive/developers",
+  "name": "userdive-developers",
   "version": "0.15.0",
   "dependencies": {
     "docusaurus": "1.0.9"
