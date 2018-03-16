@@ -1,5 +1,5 @@
 {
-  "name": "@userdive/examples",
+  "name": "userdive-examples",
   "version": "0.15.0",
   "devDependencies": {
     "@types/nightwatch": "0.9.7",
