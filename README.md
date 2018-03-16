@@ -18,11 +18,11 @@
 
 This repository is a monorepo that we manage using [Lerna](https://github.com/lerna/lerna). That means that we actually publish [packages](./packages) to npm from the same codebase, including:
 
-| Package                                  | Version                                                                                                            |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **[@userdive/agent](/packages/agent)**   | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)  |
-| **[@userdive/linker](/packages/linker)** | [![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://badge.fury.io/js/%40userdive%2Flinker) |
-| **[userdive](/packages/userdive)**       | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                    |
+| Package                                  | Version                                                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **[@userdive/agent](/packages/agent)**   | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)   |
+| **[@userdive/linker](/packages/linker)** | [![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker) |
+| **[userdive](/packages/userdive)**       | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                     |
 
 ## Contribute
 

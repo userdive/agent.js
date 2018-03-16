@@ -1,6 +1,6 @@
 # @userdive/linker
 
-[![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://badge.fury.io/js/%40userdive%2Flinker)
+[![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker)
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
 [![codecov](https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg)](https://codecov.io/gh/userdive/agent.js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
