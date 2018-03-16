@@ -1,5 +1,5 @@
 import Agent from '@userdive/agent'
-import Linker from '@userdive/Linker'
+import Linker from '@userdive/linker'
 
 const agent = new Agent('af57h6gb', 'auto')
 agent.provide('linker', Linker)
