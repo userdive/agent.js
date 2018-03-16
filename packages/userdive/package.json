@@ -1,7 +1,7 @@
 {
   "name": "userdive",
   "description": "load @userdve/agent from cdn",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "author": "UNCOVER TRUTH Inc",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -21,8 +21,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build",
     "clean": "rimraf lib coverage build",
+    "prepublish": "npm run build",
     "test": "karma start"
   },
   "types": "lib/index.d.ts"

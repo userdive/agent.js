@@ -1,3 +1,20 @@
+## v0.15.0 (2018-03-16)
+
+#### :rocket: Enhancement
+* [#365](https://github.com/userdive/agent.js/pull/365) refactor(website) Added simple spec. ([@9renpoto](https://github.com/9renpoto))
+
+#### :bug: Bug Fix
+* `linker`
+  * [#368](https://github.com/userdive/agent.js/pull/368) refactor(packages/linker) Skip same origin. ([@9renpoto](https://github.com/9renpoto))
+* Other
+  * [#366](https://github.com/userdive/agent.js/pull/366) Fix e2e test. ([@taka-sho](https://github.com/taka-sho))
+
+#### Committers: 4
+- Go.YAMADA ([usaturn](https://github.com/usaturn))
+- Keisuke Kan ([9renpoto](https://github.com/9renpoto))
+- Shotaro Takahara ([taka-sho](https://github.com/taka-sho))
+- [renovate[bot]](https://github.com/apps/renovate)
+
 ## v0.14.0 (2018-03-13)
 
 #### :rocket: Enhancement
