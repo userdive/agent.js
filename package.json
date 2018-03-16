@@ -78,7 +78,7 @@
   },
   "scripts": {
     "build": "run-p build:*",
-    "build:packages": "lerna run build",
+    "build:packages": "npm run prepare && lerna run build",
     "build:website": "cd website && yarn build",
     "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "ci:appveyor": "cross-env CI_MODE=IE lerna run test",
@@ -110,6 +110,10 @@
     {
       "path": "cdn/agent.js",
       "limit": "8.1 KB"
+    },
+    {
+      "path": "cdn/agent.d.js",
+      "limit": "20 KB"
     },
     {
       "path": "cdn/linker.js",
