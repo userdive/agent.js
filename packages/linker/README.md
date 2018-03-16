@@ -1,5 +1,6 @@
 # @userdive/linker
 
+[![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker)
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
 [![codecov](https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg)](https://codecov.io/gh/userdive/agent.js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -25,7 +26,27 @@
 
 ## Usage
 
-> TBA
+### Basic Usage
+
+```js
+import Linker from "@userdive/linker";
+
+const linker = new Linker();
+linker.autoLink(["developers.userdive.com"]);
+```
+
+### Usage as Agent Plugin
+
+```js
+import Agent from "@userdive/agent";
+import Linker from "@userdive/linker";
+
+const agent = new Agent();
+agent.create("projectId", "auto");
+agent.provide("linker", Linker);
+agent.require("linker");
+agent.run("linker", "autoLink", ["developers.userdive.com"]);
+```
 
 ## Contribute
 
