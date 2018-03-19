@@ -36,9 +36,9 @@ export default function (Agent: any) {
   const name = element.getAttribute(NAMESPACE) as string
   if (w[name] && w[name].q) {
     const { q } = w[name]
-    q.forEach((args: any[]) => {
-      const cmd = args[0]
-      delete args[0]
+    q.forEach((argsObject: any[]) => {
+      const args = [].map.call(argsObject, (x: any) => x)
+      const cmd = args.shift()
       execute(Agent)(cmd, ...args)
     })
   }
