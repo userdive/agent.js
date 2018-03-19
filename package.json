@@ -36,7 +36,7 @@
     "karma-mocha-reporter": "2.2.5",
     "karma-phantomjs-launcher": "1.0.4",
     "karma-sauce-launcher": "1.2.0",
-    "karma-webpack": "2.0.13",
+    "karma-webpack": "3.0.0",
     "lerna": "2.9.0",
     "lerna-changelog": "0.7.0",
     "lint-staged": "7.0.0",
