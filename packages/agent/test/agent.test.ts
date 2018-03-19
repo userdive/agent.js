@@ -52,7 +52,7 @@ describe('agent', () => {
       constructor (tracker) {
         assert(tracker.plugins[pluginName])
       }
-      echo (value: string) {
+      echo (value: 'hello') {
         assert(value === 'hello')
       }
     }
@@ -62,12 +62,12 @@ describe('agent', () => {
       assert(agent.plugins[pluginName] === Plugin)
       assert(agent.require(pluginName))
 
+      const spy = sinonSpy(agent.plugins[pluginName], 'echo')
+      agent.run(pluginName, 'echo', 'hello')
+      assert(spy.calledOnce)
+
       agent.provide(lorem.word(), Plugin)
       assert(Object.keys(agent.plugins).length === 2)
-
-      const spy = sinonSpy(agent.plugins[name], 'echo')
-      agent.run(name, 'echo', lorem.word())
-      assert(spy.calledOnce)
     })
 
     it('not provide plugin', () => {
