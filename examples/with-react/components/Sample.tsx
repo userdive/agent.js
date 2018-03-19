@@ -13,7 +13,6 @@ class EntryPointWrapper extends React.PureComponent<Props> {
   constructor (props: Props) {
     super(props)
     this._ud = factory()
-    this._ud('create', 'af57h6gb', 'auto')
   }
   componentDidMount () {
     this._ud('send', 'pageview', this.props.href)
@@ -23,18 +22,20 @@ class EntryPointWrapper extends React.PureComponent<Props> {
   }
 }
 
-type SampleProps = {
+class Sample extends React.PureComponent<{
   linkTo: string
-  location: { href: string }
-  children: Function
-}
-
-function Sample ({ linkTo, children, location: { href } }: SampleProps) {
-  return (
-    <EntryPointWrapper href={href}>
-      <Link to={linkTo}>{children}</Link>
-    </EntryPointWrapper>
-  )
+  location: any
+  children: JSX.Element
+  match: Object
+}> {
+  render () {
+    const { linkTo, children, location: { href } } = this.props
+    return (
+      <EntryPointWrapper href={href}>
+        <Link to={linkTo}>{children}</Link>
+      </EntryPointWrapper>
+    )
+  }
 }
 
 export default withRouter(Sample)

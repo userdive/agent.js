@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:8-browsers
     working_directory: ~/repo
@@ -14,3 +14,17 @@ jobs:
           background: true
       - run: sleep 30
       - run: yarn e2e
+      - deploy: cd examples && gh-pages -d build
+
+workflows:
+  version: 2
+  e2e:
+    triggers:
+      - schedule:
+          cron: "0 5 * * *" # UTC time
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test

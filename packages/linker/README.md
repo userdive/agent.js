@@ -6,7 +6,7 @@
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 
-> CORS domain tracking plugin support using query parameter
+> CORS domain tracking using query parameter plugin
 
 ## Table of Contents
 
