@@ -60,6 +60,22 @@ agent.set({
 agent.set("dimension15", "My Custom Dimension");
 ```
 
+#### Send Event
+
+```js
+import Agent from "@userdive/agent";
+
+const agent = new Agent();
+agent.create("projectId", "auto");
+agent.send("pageview");
+agent.send("event", {
+    category: "EC",
+    action: "Cart",
+    label: "add",
+    value: 2000
+});
+```
+
 #### Register Plugin ( in plugin code )
 
 ```js
