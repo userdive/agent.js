@@ -3,7 +3,7 @@ import { internet, lorem } from 'faker'
 import 'mocha'
 import { stub as sinonStub } from 'sinon'
 
-import { inject, q } from 'userdive'
+import { inject, namespace, q } from 'userdive'
 import { NAMESPACE } from '../src/constants'
 
 const GLOBAL_NAME: string = lorem.word()
@@ -27,6 +27,10 @@ describe('global async', () => {
   afterEach(() => {
     window[GLOBAL_NAME] = undefined
     stub.restore()
+  })
+
+  it('namespace', () => {
+    assert(NAMESPACE === namespace)
   })
 
   it('find global', () => {
@@ -59,7 +63,7 @@ describe('global async', () => {
     class Plugin {
       tracker: any
       constructor (tracker) {
-        assert(tracker.plugins.length === 1)
+        assert(tracker.plugins[name])
       }
       echo (value: string) {
         assert(value === 'hello')
