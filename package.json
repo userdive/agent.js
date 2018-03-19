@@ -106,7 +106,7 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8.2 KB"
+      "limit": "8.1 KB"
     },
     {
       "path": "cdn/agent.d.js",
