@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import { internet, lorem } from 'faker'
 import 'mocha'
-import { stub as sinonStub } from 'sinon'
+import { spy as sinonSpy, stub as sinonStub } from 'sinon'
 
 import { inject, namespace, q } from 'userdive'
 import { NAMESPACE } from '../src/constants'
@@ -15,6 +15,7 @@ describe('global async', () => {
 
   let stub
   beforeEach('generate queue', () => {
+    delete require.cache[require.resolve('../src/entrypoint')]
     window[GLOBAL_NAME] = q(GLOBAL_NAME, window)
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
@@ -69,11 +70,13 @@ describe('global async', () => {
         assert(value === 'hello')
       }
     }
+    const spy = sinonSpy(Plugin.prototype, 'echo')
     window[GLOBAL_NAME]('provide', name, Plugin)
     window[GLOBAL_NAME]('require', name)
 
     const url: string = internet.url()
     window[GLOBAL_NAME](`${name}:echo`, 'hello')
+    assert(spy.called)
   })
 
   it('debug global', () => {

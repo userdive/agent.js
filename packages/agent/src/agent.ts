@@ -9,6 +9,10 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
 
+export type PluginConstructor = new (
+  tracker: Agent,
+  pluginOptions?: Object
+) => void
 const PLUGINS = 'plugins'
 
 export default class Agent {
@@ -57,10 +61,7 @@ export default class Agent {
       : ''
   }
 
-  provide (
-    name: string,
-    pluginConstructor: new (tracker: Agent, pluginOptions?: Object) => void
-  ) {
+  provide (name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
   }
 
