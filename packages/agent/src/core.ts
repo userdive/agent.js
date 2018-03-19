@@ -8,8 +8,7 @@ import { v4 as uuid } from 'uuid'
 import { getEnv } from './browser'
 import {
   INTERACT as MAX_INTERACT,
-  INTERVAL as INTERVAL_DEFAULT_SETTING,
-  LINKER
+  INTERVAL as INTERVAL_DEFAULT_SETTING
 } from './constants'
 import { AgentEvent } from './events'
 import { raise, setup, warning } from './logger'
@@ -64,14 +63,15 @@ export default class AgentCore extends Store {
     id: string,
     eventsClass: any[], // TODO
     {
-      RAVEN_DSN,
-      Raven,
+      allowLink,
+      auto,
       baseUrl,
       cookieDomain: domain,
       cookieExpires: expires,
       cookieName,
-      auto,
-      allowLink
+      linkerName,
+      RAVEN_DSN,
+      Raven
     }: Settings
   ) {
     let userId = getCookie(cookieName)
@@ -79,7 +79,7 @@ export default class AgentCore extends Store {
       const qs = location.search.trim().replace(/^[?#&]/, '')
       const [linkerParam] = qs
         .split('&')
-        .filter(s => s.length && s.split('=')[0] === LINKER)
+        .filter(s => s.length && s.split('=')[0] === linkerName)
       const id = linkerParam ? linkerParam.split('=')[1] : undefined
       if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
         userId = id

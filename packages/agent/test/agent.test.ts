@@ -1,13 +1,12 @@
 import * as assert from 'assert'
-import { internet, random } from 'faker'
+import { internet, lorem, random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy, stub } from 'sinon'
 import Agent from '../src/agent'
 import { INTERVAL } from '../src/constants'
+import AgentCore from '../src/core'
 
 describe('agent', () => {
-  const AgentCore = require('../src/core').default
-  const Agent = require('../src/agent').default
   let agent
 
   beforeEach(() => {
@@ -15,7 +14,7 @@ describe('agent', () => {
   })
 
   it('constructor', () => {
-    const agent = new Agent(random.uuid(), 'auto')
+    const agent: any = new Agent(random.uuid(), 'auto')
     assert(agent.core)
     assert(agent.get('linkerParam'))
 
@@ -25,11 +24,6 @@ describe('agent', () => {
 
   it('linkerParam', () => {
     assert(agent.get(random.word()) === '', 'undefined key')
-  })
-
-  it('create', () => {
-    assert(agent.create(random.uuid(), 'auto'))
-    assert(agent.create(random.uuid(), { baseUrl: internet.url() }))
   })
 
   it('send', () => {
@@ -51,19 +45,33 @@ describe('agent', () => {
     )
   })
 
-  it('use plugin', () => {
-    const dummyPlugin = require('./helpers/plugin').default
-    agent.provide('dummy', dummyPlugin)
-    assert.equal(agent.plugins['dummy'], dummyPlugin)
-    assert(agent.require('dummy', {}))
+  describe('plugin', () => {
+    const pluginName = lorem.word()
+    class Plugin {
+      tracker: any
+      constructor (tracker) {
+        assert(tracker.plugins[pluginName])
+      }
+      echo (value: 'hello') {
+        assert(value === 'hello')
+      }
+    }
 
-    agent.provide('dummy2', dummyPlugin)
-    assert(agent.plugins['dummy2'])
-    assert.equal(Object.keys(agent.plugins).length, 2)
+    it('use plugin', () => {
+      agent.provide(pluginName, Plugin)
+      assert(agent.plugins[pluginName] === Plugin)
+      assert(agent.require(pluginName))
 
-    const spy = sinonSpy(agent.plugins['dummy'], 'injectLocation')
-    const l: string = internet.url()
-    agent.run('dummy', 'injectLocation', l)
-    assert(spy.calledOnce)
+      const spy = sinonSpy(agent.plugins[pluginName], 'echo')
+      agent.run(pluginName, 'echo', 'hello')
+      assert(spy.calledOnce)
+
+      agent.provide(lorem.word(), Plugin)
+      assert(Object.keys(agent.plugins).length === 2)
+    })
+
+    it('not provide plugin', () => {
+      assert(agent.require(lorem.word()) === false)
+    })
   })
 })

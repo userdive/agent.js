@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 
 import { validate } from './browser'
-import { LINKER, LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
+import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
 import MouseMove from './events/mousemove'
@@ -9,28 +9,29 @@ import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { SendType, State } from './types'
 
+export type PluginConstructor = new (
+  tracker: Agent,
+  pluginOptions?: Object
+) => void
 const PLUGINS = 'plugins'
 
 export default class Agent {
   private core: AgentCore
+  private linkerName: string
   private plugins: { [name: string]: any }
 
-  constructor (projectId?: string, settings?: Object | 'auto') {
+  constructor (projectId: string, settings: Object | 'auto') {
     this.plugins = {}
-    if (projectId && settings) {
-      this.create(projectId, settings)
-    }
-  }
-
-  create (projectId: string, settings: Object | 'auto'): AgentCore {
     if (typeof settings === 'string' && settings === 'auto') {
       settings = { auto: true }
     }
+    const config = objectAssign({}, SETTINGS_DEFAULT, settings)
     this.core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
-      objectAssign({}, SETTINGS_DEFAULT, settings)
+      config
     )
+    this.linkerName = config.linkerName
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(
         'pagehide',
@@ -40,12 +41,13 @@ export default class Agent {
         false
       )
     }
-    return this.core
   }
+
   send (type: SendType, page?: string): AgentCore {
     this.core.send(type, page || location.href)
     return this.core
   }
+
   set (key: any, value?: string | number): State {
     if (key && value) {
       return this.core.set(key, value)
@@ -54,17 +56,21 @@ export default class Agent {
   }
 
   get (key: string): string {
-    return key === 'linkerParam' ? `${LINKER}=${this.core.get('userId')}` : ''
+    return key === 'linkerParam'
+      ? `${this.linkerName}=${this.core.get('userId')}`
+      : ''
   }
 
-  provide (name: string, pluginConstructor: ObjectConstructor) {
+  provide (name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
   }
 
-  require (pluginName: string, options: any): boolean {
+  require (pluginName: string, pluginOptions?: any): boolean {
     if (this[PLUGINS][pluginName]) {
-      const opt: any = options || {}
-      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](this, opt)
+      this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](
+        this,
+        pluginOptions
+      )
       return true
     }
     return false

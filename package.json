@@ -77,9 +77,7 @@
     "url": "git+ssh://git@github.com/userdive/agent.js.git"
   },
   "scripts": {
-    "build": "run-p build:*",
-    "build:packages": "lerna run build",
-    "build:website": "cd website && yarn build",
+    "build": "lerna run build --parallel",
     "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "ci:appveyor": "cross-env CI_MODE=IE lerna run test",
     "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
@@ -92,15 +90,14 @@
     "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
-    "lint:docs": "textlint docs",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
     "lint:js": "eslint -c website/.eslintrc.json website",
-    "lint:packagemd": "textlint 'packages/*/*.md' README.md",
+    "lint:md": "textlint 'packages/*/*.md' README.md docs",
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "prepare": "lerna run build",
+    "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently --kill-others 'npm run examples' 'npm run website'",
     "test": "lerna run test",
@@ -110,6 +107,10 @@
     {
       "path": "cdn/agent.js",
       "limit": "8.1 KB"
+    },
+    {
+      "path": "cdn/agent.d.js",
+      "limit": "20 KB"
     },
     {
       "path": "cdn/linker.js",

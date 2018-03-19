@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   entry: {
+    'built-in': path.join(__dirname, 'built-in/index.ts'),
     react: path.join(__dirname, 'with-react/pages/index.tsx'),
     angular1: path.join(__dirname, 'with-angular1/main.ts'),
     angular: path.join(__dirname, 'with-angular/main.ts'),

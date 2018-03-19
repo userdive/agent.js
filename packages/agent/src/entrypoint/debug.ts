@@ -4,8 +4,14 @@ import Agent from '../agent'
 import factory from '../global'
 
 class DebugAgent extends Agent {
-  create (projectId: string, options: any) {
-    return super.create(projectId, objectAssign({}, options, { Raven: Raven }))
+  constructor (projectId: string, options: Object) {
+    super(
+      projectId,
+      objectAssign({}, options, {
+        Raven,
+        RAVEN_DSN: process.env.RAVEN_DSN
+      })
+    )
   }
 }
 
