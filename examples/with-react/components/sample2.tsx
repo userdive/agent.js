@@ -4,6 +4,6 @@ import Sample from './Sample'
 
 export default class SampleWrapper extends React.PureComponent {
   render () {
-    return <Sample linkTo='/sample1' linkValue='Sample1' />
+    return <Sample linkTo='/sample1'>Sample1</Sample>
   }
 }

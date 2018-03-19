@@ -1,25 +1,39 @@
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
-import userdive from 'userdive'
+import factory from 'userdive'
 
 type Props = {
-  linkTo: string
-  linkValue: string
-  match: any
-  location: any
-  history: any
+  href: string
+  children: JSX.Element
 }
-const _ud = userdive()
 
-function Sample ({ linkTo, linkValue, location: { href } }: Props) {
-  _ud('send', 'pageview', href)
+class EntryPointWrapper extends React.PureComponent<Props> {
+  _ud: Function
+  constructor (props: Props) {
+    super(props)
+    this._ud = factory()
+    this._ud('create', 'af57h6gb', 'auto')
+  }
+  componentDidMount () {
+    this._ud('send', 'pageview', this.props.href)
+  }
+  render () {
+    return this.props.children
+  }
+}
+
+type SampleProps = {
+  linkTo: string
+  location: { href: string }
+  children: Function
+}
+
+function Sample ({ linkTo, children, location: { href } }: SampleProps) {
   return (
-    <ul>
-      <li>
-        <Link to={linkTo}>{linkValue}</Link>
-      </li>
-    </ul>
+    <EntryPointWrapper href={href}>
+      <Link to={linkTo}>{children}</Link>
+    </EntryPointWrapper>
   )
 }
 

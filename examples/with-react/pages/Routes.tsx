@@ -16,11 +16,11 @@ export default class App extends React.PureComponent<Props, void> {
   render () {
     return (
       <HashRouter>
-        <div>
+        <React.Fragment>
           <Route path='/sample1' component={Sample1} />
           <Route path='/sample2' component={Sample2} />
           <Redirect from='/' to='/sample1' />
-        </div>
+        </React.Fragment>
       </HashRouter>
     )
   }
