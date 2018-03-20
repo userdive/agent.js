@@ -32,11 +32,11 @@ html
             li
               a(href='https://developers.userdive.com') Document
     .container
-      .well
-        .row
+      .panel.panel-default
+        .panel-body.form-horizontal
           block content
-      .well
-        .row
+      .panel.panel-default
+        .panel-body.form-horizontal
           form(action='#')
             .form-group
               label.col-sm-2.control-label(for='email') Email adress
@@ -46,36 +46,38 @@ html
               label.col-sm-2.control-label(for='password') Password
               .col-sm-10
                 input.form-controll.container-fluid.form-control(type='password', placeholder='password')
-            label.col-sm-2.control-label radio
-            .col-sm-10
-              .radio
-                label.radio-inline
-                  input(type='radio', name='optionsRadios', value='but', checked)
-                  | default
-                label.radio-inline
-                  input(type='radio', name='optionsRadios', value='but')
-                  | sub
-            label.col-sm-2.control-label disable
-            .col-sm-10
-              .radio.disabled
-                label.radio-inline
-                  input(type='radio', name='optionsRadios', value='but', disabled)
-                  | example
+            .form-group
+              label.col-sm-2.control-label radio
+              .col-sm-10
+                .radio
+                  label.radio-inline
+                    input(type='radio', name='optionsRadios', value='but', checked)
+                    | default
+                  label.radio-inline
+                    input(type='radio', name='optionsRadios', value='but')
+                    | sub
+            .form-group
+              label.col-sm-2.control-label
+              .col-sm-10
+                .radio.disabled
+                  label.radio-inline.text-muted
+                    input(type='radio', name='optionsRadios', value='but', disabled)
+                    | example
             .form-group
               label.col-sm-2.control-label selecter
               .col-sm-10
                 select.form-control
                   option example1
                   option example2
-            label.col-sm-2.control-label checkbox
-            .col-sm-10
-              label.checkbox-inline
-                input(type='checkbox')
-                | sub
-              label.checkbox-inline
-                input(type='checkbox')
-                | sub2
-          .form-group
-            .col-sm-offset-2.col-sm-10
-              button.btn(type='submit') Submit
+            .form-group
+              label.col-sm-2.control-label checkbox
+              .col-sm-10
+                label.checkbox-inline
+                  input(type='checkbox')
+                  | sub
+                label.checkbox-inline
+                  input(type='checkbox')
+                  | sub2
+        .panel-footer.text-right
+            button.btn.btn-primary(type='submit') Submit
     block footer_content
