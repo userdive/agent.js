@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta2",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"

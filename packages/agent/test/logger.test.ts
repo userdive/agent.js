@@ -2,6 +2,9 @@ import * as assert from 'assert'
 import { throws } from 'assert-exception'
 import { random } from 'faker'
 import 'mocha'
+import * as Raven from 'raven-js'
+
+import { error, raise, setup, warning } from '../src/logger'
 
 describe('logger', () => {
   const args = [random.word(), new Error(random.word())]
@@ -11,13 +14,10 @@ describe('logger', () => {
   }
 
   it('raise', () => {
-    const raise = require('../src/logger').raise
     assert(throws(() => raise(random.word())).message)
   })
 
   it('not setup', () => {
-    const error = require('../src/logger').error
-    const warning = require('../src/logger').warning
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)
       assert(warning(args[i]) === undefined)
@@ -25,20 +25,10 @@ describe('logger', () => {
   })
 
   it('setup', () => {
-    const error = require('../src/logger').error
-    const setup = require('../src/logger').setup
-    const warning = require('../src/logger').warning
+    assert(setup(Raven) === false)
 
-    setup(createDSN(), null)
-
-    for (let i = 0; i < args.length; i++) {
-      assert(error(args[i]) === undefined)
-      assert(warning(args[i]) === undefined)
-    }
-
-    const Raven = require('raven-js')
-
-    setup(createDSN(), Raven)
+    Raven.config(createDSN()).install()
+    assert(setup(Raven) === true)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)

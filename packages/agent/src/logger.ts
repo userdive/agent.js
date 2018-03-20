@@ -1,7 +1,5 @@
-import * as ravenjs from 'raven-js'
+import { RavenOptions, RavenStatic } from 'raven-js'
 import { CustomError } from './types'
-
-let Raven: ravenjs.RavenStatic
 
 export function raise (msg: string) {
   if (process.env.NODE_ENV !== 'production') {
@@ -9,17 +7,20 @@ export function raise (msg: string) {
   }
 }
 
-export function setup (DSN: string, raven?: ravenjs.RavenStatic): void {
-  if (!DSN || !raven) {
-    return
+const isDefined = (instance: any): boolean => instance && instance.isSetup()
+
+let Raven: any
+export function setup (raven?: RavenStatic): boolean {
+  const isSetup = isDefined(raven)
+  if (isSetup) {
+    Raven = raven
+    Raven.setRelease(process.env.VERSION as string)
   }
-  Raven = raven
-  Raven.config(DSN).install()
-  Raven.setRelease(process.env.VERSION as string)
+  return isSetup
 }
 
-function capture (err: CustomError, options?: ravenjs.RavenOptions): void {
-  if (Raven && Raven.isSetup()) {
+function capture (err: CustomError, options?: RavenOptions): void {
+  if (isDefined(Raven)) {
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)
       return

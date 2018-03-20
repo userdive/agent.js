@@ -1,5 +1,6 @@
 import { NAMESPACE } from './constants'
 
+const CREATE = 'create'
 const agents: any = {}
 
 const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
@@ -13,7 +14,7 @@ const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
    * _ud('create', 'id', 'auto', 'myTracker')
    * _ud('create', 'id', 'auto')
    */
-  if (cmd === 'create') {
+  if (cmd === CREATE) {
     agents[
       args[2] || (typeof args[1] === 'object' && args[1].name) || trackerName
     ] = new Agent(args[0], args[1])
@@ -30,17 +31,25 @@ const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
   }
 }
 
+type Arguments = { [key: number]: any }
+
 export default function (Agent: any) {
   const w: any = window
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
+  const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
+    isEqual ? cmd === CREATE : cmd !== CREATE
+
+  const applyQueue = (argsObject: any[]) => {
+    const args = [].map.call(argsObject, (x: any) => x)
+    const cmd = args.shift()
+    execute(Agent)(cmd, ...args)
+  }
+
   if (w[name] && w[name].q) {
     const { q } = w[name]
-    q.forEach((argsObject: any[]) => {
-      const args = [].map.call(argsObject, (x: any) => x)
-      const cmd = args.shift()
-      execute(Agent)(cmd, ...args)
-    })
+    q.filter(isCreateCmd(true)).forEach(applyQueue)
+    q.filter(isCreateCmd(false)).forEach(applyQueue)
   }
   w[name] = execute(Agent)
 }
