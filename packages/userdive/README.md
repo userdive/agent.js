@@ -34,7 +34,7 @@ _ud("send", "pageview");
 ```js
 import factory from "userdive";
 
-const myTracker = factory("myTracker"); // customize global name
+const myTracker = factory("myTracker"); // customize global function name
 myTracker("create", "id", "auto");
 myTracker("send", "pageview");
 ```
