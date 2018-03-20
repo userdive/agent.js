@@ -40,7 +40,7 @@ function providePlugin(pluginName, pluginConstrucor) {
 
 ## Use plugin
 
-### Configuring via require
+### Configuring plugin instance
 
 You can configure plugin instance via `require` command argument.
 
