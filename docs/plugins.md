@@ -3,11 +3,12 @@ id: plugins
 title: Plugins
 ---
 
-You can write functionaly scripts as plugin to help solve probrem and to aid in measure the action.
+Agent.js allows you to add custom scripts via a plugin architecture.
+The scripts to help solving problems or to aid measuring end-user actions.
 
 ## Defining a plugin
 
-Plugins can registere to agent via `provide` command.
+Plugins can register to agent via `provide` command.
 It must invoke with the name of the plugin as the first argument followed by the plugin's constructor.
 `provide` command register to agent with userdive command queue.
 
