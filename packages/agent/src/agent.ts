@@ -7,6 +7,7 @@ import Click from './events/click'
 import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
+import { setup } from './logger'
 import { SendType, State } from './types'
 
 export type PluginConstructor = new (
@@ -32,6 +33,7 @@ export default class Agent {
       config
     )
     this.linkerName = config.linkerName
+    setup(config.Raven)
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(
         'pagehide',

@@ -11,7 +11,7 @@ import {
   INTERVAL as INTERVAL_DEFAULT_SETTING
 } from './constants'
 import { AgentEvent } from './events'
-import { raise, setup, warning } from './logger'
+import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
@@ -69,9 +69,7 @@ export default class AgentCore extends Store {
       cookieDomain: domain,
       cookieExpires: expires,
       cookieName,
-      linkerName,
-      RAVEN_DSN,
-      Raven
+      linkerName
     }: Settings
   ) {
     let userId = getCookie(cookieName)
@@ -94,8 +92,6 @@ export default class AgentCore extends Store {
       })
     }
     super(userId)
-
-    setup(RAVEN_DSN, Raven)
 
     this.id = generateId()
     this.clear()

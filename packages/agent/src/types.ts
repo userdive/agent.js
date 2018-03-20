@@ -7,7 +7,6 @@ export type Settings = {
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
-  readonly RAVEN_DSN: string
   readonly Raven?: Raven.RavenStatic
 }
 
