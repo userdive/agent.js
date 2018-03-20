@@ -23,6 +23,5 @@ export const SETTINGS: Settings = {
   cookieDomain: '',
   cookieExpires: 730, // TODO
   cookieName: '_ud',
-  RAVEN_DSN: '',
   Raven: undefined
 }
