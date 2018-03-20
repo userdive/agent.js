@@ -87,7 +87,7 @@
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
     "coverage:userdive": "codecov -f ./packages/userdive/coverage/lcov.info -F userdive",
     "e2e": "lerna run e2e",
-    "examples": "webpack-dev-server --config ./examples/webpack.config.ts",
+    "examples": "lerna run dev --scope userdive-examples",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",

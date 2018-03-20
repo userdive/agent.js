@@ -18,6 +18,9 @@
     "build:js": "webpack",
     "build:test": "tsc -m commonjs",
     "clean": "rimraf tests build",
+    "dev": "run-p dev:*",
+    "dev:html": "pug . -o build -P -s -w",
+    "dev:js": "webpack-dev-server --config ./webpack.config.ts",
     "e2e": "nightwatch",
     "prebuild": "npm run clean"
   }
