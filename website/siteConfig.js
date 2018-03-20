@@ -39,8 +39,7 @@ const siteConfig = {
   },
   scripts: ['https://cdn.userdive.com/agent.js'],
   repoUrl,
-  twitter: true,
-  gaTrackingId: 'UA-89961506-1'
+  twitter: true
 }
 
 module.exports = siteConfig
