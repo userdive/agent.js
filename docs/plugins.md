@@ -21,7 +21,7 @@ function MyPlugin() {
 _ud("provide", "myplugin", MyPlugin);
 ```
 
-Plugin supply needs to invoke global object obtained through `data-ud-namespace`.
+Plugin supply needs to invoke global function obtained through `data-ud-namespace`.
 To resolve it, plugins should have check the object name, like below;
 
 ```js
