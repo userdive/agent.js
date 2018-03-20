@@ -55,10 +55,7 @@ _ud("send", "pageview");
 After invoke `require` command, you can invoke command to call the plugin method.
 
 ```js
-_ud("create", "id", "auto");
-_ud("require", "somePlugin", { egg: "small", spam: true });
-å;
-_ud("somePlugin:methodName", ...args);
+_ud("somePlugin:methodName", { egg: "large" });
 ```
 
 ### Load plugin file
