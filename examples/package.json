@@ -1,6 +1,6 @@
 {
   "name": "userdive-examples",
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta2",
   "devDependencies": {
     "@types/nightwatch": "0.9.7",
     "chromedriver": "2.36.0",
