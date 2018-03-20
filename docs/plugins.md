@@ -4,7 +4,7 @@ title: Plugins
 ---
 
 Agent.js allows you to add custom scripts via a plugin architecture.
-The scripts to help solving problems or to aid measuring end-user actions.
+Plugins are useful to help solving problems or to aid measuring end-user actions.
 
 ## Defining a plugin
 
