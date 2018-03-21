@@ -3,7 +3,7 @@
   "version": "1.0.0-beta2",
   "devDependencies": {
     "@types/nightwatch": "0.9.7",
-    "chromedriver": "2.36.0",
+    "chromedriver": "2.37.0",
     "nightwatch": "0.9.20",
     "pug": "2.0.2",
     "pug-cli": "1.0.0-alpha6",
