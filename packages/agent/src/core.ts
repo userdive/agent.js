@@ -8,14 +8,15 @@ import { v4 as uuid } from 'uuid'
 import { getEnv } from './browser'
 import {
   INTERACT as MAX_INTERACT,
-  INTERVAL as INTERVAL_DEFAULT_SETTING
+  INTERVAL as INTERVAL_DEFAULT_SETTING,
+  MAX_EVENT_SEQ
 } from './constants'
 import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
-import { Interact, SendType, Settings } from './types'
+import { Interact, SendData, SendEvent, SendType, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -55,6 +56,7 @@ export default class AgentCore extends Store {
   private emitter: EventEmitter
   private events: AgentEvent[]
   private interactId: number
+  private eventId: number
   private interacts: Interact[]
   private interval: number[]
   private loadTime: number
@@ -99,6 +101,7 @@ export default class AgentCore extends Store {
     this.interacts = []
     this.interval = []
     this.interactId = 0
+    this.eventId = 0
     this.emitter = new EventEmitter()
     this.observer = new UIEventObserver() // singleton
     eventsClass.forEach(Class => {
@@ -112,7 +115,7 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  send (type: SendType, page: string): void {
+  send (type: SendType, sendData: SendData): void {
     switch (type) {
       case 'pageview':
         this.sendInteracts(true)
@@ -120,7 +123,7 @@ export default class AgentCore extends Store {
           this.bind()
         }
 
-        const data = getEnv(pathname2href(page))
+        const data = getEnv(pathname2href(sendData as string))
         if (!data || !this.baseUrl) {
           return warning(`failed init`)
         }
@@ -128,6 +131,7 @@ export default class AgentCore extends Store {
 
         this.interval = INTERVAL_DEFAULT_SETTING.concat()
         this.interactId = 0
+        this.eventId = 0
         this.loadTime = Date.now()
         this.sendInteractsWithUpdate()
         get(
@@ -141,6 +145,18 @@ export default class AgentCore extends Store {
             this.destroy()
           }
         )
+        break
+      case 'event':
+        const event = sendData as SendEvent
+        if (
+          event.category &&
+          event.action &&
+          (!event.value || event.value >= 0)
+        ) {
+          this.eventId++
+          this.sendEvent(event)
+        }
+        break
     }
   }
 
@@ -150,8 +166,8 @@ export default class AgentCore extends Store {
     this.loadTime = 0
   }
 
-  sendInteracts (force?: boolean): void {
-    const query: string[] = []
+  sendInteracts (force?: boolean, optionalQuery?: string[]): void {
+    const query: string[] = optionalQuery || []
     this.interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -175,7 +191,32 @@ export default class AgentCore extends Store {
     }
   }
 
+  protected sendEvent (e: SendEvent) {
+    if (this.eventId <= MAX_EVENT_SEQ) {
+      this.cacheToInteracts()
+      const { category, action, label, value } = e
+      let query = `e=${this.eventId},${category},${action}`
+      query = label || value ? `${query},${label || ''}` : query
+      query = value ? `${query},${value}` : query
+      this.sendInteracts(true, [query])
+      this.interactId++
+    }
+  }
+
   protected sendInteractsWithUpdate (): void {
+    this.cacheToInteracts()
+    this.sendInteracts()
+
+    if (this.loadTime) {
+      const delay = this.interval.shift()
+      if (delay !== undefined && delay >= 0) {
+        setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
+      }
+      this.interactId++
+    }
+  }
+
+  private cacheToInteracts () {
     Object.keys(this.cache).forEach(key => {
       const cache: any = this.cache[key]
       if (cacheValidator(cache)) {
@@ -186,17 +227,7 @@ export default class AgentCore extends Store {
         )
       }
     })
-
     this.clear()
-    this.sendInteracts()
-
-    if (this.loadTime) {
-      const delay = this.interval.shift()
-      if (delay !== undefined && delay >= 0) {
-        setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
-      }
-      this.interactId++
-    }
   }
 
   private bind () {

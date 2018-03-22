@@ -38,7 +38,7 @@ export default function (Agent: any) {
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
   const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
-    isEqual ? cmd === CREATE : cmd !== CREATE
+    isEqual === (cmd === CREATE)
 
   const applyQueue = (argsObject: any[]) => {
     const args = [].map.call(argsObject, (x: any) => x)

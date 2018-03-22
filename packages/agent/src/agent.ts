@@ -8,7 +8,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { SendType, State } from './types'
+import { SendData, SendType, State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -44,9 +44,8 @@ export default class Agent {
       )
     }
   }
-
-  send (type: SendType, page?: string): AgentCore {
-    this.core.send(type, page || location.href)
+  send (type: SendType, data?: SendData): AgentCore {
+    this.core.send(type, data || location.href)
     return this.core
   }
 

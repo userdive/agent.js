@@ -20,7 +20,8 @@ export type Size = {
   readonly w: number
 }
 
-export type SendType = 'pageview'
+export type SendType = 'pageview' | 'event'
+export type SendData = string | SendEvent
 export type Dimension =
   | 'dimension1'
   | 'dimension2'
@@ -147,6 +148,13 @@ export type Interact = {
   readonly type: InteractType
   readonly x: number
   readonly y: number
+}
+
+export type SendEvent = {
+  readonly category: string
+  readonly action: string
+  readonly label?: string
+  readonly value?: number
 }
 
 export type EventType =

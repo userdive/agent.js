@@ -2,7 +2,8 @@
   "docs": {
     "Usage": [
       "getting-started",
-      "custom-variables"
+      "custom-variables",
+      "event"
     ],
     "Plugins": [
       "plugins"

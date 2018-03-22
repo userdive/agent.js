@@ -25,3 +25,4 @@ export const SETTINGS: Settings = {
   cookieName: '_ud',
   Raven: undefined
 }
+export const MAX_EVENT_SEQ = 10
