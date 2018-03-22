@@ -35,7 +35,7 @@ function providePlugin(pluginName, pluginConstrucor) {
         function() {
             (window[name].q = window[name].q || []).push(arguments);
         };
-    ud("provide", "myplugin", MyPlugin);
+    ud("provide", pluginName, pluginConstrucor);
 }
 ```
 
