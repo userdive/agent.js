@@ -37,7 +37,7 @@ const siteConfig = {
     // Highlight.js theme to use for syntax highlighting in code blocks
     theme: 'default'
   },
-  scripts: ['https://cdn.userdive.com/agent.js'],
+  scripts: [],
   repoUrl,
   twitter: true
 }

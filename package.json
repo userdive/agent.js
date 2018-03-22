@@ -97,7 +97,7 @@
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "run-p w:*",
+    "start": "run-p -l w:*",
     "test": "lerna run test",
     "w:examples": "lerna run dev --scope userdive-examples",
     "w:website": "cd website && npm start"
