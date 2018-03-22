@@ -18,8 +18,17 @@ describe('agent', () => {
     assert(agent.core)
     assert(agent.get('linkerParam'))
 
-    const agent2 = new Agent(random.uuid(), { allowLinker: true })
+    const agent2 = new Agent(random.uuid(), {
+      allowLinker: true,
+      cookieName: lorem.word(),
+      cookieDomain: internet.domainName(),
+      cookieExpires: random.number()
+    })
     assert(agent.get('linkerParam'))
+
+    const agent3 = new Agent(random.uuid(), 'auto', lorem.work(), {
+      allowLinker: true
+    })
   })
 
   it('linkerParam', () => {

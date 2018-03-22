@@ -59,15 +59,6 @@ export interface FieldsObject {
 export interface USERDIVEApi {
   q: any[]
 
-  // (
-  //   command: 'send',
-  //   hitType: 'event',
-  //   eventCategory: string,
-  //   eventAction: string,
-  //   eventLabel?: string,
-  //   eventValue?: number,
-  //   fieldsObject?: FieldsObject
-  // ): void
   (
     command: 'send',
     hitType: 'event',
@@ -76,22 +67,21 @@ export interface USERDIVEApi {
       eventAction: string
       eventLabel?: string
       eventValue?: number
-    // nonInteraction?: boolean
     }
   ): void
-  // (
-  //   command: "send",
-  //   fieldsObject: {
-  //     hitType: "event"
-  //     eventCategory: string
-  //     eventAction: string
-  //     eventLabel?: string
-  //     eventValue?: number
-  //     nonInteraction?: boolean
-  //   }
-  // ): void
-  (command: 'send', hitType: 'pageview', page: string): void
-  (command: 'send', fieldsObject: FieldsObject): void
+  (
+    command: 'send',
+    fieldsObject:
+    | {
+      hitType: 'event'
+      eventCategory: string
+      eventAction: string
+      eventLabel?: string
+      eventValue?: number
+    }
+    | FieldsObject
+  ): void
+  (command: 'send', hitType: 'pageview', page?: string): void
   (command: 'require', pluginName: string, pluginOptions?: any): void
   (
     command: 'provide',
