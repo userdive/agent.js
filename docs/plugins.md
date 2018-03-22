@@ -28,7 +28,7 @@ To resolve it, plugins should have check the object name, like below;
 // in plugin code
 function providePlugin(pluginName, pluginConstrucor) {
     var name = document
-        .querySelector("data-ud-namespace")
+        .querySelector("[data-ud-namespace]")
         .getAttribute("data-ud-namespace");
     var ud =
         window[name] ||
