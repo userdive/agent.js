@@ -17,8 +17,7 @@ import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 
 describe('core', () => {
-  const Agent = require('../src/core').default
-  const Base = require('../src/events').default
+  const isUrl = require('is-url')
   const eventFactory = (type, emitter) =>
     class DummyEvents extends Base {
       validate () {
@@ -156,7 +155,6 @@ describe('core', () => {
     assert(url.split('/')[4].length === 32)
     assert(url.split('/')[5].length === 13)
     assert(url.split('/')[6] === 'int.gif')
-    const isUrl = require('is-url')
     assert(isUrl(url))
 
     assert(spy.getCall(0).args[1].length === INTERACT)

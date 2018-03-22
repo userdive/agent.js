@@ -14,7 +14,15 @@ jobs:
           background: true
       - run: sleep 30
       - run: yarn e2e
-      - deploy: cd examples && gh-pages -d build
+  deploy:
+    docker:
+      - image: circleci/node:8-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: yarn install
+      - run: yarn build
+      - run: cd examples && gh-pages -d build
 
 workflows:
   version: 2
@@ -28,3 +36,9 @@ workflows:
                 - master
     jobs:
       - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

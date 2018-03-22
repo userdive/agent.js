@@ -18,7 +18,7 @@ describe('agent', () => {
     assert(agent.core)
     assert(agent.get('linkerParam'))
 
-    const agent2 = new Agent(random.uuid(), { allowLink: true })
+    const agent2 = new Agent(random.uuid(), { allowLinker: true })
     assert(agent.get('linkerParam'))
   })
 

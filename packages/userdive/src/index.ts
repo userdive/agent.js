@@ -1,5 +1,5 @@
 /*! userdive | Copyright (c) UNCOVER TRUTH Inc. */
-
+import { USERDIVEApi } from './types'
 const TAG_NAME = 'script'
 
 export interface IAttributes {
@@ -34,7 +34,7 @@ export default function (
   name?: string,
   source?: string,
   global?: any
-): Function {
+): USERDIVEApi {
   name = name || '_ud'
   source = source || 'https://cdn.userdive.com/agent.js'
   global = global || window

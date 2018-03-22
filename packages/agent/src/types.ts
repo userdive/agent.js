@@ -1,6 +1,7 @@
 import * as Raven from 'raven-js'
-export type Settings = {
-  readonly allowLink: boolean
+import { FieldsObject } from 'userdive/lib/types'
+
+export interface Settings extends FieldsObject {
   readonly auto: boolean
   readonly baseUrl: string
   readonly cookieDomain: string
@@ -20,7 +21,6 @@ export type Size = {
   readonly w: number
 }
 
-export type SendType = 'pageview' | 'event'
 export type SendData = string | SendEvent
 export type Dimension =
   | 'dimension1'
@@ -164,6 +164,7 @@ export type EventType =
   | 'touchend'
   | 'touchstart'
   | 'touchmove'
+
 export type CustomError = string | Error
 
 export type TaskQueue = {
