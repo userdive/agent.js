@@ -2,10 +2,9 @@
 
 [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
-[![codecov](https://codecov.io/gh/userdive/agent.js/branch/master/graph/badge.svg)](https://codecov.io/gh/userdive/agent.js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-> TBA
+> Official USERDIVE loader from cdn.userdive.com
 
 ## Table of Contents
 
@@ -23,11 +22,21 @@ npm install userdive --save
 ## Usage
 
 ```js
-import userdive from "userdive";
-const _ud = userdive();
+import factory from "userdive";
+
+// create global entrypoint & load agent.js from cdn
+const _ud = factory();
 
 _ud("create", "id", "auto");
 _ud("send", "pageview");
+```
+
+```js
+import factory from "userdive";
+
+const myTracker = factory("myTracker"); // customize global function name
+myTracker("create", "id", "auto");
+myTracker("send", "pageview");
 ```
 
 more [examples](https://github.com/userdive/agent.js/tree/master/examples)

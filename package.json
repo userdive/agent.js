@@ -20,7 +20,6 @@
     "assert-exception": "1.1.0",
     "can-npm-publish": "1.0.2",
     "codecov": "3.0.0",
-    "concurrently": "3.5.1",
     "cross-env": "5.1.4",
     "eslint": "4.19.1",
     "faker": "4.1.0",
@@ -87,7 +86,6 @@
     "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
     "coverage:userdive": "codecov -f ./packages/userdive/coverage/lcov.info -F userdive",
     "e2e": "lerna run e2e",
-    "examples": "lerna run dev --scope userdive-examples",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
     "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
@@ -99,14 +97,15 @@
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "concurrently --kill-others 'npm run examples' 'npm run website'",
+    "start": "run-p -l w:*",
     "test": "lerna run test",
-    "website": "cd website && npm start"
+    "w:examples": "lerna run dev --scope userdive-examples",
+    "w:website": "cd website && npm start"
   },
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8.1 KB"
+      "limit": "8 KB"
     },
     {
       "path": "cdn/agent.d.js",

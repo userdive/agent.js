@@ -1,6 +1,6 @@
 import { NightwatchAPI, NightwatchTests } from 'nightwatch'
 
-const linkQuery: string = '#app li a'
+const linkQuery: string = '#app a'
 
 export default function (suffix: string): NightwatchTests {
   const toUrl = (base: string) => `${base}${suffix}`

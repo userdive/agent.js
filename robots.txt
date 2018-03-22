@@ -3,3 +3,5 @@ Allow: /agent.d.js
 Allow: /agent.d.js.map
 Allow: /agent.js
 Allow: /agent.js.map
+Allow: /linker.js
+Allow: /linker.js.map

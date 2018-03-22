@@ -1,9 +1,14 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 
-import Sample from './Sample'
+import EntryPointWrapper from './EntryPointWrapper'
 
-export default class SampleWrapper extends React.PureComponent {
+export default class Sample2 extends React.PureComponent<{}> {
   render () {
-    return <Sample linkTo='/sample2' linkValue='Sample2' />
+    return (
+      <EntryPointWrapper>
+        <Link to='/sample2'>Sample2</Link>
+      </EntryPointWrapper>
+    )
   }
 }
