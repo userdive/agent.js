@@ -6,7 +6,7 @@
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 
-> Cross-domain tracking tracking using query parameter plugin
+> Cross-domain tracking using query parameter plugin
 
 ## Table of Contents
 
