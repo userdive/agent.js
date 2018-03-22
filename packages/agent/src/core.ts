@@ -3,6 +3,7 @@ import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { UIEventObserver } from 'ui-event-observer'
+import { HitType } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
 import { getEnv } from './browser'
@@ -16,7 +17,7 @@ import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
 
-import { Interact, SendData, SendEvent, SendType, Settings } from './types'
+import { Interact, SendData, SendEvent, Settings } from './types'
 
 function generateId () {
   return uuid().replace(/-/g, '')
@@ -65,7 +66,7 @@ export default class AgentCore extends Store {
     id: string,
     eventsClass: any[], // TODO
     {
-      allowLink,
+      allowLinker,
       auto,
       baseUrl,
       cookieDomain: domain,
@@ -75,7 +76,7 @@ export default class AgentCore extends Store {
     }: Settings
   ) {
     let userId = getCookie(cookieName)
-    if (allowLink) {
+    if (allowLinker) {
       const qs = location.search.trim().replace(/^[?#&]/, '')
       const [linkerParam] = qs
         .split('&')
@@ -86,7 +87,7 @@ export default class AgentCore extends Store {
       }
     }
     const saveCookie = auto ? save : setCookie
-    if (!userId || allowLink) {
+    if (!userId || allowLinker) {
       userId = userId || generateId()
       saveCookie(cookieName, userId, {
         domain,
@@ -115,7 +116,7 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  send (type: SendType, sendData: SendData): void {
+  send (type: HitType, sendData: SendData): void {
     switch (type) {
       case 'pageview':
         this.sendInteracts(true)

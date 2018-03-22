@@ -12,12 +12,12 @@
     "object-assign": "^4.1.1",
     "raven-js": "^3.23.1",
     "ui-event-observer": "^2.0.0",
+    "userdive": "^0.15.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
     "@types/js-cookie": "2.1.0",
-    "@types/uuid": "3.4.3",
-    "userdive": "^0.15.0"
+    "@types/uuid": "3.4.3"
   },
   "engine": {
     "node": "> 5"

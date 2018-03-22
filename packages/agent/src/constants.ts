@@ -16,7 +16,7 @@ export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
 export const VERSION = 1
 export const SETTINGS: Settings = {
-  allowLink: false,
+  allowLinker: false,
   linkerName: '__ud',
   auto: false,
   baseUrl: 'https://v1.userdive.com',

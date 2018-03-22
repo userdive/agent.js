@@ -28,6 +28,7 @@
     "packages"
   ],
   "types": [
-    "./node_modules/@userdive/agent.js/lib"
+    "./node_modules/@userdive/agent.js/lib",
+    "./node_modules/@userdive/userdive/lib",
   ]
 }
