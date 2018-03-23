@@ -39,6 +39,11 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-body form-horizontal">
+          <ul id="app" ui-view>
+            <li>
+              <app></app>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="panel panel-default">
@@ -121,5 +126,7 @@
         </div>
       </div>
     </div>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <script src="../assets/angular.bundle.js"></script>
   </body>
 </html>
