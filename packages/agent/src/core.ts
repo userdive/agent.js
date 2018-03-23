@@ -148,16 +148,17 @@ export default class AgentCore extends Store {
     eventValue: value
   }: FieldsObject): void {
     this.eventId++
+    const isNumber = (n?: number): boolean => typeof n === 'number' && n >= 0
     if (
       this.eventId <= MAX_EVENT_SEQ &&
       category &&
       action &&
-      (typeof value === 'number' && value >= 0)
+      (!value || isNumber(value))
     ) {
       this.sendInteracts(
         [
           `e=${this.eventId},${category},${action},${label || ''}${
-            value ? ',' + value : ''
+            isNumber(value) ? ',' + value : ''
           }`
         ],
         true

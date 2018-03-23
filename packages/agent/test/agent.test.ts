@@ -10,15 +10,15 @@ describe('agent', () => {
   let agent
 
   beforeEach(() => {
-    agent = new Agent(random.uuid(), 'auto')
+    agent = new Agent(random.uuid(), 'auto', {})
   })
 
   it('constructor', () => {
-    const agent: any = new Agent(random.uuid(), 'auto')
+    const agent: any = new Agent(random.uuid(), 'auto', {})
     assert(agent.core)
     assert(agent.get('linkerParam'))
 
-    const agent2 = new Agent(random.uuid(), {
+    const agent2 = new Agent(random.uuid(), 'auto', {
       allowLinker: true,
       cookieName: lorem.word(),
       cookieDomain: internet.domainName(),
@@ -26,7 +26,7 @@ describe('agent', () => {
     })
     assert(agent.get('linkerParam'))
 
-    const agent3 = new Agent(random.uuid(), 'auto', lorem.work(), {
+    const agent3 = new Agent(random.uuid(), 'auto', {
       allowLinker: true
     })
   })

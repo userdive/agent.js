@@ -25,10 +25,10 @@ describe('logger', () => {
   })
 
   it('setup', () => {
-    assert(setup(Raven) === false)
+    assert(setup({ Raven }) === false)
 
     Raven.config(createDSN()).install()
-    assert(setup(Raven) === true)
+    assert(setup({ Raven }) === true)
 
     for (let i = 0; i < args.length; i++) {
       assert(error(args[i]) === undefined)

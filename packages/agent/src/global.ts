@@ -1,9 +1,16 @@
+import { FieldsObject } from 'userdive/lib/types'
 import { NAMESPACE } from './constants'
 
 const CREATE = 'create'
 const agents: any = {}
 
-const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
+const execute = (
+  Agent: new (
+    projectId: string,
+    cookieDomain: string,
+    fieldsObject: FieldsObject
+  ) => void
+) => (cmd: string, ...args: any[]): void => {
   const [n, command] = cmd.split('.')
   if (n && command) {
     cmd = command
@@ -17,7 +24,11 @@ const execute = (Agent: any) => (cmd: string, ...args: any[]): void => {
   if (cmd === CREATE) {
     agents[
       args[2] || (typeof args[1] === 'object' && args[1].name) || trackerName
-    ] = new Agent(args[0], args[1])
+    ] = new Agent(
+      args[0],
+      typeof args[1] === 'string' ? args[1] : args[1].cookieName,
+      typeof args[1] === 'object' ? args[1] : undefined
+    )
     return
   }
 

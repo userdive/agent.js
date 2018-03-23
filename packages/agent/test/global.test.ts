@@ -81,7 +81,7 @@ describe('global async', () => {
   })
 
   it('debug global', () => {
-    assert.equal(window[GLOBAL_NAME]('create', lorem.word(), {}), undefined)
+    assert(window[GLOBAL_NAME]('create', lorem.word(), {}) === undefined)
     assert(window[GLOBAL_NAME]['q'].length)
     require('../src/entrypoint/debug')
     assert(window[GLOBAL_NAME]['q'] === undefined)
