@@ -10,9 +10,10 @@
   },
   "private": true,
   "scripts": {
-    "build": "docusaurus-build",
+    "build": "run-s crowdin-download docusaurus-build crowdin-upload",
     "crowdin-download": "crowdin --config ../crowdin.yaml download -b master",
     "crowdin-upload": "crowdin --config ../crowdin.yaml upload sources --auto-update -b master",
+    "docusaurus-build": "docusaurus-build",
     "prepare": "yarn write-translations",
     "rename-version": "docusaurus-rename-version",
     "start": "docusaurus-start",
