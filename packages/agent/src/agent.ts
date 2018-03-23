@@ -1,5 +1,5 @@
 import * as objectAssign from 'object-assign'
-import { HitType } from 'userdive/lib/types'
+import { FieldsObject, HitType } from 'userdive/lib/types'
 
 import { validate } from './browser'
 import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
@@ -9,7 +9,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { SendData, State } from './types'
+import { State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -46,8 +46,14 @@ export default class Agent {
     }
   }
 
-  send (type: HitType, data?: SendData): AgentCore {
-    this.core.send(type, data || location.href)
+  send (type: HitType, data: FieldsObject | string): AgentCore {
+    if (typeof type === 'string') {
+      this.core.send(type, data)
+    } else {
+      const { hitType } = data
+      this.core.send(hitType, data)
+    }
+
     return this.core
   }
 

@@ -41,4 +41,52 @@ describe('aync loader', () => {
     const _ud = factory()
     assert(document.querySelector(`[${NAMESPACE}]`), undefined)
   })
+
+  it('should exercise all ga APIs', () => {
+    const _ud = factory()
+    _ud('create', lorem.word(), 'auto')
+    // _ud('create', lorem.word(), {
+    //   cookieName: lorem.word(),
+    //   cookieDomain: internet.domainName(),
+    //   cookieExpires: random.number()
+    // })
+    _ud('create', lorem.word(), 'auto', 'myTracker', {
+      allowLinker: true,
+      dimension1: lorem.word()
+    })
+    // _ud('create', {
+    //   trackingId: lorem.word(),
+    //   cookieDomain: 'auto',
+    //   name: lorem.word()
+    // })
+
+    // _ud('create', lorem.word(), {
+    //   name: lorem.word(),
+    //   allowLinker: true,
+    //   dimension20: 'cd1'
+    // })
+
+    _ud('send', 'pageview')
+    _ud('send', 'event', {
+      eventCategory: 'c1',
+      eventAction: 'a1'
+    })
+
+    _ud('send', 'event', {
+      eventCategory: 'c1',
+      eventAction: 'a1',
+      eventLabel: 'l1',
+      eventValue: 1
+    })
+
+    _ud('send', {
+      hitType: 'event',
+      eventCategory: 'c1',
+      eventAction: 'a1'
+    })
+
+    _ud('require', 'somePlugin')
+    _ud('require', 'somePlugin', 'option')
+    _ud('require', 'somePlugin', { some: 'options' })
+  })
 })

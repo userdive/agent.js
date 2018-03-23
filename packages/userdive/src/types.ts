@@ -2,84 +2,78 @@ export type HitType = 'pageview' | 'event'
 
 export interface FieldsObject {
   // allowAnchor?: boolean
-  allowLinker?: boolean
-  cookieName?: string
-  cookieDomain?: string
-  cookieExpires?: number
+  readonly allowLinker?: boolean
+  readonly cookieName?: string
+  readonly cookieDomain?: string
+  readonly cookieExpires?: number
   // cookiePath?: string
-  dimension1?: string
-  dimension2?: string
-  dimension3?: string
-  dimension4?: string
-  dimension5?: string
-  dimension6?: string
-  dimension7?: string
-  dimension8?: string
-  dimension9?: string
-  dimension10?: string
-  dimension11?: string
-  dimension12?: string
-  dimension13?: string
-  dimension14?: string
-  dimension15?: string
-  dimension16?: string
-  dimension17?: string
-  dimension18?: string
-  dimension19?: string
-  dimension20?: string
+  readonly dimension1?: string
+  readonly dimension2?: string
+  readonly dimension3?: string
+  readonly dimension4?: string
+  readonly dimension5?: string
+  readonly dimension6?: string
+  readonly dimension7?: string
+  readonly dimension8?: string
+  readonly dimension9?: string
+  readonly dimension10?: string
+  readonly dimension11?: string
+  readonly dimension12?: string
+  readonly dimension13?: string
+  readonly dimension14?: string
+  readonly dimension15?: string
+  readonly dimension16?: string
+  readonly dimension17?: string
+  readonly dimension18?: string
+  readonly dimension19?: string
+  readonly dimension20?: string
   // eventAction?: string
   // eventCategory?: string
   // eventLabel?: string
   // eventValue?: number
   // hitType?: HitType
-  metric1?: string | number
-  metric2?: string | number
-  metric3?: string | number
-  metric4?: string | number
-  metric5?: string | number
-  metric6?: string | number
-  metric7?: string | number
-  metric8?: string | number
-  metric9?: string | number
-  metric10?: string | number
-  metric11?: string | number
-  metric12?: string | number
-  metric13?: string | number
-  metric14?: string | number
-  metric15?: string | number
-  metric16?: string | number
-  metric17?: string | number
-  metric18?: string | number
-  metric19?: string | number
-  metric20?: string | number
-  name?: string
+  readonly metric1?: string | number
+  readonly metric2?: string | number
+  readonly metric3?: string | number
+  readonly metric4?: string | number
+  readonly metric5?: string | number
+  readonly metric6?: string | number
+  readonly metric7?: string | number
+  readonly metric8?: string | number
+  readonly metric9?: string | number
+  readonly metric10?: string | number
+  readonly metric11?: string | number
+  readonly metric12?: string | number
+  readonly metric13?: string | number
+  readonly metric14?: string | number
+  readonly metric15?: string | number
+  readonly metric16?: string | number
+  readonly metric17?: string | number
+  readonly metric18?: string | number
+  readonly metric19?: string | number
+  readonly metric20?: string | number
+  readonly name?: string
   // useBeacon?: boolean
+}
+
+export interface EventFieldsObject {
+  readonly eventCategory: string
+  readonly eventAction: string
+  readonly eventLabel?: string
+  readonly eventValue?: number
+}
+
+export interface EventFieldsObjectWithHitType extends EventFieldsObject {
+  readonly hitType: 'event'
 }
 
 export interface USERDIVEApi {
   q: any[]
 
+  (command: 'send', hitType: 'event', fieldsObject: EventFieldsObject): void
   (
     command: 'send',
-    hitType: 'event',
-    fieldsObject: {
-      eventCategory: string
-      eventAction: string
-      eventLabel?: string
-      eventValue?: number
-    }
-  ): void
-  (
-    command: 'send',
-    fieldsObject:
-    | {
-      hitType: 'event'
-      eventCategory: string
-      eventAction: string
-      eventLabel?: string
-      eventValue?: number
-    }
-    | FieldsObject
+    fieldsObject: EventFieldsObjectWithHitType | FieldsObject
   ): void
   (command: 'send', hitType: 'pageview', page?: string): void
   (command: 'require', pluginName: string, pluginOptions?: any): void

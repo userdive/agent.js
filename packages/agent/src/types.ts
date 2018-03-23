@@ -1,14 +1,11 @@
-import * as Raven from 'raven-js'
 import { FieldsObject } from 'userdive/lib/types'
 
 export interface Settings extends FieldsObject {
-  readonly auto: boolean
   readonly baseUrl: string
   readonly cookieDomain: string
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
-  readonly Raven?: Raven.RavenStatic
 }
 
 export type Point = {
@@ -21,7 +18,6 @@ export type Size = {
   readonly w: number
 }
 
-export type SendData = string | SendEvent
 export type Dimension =
   | 'dimension1'
   | 'dimension2'
@@ -148,13 +144,6 @@ export type Interact = {
   readonly type: InteractType
   readonly x: number
   readonly y: number
-}
-
-export type SendEvent = {
-  readonly category: string
-  readonly action: string
-  readonly label?: string
-  readonly value?: number
 }
 
 export type EventType =
