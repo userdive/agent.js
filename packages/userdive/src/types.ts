@@ -27,11 +27,11 @@ export interface FieldsObject {
   readonly dimension18?: string
   readonly dimension19?: string
   readonly dimension20?: string
-  // eventAction?: string
-  // eventCategory?: string
-  // eventLabel?: string
-  // eventValue?: number
-  // hitType?: HitType
+  readonly eventAction?: string
+  readonly eventCategory?: string
+  readonly eventLabel?: string
+  readonly eventValue?: number
+  readonly hitType?: HitType
   readonly metric1?: string | number
   readonly metric2?: string | number
   readonly metric3?: string | number

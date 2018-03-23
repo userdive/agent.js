@@ -1,4 +1,4 @@
-import { Settings } from './types'
+import { SettingFieldsObject } from './types'
 const intervals: number[] = []
 function push (t: number, n: number) {
   for (let i = 0; i < n; i++) {
@@ -15,10 +15,9 @@ export const NAMESPACE = `data-ud-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
 export const VERSION = 1
-export const SETTINGS: Settings = {
+export const SETTINGS: SettingFieldsObject = {
   allowLinker: false,
   linkerName: '__ud',
-  auto: false,
   baseUrl: 'https://v1.userdive.com',
   cookieDomain: '',
   cookieExpires: 730, // TODO

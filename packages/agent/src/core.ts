@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { UIEventObserver } from 'ui-event-observer'
-import { EventFieldsObject, FieldsObject, HitType } from 'userdive/lib/types'
+import { FieldsObject } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
 import { getEnv } from './browser'
@@ -16,8 +16,7 @@ import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
-
-import { Interact, Settings } from './types'
+import { Interact, SettingFieldsObject } from './types'
 
 const generateId = () => uuid().replace(/-/g, '')
 
@@ -51,7 +50,7 @@ const findOrCreateUserId = ({
   cookieExpires: expires,
   cookieName,
   linkerName
-}: Settings): string => {
+}: SettingFieldsObject): string => {
   let userId = getCookie(cookieName)
   if (allowLinker) {
     const qs = location.search.trim().replace(/^[?#&]/, '')
@@ -89,7 +88,7 @@ export default class AgentCore extends Store {
   constructor (
     id: string,
     eventsClass: any[], // TODO
-    settings: Settings
+    settings: SettingFieldsObject
   ) {
     const userId = findOrCreateUserId(settings)
     super(userId)
@@ -114,48 +113,55 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  send (type: HitType, fieldsObject: FieldsObject | string): void {
-    switch (type) {
-      case 'pageview':
-        this.sendInteracts(true)
-        if (!this.loadTime) {
-          this.bind()
-        }
+  pageview (page: string): void {
+    this.sendInteracts([], true)
+    if (!this.loadTime) {
+      this.bind()
+    }
 
-        const data = getEnv(pathname2href(fieldsObject))
-        if (!data || !this.baseUrl) {
-          return warning(`failed init`)
-        }
-        this.merge({ type: 'env', data })
+    const data = getEnv(pathname2href(page))
+    if (!data || !this.baseUrl) {
+      return warning(`failed init`)
+    }
+    this.merge({ type: 'env', data })
 
-        this.interval = INTERVAL_DEFAULT_SETTING.concat()
-        this.interactId = 0
-        this.eventId = 0
-        this.loadTime = Date.now()
-        this.sendInteractsWithUpdate()
-        get(
-          `${this.baseUrl}/${this.loadTime}/env.gif`,
-          obj2query(objectAssign({}, this.get('env'), this.get('custom'))),
-          () => {
-            this.destroy()
-          }
-        )
-        break
-      case 'event':
-        this.eventId++
-        const {
-          eventCategory: category,
-          eventLabel: label,
-          eventAction: action,
-          eventValue: value
-        }: EventFieldsObject = fieldsObject
+    this.interval = INTERVAL_DEFAULT_SETTING.concat()
+    this.interactId = 0
+    this.eventId = 0
+    this.loadTime = Date.now()
+    this.sendInteractsWithUpdate()
+    get(
+      `${this.baseUrl}/${this.loadTime}/env.gif`,
+      obj2query(
+        objectAssign({}, this.get('env'), this.get('custom')) as any /* TODO */
+      ),
+      () => {
+        this.destroy()
+      }
+    )
+  }
 
-        if (this.eventId <= MAX_EVENT_SEQ) {
-          let query = `e=${this.eventId},${category},${action}`
-          query = label || value ? `${query},${label || ''}` : query
-          query = value ? `${query},${value}` : query
-        }
-        break
+  event ({
+    eventCategory: category,
+    eventLabel: label,
+    eventAction: action,
+    eventValue: value
+  }: FieldsObject): void {
+    this.eventId++
+    if (
+      this.eventId <= MAX_EVENT_SEQ &&
+      category &&
+      action &&
+      (typeof value === 'number' && value >= 0)
+    ) {
+      this.sendInteracts(
+        [
+          `e=${this.eventId},${category},${action},${label || ''}${
+            value ? ',' + value : ''
+          }`
+        ],
+        true
+      )
     }
   }
 
@@ -165,8 +171,7 @@ export default class AgentCore extends Store {
     this.loadTime = 0
   }
 
-  sendInteracts (force?: boolean): void {
-    const query: string[] = []
+  sendInteracts (query: string[], force?: boolean): void {
     this.interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -178,10 +183,9 @@ export default class AgentCore extends Store {
       this.baseUrl &&
       (query.length >= MAX_INTERACT || (force && query.length > 0))
     ) {
-      const customState = this.get('custom')
       get(
         `${this.baseUrl}/${this.loadTime}/int.gif`,
-        query.concat(obj2query(customState)),
+        query.concat(obj2query(this.get('custom') as any /* TODO */)),
         () => {
           this.destroy()
         }
@@ -192,7 +196,7 @@ export default class AgentCore extends Store {
 
   private sendInteractsWithUpdate (): void {
     Object.keys(this.cache).forEach(key => {
-      const cache = this.cache[key]
+      const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
         cache.id = this.interactId
         this.interacts.push(cache)
@@ -200,7 +204,7 @@ export default class AgentCore extends Store {
     })
 
     this.clear()
-    this.sendInteracts()
+    this.sendInteracts([])
 
     if (this.loadTime) {
       const delay = this.interval.shift()

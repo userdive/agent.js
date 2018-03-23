@@ -1,5 +1,6 @@
 import { RavenOptions, RavenStatic } from 'raven-js'
-import { CustomError } from './types'
+
+export type CustomError = string | Error
 
 export function raise (msg: string) {
   if (process.env.NODE_ENV !== 'production') {
@@ -10,7 +11,7 @@ export function raise (msg: string) {
 const isDefined = (instance: any): boolean => instance && instance.isSetup()
 
 let Raven: any
-export function setup (raven?: RavenStatic): boolean {
+export function setup ({ Raven: raven }: { Raven?: RavenStatic }): boolean {
   const isSetup = isDefined(raven)
   if (isSetup) {
     Raven = raven

@@ -9,7 +9,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { State } from './types'
+import { SettingFieldsObject, State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -22,24 +22,33 @@ export default class Agent {
   private linkerName: string
   private plugins: { [name: string]: any }
 
-  constructor (projectId: string, settings: Object | 'auto') {
+  constructor (
+    projectId: string,
+    cookieDomain: string,
+    fieldsObject: FieldsObject
+  ) {
     this.plugins = {}
-    if (typeof settings === 'string' && settings === 'auto') {
-      settings = { auto: true }
-    }
-    const config = objectAssign({}, SETTINGS_DEFAULT, settings)
+    const config = objectAssign(
+      {},
+      SETTINGS_DEFAULT,
+      { cookieDomain },
+      fieldsObject
+    ) as SettingFieldsObject
+
     this.core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
       config
     )
     this.linkerName = config.linkerName
-    setup(config.Raven)
+
+    setup(config)
+
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(
         'pagehide',
         () => {
-          this.core.sendInteracts(true)
+          this.core.sendInteracts([], true)
         },
         false
       )
@@ -48,10 +57,16 @@ export default class Agent {
 
   send (type: HitType, data: FieldsObject | string): AgentCore {
     if (typeof type === 'string') {
-      this.core.send(type, data)
-    } else {
-      const { hitType } = data
-      this.core.send(hitType, data)
+      switch (type) {
+        case 'pageview':
+          if (!data || typeof data === 'string') {
+            this.core.pageview(data || location.href)
+          }
+          break
+        case 'event':
+          this.core.event(data as FieldsObject)
+          break
+      }
     }
 
     return this.core

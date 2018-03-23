@@ -1,11 +1,13 @@
+import { RavenStatic } from 'raven-js'
 import { FieldsObject } from 'userdive/lib/types'
 
-export interface Settings extends FieldsObject {
+export interface SettingFieldsObject extends FieldsObject {
   readonly baseUrl: string
   readonly cookieDomain: string
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
+  Raven?: RavenStatic
 }
 
 export type Point = {
@@ -138,7 +140,7 @@ export type State = {
 export type InteractType = 'l' | 'a'
 
 export type Interact = {
-  readonly id: number
+  id: number
   readonly left: number
   readonly top: number
   readonly type: InteractType
@@ -153,8 +155,6 @@ export type EventType =
   | 'touchend'
   | 'touchstart'
   | 'touchmove'
-
-export type CustomError = string | Error
 
 export type TaskQueue = {
   name: string
