@@ -5,6 +5,10 @@ body {
     "Hiragino Kaku Gothic ProN", "メイリオ", Helvetica, Arial, sans-serif;
 }
 
+.projectLogo {
+  display: block;
+}
+
 .fixedHeaderContainer header h2 {
   display: none;
 }
@@ -53,16 +57,20 @@ body {
   background: #232930;
 }
 
-.promoSection .buttonWrapper:nth-of-type(1) .button {
-  background: #e85f61;
+.promoSection .promoRow .pluginRowBlock {
+  margin: 0;
 }
 
-.promoSection .buttonWrapper:nth-of-type(2) .button {
+.promoSection .buttonWrapper:nth-of-type(1) .button {
   background: #edae53;
 }
 
-.promoSection .buttonWrapper:nth-of-type(3) .button {
+.promoSection .buttonWrapper:nth-of-type(2) .button {
   background: #3fa080;
+}
+
+.promoSection .buttonWrapper:nth-of-type(3) .button {
+  background: #e85f61;
 }
 
 .toolSection .container .wrapper h2 {
@@ -71,10 +79,12 @@ body {
 
 .functionSection h2 {
   color: #e85f61;
+  margin-top: 0;
 }
 
 .collaborationSection .container .wrapper .imageAlignSide h2 {
   color: #edae53;
+  margin-top: 0;
 }
 
 .container .wrapper .imageAlignSide p {
@@ -93,6 +103,20 @@ footer .sitemap .nav-home {
 @media only screen and (max-width: 46rem) {
   .introSection .blockElement + .blockElement {
     margin-top: 3.125rem;
+  }
+
+  .logo {
+    display: block;
+  }
+
+  .imageAlignSide .blockImage {
+    display: block;
+    margin-left: 0;
+    margin-top: 3rem;
+  }
+
+  .toolSection .blockElement + .blockElement {
+    margin-top: 4rem;
   }
 }
 
