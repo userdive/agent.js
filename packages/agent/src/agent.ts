@@ -25,14 +25,14 @@ export default class Agent {
   constructor (
     projectId: string,
     cookieDomain: string,
-    fieldsObject: FieldsObject
+    fieldsObject?: FieldsObject
   ) {
     this.plugins = {}
     const config = objectAssign(
       {},
       SETTINGS_DEFAULT,
       { cookieDomain },
-      fieldsObject
+      fieldsObject || {}
     ) as SettingFieldsObject
 
     this.core = new AgentCore(
@@ -56,17 +56,18 @@ export default class Agent {
   }
 
   send (type: HitType, data: FieldsObject | string): AgentCore {
-    if (typeof type === 'string') {
-      switch (type) {
-        case 'pageview':
-          if (!data || typeof data === 'string') {
-            this.core.pageview(data || location.href)
-          }
-          break
-        case 'event':
-          this.core.event(data as FieldsObject)
-          break
-      }
+    if (typeof type !== 'string') {
+      return this.core
+    }
+    switch (type) {
+      case 'pageview':
+        if (!data || typeof data === 'string') {
+          this.core.pageview(data || location.href)
+        }
+        break
+      case 'event':
+        this.core.event(data as FieldsObject)
+        break
     }
 
     return this.core
