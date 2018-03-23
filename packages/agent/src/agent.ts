@@ -55,7 +55,7 @@ export default class Agent {
     }
   }
 
-  send (type: HitType, data: FieldsObject | string): AgentCore {
+  send (type: HitType, data?: FieldsObject | string): AgentCore {
     if (typeof type !== 'string') {
       return this.core
     }
