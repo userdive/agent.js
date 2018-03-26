@@ -209,19 +209,27 @@ var Agent = /** @class */ (function () {
         logger_1.setup(config);
         if (browser_1.validate(constants_1.LISTENER.concat(['onpagehide']))) {
             window.addEventListener('pagehide', function () {
-                _this.core.sendInteracts([], true);
+                _this.core.send([], true);
             }, false);
         }
     }
     Agent.prototype.send = function (type, data) {
-        if (typeof type !== 'string') {
-            return this.core;
+        if (typeof type === 'object') {
+            data = type;
+            type = type.hitType;
+        }
+        var page;
+        if (typeof data === 'object') {
+            page = this.set(data).env.l;
         }
         switch (type) {
+            // _ud('send', 'pageview')
+            // _ud('send', 'pageview', internet.url())
+            // _ud('send', 'pageview', { page: internet.url() })
             case 'pageview':
-                if (!data || typeof data === 'string') {
-                    this.core.pageview(data || location.href);
-                }
+                this.core.pageview(typeof page === 'string'
+                    ? page || location.href
+                    : data /* TODO */);
                 break;
             case 'event':
                 this.core.event(data);
@@ -230,7 +238,7 @@ var Agent = /** @class */ (function () {
         return this.core;
     };
     Agent.prototype.set = function (key, value) {
-        if (key && value) {
+        if (typeof key === 'string' && value) {
             return this.core.set(key, value);
         }
         return this.core.mergeDeep(key);
@@ -305,19 +313,12 @@ var cacheValidator = function (_a) {
 };
 var toInt = function (n) { return Math.floor(n); };
 var createInteractData = function (d) {
-    if (!cacheValidator(d)) {
-        return '';
-    }
-    return d.type + "," + d.id + "," + toInt(d.x) + "," + toInt(d.y) + "," + toInt(d.left) + "," + toInt(d.top);
-};
-var pathname2href = function (pathname) {
-    if (!/^http/.test(pathname)) {
-        pathname = location.protocol + "//" + location.host + pathname;
-    }
-    return pathname;
+    return cacheValidator(d)
+        ? d.type + "," + d.id + "," + toInt(d.x) + "," + toInt(d.y) + "," + toInt(d.left) + "," + toInt(d.top)
+        : '';
 };
 var findOrCreateUserId = function (_a) {
-    var allowLinker = _a.allowLinker, domain = _a.cookieDomain, expires = _a.cookieExpires, cookieName = _a.cookieName, linkerName = _a.linkerName;
+    var allowLinker = _a.allowLinker, domain = _a.cookieDomain, expires = _a.cookieExpires, cookieName = _a.cookieName, path = _a.cookiePath, linkerName = _a.linkerName;
     var userId = js_cookie_1.get(cookieName);
     if (allowLinker) {
         var qs = location.search.trim().replace(/^[?#&]/, '');
@@ -334,10 +335,16 @@ var findOrCreateUserId = function (_a) {
         userId = userId || generateId();
         saveCookie(cookieName, userId, {
             domain: domain,
-            expires: expires
+            expires: expires,
+            path: path
         });
     }
     return userId;
+};
+var pathname2href = function (pathname) {
+    return !/^http/.test(pathname)
+        ? location.protocol + "//" + location.host + pathname
+        : pathname;
 };
 var AgentCore = /** @class */ (function (_super) {
     __extends(AgentCore, _super);
@@ -368,7 +375,7 @@ var AgentCore = /** @class */ (function (_super) {
     }
     AgentCore.prototype.pageview = function (page) {
         var _this = this;
-        this.sendInteracts([], true);
+        this.send([], true);
         if (!this.loadTime) {
             this.bind();
         }
@@ -381,10 +388,11 @@ var AgentCore = /** @class */ (function (_super) {
         this.interactId = 0;
         this.eventId = 0;
         this.loadTime = Date.now();
-        this.sendInteractsWithUpdate();
+        this.sendWithUpdate();
         requests_1.get(this.baseUrl + "/" + this.loadTime + "/env.gif", requests_1.obj2query(objectAssign({}, this.get('env'), this.get('custom')) /* TODO */), function () {
             _this.destroy();
         });
+        this.set('page', undefined); // remove locale cache
     };
     AgentCore.prototype.event = function (_a) {
         var category = _a.eventCategory, label = _a.eventLabel, action = _a.eventAction, value = _a.eventValue;
@@ -394,7 +402,7 @@ var AgentCore = /** @class */ (function (_super) {
             category &&
             action &&
             (!value || isNumber(value))) {
-            this.sendInteracts([
+            this.send([
                 "e=" + this.eventId + "," + category + "," + action + "," + (label || '') + (isNumber(value) ? ',' + value : '')
             ], true);
         }
@@ -404,7 +412,7 @@ var AgentCore = /** @class */ (function (_super) {
         this.events.forEach(function (e) { return e.off(); });
         this.loadTime = 0;
     };
-    AgentCore.prototype.sendInteracts = function (query, force) {
+    AgentCore.prototype.send = function (query, force) {
         var _this = this;
         this.interacts.forEach(function (data) {
             var q = createInteractData(data);
@@ -420,7 +428,7 @@ var AgentCore = /** @class */ (function (_super) {
             this.interacts.length = 0;
         }
     };
-    AgentCore.prototype.sendInteractsWithUpdate = function () {
+    AgentCore.prototype.sendWithUpdate = function () {
         var _this = this;
         Object.keys(this.cache).forEach(function (key) {
             var cache = _this.cache[key]; // TODO
@@ -430,11 +438,11 @@ var AgentCore = /** @class */ (function (_super) {
             }
         });
         this.clear();
-        this.sendInteracts([]);
+        this.send([]);
         if (this.loadTime) {
             var delay = this.interval.shift();
             if (delay !== undefined && delay >= 0) {
-                setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000);
+                setTimeout(this.sendWithUpdate.bind(this), delay * 1000);
             }
             this.interactId++;
         }
@@ -1334,47 +1342,44 @@ exports.obj2query = obj2query;
 Object.defineProperty(exports, "__esModule", { value: true });
 var objectAssign = __webpack_require__(12);
 var constants_1 = __webpack_require__(20);
-function parseCustomData(key, // TODO only enum string Metric | Dimension
+var parseCustomDataKey = function (long, prefix) {
+    var _a = long.split(prefix), index = _a[1];
+    return parseInt(index, 10) <= constants_1.CUSTOM_INDEX ? "c" + prefix[0] + index : '';
+};
+var parseCustomData = function (key, // TODO only enum string Metric | Dimension
 value) {
     var data = {};
-    var splitedKey = key.split('dimension');
-    if (splitedKey.length > 1 && parseInt(splitedKey[1], 10) <= constants_1.CUSTOM_INDEX) {
-        data["cd" + splitedKey[1]] = value;
+    var splitedKey = parseCustomDataKey(key, 'dimension');
+    if (splitedKey && value) {
+        data[splitedKey] = value;
     }
-    splitedKey = key.split('metric');
-    if (splitedKey.length > 1 &&
-        typeof value === 'number' &&
-        parseInt(splitedKey[1], 10) <= constants_1.CUSTOM_INDEX) {
-        data["cm" + splitedKey[1]] = value;
+    splitedKey = parseCustomDataKey(key, 'metric');
+    if (splitedKey && typeof value === 'number') {
+        data[splitedKey] = value;
     }
     return data;
-}
-function initialState() {
-    return {
-        userId: '',
-        env: {
-            v: constants_1.VERSION,
-            l: '',
-            r: '',
-            n: '',
-            h: 0,
-            w: 0,
-            sh: 0,
-            sw: 0,
-            wh: 0,
-            ww: 0
-        },
-        custom: {}
-    };
-}
+};
+var initialState = function () { return ({
+    userId: '',
+    env: {
+        v: constants_1.VERSION,
+        l: '',
+        r: '',
+        n: '',
+        h: 0,
+        w: 0,
+        sh: 0,
+        sw: 0,
+        wh: 0,
+        ww: 0
+    },
+    custom: {}
+}); };
 var Store = /** @class */ (function () {
     function Store(id) {
         this.reset();
         this.state.userId = id;
     }
-    Store.prototype.reset = function () {
-        this.state = initialState();
-    };
     Store.prototype.get = function (key) {
         var data = this.state[key];
         if (key === 'custom') {
@@ -1385,29 +1390,31 @@ var Store = /** @class */ (function () {
     Store.prototype.set = function (type, data) {
         switch (type) {
             case 'page':
-                var l = data;
-                this.state.env.l = l;
+                this.state.env.l = data;
                 break;
             default:
                 this.state.custom = objectAssign({}, this.state.custom, parseCustomData(type, data));
         }
         return this.state;
     };
-    Store.prototype.merge = function (obj) {
+    Store.prototype.merge = function (_a) {
+        var type = _a.type, data = _a.data;
         var stateObj = initialState();
-        this.state[obj.type] = objectAssign({}, stateObj[obj.type], this.state[obj.type], obj.data);
+        this.state[type] = objectAssign({}, stateObj[type], this.state[type], data);
         return this.state;
     };
     Store.prototype.mergeDeep = function (obj) {
         if (obj.page) {
             this.state.env.l = obj.page;
-            delete obj.page;
         }
         var data = {};
         Object.keys(obj).forEach(function (key) {
             data = objectAssign({}, data, parseCustomData(key, obj[key]));
         });
         return this.merge({ type: 'custom', data: data });
+    };
+    Store.prototype.reset = function () {
+        this.state = initialState();
     };
     return Store;
 }());
@@ -1731,12 +1738,10 @@ function addHiddenInput(form, linkerParam) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = __webpack_require__(20);
 var logger_1 = __webpack_require__(34);
-function getWindowSize(w) {
-    return {
-        h: w.innerHeight,
-        w: w.innerWidth
-    };
-}
+var getWindowSize = function (w) { return ({
+    h: w.innerHeight,
+    w: w.innerWidth
+}); };
 function getResourceSize(d) {
     var body = d.body;
     return {
@@ -1744,34 +1749,24 @@ function getResourceSize(d) {
         w: body.clientWidth
     };
 }
-function getScreenSize(s) {
-    return {
-        h: s.height,
-        w: s.width
-    };
-}
-function getOffset(w) {
-    return {
-        x: w.scrollX || w.pageXOffset,
-        y: w.scrollY || w.pageYOffset
-    };
-}
-exports.getOffset = getOffset;
-function getReferrer() {
-    return document.referrer;
-}
-function getTitle() {
-    return document.title;
-}
-function getEnv(page) {
+var getScreenSize = function (s) { return ({
+    h: s.height,
+    w: s.width
+}); };
+exports.getOffset = function (w) { return ({
+    x: w.scrollX || w.pageXOffset,
+    y: w.scrollY || w.pageYOffset
+}); };
+exports.getEnv = function (page) {
     try {
+        var d = document;
         var screenSize = getScreenSize(screen);
         var windowSize = getWindowSize(window);
-        var resourceSize = getResourceSize(document);
+        var resourceSize = getResourceSize(d);
         return {
             v: constants_1.VERSION,
-            r: getReferrer(),
-            n: getTitle(),
+            r: d.referrer,
+            n: d.title,
             l: page,
             sh: screenSize.h,
             sw: screenSize.w,
@@ -1784,17 +1779,10 @@ function getEnv(page) {
     catch (err) {
         logger_1.error(err);
     }
-}
-exports.getEnv = getEnv;
-function validate(apis) {
-    for (var i = 0; i < apis.length; i++) {
-        if (!(apis[i] in window)) {
-            return false;
-        }
-    }
-    return true;
-}
-exports.validate = validate;
+};
+exports.validate = function (apis) {
+    return !apis.some(function (api) { return !(api in window); });
+};
 //# sourceMappingURL=browser.js.map
 
 /***/ }),
@@ -2031,15 +2019,15 @@ process.umask = function() { return 0; };
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 Object.defineProperty(exports, "__esModule", { value: true });
-function raise(msg) {
+exports.raise = function (msg) {
     if (process.env.NODE_ENV !== 'production') {
         throw new Error(msg);
     }
-}
-exports.raise = raise;
+    console.warn(msg);
+};
 var isDefined = function (instance) { return instance && instance.isSetup(); };
 var Raven;
-function setup(_a) {
+exports.setup = function (_a) {
     var raven = _a.Raven;
     var isSetup = isDefined(raven);
     if (isSetup) {
@@ -2047,25 +2035,23 @@ function setup(_a) {
         Raven.setRelease(process.env.VERSION);
     }
     return isSetup;
-}
-exports.setup = setup;
-function capture(err, options) {
+};
+var capture = function (err, options) {
     if (isDefined(Raven)) {
         if (typeof err === 'string') {
             Raven.captureMessage(err, options);
             return;
         }
         Raven.captureException(err, options);
+        console.warn(err, options);
     }
-}
-function error(err, extra) {
+};
+exports.error = function (err, extra) {
     capture(err, { level: 'error', extra: extra });
-}
-exports.error = error;
-function warning(err, extra) {
+};
+exports.warning = function (err, extra) {
     capture(err, { level: 'warning', extra: extra });
-}
-exports.warning = warning;
+};
 //# sourceMappingURL=logger.js.map
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
