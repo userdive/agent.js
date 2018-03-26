@@ -1,12 +1,12 @@
 export type HitType = 'pageview' | 'event'
 
 export interface FieldsObject {
-  // allowAnchor?: boolean
+  // readonly allowAnchor?: boolean
   readonly allowLinker?: boolean
   readonly cookieName?: string
   readonly cookieDomain?: string
   readonly cookieExpires?: number
-  // cookiePath?: string
+  readonly cookiePath?: string
   readonly dimension1?: string
   readonly dimension2?: string
   readonly dimension3?: string
@@ -68,6 +68,7 @@ export interface EventFieldsObjectWithHitType extends EventFieldsObject {
 }
 
 export interface USERDIVEApi {
+  q: any[]
   (command: 'send', hitType: 'event', fieldsObject: EventFieldsObject): void
   (
     command: 'send',

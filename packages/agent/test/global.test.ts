@@ -9,18 +9,15 @@ import { NAMESPACE } from '../src/constants'
 
 const GLOBAL_NAME: string = lorem.word()
 
-describe.only('global async', () => {
+describe('global async', () => {
   before(() => {
     inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
-  let _ud: USERDIVEApi
+  const factory = (): USERDIVEApi => q(GLOBAL_NAME, window)
   let stub
   beforeEach('generate queue', () => {
     delete require.cache[require.resolve('../src/entrypoint')]
-    _ud = q(GLOBAL_NAME, window) as USERDIVEApi
-    assert(window[GLOBAL_NAME])
-    assert(window[GLOBAL_NAME]['q'] === undefined)
     stub = sinonStub(require('../src/requests'), 'get')
     stub.callsFake((url, query, onerror) => {
       // nothing todo
@@ -37,23 +34,23 @@ describe.only('global async', () => {
   })
 
   it('find global', () => {
-    assert(_ud('set', 'dimension1', lorem.word()) === undefined)
-    assert(_ud('create', lorem.word(), {}) === undefined)
-    assert(_ud['q'].length === 2)
+    assert(factory()('set', 'dimension1', lorem.word()) === undefined)
+    assert(factory()('create', lorem.word(), 'auto') === undefined)
+    assert(window[GLOBAL_NAME].q.length === 2)
 
     require('../src/entrypoint/')
-    assert(_ud.q === undefined)
-    const agent: any = window[GLOBAL_NAME]('send', 'pageview')
+    assert(window[GLOBAL_NAME].q === undefined)
+    const agent = window[GLOBAL_NAME]('send', 'pageview')
     assert(agent.loadTime)
 
     let name = lorem.word()
-    _ud(`create`, lorem.word(), {}, name)
+    factory()(`create`, lorem.word(), 'auto', name)
     const agent2 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
     assert(agent2.loadTime)
     assert(agent.id !== agent2.id)
 
     name = lorem.word()
-    _ud(`create`, lorem.word(), { name })
+    factory()(`create`, lorem.word(), 'auto', { name })
     const agent3 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
     assert(agent3.loadTime)
     assert(agent.id !== agent3.id)
@@ -62,7 +59,7 @@ describe.only('global async', () => {
 
   it('call plugins', () => {
     require('../src/entrypoint/')
-    _ud('create', lorem.word(), {})
+    factory()('create', lorem.word(), 'auto')
     const name = lorem.word()
     class Plugin {
       tracker: any
@@ -74,18 +71,19 @@ describe.only('global async', () => {
       }
     }
     const spy = sinonSpy(Plugin.prototype, 'echo')
-    _ud('provide', name, Plugin)
-    _ud('require', name)
+    factory()('provide', name, Plugin)
+    factory()('require', name)
 
     const url: string = internet.url()
+    console.log(window[GLOBAL_NAME])
     window[GLOBAL_NAME](`${name}:echo`, 'hello')
     assert(spy.called)
   })
 
   it('debug global', () => {
-    assert(_ud('create', lorem.word(), {}) === undefined)
-    assert(_ud.q.length)
+    assert(factory()('create', lorem.word(), 'auto') === undefined)
+    assert(factory().q.length)
     require('../src/entrypoint/debug')
-    assert(_ud.q === undefined)
+    assert(factory().q === undefined)
   })
 })

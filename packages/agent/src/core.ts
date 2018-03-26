@@ -114,7 +114,7 @@ export default class AgentCore extends Store {
   }
 
   pageview (page: string): void {
-    this.sendInteracts([], true)
+    this.send([], true)
     if (!this.loadTime) {
       this.bind()
     }
@@ -129,7 +129,7 @@ export default class AgentCore extends Store {
     this.interactId = 0
     this.eventId = 0
     this.loadTime = Date.now()
-    this.sendInteractsWithUpdate()
+    this.sendWithUpdate()
     get(
       `${this.baseUrl}/${this.loadTime}/env.gif`,
       obj2query(
@@ -155,7 +155,7 @@ export default class AgentCore extends Store {
       action &&
       (!value || isNumber(value))
     ) {
-      this.sendInteracts(
+      this.send(
         [
           `e=${this.eventId},${category},${action},${label || ''}${
             isNumber(value) ? ',' + value : ''
@@ -172,7 +172,7 @@ export default class AgentCore extends Store {
     this.loadTime = 0
   }
 
-  sendInteracts (query: string[], force?: boolean): void {
+  send (query: string[], force?: boolean): void {
     this.interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -195,7 +195,7 @@ export default class AgentCore extends Store {
     }
   }
 
-  private sendInteractsWithUpdate (): void {
+  private sendWithUpdate (): void {
     Object.keys(this.cache).forEach(key => {
       const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
@@ -205,12 +205,12 @@ export default class AgentCore extends Store {
     })
 
     this.clear()
-    this.sendInteracts([])
+    this.send([])
 
     if (this.loadTime) {
       const delay = this.interval.shift()
       if (delay !== undefined && delay >= 0) {
-        setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
+        setTimeout(this.sendWithUpdate.bind(this), delay * 1000)
       }
       this.interactId++
     }

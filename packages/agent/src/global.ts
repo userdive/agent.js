@@ -24,7 +24,8 @@ const execute = (
   if (cmd === CREATE) {
     agents[
       (typeof args[2] === 'string' && args[2]) ||
-        (typeof args[1] === 'object' && args[1].name)
+        (typeof args[1] === 'object' && args[1].name) ||
+        trackerName
     ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
     return
   }
@@ -41,12 +42,13 @@ const execute = (
 
 type Arguments = { [key: number]: any }
 
+const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
+  isEqual === (cmd === CREATE)
+
 export default function (Agent: any) {
   const w: any = window
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
-  const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
-    isEqual === (cmd === CREATE)
 
   const applyQueue = (argsObject: any[]) => {
     const args = [].map.call(argsObject, (x: any) => x)
