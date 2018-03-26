@@ -20,7 +20,8 @@ module.exports = {
     }
   },
   devServer: {
-    contentBase: path.join(__dirname, 'build')
+    contentBase: path.join(__dirname, 'build'),
+    open: true
   },
   module: {
     rules: [{ test: /\.tsx?$/, use: 'ts-loader' }]

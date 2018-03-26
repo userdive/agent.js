@@ -7,10 +7,11 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn build
+      - run: lerna run build --scope userdive-examples
+      - run: yarn start
       - run:
           name: start SPAs
-          command: yarn examples
+          command: yarn w:examples
           background: true
       - run: sleep 30
       - run: yarn e2e
