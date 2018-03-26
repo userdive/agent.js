@@ -1,5 +1,5 @@
 language: node_js
-sudo: false
+sudo: true
 node_js: lts/*
 cache: yarn
 env:
@@ -19,10 +19,10 @@ jobs:
     if: (type = pr or branch = master) and NOT branch =~ ^docs
   - stage: deploy
     script:
-    - apt-get update
-    - apt-get install default-jre rsync
+    - sudo apt-get update
+    - sudo apt-get install default-jre rsync
     - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
-    - dpkg -i crowdin.deb
+    - sudo dpkg -i crowdin.deb
     - sleep 5
     - npm run build
     deploy:
