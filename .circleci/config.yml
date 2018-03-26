@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: lerna run build --scope userdive-examples
       - run: yarn start
       - run:
           name: start SPAs
