@@ -4,19 +4,21 @@ import 'mocha'
 import { spy as sinonSpy, stub as sinonStub } from 'sinon'
 
 import { inject, namespace, q } from 'userdive'
+import { USERDIVEApi } from 'userdive/lib/types'
 import { NAMESPACE } from '../src/constants'
 
 const GLOBAL_NAME: string = lorem.word()
 
-describe('global async', () => {
+describe.only('global async', () => {
   before(() => {
     inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
+  let _ud: USERDIVEApi
   let stub
   beforeEach('generate queue', () => {
     delete require.cache[require.resolve('../src/entrypoint')]
-    window[GLOBAL_NAME] = q(GLOBAL_NAME, window)
+    _ud = q(GLOBAL_NAME, window) as USERDIVEApi
     assert(window[GLOBAL_NAME])
     assert(window[GLOBAL_NAME]['q'] === undefined)
     stub = sinonStub(require('../src/requests'), 'get')
@@ -35,23 +37,23 @@ describe('global async', () => {
   })
 
   it('find global', () => {
-    assert(window[GLOBAL_NAME]('set', 'dimension1', lorem.word()) === undefined)
-    assert(window[GLOBAL_NAME]('create', lorem.word(), {}) === undefined)
-    assert(window[GLOBAL_NAME]['q'].length === 2)
+    assert(_ud('set', 'dimension1', lorem.word()) === undefined)
+    assert(_ud('create', lorem.word(), {}) === undefined)
+    assert(_ud['q'].length === 2)
 
     require('../src/entrypoint/')
-    assert(window[GLOBAL_NAME]['q'] === undefined)
+    assert(_ud.q === undefined)
     const agent: any = window[GLOBAL_NAME]('send', 'pageview')
     assert(agent.loadTime)
 
     let name = lorem.word()
-    window[GLOBAL_NAME](`create`, lorem.word(), {}, name)
+    _ud(`create`, lorem.word(), {}, name)
     const agent2 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
     assert(agent2.loadTime)
     assert(agent.id !== agent2.id)
 
     name = lorem.word()
-    window[GLOBAL_NAME](`create`, lorem.word(), { name })
+    _ud(`create`, lorem.word(), { name })
     const agent3 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
     assert(agent3.loadTime)
     assert(agent.id !== agent3.id)
@@ -60,7 +62,7 @@ describe('global async', () => {
 
   it('call plugins', () => {
     require('../src/entrypoint/')
-    window[GLOBAL_NAME]('create', lorem.word(), {})
+    _ud('create', lorem.word(), {})
     const name = lorem.word()
     class Plugin {
       tracker: any
@@ -72,8 +74,8 @@ describe('global async', () => {
       }
     }
     const spy = sinonSpy(Plugin.prototype, 'echo')
-    window[GLOBAL_NAME]('provide', name, Plugin)
-    window[GLOBAL_NAME]('require', name)
+    _ud('provide', name, Plugin)
+    _ud('require', name)
 
     const url: string = internet.url()
     window[GLOBAL_NAME](`${name}:echo`, 'hello')
@@ -81,9 +83,9 @@ describe('global async', () => {
   })
 
   it('debug global', () => {
-    assert(window[GLOBAL_NAME]('create', lorem.word(), {}) === undefined)
-    assert(window[GLOBAL_NAME]['q'].length)
+    assert(_ud('create', lorem.word(), {}) === undefined)
+    assert(_ud.q.length)
     require('../src/entrypoint/debug')
-    assert(window[GLOBAL_NAME]['q'] === undefined)
+    assert(_ud.q === undefined)
   })
 })

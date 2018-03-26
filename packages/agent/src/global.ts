@@ -17,18 +17,15 @@ const execute = (
   }
   const trackerName: string = command ? n : 'default'
   /**
-   * _ud('create', 'id', { name: 'myTracker' })
+   * _ud('create', 'id', 'auto', { name: 'myTracker' })
    * _ud('create', 'id', 'auto', 'myTracker')
    * _ud('create', 'id', 'auto')
    */
   if (cmd === CREATE) {
     agents[
-      args[2] || (typeof args[1] === 'object' && args[1].name) || trackerName
-    ] = new Agent(
-      args[0],
-      typeof args[1] === 'string' ? args[1] : args[1].cookieName,
-      typeof args[1] === 'object' ? args[1] : undefined
-    )
+      (typeof args[2] === 'string' && args[2]) ||
+        (typeof args[1] === 'object' && args[1].name)
+    ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
     return
   }
 

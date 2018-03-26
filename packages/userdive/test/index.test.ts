@@ -45,26 +45,17 @@ describe('aync loader', () => {
   it('should exercise all ga APIs', () => {
     const _ud = factory()
     _ud('create', lorem.word(), 'auto')
-    // _ud('create', lorem.word(), {
-    //   cookieName: lorem.word(),
-    //   cookieDomain: internet.domainName(),
-    //   cookieExpires: random.number()
-    // })
-    _ud('create', lorem.word(), 'auto', 'myTracker', {
+    _ud('create', lorem.word(), 'auto', {
       allowLinker: true,
-      dimension1: lorem.word()
+      dimension1: lorem.word(),
+      name: lorem.word()
     })
-    // _ud('create', {
-    //   trackingId: lorem.word(),
-    //   cookieDomain: 'auto',
-    //   name: lorem.word()
-    // })
 
-    // _ud('create', lorem.word(), {
-    //   name: lorem.word(),
-    //   allowLinker: true,
-    //   dimension20: 'cd1'
-    // })
+    _ud('create', lorem.word(), 'auto', lorem.word(), {
+      allowLinker: true,
+      dimension1: lorem.word(),
+      name: lorem.word()
+    })
 
     _ud('send', 'pageview')
     _ud('send', 'event', {

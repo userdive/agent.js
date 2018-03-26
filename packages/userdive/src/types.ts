@@ -32,28 +32,28 @@ export interface FieldsObject {
   readonly eventLabel?: string
   readonly eventValue?: number
   readonly hitType?: HitType
-  readonly metric1?: string | number
-  readonly metric2?: string | number
-  readonly metric3?: string | number
-  readonly metric4?: string | number
-  readonly metric5?: string | number
-  readonly metric6?: string | number
-  readonly metric7?: string | number
-  readonly metric8?: string | number
-  readonly metric9?: string | number
-  readonly metric10?: string | number
-  readonly metric11?: string | number
-  readonly metric12?: string | number
-  readonly metric13?: string | number
-  readonly metric14?: string | number
-  readonly metric15?: string | number
-  readonly metric16?: string | number
-  readonly metric17?: string | number
-  readonly metric18?: string | number
-  readonly metric19?: string | number
-  readonly metric20?: string | number
+  // readonly metric1?: number
+  // readonly metric2?: number
+  // readonly metric3?: number
+  // readonly metric4?: number
+  // readonly metric5?: number
+  // readonly metric6?: number
+  // readonly metric7?: number
+  // readonly metric8?: number
+  // readonly metric9?: number
+  // readonly metric10?: number
+  // readonly metric11?: number
+  // readonly metric12?: number
+  // readonly metric13?: number
+  // readonly metric14?: number
+  // readonly metric15?: number
+  // readonly metric16?: number
+  // readonly metric17?: number
+  // readonly metric18?: number
+  // readonly metric19?: number
+  // readonly metric20?: number
   readonly name?: string
-  // useBeacon?: boolean
+  // readonly useBeacon?: boolean
 }
 
 export interface EventFieldsObject {
@@ -68,8 +68,6 @@ export interface EventFieldsObjectWithHitType extends EventFieldsObject {
 }
 
 export interface USERDIVEApi {
-  q: any[]
-
   (command: 'send', hitType: 'event', fieldsObject: EventFieldsObject): void
   (
     command: 'send',
@@ -86,8 +84,65 @@ export interface USERDIVEApi {
   (
     command: 'create',
     trackingId: string,
-    cookieDomain?: string,
-    name?: string,
+    cookieDomain: string,
     fieldsObject?: FieldsObject
   ): void
+  (
+    command: 'create',
+    trackingId: string,
+    cookieDomain: string,
+    name: string,
+    fieldsObject?: FieldsObject
+  ): void
+  (command: 'set', fieldsObject: FieldsObject): void
+  (
+    command: 'set',
+    key:
+    | 'dimension1'
+    | 'dimension2'
+    | 'dimension3'
+    | 'dimension4'
+    | 'dimension5'
+    | 'dimension6'
+    | 'dimension7'
+    | 'dimension8'
+    | 'dimension9'
+    | 'dimension10'
+    | 'dimension11'
+    | 'dimension12'
+    | 'dimension13'
+    | 'dimension14'
+    | 'dimension15'
+    | 'dimension16'
+    | 'dimension17'
+    | 'dimension18'
+    | 'dimension19'
+    | 'dimension20',
+    value: string
+  ): void
+  // (
+  //   command: 'set',
+  //   key:
+  //     | 'metric1'
+  //     | 'metric2'
+  //     | 'metric3'
+  //     | 'metric4'
+  //     | 'metric5'
+  //     | 'metric6'
+  //     | 'metric7'
+  //     | 'metric8'
+  //     | 'metric9'
+  //     | 'metric10'
+  //     | 'metric11'
+  //     | 'metric12'
+  //     | 'metric13'
+  //     | 'metric14'
+  //     | 'metric15'
+  //     | 'metric16'
+  //     | 'metric17'
+  //     | 'metric18'
+  //     | 'metric19'
+  //     | 'metric20',
+  //   value: number
+  // ): void
 }
