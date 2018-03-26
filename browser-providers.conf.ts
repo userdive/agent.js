@@ -16,18 +16,24 @@ export const customLaunchers = {
     version: '7.1',
     device: 'Android GoogleAPI Emulator'
   },
-  SL_CHROME46: {
+  SL_CHROME48: {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Linux',
-    version: '46'
+    version: '48'
   },
   SL_CHROME_BETA: { base: 'SauceLabs', browserName: 'chrome', version: 'beta' },
   SL_FIREFOX: {
     base: 'SauceLabs',
     browserName: 'firefox',
     platform: 'Windows 10',
-    version: '51'
+    version: '58'
+  },
+  SL_FIREFOX_BETA: {
+    base: 'SauceLabs',
+    browserName: 'firefox',
+    platform: 'Windows 10',
+    version: 'beta'
   },
   // SL_SAFARI10: {
   //   base: 'SauceLabs',
