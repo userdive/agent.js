@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn start
       - run:
           name: start SPAs
           command: yarn w:examples
@@ -21,6 +20,13 @@ jobs:
     steps:
       - checkout
       - run: yarn install
+      - run:
+        name: install crowdin
+        command:
+        - sudo apt-get update
+        - sudo apt-get install default-jre rsync
+        - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
+        - sudo dpkg -i crowdin.deb
       - run: yarn build
       - run: cd examples && gh-pages -d build
 
