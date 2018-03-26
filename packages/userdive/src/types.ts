@@ -68,6 +68,50 @@ export interface EventFieldsObjectWithHitType extends EventFieldsObject {
   readonly hitType: 'event'
 }
 
+export type Dimension =
+  | 'dimension1'
+  | 'dimension2'
+  | 'dimension3'
+  | 'dimension4'
+  | 'dimension5'
+  | 'dimension6'
+  | 'dimension7'
+  | 'dimension8'
+  | 'dimension9'
+  | 'dimension10'
+  | 'dimension11'
+  | 'dimension12'
+  | 'dimension13'
+  | 'dimension14'
+  | 'dimension15'
+  | 'dimension16'
+  | 'dimension17'
+  | 'dimension18'
+  | 'dimension19'
+  | 'dimension20'
+
+export type Metric =
+  | 'metric1'
+  | 'metric2'
+  | 'metric3'
+  | 'metric4'
+  | 'metric5'
+  | 'metric6'
+  | 'metric7'
+  | 'metric8'
+  | 'metric9'
+  | 'metric10'
+  | 'metric11'
+  | 'metric12'
+  | 'metric13'
+  | 'metric14'
+  | 'metric15'
+  | 'metric16'
+  | 'metric17'
+  | 'metric18'
+  | 'metric19'
+  | 'metric20'
+
 export interface USERDIVEApi {
   q: any[]
   (command: 'send', hitType: 'event', fieldsObject: EventFieldsObject): void
@@ -97,54 +141,6 @@ export interface USERDIVEApi {
     fieldsObject?: FieldsObject
   ): void
   (command: 'set', fieldsObject: FieldsObject): void
-  (
-    command: 'set',
-    key:
-    | 'dimension1'
-    | 'dimension2'
-    | 'dimension3'
-    | 'dimension4'
-    | 'dimension5'
-    | 'dimension6'
-    | 'dimension7'
-    | 'dimension8'
-    | 'dimension9'
-    | 'dimension10'
-    | 'dimension11'
-    | 'dimension12'
-    | 'dimension13'
-    | 'dimension14'
-    | 'dimension15'
-    | 'dimension16'
-    | 'dimension17'
-    | 'dimension18'
-    | 'dimension19'
-    | 'dimension20',
-    value: string
-  ): void
-  // (
-  //   command: 'set',
-  //   key:
-  //     | 'metric1'
-  //     | 'metric2'
-  //     | 'metric3'
-  //     | 'metric4'
-  //     | 'metric5'
-  //     | 'metric6'
-  //     | 'metric7'
-  //     | 'metric8'
-  //     | 'metric9'
-  //     | 'metric10'
-  //     | 'metric11'
-  //     | 'metric12'
-  //     | 'metric13'
-  //     | 'metric14'
-  //     | 'metric15'
-  //     | 'metric16'
-  //     | 'metric17'
-  //     | 'metric18'
-  //     | 'metric19'
-  //     | 'metric20',
-  //   value: number
-  // ): void
+  (command: 'set', key: Dimension, value: string): void
+  // (command: "set", key: Metric, value: number): void
 }

@@ -1,5 +1,5 @@
 import { RavenStatic } from 'raven-js'
-import { FieldsObject } from 'userdive/lib/types'
+import { Dimension, FieldsObject, Metric } from 'userdive/lib/types'
 
 export interface SettingFieldsObject extends FieldsObject {
   readonly baseUrl: string
@@ -20,48 +20,6 @@ export type Size = {
   readonly w: number
 }
 
-export type Dimension =
-  | 'dimension1'
-  | 'dimension2'
-  | 'dimension3'
-  | 'dimension4'
-  | 'dimension5'
-  | 'dimension6'
-  | 'dimension7'
-  | 'dimension8'
-  | 'dimension9'
-  | 'dimension10'
-  | 'dimension11'
-  | 'dimension12'
-  | 'dimension13'
-  | 'dimension14'
-  | 'dimension15'
-  | 'dimension16'
-  | 'dimension17'
-  | 'dimension18'
-  | 'dimension19'
-  | 'dimension20'
-export type Metric =
-  | 'metric1'
-  | 'metric2'
-  | 'metric3'
-  | 'metric4'
-  | 'metric5'
-  | 'metric6'
-  | 'metric7'
-  | 'metric8'
-  | 'metric9'
-  | 'metric10'
-  | 'metric11'
-  | 'metric12'
-  | 'metric13'
-  | 'metric14'
-  | 'metric15'
-  | 'metric16'
-  | 'metric17'
-  | 'metric18'
-  | 'metric19'
-  | 'metric20'
 export type SetType = 'page' | Dimension | Metric
 
 export type CustomData = {
