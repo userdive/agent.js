@@ -97,9 +97,10 @@
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "run-p -l w:*",
+    "start": "concurrently -k 'yarn w:examples' 'yarn w:website'",
     "test": "lerna run test --parallel",
-    "w:examples": "lerna run dev --scope userdive-examples",
+    "w:examples": "webpack-dev-server --config examples/webpack.config.ts --output-path examples/build/assets",
+    "w:html": "pug examples -o examples/build -P -s -w",
     "w:website": "cd website && npm start"
   },
   "size-limit": [
