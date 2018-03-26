@@ -1,5 +1,5 @@
 import * as objectAssign from 'object-assign'
-import { FieldsObject, HitType } from 'userdive/lib/types'
+import { EventFieldsObject, FieldsObject, HitType } from 'userdive/lib/types'
 
 import { validate } from './browser'
 import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
@@ -9,7 +9,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { SettingFieldsObject, State } from './types'
+import { SettingFieldsObject, SetType, State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -57,26 +57,34 @@ export default class Agent {
 
   send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
     if (typeof type === 'object') {
-      type = type.hitType as HitType
       data = type
+      type = type.hitType as HitType
+    }
+    let page
+    if (typeof data === 'object') {
+      page = this.set(data).env.l
     }
     switch (type) {
+      // _ud('send', 'pageview')
+      // _ud('send', 'pageview', internet.url())
+      // _ud('send', 'pageview', { page: internet.url() })
       case 'pageview':
-        if (typeof data === 'object') {
-          data = data.page
-        }
-        this.core.pageview(data || location.href)
+        this.core.pageview(
+          typeof page === 'string'
+            ? page || location.href
+            : (data as string) /* TODO */
+        )
         break
       case 'event':
-        this.core.event(data as FieldsObject)
+        this.core.event(data as EventFieldsObject)
         break
     }
 
     return this.core
   }
 
-  set (key: any, value?: string | number): State {
-    if (key && value) {
+  set (key: SetType | FieldsObject, value?: string | number): State {
+    if (typeof key === 'string' && value) {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)

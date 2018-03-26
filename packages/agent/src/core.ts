@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { UIEventObserver } from 'ui-event-observer'
-import { FieldsObject } from 'userdive/lib/types'
+import { EventFieldsObject } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
 import { getEnv } from './browser'
@@ -28,21 +28,12 @@ const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
 }
 
 const toInt = (n: number) => Math.floor(n)
-const createInteractData = (d: Interact): string => {
-  if (!cacheValidator(d)) {
-    return ''
-  }
-  return `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(
-    d.left
-  )},${toInt(d.top)}`
-}
-
-const pathname2href = (pathname: string) => {
-  if (!/^http/.test(pathname)) {
-    pathname = `${location.protocol}//${location.host}${pathname}`
-  }
-  return pathname
-}
+const createInteractData = (d: Interact): string =>
+  cacheValidator(d)
+    ? `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(
+      d.top
+    )}`
+    : ''
 
 const findOrCreateUserId = ({
   allowLinker,
@@ -74,6 +65,11 @@ const findOrCreateUserId = ({
   }
   return userId
 }
+
+const pathname2href = (pathname: string) =>
+  !/^http/.test(pathname)
+    ? `${location.protocol}//${location.host}${pathname}`
+    : pathname
 
 export default class AgentCore extends Store {
   observer: UIEventObserver
@@ -141,6 +137,7 @@ export default class AgentCore extends Store {
         this.destroy()
       }
     )
+    this.set('page', undefined) // remove locale cache
   }
 
   event ({
@@ -148,7 +145,7 @@ export default class AgentCore extends Store {
     eventLabel: label,
     eventAction: action,
     eventValue: value
-  }: FieldsObject): void {
+  }: EventFieldsObject): void {
     this.eventId++
     const isNumber = (n?: number): boolean => typeof n === 'number' && n >= 0
     if (

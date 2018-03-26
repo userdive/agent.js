@@ -1,5 +1,5 @@
 ---
-id: event
+id: events
 title: Event Tracking
 ---
 
@@ -14,6 +14,16 @@ title: Event Tracking
 
 ```js
 _ud("send", "event", {
+    eventCategory: "Category",
+    eventAction: "Action",
+    eventLabel: "Label",
+    eventValue: 1000
+});
+```
+
+```js
+_ud("send", {
+    hitType: "events",
     eventCategory: "Category",
     eventAction: "Action",
     eventLabel: "Label",

@@ -36,9 +36,22 @@ describe('agent', () => {
   })
 
   it('send', () => {
-    const core = agent.send('pageview')
+    const spy = sinonSpy(require('../src/requests'), 'get')
+
+    const page = internet.url()
+    const dimension1 = lorem.word()
+    const core = agent.send('pageview', {
+      page,
+      dimension1
+    })
     assert(core.interactId === 1)
+    const args = spy.getCall(0).args[1]
+    assert(args[1] === `l=${encodeURIComponent(page)}`)
+    assert(args[args.length - 1] === `cd1=${dimension1}`)
+    assert.deepEqual(core.state.custom, {})
+    assert(core.state.env.l === undefined)
     assert(core.interval.length === INTERVAL.length - 1)
+    spy.restore()
   })
 
   it('set', () => {

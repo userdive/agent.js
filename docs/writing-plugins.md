@@ -1,5 +1,5 @@
 ---
-id: plugins
+id: writing-plugins
 title: Plugins
 ---
 

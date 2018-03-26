@@ -98,14 +98,14 @@
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "run-p -l w:*",
-    "test": "lerna run test",
+    "test": "lerna run test --parallel",
     "w:examples": "lerna run dev --scope userdive-examples",
     "w:website": "cd website && npm start"
   },
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8.1 KB"
+      "limit": "8.2 KB"
     },
     {
       "path": "cdn/agent.d.js",
