@@ -2,5 +2,10 @@
   "extends": [
     "../tslint.json",
     "tslint-react"
-  ]
+  ],
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**/*"
+    ]
+  }
 }
