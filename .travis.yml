@@ -16,15 +16,15 @@ jobs:
     - npm run coverage
   - stage: Sauce
     script: npm run ci:sauce
-    if: type = pr or branch = master or NOT branch =~ ^docs
+    if: (type = pr or branch = master) and NOT branch =~ ^docs
   - stage: deploy
     script:
-    - npm run build
     - apt-get update
     - apt-get install default-jre rsync
     - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
     - dpkg -i crowdin.deb
     - sleep 5
+    - npm run build
     deploy:
     - provider: script
       script: scripts/publish
