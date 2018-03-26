@@ -40,8 +40,21 @@ describe('global async', () => {
 
     require('../src/entrypoint/')
     assert(window[GLOBAL_NAME].q === undefined)
-    const agent = window[GLOBAL_NAME]('send', 'pageview')
+    const agent: any = factory()('send', 'pageview')
     assert(agent.loadTime)
+
+    let _core: any = factory()('send', 'event', {
+      eventCategory: 'c1',
+      eventAction: 'a1'
+    })
+    assert(_core.eventId === 1)
+
+    _core = factory()('send', {
+      hitType: 'event',
+      eventCategory: 'c1',
+      eventAction: 'a1'
+    })
+    assert(_core.eventId === 2)
 
     let name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', name)
@@ -51,7 +64,9 @@ describe('global async', () => {
 
     name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', { name })
-    const agent3 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
+    const agent3 = window[GLOBAL_NAME](`${name}.send`, {
+      hitType: 'pageview'
+    })
     assert(agent3.loadTime)
     assert(agent.id !== agent3.id)
     assert(agent2.id !== agent3.id)
@@ -75,7 +90,6 @@ describe('global async', () => {
     factory()('require', name)
 
     const url: string = internet.url()
-    console.log(window[GLOBAL_NAME])
     window[GLOBAL_NAME](`${name}:echo`, 'hello')
     assert(spy.called)
   })

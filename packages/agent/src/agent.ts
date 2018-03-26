@@ -55,15 +55,17 @@ export default class Agent {
     }
   }
 
-  send (type: HitType, data?: FieldsObject | string): AgentCore {
-    if (typeof type !== 'string') {
-      return this.core
+  send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
+    if (typeof type === 'object') {
+      type = type.hitType as HitType
+      data = type
     }
     switch (type) {
       case 'pageview':
-        if (!data || typeof data === 'string') {
-          this.core.pageview(data || location.href)
+        if (typeof data === 'object') {
+          data = data.page
         }
+        this.core.pageview(data || location.href)
         break
       case 'event':
         this.core.event(data as FieldsObject)

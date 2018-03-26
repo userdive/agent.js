@@ -3,9 +3,9 @@ export type HitType = 'pageview' | 'event'
 export interface FieldsObject {
   // readonly allowAnchor?: boolean
   readonly allowLinker?: boolean
-  readonly cookieName?: string
   readonly cookieDomain?: string
   readonly cookieExpires?: number
+  readonly cookieName?: string
   readonly cookiePath?: string
   readonly dimension1?: string
   readonly dimension2?: string
@@ -53,6 +53,7 @@ export interface FieldsObject {
   // readonly metric19?: number
   // readonly metric20?: number
   readonly name?: string
+  readonly page?: string
   // readonly useBeacon?: boolean
 }
 

@@ -24,7 +24,7 @@ const execute = (
   if (cmd === CREATE) {
     agents[
       (typeof args[2] === 'string' && args[2]) ||
-        (typeof args[1] === 'object' && args[1].name) ||
+        (typeof args[2] === 'object' && args[2].name) ||
         trackerName
     ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
     return
