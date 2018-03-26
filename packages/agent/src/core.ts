@@ -49,6 +49,7 @@ const findOrCreateUserId = ({
   cookieDomain: domain,
   cookieExpires: expires,
   cookieName,
+  cookiePath: path,
   linkerName
 }: SettingFieldsObject): string => {
   let userId = getCookie(cookieName)
@@ -67,7 +68,8 @@ const findOrCreateUserId = ({
     userId = userId || generateId()
     saveCookie(cookieName, userId, {
       domain,
-      expires
+      expires,
+      path
     })
   }
   return userId
