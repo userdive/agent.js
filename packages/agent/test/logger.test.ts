@@ -1,5 +1,4 @@
 import * as assert from 'assert'
-import { throws } from 'assert-exception'
 import { random } from 'faker'
 import 'mocha'
 import * as Raven from 'raven-js'
@@ -14,7 +13,13 @@ describe('logger', () => {
   }
 
   it('raise', () => {
-    assert(throws(() => raise(random.word())).message)
+    assert.throws(
+      () => raise(random.word()),
+      ({ message }: Error) => {
+        assert(message)
+        return true
+      }
+    )
   })
 
   it('not setup', () => {

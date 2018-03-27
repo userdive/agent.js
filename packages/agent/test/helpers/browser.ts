@@ -1,4 +1,5 @@
-export const isIE11 = (w: Window, document: Document): boolean =>
+export const isIE11 = (w: any, d: any): boolean =>
   !!w['MSInputMethodContext'] && !!d['documentMode']
 
-export const isTouchDevice = (w: Window): boolean => 'ontouchstart' in w
+export const isTouchDevice = (w: Window = window): boolean =>
+  'ontouchstart' in w

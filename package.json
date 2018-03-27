@@ -17,7 +17,6 @@
     "@uncovertruth/stylelint-config": "4.1.0",
     "@uncovertruth/textlint-config-en": "4.0.0",
     "@uncovertruth/tslint-config": "4.0.0",
-    "assert-exception": "1.1.0",
     "can-npm-publish": "1.0.2",
     "codecov": "3.0.0",
     "concurrently": "3.5.1",
@@ -79,8 +78,8 @@
   "scripts": {
     "build": "lerna run build --parallel",
     "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
-    "ci:appveyor": "cross-env CI_MODE=IE lerna run test",
-    "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
+    "ci:appveyor": "cross-env CI_MODE=IE karma start",
+    "ci:sauce": "cross-env CI_MODE=sauce karma start",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",

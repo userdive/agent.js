@@ -2,15 +2,14 @@ import * as assert from 'assert'
 import { internet, random } from 'faker/locale/ja'
 import 'mocha'
 
-describe('requests', () => {
-  const requests = require('../src/requests')
-  const dummyHandler = () => {
-    // nothing to do
-  }
+import { get, obj2query } from '../src/requests'
 
+describe('requests', () => {
   it('get', () => {
     assert(
-      requests.get(internet.url(), [], dummyHandler, dummyHandler) === undefined
+      get(internet.url(), [], () => {
+        // nothing todo
+      }) === undefined
     )
   })
 
@@ -18,7 +17,7 @@ describe('requests', () => {
     function isASCII (str: string) {
       return /^[\x00-\x7F]*$/.test(str)
     }
-    const queries = requests.obj2query({ foo: random.word() })
+    const queries = obj2query({ foo: random.word() })
     queries.forEach(q => {
       assert(isASCII(q))
     })

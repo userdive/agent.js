@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { internet, lorem } from 'faker'
+import { lorem } from 'faker'
 import 'mocha'
 import { spy as sinonSpy, stub as sinonStub } from 'sinon'
 
@@ -14,18 +14,19 @@ describe('global async', () => {
     inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
+  const w: any = window
   const factory = (): USERDIVEApi => q(GLOBAL_NAME, window)
-  let stub
+  let stub: any
   beforeEach('generate queue', () => {
     delete require.cache[require.resolve('../src/entrypoint')]
     stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onerror) => {
+    stub.callsFake(() => {
       // nothing todo
     })
   })
 
   afterEach(() => {
-    window[GLOBAL_NAME] = undefined
+    w[GLOBAL_NAME] = undefined
     stub.restore()
   })
 
@@ -36,10 +37,10 @@ describe('global async', () => {
   it('find global', () => {
     assert(factory()('set', 'dimension1', lorem.word()) === undefined)
     assert(factory()('create', lorem.word(), 'auto') === undefined)
-    assert(window[GLOBAL_NAME].q.length === 2)
+    assert(w[GLOBAL_NAME].q.length === 2)
 
     require('../src/entrypoint/')
-    assert(window[GLOBAL_NAME].q === undefined)
+    assert(w[GLOBAL_NAME].q === undefined)
     const agent: any = factory()('send', 'pageview')
     assert(agent.loadTime)
 
@@ -58,13 +59,13 @@ describe('global async', () => {
 
     let name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', name)
-    const agent2 = window[GLOBAL_NAME](`${name}.send`, 'pageview')
+    const agent2 = w[GLOBAL_NAME](`${name}.send`, 'pageview')
     assert(agent2.loadTime)
     assert(agent.id !== agent2.id)
 
     name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', { name })
-    const agent3 = window[GLOBAL_NAME](`${name}.send`, {
+    const agent3 = w[GLOBAL_NAME](`${name}.send`, {
       hitType: 'pageview'
     })
     assert(agent3.loadTime)
@@ -78,7 +79,7 @@ describe('global async', () => {
     const name = lorem.word()
     class Plugin {
       tracker: any
-      constructor (tracker) {
+      constructor (tracker: any) {
         assert(tracker.plugins[name])
       }
       echo (value: string) {
@@ -89,8 +90,7 @@ describe('global async', () => {
     factory()('provide', name, Plugin)
     factory()('require', name)
 
-    const url: string = internet.url()
-    window[GLOBAL_NAME](`${name}:echo`, 'hello')
+    w[GLOBAL_NAME](`${name}:echo`, 'hello')
     assert(spy.called)
   })
 

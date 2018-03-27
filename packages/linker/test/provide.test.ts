@@ -9,27 +9,33 @@ import provide from '../src/provide'
 describe('provide', () => {
   const name = random.word()
   afterEach(() => {
-    window[name] = undefined
+    ((w: any) => {
+      w[name] = undefined
+    })(window)
   })
 
   it('if not exist queue', () => {
-    inject('', { [NAMESPACE]: name })
-    provide('linker', Linker)
-    assert(window[name].q)
-    const provideQueue = window[name].q[0]
-    assert(provideQueue[0] === 'provide')
-    assert(provideQueue[1] === 'linker')
-    assert(provideQueue[2] === Linker)
+    ((w: any) => {
+      inject('', { [NAMESPACE]: name })
+      provide('linker', Linker)
+      assert(w[name].q)
+      const provideQueue = w[name].q[0]
+      assert(provideQueue[0] === 'provide')
+      assert(provideQueue[1] === 'linker')
+      assert(provideQueue[2] === Linker)
+    })(window)
   })
 
   it('if queue already exists', () => {
-    inject('', { [NAMESPACE]: name })
-    window[name] = q(name, window)
-    provide('linker', Linker)
-    assert(window[name].q)
-    const provideQueue = window[name].q[0]
-    assert(provideQueue[0] === 'provide')
-    assert(provideQueue[1] === 'linker')
-    assert(provideQueue[2] === Linker)
+    ((w: any) => {
+      inject('', { [NAMESPACE]: name })
+      w[name] = q(name, window)
+      provide('linker', Linker)
+      assert(w[name].q)
+      const provideQueue = w[name].q[0]
+      assert(provideQueue[0] === 'provide')
+      assert(provideQueue[1] === 'linker')
+      assert(provideQueue[2] === Linker)
+    })(window)
   })
 })

@@ -5,11 +5,11 @@ import { spy as sinonSpy } from 'sinon'
 
 import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
+import MouseMoveEvents from '../src/events/mousemove'
 import { createEvent } from './helpers/Event'
 
 describe('mousemove', () => {
-  const MouseMoveEvents = require('../src/events/mousemove').default
-  let instance
+  let instance: any
 
   beforeEach(() => {
     instance = new MouseMoveEvents(

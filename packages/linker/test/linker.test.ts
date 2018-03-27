@@ -13,7 +13,8 @@ describe('linker', () => {
   })
 
   it('constructor', () => {
-    assert(linker.agent)
+    const instance: any = linker
+    assert(instance.agent)
   })
 
   it('event listener', () => {

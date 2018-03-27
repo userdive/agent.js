@@ -1,19 +1,17 @@
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
+import { UIEventObserver } from 'ui-event-observer'
 
 import { EventEmitter } from 'events'
+import TouchEvents from '../src/events/touch'
 import { isTouchDevice } from './helpers/browser'
 
-function describeExcludeTouch (): Function {
-  return !isTouchDevice() ? describe.skip : describe
-}
+const describeExcludeTouch = (): Function =>
+  !isTouchDevice() ? describe.skip : describe
 
 describeExcludeTouch()('touch', () => {
-  const { UIEventObserver } = require('ui-event-observer')
-  const TouchEvents = require('../src/events/touch').default
-
-  let instance
+  let instance: any
 
   beforeEach(() => {
     instance = new TouchEvents(

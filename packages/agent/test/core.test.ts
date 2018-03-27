@@ -1,10 +1,10 @@
 import * as assert from 'assert'
-import { throws } from 'assert-exception'
 import { EventEmitter } from 'events'
 import { internet, lorem, random } from 'faker'
 import 'mocha'
 import * as objectAssign from 'object-assign'
 import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
+import { FieldsObject } from 'userdive/lib/types'
 
 import {
   INTERACT,
@@ -18,7 +18,7 @@ import { getType } from './helpers/Event'
 
 describe('AgentCore', () => {
   const isUrl = require('is-url')
-  const eventFactory = (type, emitter) =>
+  const eventFactory = (type: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base {
       validate () {
         return true
@@ -35,16 +35,16 @@ describe('AgentCore', () => {
       }
     }
 
-  const agentFactory = (options = {}) =>
+  const agentFactory = (options = {}): any =>
     new Agent(
       random.uuid(),
       [eventFactory('click', emitter), eventFactory('scroll', emitter)],
       objectAssign({}, SETTINGS_DEFAULT, options)
     )
 
-  let agent
-  let emitter
-  let timer
+  let agent: any
+  let emitter: any
+  let timer: any
   beforeEach(() => {
     emitter = new EventEmitter()
     timer = useFakeTimers(new Date().getTime())
@@ -196,7 +196,7 @@ describe('AgentCore', () => {
     agent.pageview(internet.url())
     const spy = sinonSpy(require('../src/requests'), 'get')
 
-    const sendEvent = data => {
+    const sendEvent = (data: FieldsObject) => {
       agent.event(data)
       const query = spy.getCall(0).args[1]
       const [key, value] = query[0].split('=')
@@ -236,8 +236,8 @@ describe('AgentCore', () => {
 
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onerror) => {
-      onerror()
+    stub.callsFake((url: any, query: any, onerror: Function) => {
+      onerror(url, query)
     })
 
     agent.pageview(location.href)
