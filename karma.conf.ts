@@ -42,7 +42,7 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
         'text/x-typescript': ['ts']
       },
       basePath: '',
-      frameworks: ['mocha'],
+      frameworks: ['mocha', 'fixture'],
       files: [{ pattern }],
       preprocessors: {
         [pattern]: ['webpack']
