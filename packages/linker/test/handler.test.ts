@@ -2,7 +2,6 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { image, internet, random } from 'faker'
 import 'mocha'
-import { spy as sinonSpy } from 'sinon'
 import { link, submit } from '../src/handler'
 
 const toLink = (href: string) => {
@@ -12,8 +11,8 @@ const toLink = (href: string) => {
 }
 
 describe('handler', () => {
-  let agent
-  let param
+  let agent: Agent
+  let param: string
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
     param = agent.get('linkerParam')
@@ -132,8 +131,8 @@ describe('handler', () => {
     handler({ target: form } as any)
 
     assert(document.getElementsByTagName('input').length === 1)
-    const hidden = form.firstElementChild
-    const [key, value] = param.split('=')
+    const hidden: any = form.firstElementChild
+    const [key, value]: string[] = param.split('=')
     assert(hidden.getAttribute('type') === 'hidden')
     assert(hidden.getAttribute('name') === key)
     assert(hidden.getAttribute('value') === value)

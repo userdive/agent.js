@@ -1,5 +1,5 @@
 import Agent from '@userdive/agent'
-import { link, submit } from './handler'
+import { Domain, link, submit } from './handler'
 
 export default class Linker {
   private agent: Agent
@@ -7,7 +7,7 @@ export default class Linker {
     this.agent = agent
   }
 
-  autoLink (domains: string[]) {
+  autoLink (domains: Domain[]) {
     const events: string[] = ['mousedown', 'keyup']
     const param = this.agent.get('linkerParam')
     events.forEach((event: string) =>

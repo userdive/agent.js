@@ -14,21 +14,24 @@
     "alwaysStrict": true,
     "strict": true,
     "noImplicitAny": true,
+    "outDir": ".tmp",
     "noImplicitThis": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization":false,
+    "strictPropertyInitialization": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node"
   },
+  "include": [
+    "packages/**/*.ts"
+  ],
   "exclude": [
-    "node_modules",
-    "packages"
+    "node_modules/**/*.ts"
   ],
   "types": [
     "./node_modules/@userdive/agent.js/lib",
-    "./node_modules/@userdive/userdive/lib",
+    "./node_modules/@userdive/userdive/lib"
   ]
 }

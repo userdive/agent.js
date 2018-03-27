@@ -33,9 +33,10 @@ describe('aync loader', () => {
   })
 
   it('already loaded', () => {
-    window['_ud'] = function () {
-      // is not api function
-    }
+    ((w: any) =>
+      (w['_ud'] = function () {
+        // is not api function
+      }))(window)
     userdive()
     assert(document.querySelector(`[${NAMESPACE}]`), undefined)
   })

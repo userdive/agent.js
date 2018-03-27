@@ -34,8 +34,6 @@ const base = {
     reports: ['html', 'lcovonly', 'text-summary']
   },
   webpackMiddleware: {
-    noInfo: true,
-    quiet: true,
     stats: {
       colors: true
     }

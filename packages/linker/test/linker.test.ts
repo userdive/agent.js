@@ -5,8 +5,8 @@ import 'mocha'
 import Linker from '../src/linker'
 
 describe('linker', () => {
-  let agent
-  let linker
+  let agent: any
+  let linker: Linker
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
     linker = new Linker(agent)
