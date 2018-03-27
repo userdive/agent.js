@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import { internet, lorem } from 'faker'
 import 'mocha'
 
-import factory from '../src'
+import userdive from '../src'
 
 const DEFAULT_NAME = '_ud'
 
@@ -18,18 +18,16 @@ describe('aync loader', () => {
   })
 
   it('entrypoint', () => {
-    const _ud = factory()
-    assert(typeof _ud === 'function')
-    assert(_ud('create', 'id', 'auto') === undefined)
-    assert(_ud('send', 'pageview', internet.url()) === undefined)
+    assert(userdive()('create', 'id', 'auto') === undefined)
+    assert(userdive()('send', 'pageview', internet.url()) === undefined)
     const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
-    const name: string = element.getAttribute(NAMESPACE)
+    const name = element.getAttribute(NAMESPACE) as string
     assert(name === '_ud')
   })
 
   it('customize', () => {
     const name = lorem.word()
-    const _ud = factory(name)
+    userdive(name)
     const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
     assert(element.getAttribute(NAMESPACE), name)
   })
@@ -38,46 +36,45 @@ describe('aync loader', () => {
     window['_ud'] = function () {
       // is not api function
     }
-    const _ud = factory()
+    userdive()
     assert(document.querySelector(`[${NAMESPACE}]`), undefined)
   })
 
   it('should exercise all ga APIs', () => {
-    const _ud = factory()
-    _ud('create', lorem.word(), 'auto')
-    _ud('create', lorem.word(), 'auto', {
+    userdive()('create', lorem.word(), 'auto')
+    userdive()('create', lorem.word(), 'auto', {
       allowLinker: true,
       dimension1: lorem.word(),
       name: lorem.word()
     })
 
-    _ud('create', lorem.word(), 'auto', lorem.word(), {
+    userdive()('create', lorem.word(), 'auto', lorem.word(), {
       allowLinker: true,
       dimension1: lorem.word(),
       name: lorem.word()
     })
 
-    _ud('send', 'pageview')
-    _ud('send', 'event', {
+    userdive()('send', 'pageview')
+    userdive()('send', 'event', {
       eventCategory: 'c1',
       eventAction: 'a1'
     })
 
-    _ud('send', 'event', {
+    userdive()('send', 'event', {
       eventCategory: 'c1',
       eventAction: 'a1',
       eventLabel: 'l1',
       eventValue: 1
     })
 
-    _ud('send', {
+    userdive()('send', {
       hitType: 'event',
       eventCategory: 'c1',
       eventAction: 'a1'
     })
 
-    _ud('require', 'somePlugin')
-    _ud('require', 'somePlugin', 'option')
-    _ud('require', 'somePlugin', { some: 'options' })
+    userdive()('require', 'somePlugin')
+    userdive()('require', 'somePlugin', 'option')
+    userdive()('require', 'somePlugin', { some: 'options' })
   })
 })
