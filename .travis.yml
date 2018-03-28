@@ -16,7 +16,7 @@ jobs:
     - npm run coverage
   - stage: Sauce
     script: npm run ci:sauce
-    if: (type = pr or branch = master) and NOT branch =~ ^docs
+    if: (type = pr or branch = master) and (not branch =~ ^docs)
   - stage: deploy
     script:
     - sudo apt-get update
