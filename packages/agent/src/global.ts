@@ -1,16 +1,15 @@
 import { FieldsObject } from 'userdive/lib/types'
 import { NAMESPACE } from './constants'
 
-const CREATE = 'create'
 const agents: any = {}
 
-const execute = (
-  Agent: new (
-    projectId: string,
-    cookieDomain: string,
-    fieldsObject: FieldsObject
-  ) => void
-) => (cmd: string, ...args: any[]): void => {
+type AgentClass = new (
+  projectId: string,
+  cookieDomain: string,
+  fieldsObject: FieldsObject
+) => void
+
+const execute = (Agent: AgentClass) => (cmd: string, ...args: any[]) => {
   const [n, command] = cmd.split('.')
   if (n && command) {
     cmd = command
@@ -21,7 +20,7 @@ const execute = (
    * _ud('create', 'id', 'auto', 'myTracker')
    * _ud('create', 'id', 'auto')
    */
-  if (cmd === CREATE) {
+  if (cmd === 'create') {
     if (typeof args[1] === 'object') {
       // _ud('create', 'id', { auto: true, name: 'myTracker' })
       args[2] = args[1]
@@ -32,39 +31,48 @@ const execute = (
         (typeof args[2] === 'object' && args[2].name) ||
         trackerName
     ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
-    return
+    return true
   }
 
   const [pluginName, pluginFunctionName]: string[] = cmd.split(':')
   if (pluginName && pluginFunctionName) {
-    return agents[trackerName].run(pluginName, pluginFunctionName, ...args)
+    return (
+      agents[trackerName].run(pluginName, pluginFunctionName, ...args) || true
+    )
   }
 
-  if (typeof agents[trackerName][cmd] === 'function') {
-    return agents[trackerName][cmd](...args)
+  if (agents[trackerName] && typeof agents[trackerName][cmd] === 'function') {
+    return agents[trackerName][cmd](...args) || true
   }
 }
 
 type Arguments = { [key: number]: any }
 
-const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
-  isEqual === (cmd === CREATE)
+const toArray = (args: object) => [].map.call(args, (x: any) => x)
 
 export default function (Agent: any) {
   const w: any = window
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
 
-  const applyQueue = (argsObject: any[]) => {
-    const args = [].map.call(argsObject, (x: any) => x)
+  const applyQueue = (argsObject: any[], q: Arguments[]) => {
+    if (!argsObject || !argsObject[0]) {
+      return
+    }
+    const args = toArray(argsObject)
     const cmd = args.shift()
-    execute(Agent)(cmd, ...args)
+    const res = execute(Agent)(cmd, ...args)
+    if (!res) {
+      q.push(argsObject)
+    }
+    const [next, ...queue] = toArray(q)
+    applyQueue(next, queue)
   }
 
   if (w[name] && w[name].q) {
     const { q } = w[name]
-    q.filter(isCreateCmd(true)).forEach(applyQueue)
-    q.filter(isCreateCmd(false)).forEach(applyQueue)
+    const [next, ...queue] = toArray(q)
+    applyQueue(next, queue)
   }
   w[name] = execute(Agent)
 }
