@@ -7,8 +7,7 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: sudo apt-get update && sudo apt-get install default-jre rsync && wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb && sudo dpkg -i crowdin.deb
-      - run: yarn build
+      - run: yarn build:examples
       - run:
           name: start SPAs
           command: yarn w:examples
@@ -22,8 +21,7 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: sudo apt-get update && sudo apt-get install default-jre rsync && wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb && sudo dpkg -i crowdin.deb
-      - run: yarn build
+      - run: yarn build:examples
       - run: cd examples && gh-pages -d build
 
 workflows:
