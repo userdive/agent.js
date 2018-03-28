@@ -70,9 +70,7 @@ export default class Agent {
       // _ud('send', 'pageview', { page: internet.url() })
       case 'pageview':
         this.core.pageview(
-          typeof page === 'string'
-            ? page || location.href
-            : (data as string) /* TODO */
+          (typeof page === 'string' ? page : (data as string)) || location.href
         )
         break
       case 'event':

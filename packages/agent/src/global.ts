@@ -22,6 +22,11 @@ const execute = (
    * _ud('create', 'id', 'auto')
    */
   if (cmd === CREATE) {
+    if (typeof args[1] === 'object') {
+      // _ud('create', 'id', { auto: true, name: 'myTracker' })
+      args[2] = args[1]
+      args[1] = args[1].auto || args[1].cookieName
+    }
     agents[
       (typeof args[2] === 'string' && args[2]) ||
         (typeof args[2] === 'object' && args[2].name) ||
