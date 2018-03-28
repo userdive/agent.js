@@ -2,11 +2,11 @@
 id: カスタム変数
 title: カスタムディメンション
 ---
-| フィールド            | 型   | 必須  | 説明                                                       |
-|:---------------- |:--- |:--- |:-------------------------------------------------------- |
-| dimensions[0-9]+ | 文字列 | いいえ | Able to set any custom variable. Max number of index: 20 |
+| フィールド            | 型   | 必須  | 説明                             |
+|:---------------- |:--- |:--- |:------------------------------ |
+| dimensions[0-9]+ | 文字列 | いいえ | カスタム変数をセットできます。最大のインデックスは20です。 |
 
-## Send Data
+## データ送信
 
 ```js
 _ud("send", "pageview", {
@@ -14,13 +14,13 @@ _ud("send", "pageview", {
 });
 ```
 
-## Set Data
+## データセット
 
 ```js
 _ud("set", "dimension5", "custom dimension data");
 ```
 
-To `set` multi dimensions, you can use:
+複数のディメンションを`set`するには、以下のようにします
 
 ```js
 _ud("set", {
