@@ -53,11 +53,9 @@ type Arguments = { [key: number]: any }
 
 const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
-export default function (
-  Agent: any,
-  lazyStack: { [key: string]: number },
-  agents: { [key: string]: any }
-) {
+export default function (Agent: any) {
+  const lazyStack: { [key: string]: number } = {}
+  const agents: { [key: string]: any } = {}
   const w: any = window
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
