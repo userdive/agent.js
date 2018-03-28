@@ -3,10 +3,10 @@
     "Usage": [
       "getting-started",
       "custom-variables",
-      "event"
+      "events"
     ],
     "Plugins": [
-      "plugins"
+      "writing-plugins"
     ],
     "Integrations": [
       "integrations"

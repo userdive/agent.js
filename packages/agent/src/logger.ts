@@ -1,16 +1,18 @@
 import { RavenOptions, RavenStatic } from 'raven-js'
-import { CustomError } from './types'
 
-export function raise (msg: string) {
+export type CustomError = string | Error
+
+export const raise = (msg: string) => {
   if (process.env.NODE_ENV !== 'production') {
     throw new Error(msg)
   }
+  console.warn(msg)
 }
 
 const isDefined = (instance: any): boolean => instance && instance.isSetup()
 
 let Raven: any
-export function setup (raven?: RavenStatic): boolean {
+export const setup = ({ Raven: raven }: { Raven?: RavenStatic }): boolean => {
   const isSetup = isDefined(raven)
   if (isSetup) {
     Raven = raven
@@ -19,19 +21,20 @@ export function setup (raven?: RavenStatic): boolean {
   return isSetup
 }
 
-function capture (err: CustomError, options?: RavenOptions): void {
+const capture = (err: CustomError, options?: RavenOptions): void => {
   if (isDefined(Raven)) {
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)
       return
     }
     Raven.captureException(err, options)
+    console.warn(err, options)
   }
 }
 
-export function error (err: CustomError, extra?: any): void {
+export const error = (err: CustomError, extra?: RavenOptions): void => {
   capture(err, { level: 'error', extra })
 }
-export function warning (err: CustomError, extra?: any): void {
+export const warning = (err: CustomError, extra?: RavenOptions): void => {
   capture(err, { level: 'warning', extra })
 }

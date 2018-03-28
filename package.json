@@ -11,15 +11,15 @@
     "@types/node": "9.6.0",
     "@types/object-assign": "4.0.30",
     "@types/sinon": "4.3.0",
-    "@types/webpack": "4.0.0",
+    "@types/webpack": "3.8.11",
     "@uncovertruth/eslint-config": "4.0.0",
     "@uncovertruth/eslint-config-react": "4.0.0",
     "@uncovertruth/stylelint-config": "4.1.0",
     "@uncovertruth/textlint-config-en": "4.0.0",
     "@uncovertruth/tslint-config": "4.0.0",
-    "assert-exception": "1.1.0",
     "can-npm-publish": "1.0.2",
     "codecov": "3.0.0",
+    "concurrently": "3.5.1",
     "cross-env": "5.1.4",
     "eslint": "4.19.1",
     "faker": "4.1.0",
@@ -78,8 +78,8 @@
   "scripts": {
     "build": "lerna run build --parallel",
     "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
-    "ci:appveyor": "cross-env CI_MODE=IE lerna run test",
-    "ci:sauce": "cross-env CI_MODE=sauce lerna run test",
+    "ci:appveyor": "cross-env CI_MODE=IE karma start",
+    "ci:sauce": "cross-env CI_MODE=sauce karma start",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
     "coverage": "run-p coverage:*",
     "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
@@ -93,27 +93,29 @@
     "lint:md": "textlint 'packages/*/*.md' README.md docs",
     "lint:pug": "pug-lint examples/**/*.pug",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
+    "lint:types": "tsc",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "run-p -l w:*",
-    "test": "lerna run test",
-    "w:examples": "lerna run dev --scope userdive-examples",
+    "start": "concurrently -k 'yarn w:examples' 'yarn w:website'",
+    "test": "lerna run test --parallel",
+    "w:examples": "webpack-dev-server --config examples/webpack.config.ts --output-path examples/build/assets",
+    "w:html": "pug examples -o examples/build -P -s -w",
     "w:website": "cd website && npm start"
   },
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8 KB"
+      "limit": "8.2 KB"
     },
     {
       "path": "cdn/agent.d.js",
-      "limit": "20 KB"
+      "limit": "21 KB"
     },
     {
       "path": "cdn/linker.js",
-      "limit": "1.1 KB"
+      "limit": "1.2 KB"
     }
   ],
   "workspaces": [

@@ -9,7 +9,7 @@ module.exports = {
     vue: path.join(__dirname, 'with-vue/index.ts')
   },
   output: {
-    path: path.join(__dirname, 'build/assets/'),
+    path: path.join(__dirname, 'build'),
     filename: '[name].bundle.js'
   },
   resolve: {
@@ -20,7 +20,8 @@ module.exports = {
     }
   },
   devServer: {
-    contentBase: path.join(__dirname, 'build')
+    contentBase: path.join(__dirname, 'build'),
+    openPage: '/simple/'
   },
   module: {
     rules: [{ test: /\.tsx?$/, use: 'ts-loader' }]

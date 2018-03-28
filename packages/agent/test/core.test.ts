@@ -1,10 +1,10 @@
 import * as assert from 'assert'
-import { throws } from 'assert-exception'
 import { EventEmitter } from 'events'
-import { random } from 'faker'
+import { internet, lorem, random } from 'faker'
 import 'mocha'
 import * as objectAssign from 'object-assign'
 import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
+import { FieldsObject } from 'userdive/lib/types'
 
 import {
   INTERACT,
@@ -16,9 +16,9 @@ import Base from '../src/events'
 import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 
-describe('core', () => {
+describe('AgentCore', () => {
   const isUrl = require('is-url')
-  const eventFactory = (type, emitter) =>
+  const eventFactory = (type: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base {
       validate () {
         return true
@@ -35,16 +35,16 @@ describe('core', () => {
       }
     }
 
-  const agentFactory = (options = {}) =>
+  const agentFactory = (options = {}): any =>
     new Agent(
       random.uuid(),
       [eventFactory('click', emitter), eventFactory('scroll', emitter)],
       objectAssign({}, SETTINGS_DEFAULT, options)
     )
 
-  let agent
-  let emitter
-  let timer
+  let agent: any
+  let emitter: any
+  let timer: any
   beforeEach(() => {
     emitter = new EventEmitter()
     timer = useFakeTimers(new Date().getTime())
@@ -62,7 +62,7 @@ describe('core', () => {
   })
 
   const failedUpdateCache = (x: number, y: number, type: EventType) => {
-    agent.send('pageview', location.href)
+    agent.pageview(location.href)
 
     emitter.emit(type, { x, y })
 
@@ -87,7 +87,7 @@ describe('core', () => {
   })
 
   it('cache success action', () => {
-    agent.send('pageview', location.href)
+    agent.pageview(location.href)
     assert(agent.emitter.listenerCount(agent.id) === 1)
     emitter.emit('click', {
       x: random.number({ min: 1 }),
@@ -108,7 +108,7 @@ describe('core', () => {
   })
 
   it('cache success looks', () => {
-    agent.send('pageview', location.href)
+    agent.pageview(location.href)
     emitter.emit('scroll', {
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
@@ -128,7 +128,7 @@ describe('core', () => {
   })
 
   it('send success', () => {
-    agent.send('pageview', location.href)
+    agent.pageview(location.href)
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 
@@ -165,8 +165,8 @@ describe('core', () => {
 
   it('send success auto', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
-    const autoAgent = agentFactory({ auto: true })
-    autoAgent.send('pageview', location.href)
+    const autoAgent = agentFactory({ cookieName: 'auto' })
+    autoAgent.pageview(location.href)
 
     const url = spy.getCall(0).args[0]
     assert(url.split('/').length === 7)
@@ -182,8 +182,8 @@ describe('core', () => {
 
   it('send success pathname', () => {
     const spy = sinonSpy(require('../src/requests'), 'get')
-    const autoAgent = agentFactory({ auto: true })
-    autoAgent.send('pageview', location.pathname)
+    const autoAgent = agentFactory({ cookieName: 'auto' })
+    autoAgent.pageview(location.pathname)
 
     const query = spy.getCall(0).args[1]
     assert(query.length === 8)
@@ -193,41 +193,40 @@ describe('core', () => {
 
   it('send event', () => {
     const agent = agentFactory({ auto: true })
-    agent.send('pageview', location.href)
+    agent.pageview(internet.url())
     const spy = sinonSpy(require('../src/requests'), 'get')
 
-    const sendEvent = function (eventObj) {
-      agent.send('event', eventObj)
+    const sendEvent = (data: FieldsObject) => {
+      agent.event(data)
       const query = spy.getCall(0).args[1]
       const [key, value] = query[0].split('=')
-      const eventParams = value.split(',')
       assert(key === 'e')
-      return eventParams
+      return value.split(',')
     }
 
     let eventParams = sendEvent({
-      category: 'DummyCategory',
-      action: 'DummyAction',
-      label: 'DummyLabel',
-      value: 100
+      eventCategory: lorem.word(),
+      eventAction: lorem.word(),
+      eventLabel: lorem.word(),
+      eventValue: random.number()
     })
     assert(eventParams.length === 5)
     assert(eventParams[0] === '1')
     spy.reset()
 
     eventParams = sendEvent({
-      category: 'DummyCategory',
-      action: 'DummyAction',
-      label: 'DummyLabel'
+      eventCategory: lorem.word(),
+      eventAction: lorem.word(),
+      eventLabel: lorem.word()
     })
     assert(eventParams.length === 4)
     assert(eventParams[0] === '2')
     spy.reset()
 
     eventParams = sendEvent({
-      category: 'DummyCategory',
-      action: 'DummyAction',
-      value: 100
+      eventCategory: lorem.word(),
+      eventAction: lorem.word(),
+      eventValue: random.number()
     })
     assert(eventParams.length === 5)
     assert(eventParams[0] === '3')
@@ -237,11 +236,11 @@ describe('core', () => {
 
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url, query, onerror) => {
-      onerror()
+    stub.callsFake((url: any, query: any, onerror: Function) => {
+      onerror(url, query)
     })
 
-    agent.send('pageview', location.href)
+    agent.pageview(location.href)
     assert(agent.loadTime === 0)
     stub.restore()
   })

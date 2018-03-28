@@ -3,8 +3,8 @@ import * as objectAssign from 'object-assign'
 import { EventEmitter } from 'events'
 import { getOffset, validate } from './browser'
 import { LISTENER, SCROLL } from './constants'
-import { error, raise, warning } from './logger'
-import { CustomError, EventType, InteractType } from './types'
+import { CustomError, error, raise, warning } from './logger'
+import { EventType, InteractType, Point } from './types'
 
 export interface AgentEventBase {
   on (eventName: EventType, handler: Function, type: InteractType): void
@@ -60,7 +60,7 @@ export default class Events implements AgentEventBase {
     raise('please override validate')
     return false
   }
-  protected emit (data: { x: number; y: number }): void {
+  protected emit (data: Point): void {
     if (data.x < 0 || data.y < 0 || !this.type) {
       return
     }

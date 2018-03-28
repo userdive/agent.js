@@ -1,5 +1,2 @@
-import { setting } from '../../karma.conf.base'
-
-module.exports = function (config: any) {
-  config.set(setting)
-}
+import { createSettings } from '../../karma.conf'
+export default (config: any) => config.set(createSettings())

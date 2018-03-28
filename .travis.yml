@@ -1,5 +1,5 @@
 language: node_js
-sudo: false
+sudo: true
 node_js: lts/*
 cache: yarn
 env:
@@ -16,9 +16,15 @@ jobs:
     - npm run coverage
   - stage: Sauce
     script: npm run ci:sauce
-    if: type = pr or branch = master or NOT branch =~ ^docs
+    if: (type = pr or branch = master) and NOT branch =~ ^docs
   - stage: deploy
-    script: npm run build
+    script:
+    - sudo apt-get update
+    - sudo apt-get install default-jre rsync
+    - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
+    - sudo dpkg -i crowdin.deb
+    - sleep 5
+    - npm run build
     deploy:
     - provider: script
       script: scripts/publish

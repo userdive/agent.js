@@ -19,7 +19,7 @@ export function inject (source: string, attributes: IAttributes) {
   script.parentNode.insertBefore(element, script)
 }
 
-export function q (name: string, global: any) {
+export function q (name: string, global: any): USERDIVEApi {
   global[name] =
     global[name] ||
     function () {

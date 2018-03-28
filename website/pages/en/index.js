@@ -54,7 +54,7 @@ const HomeSplash = ({ language }) => (
         <Button href={docUrl('getting-started.html', language || '')}>
           <translate>Getting Started</translate>
         </Button>
-        <Button href={docUrl('plugins.html', language || '')}>
+        <Button href={docUrl('writing-plugins.html', language || '')}>
           <translate>Plugins</translate>
         </Button>
         <Button href={docUrl('integrations.html', language || '')}>

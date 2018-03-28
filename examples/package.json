@@ -1,6 +1,6 @@
 {
   "name": "userdive-examples",
-  "version": "1.0.0-beta3",
+  "version": "1.0.0-beta4",
   "devDependencies": {
     "@types/nightwatch": "0.9.7",
     "chromedriver": "2.37.0",
@@ -19,9 +19,6 @@
     "build:js": "webpack",
     "build:test": "tsc -m commonjs",
     "clean": "rimraf tests build",
-    "dev": "run-p dev:*",
-    "dev:html": "pug . -o build -P -s -w",
-    "dev:js": "webpack-dev-server --config ./webpack.config.ts",
     "e2e": "nightwatch",
     "prebuild": "npm run clean"
   }

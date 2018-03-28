@@ -1,22 +1,23 @@
-import Agent from '@userdive/agent'
 import * as assert from 'assert'
-import { internet, lorem, random } from 'faker'
+import { random } from 'faker'
 import 'mocha'
 import { inject, namespace as NAMESPACE, q } from 'userdive'
 
+import Linker from '../src/linker'
+import provide from '../src/provide'
+
 describe('provide', () => {
   const name = random.word()
+  const w: any = window
   afterEach(() => {
-    window[name] = undefined
+    w[name] = undefined
   })
 
   it('if not exist queue', () => {
     inject('', { [NAMESPACE]: name })
-    const provide = require('../src/provide').default
-    const Linker = require('../src/linker').default
     provide('linker', Linker)
-    assert(window[name].q)
-    const provideQueue = window[name].q[0]
+    assert(w[name].q)
+    const provideQueue = w[name].q[0]
     assert(provideQueue[0] === 'provide')
     assert(provideQueue[1] === 'linker')
     assert(provideQueue[2] === Linker)
@@ -24,12 +25,10 @@ describe('provide', () => {
 
   it('if queue already exists', () => {
     inject('', { [NAMESPACE]: name })
-    window[name] = q(name, window)
-    const provide = require('../src/provide').default
-    const Linker = require('../src/linker').default
+    w[name] = q(name, window)
     provide('linker', Linker)
-    assert(window[name].q)
-    const provideQueue = window[name].q[0]
+    assert(w[name].q)
+    const provideQueue = w[name].q[0]
     assert(provideQueue[0] === 'provide')
     assert(provideQueue[1] === 'linker')
     assert(provideQueue[2] === Linker)

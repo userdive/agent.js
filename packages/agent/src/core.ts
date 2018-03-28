@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { UIEventObserver } from 'ui-event-observer'
-import { HitType } from 'userdive/lib/types'
+import { EventFieldsObject } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
 import { getEnv } from './browser'
@@ -16,39 +16,60 @@ import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
+import { Interact, SettingFieldsObject } from './types'
 
-import { Interact, SendData, SendEvent, Settings } from './types'
+const generateId = () => uuid().replace(/-/g, '')
 
-function generateId () {
-  return uuid().replace(/-/g, '')
-}
-
-function cacheValidator ({ x, y, type, left, top }: Interact): boolean {
+const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
   if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
   return false
 }
 
-function toInt (n: number) {
-  return Math.floor(n)
+const toInt = (n: number) => Math.floor(n)
+const createInteractData = (d: Interact): string =>
+  cacheValidator(d)
+    ? `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(
+      d.top
+    )}`
+    : ''
+
+const findOrCreateUserId = ({
+  allowLinker,
+  cookieDomain: domain,
+  cookieExpires: expires,
+  cookieName,
+  cookiePath: path,
+  linkerName
+}: SettingFieldsObject): string => {
+  let userId = getCookie(cookieName)
+  if (allowLinker) {
+    const qs = location.search.trim().replace(/^[?#&]/, '')
+    const [linkerParam] = qs
+      .split('&')
+      .filter(s => s.length && s.split('=')[0] === linkerName)
+    const id = linkerParam ? linkerParam.split('=')[1] : undefined
+    if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
+      userId = id
+    }
+  }
+  const saveCookie = cookieName === 'auto' ? save : setCookie
+  if (!userId || allowLinker) {
+    userId = userId || generateId()
+    saveCookie(cookieName, userId, {
+      domain,
+      expires,
+      path
+    })
+  }
+  return userId
 }
 
-function createInteractData (d: Interact): string {
-  if (!cacheValidator(d)) {
-    return ''
-  }
-  return `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(
-    d.left
-  )},${toInt(d.top)}`
-}
-
-function pathname2href (pathname: string) {
-  if (!/^http/.test(pathname)) {
-    pathname = `${location.protocol}//${location.host}${pathname}`
-  }
-  return pathname
-}
+const pathname2href = (pathname: string) =>
+  !/^http/.test(pathname)
+    ? `${location.protocol}//${location.host}${pathname}`
+    : pathname
 
 export default class AgentCore extends Store {
   observer: UIEventObserver
@@ -65,35 +86,9 @@ export default class AgentCore extends Store {
   constructor (
     id: string,
     eventsClass: any[], // TODO
-    {
-      allowLinker,
-      auto,
-      baseUrl,
-      cookieDomain: domain,
-      cookieExpires: expires,
-      cookieName,
-      linkerName
-    }: Settings
+    settings: SettingFieldsObject
   ) {
-    let userId = getCookie(cookieName)
-    if (allowLinker) {
-      const qs = location.search.trim().replace(/^[?#&]/, '')
-      const [linkerParam] = qs
-        .split('&')
-        .filter(s => s.length && s.split('=')[0] === linkerName)
-      const id = linkerParam ? linkerParam.split('=')[1] : undefined
-      if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
-        userId = id
-      }
-    }
-    const saveCookie = auto ? save : setCookie
-    if (!userId || allowLinker) {
-      userId = userId || generateId()
-      saveCookie(cookieName, userId, {
-        domain,
-        expires
-      })
-    }
+    const userId = findOrCreateUserId(settings)
     super(userId)
 
     this.id = generateId()
@@ -112,52 +107,61 @@ export default class AgentCore extends Store {
       raise('need generated id')
       return
     }
-    this.baseUrl = `${baseUrl}/${id}/${userId}`
+    this.baseUrl = `${settings.baseUrl}/${id}/${userId}`
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  send (type: HitType, sendData: SendData): void {
-    switch (type) {
-      case 'pageview':
-        this.sendInteracts(true)
-        if (!this.loadTime) {
-          this.bind()
-        }
+  pageview (page: string): void {
+    this.send([], true)
+    if (!this.loadTime) {
+      this.bind()
+    }
 
-        const data = getEnv(pathname2href(sendData as string))
-        if (!data || !this.baseUrl) {
-          return warning(`failed init`)
-        }
-        this.merge({ type: 'env', data })
+    const data = getEnv(pathname2href(page))
+    if (!data || !this.baseUrl) {
+      return warning(`failed init`)
+    }
+    this.merge({ type: 'env', data })
 
-        this.interval = INTERVAL_DEFAULT_SETTING.concat()
-        this.interactId = 0
-        this.eventId = 0
-        this.loadTime = Date.now()
-        this.sendInteractsWithUpdate()
-        get(
-          `${this.baseUrl}/${this.loadTime}/env.gif`,
-          obj2query(objectAssign(
-            {},
-            this.get('env'),
-            this.get('custom')
-          ) as any),
-          () => {
-            this.destroy()
-          }
-        )
-        break
-      case 'event':
-        const event = sendData as SendEvent
-        if (
-          event.category &&
-          event.action &&
-          (!event.value || event.value >= 0)
-        ) {
-          this.eventId++
-          this.sendEvent(event)
-        }
-        break
+    this.interval = INTERVAL_DEFAULT_SETTING.concat()
+    this.interactId = 0
+    this.eventId = 0
+    this.loadTime = Date.now()
+    this.sendWithUpdate()
+    get(
+      `${this.baseUrl}/${this.loadTime}/env.gif`,
+      obj2query(
+        objectAssign({}, this.get('env'), this.get('custom')) as any /* TODO */
+      ),
+      () => {
+        this.destroy()
+      }
+    )
+    this.set('page', undefined) // remove locale cache
+  }
+
+  event ({
+    eventCategory: category,
+    eventLabel: label,
+    eventAction: action,
+    eventValue: value
+  }: EventFieldsObject): void {
+    this.eventId++
+    const isNumber = (n?: number): boolean => typeof n === 'number' && n >= 0
+    if (
+      this.eventId <= MAX_EVENT_SEQ &&
+      category &&
+      action &&
+      (!value || isNumber(value))
+    ) {
+      this.send(
+        [
+          `e=${this.eventId},${category},${action},${label || ''}${
+            isNumber(value) ? ',' + value : ''
+          }`
+        ],
+        true
+      )
     }
   }
 
@@ -167,8 +171,7 @@ export default class AgentCore extends Store {
     this.loadTime = 0
   }
 
-  sendInteracts (force?: boolean, optionalQuery?: string[]): void {
-    const query: string[] = optionalQuery || []
+  send (query: string[], force?: boolean): void {
     this.interacts.forEach(data => {
       const q = createInteractData(data)
       if (q.length) {
@@ -180,10 +183,9 @@ export default class AgentCore extends Store {
       this.baseUrl &&
       (query.length >= MAX_INTERACT || (force && query.length > 0))
     ) {
-      const customState: any = this.get('custom')
       get(
         `${this.baseUrl}/${this.loadTime}/int.gif`,
-        query.concat(obj2query(customState)),
+        query.concat(obj2query(this.get('custom') as any /* TODO */)),
         () => {
           this.destroy()
         }
@@ -192,43 +194,25 @@ export default class AgentCore extends Store {
     }
   }
 
-  protected sendEvent (e: SendEvent) {
-    if (this.eventId <= MAX_EVENT_SEQ) {
-      this.cacheToInteracts()
-      const { category, action, label, value } = e
-      let query = `e=${this.eventId},${category},${action}`
-      query = label || value ? `${query},${label || ''}` : query
-      query = value ? `${query},${value}` : query
-      this.sendInteracts(true, [query])
-      this.interactId++
-    }
-  }
+  private sendWithUpdate (): void {
+    Object.keys(this.cache).forEach(key => {
+      const cache: any = this.cache[key] // TODO
+      if (cacheValidator(cache)) {
+        cache.id = this.interactId
+        this.interacts.push(cache)
+      }
+    })
 
-  protected sendInteractsWithUpdate (): void {
-    this.cacheToInteracts()
-    this.sendInteracts()
+    this.clear()
+    this.send([])
 
     if (this.loadTime) {
       const delay = this.interval.shift()
       if (delay !== undefined && delay >= 0) {
-        setTimeout(this.sendInteractsWithUpdate.bind(this), delay * 1000)
+        setTimeout(this.sendWithUpdate.bind(this), delay * 1000)
       }
       this.interactId++
     }
-  }
-
-  private cacheToInteracts () {
-    Object.keys(this.cache).forEach(key => {
-      const cache: any = this.cache[key]
-      if (cacheValidator(cache)) {
-        this.interacts.push(
-          objectAssign({}, cache, {
-            id: this.interactId
-          })
-        )
-      }
-    })
-    this.clear()
   }
 
   private bind () {

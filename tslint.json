@@ -1,5 +1,8 @@
 {
   "extends": "@uncovertruth/tslint-config",
+  "rules": {
+    "no-unused-variable": true
+  },
   "linterOptions": {
     "exclude": [
       "**/node_modules/**/*.ts"

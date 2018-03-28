@@ -1,6 +1,6 @@
 {
   "extends": [
-    "@uncovertruth/tslint-config",
+    "../tslint.json",
     "tslint-react"
   ]
 }

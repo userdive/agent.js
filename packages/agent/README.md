@@ -63,10 +63,10 @@ import Agent from "@userdive/agent";
 const agent = new Agent("projectId", "auto");
 agent.send("pageview");
 agent.send("event", {
-    category: "EC",
-    action: "Cart",
-    label: "add",
-    value: 2000
+    eventCategory: "EC",
+    eventAction: "Cart",
+    eventLabel: "add",
+    eventValue: 2000
 });
 ```
 

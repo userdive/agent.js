@@ -1,5 +1,5 @@
 import * as objectAssign from 'object-assign'
-import { HitType } from 'userdive/lib/types'
+import { EventFieldsObject, FieldsObject, HitType } from 'userdive/lib/types'
 
 import { validate } from './browser'
 import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
@@ -9,7 +9,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { SendData, State } from './types'
+import { SettingFieldsObject, SetType, State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -22,37 +22,69 @@ export default class Agent {
   private linkerName: string
   private plugins: { [name: string]: any }
 
-  constructor (projectId: string, settings: Object | 'auto') {
+  constructor (
+    projectId: string,
+    cookieDomain: string,
+    fieldsObject?: FieldsObject
+  ) {
     this.plugins = {}
-    if (typeof settings === 'string' && settings === 'auto') {
-      settings = { auto: true }
-    }
-    const config = objectAssign({}, SETTINGS_DEFAULT, settings)
+    const config = objectAssign(
+      {},
+      SETTINGS_DEFAULT,
+      { cookieDomain },
+      fieldsObject || {}
+    ) as SettingFieldsObject
+
     this.core = new AgentCore(
       projectId,
       [Click, MouseMove, Scroll, TouchEnd],
       config
     )
     this.linkerName = config.linkerName
-    setup(config.Raven)
+
+    setup(config)
+
     if (validate(LISTENER.concat(['onpagehide']))) {
       window.addEventListener(
         'pagehide',
         () => {
-          this.core.sendInteracts(true)
+          this.core.send([], true)
         },
         false
       )
     }
   }
 
-  send (type: HitType, data?: SendData): AgentCore {
-    this.core.send(type, data || location.href)
+  send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
+    if (typeof type === 'object') {
+      data = type
+      type = type.hitType as HitType
+    }
+    let page
+    if (typeof data === 'object') {
+      page = this.set(data).env.l
+    }
+    switch (type) {
+      // _ud('send', 'pageview')
+      // _ud('send', 'pageview', internet.url())
+      // _ud('send', 'pageview', { page: internet.url() })
+      case 'pageview':
+        this.core.pageview(
+          typeof page === 'string'
+            ? page || location.href
+            : (data as string) /* TODO */
+        )
+        break
+      case 'event':
+        this.core.event(data as EventFieldsObject)
+        break
+    }
+
     return this.core
   }
 
-  set (key: any, value?: string | number): State {
-    if (key && value) {
+  set (key: SetType | FieldsObject, value?: string | number): State {
+    if (typeof key === 'string' && value) {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)

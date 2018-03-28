@@ -2,6 +2,7 @@ package-lock.json
 *.html
 .envrc
 .changelog/
+.tmp/
 cdn/
 dist/
 lib/

@@ -1,14 +1,13 @@
-import * as Raven from 'raven-js'
-import { FieldsObject } from 'userdive/lib/types'
+import { RavenStatic } from 'raven-js'
+import { Dimension, FieldsObject, Metric } from 'userdive/lib/types'
 
-export interface Settings extends FieldsObject {
-  readonly auto: boolean
+export interface SettingFieldsObject extends FieldsObject {
   readonly baseUrl: string
   readonly cookieDomain: string
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
-  readonly Raven?: Raven.RavenStatic
+  Raven?: RavenStatic
 }
 
 export type Point = {
@@ -21,49 +20,6 @@ export type Size = {
   readonly w: number
 }
 
-export type SendData = string | SendEvent
-export type Dimension =
-  | 'dimension1'
-  | 'dimension2'
-  | 'dimension3'
-  | 'dimension4'
-  | 'dimension5'
-  | 'dimension6'
-  | 'dimension7'
-  | 'dimension8'
-  | 'dimension9'
-  | 'dimension10'
-  | 'dimension11'
-  | 'dimension12'
-  | 'dimension13'
-  | 'dimension14'
-  | 'dimension15'
-  | 'dimension16'
-  | 'dimension17'
-  | 'dimension18'
-  | 'dimension19'
-  | 'dimension20'
-export type Metric =
-  | 'metric1'
-  | 'metric2'
-  | 'metric3'
-  | 'metric4'
-  | 'metric5'
-  | 'metric6'
-  | 'metric7'
-  | 'metric8'
-  | 'metric9'
-  | 'metric10'
-  | 'metric11'
-  | 'metric12'
-  | 'metric13'
-  | 'metric14'
-  | 'metric15'
-  | 'metric16'
-  | 'metric17'
-  | 'metric18'
-  | 'metric19'
-  | 'metric20'
 export type SetType = 'page' | Dimension | Metric
 
 export type CustomData = {
@@ -142,19 +98,12 @@ export type State = {
 export type InteractType = 'l' | 'a'
 
 export type Interact = {
-  readonly id: number
+  id: number
   readonly left: number
   readonly top: number
   readonly type: InteractType
   readonly x: number
   readonly y: number
-}
-
-export type SendEvent = {
-  readonly category: string
-  readonly action: string
-  readonly label?: string
-  readonly value?: number
 }
 
 export type EventType =
@@ -164,8 +113,6 @@ export type EventType =
   | 'touchend'
   | 'touchstart'
   | 'touchmove'
-
-export type CustomError = string | Error
 
 export type TaskQueue = {
   name: string

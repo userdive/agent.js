@@ -1,5 +1,5 @@
 ---
-id: plugins
+id: writing-plugins
 title: Plugins
 ---
 
@@ -25,17 +25,20 @@ Plugin supply needs to invoke global function obtained through `data-ud-namespac
 To resolve it, plugins should have check the object name, like below;
 
 ```js
-// in plugin code
-function providePlugin(pluginName, pluginConstrucor) {
-    var name = document
-        .querySelector("[data-ud-namespace]")
-        .getAttribute("data-ud-namespace");
-    var ud =
-        window[name] ||
-        function() {
-            (window[name].q = window[name].q || []).push(arguments);
-        };
-    ud("provide", pluginName, pluginConstrucor);
+import {
+    q,
+    namespace // data-ud-namespace
+} from "userdive";
+
+try {
+    const name = document
+        .querySelector(`[${namespace}]`)
+        .getAttribute(namespace);
+    if (name) {
+        q(name)("provide", pluginName, pluginConstrucor);
+    }
+} catch (e) {
+    // not found agent.js snipet
 }
 ```
 
@@ -64,5 +67,5 @@ _ud("somePlugin:methodName", { egg: "large" });
 Tipically, plugins will load separate file or bundled with your main application code.
 
 ```html
-<script async src="myplugin.js"></script>
+<script async src="./myplugin.js"></script>
 ```

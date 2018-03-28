@@ -1,5 +1,2 @@
-import { setting } from '../../karma.conf.base'
-export default function (config: any) {
-  setting.frameworks.push('fixture')
-  config.set(setting)
-}
+import { createSettings } from '../../karma.conf'
+export default (config: any) => config.set(createSettings())

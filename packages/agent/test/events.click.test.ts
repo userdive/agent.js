@@ -4,12 +4,12 @@ import 'mocha'
 import { spy as sinonSpy } from 'sinon'
 
 import { EventEmitter } from 'events'
+import { UIEventObserver } from 'ui-event-observer'
+import ClickEvents from '../src/events/click'
 import { createEvent } from './helpers/Event'
 
 describe('click', () => {
-  const UIEventObserver = require('ui-event-observer').UIEventObserver
-  const ClickEvents = require('../src/events/click').default
-  let instance
+  let instance: any
 
   beforeEach(() => {
     instance = new ClickEvents(

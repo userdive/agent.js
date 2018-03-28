@@ -2,52 +2,42 @@ import { VERSION } from './constants'
 import { error } from './logger'
 import { ClientEnvironmentsData, Size } from './types'
 
-function getWindowSize (w: { innerHeight: number; innerWidth: number }): Size {
-  return {
-    h: w.innerHeight,
-    w: w.innerWidth
-  }
-}
+const getWindowSize = (w: {
+  innerHeight: number
+  innerWidth: number
+}): Size => ({
+  h: w.innerHeight,
+  w: w.innerWidth
+})
 
 function getResourceSize (d: Document): Size {
-  const body: any = d.body
+  const body = d.body as HTMLElement
   return {
     h: body.clientHeight,
     w: body.clientWidth
   }
 }
 
-function getScreenSize (s: { height: number; width: number }): Size {
-  return {
-    h: s.height,
-    w: s.width
-  }
-}
+const getScreenSize = (s: { height: number; width: number }): Size => ({
+  h: s.height,
+  w: s.width
+})
 
-export function getOffset (w: Window) {
-  return {
-    x: w.scrollX || w.pageXOffset,
-    y: w.scrollY || w.pageYOffset
-  }
-}
+export const getOffset = (w: Window) => ({
+  x: w.scrollX || w.pageXOffset,
+  y: w.scrollY || w.pageYOffset
+})
 
-function getReferrer (): string {
-  return document.referrer
-}
-
-function getTitle () {
-  return document.title
-}
-
-export function getEnv (page: string): ClientEnvironmentsData | void {
+export const getEnv = (page: string): ClientEnvironmentsData | void => {
   try {
+    const d = document
     const screenSize = getScreenSize(screen)
     const windowSize = getWindowSize(window)
-    const resourceSize = getResourceSize(document)
+    const resourceSize = getResourceSize(d)
     return {
       v: VERSION,
-      r: getReferrer(),
-      n: getTitle(),
+      r: d.referrer,
+      n: d.title,
       l: page,
       sh: screenSize.h,
       sw: screenSize.w,
@@ -61,11 +51,5 @@ export function getEnv (page: string): ClientEnvironmentsData | void {
   }
 }
 
-export function validate (apis: string[]): boolean {
-  for (let i = 0; i < apis.length; i++) {
-    if (!(apis[i] in window)) {
-      return false
-    }
-  }
-  return true
-}
+export const validate = (apis: string[]): boolean =>
+  !apis.some((api: string) => !(api in window))
