@@ -77,7 +77,7 @@ export default function (Agent: any) {
         lazyStack[cmd]++
         lazyStack[cmd] < 5
           ? q.push(argsObject)
-          : warning(`exezcute timeout: ${cmd}`)
+          : warning(`execute timeout: ${cmd}`)
       }
       const [next, ...queue] = obj2array(q)
       applyQueue(next, queue)

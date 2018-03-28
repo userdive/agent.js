@@ -114,7 +114,7 @@ export default class Agent {
     const p = this[PLUGINS][pluginName]
     if (p && p[methodName]) {
       const res = p[methodName](...args)
-      return typeof res === 'undefined' ? true : !!res
+      return res === undefined ? true : !!res
     }
     return false
   }
