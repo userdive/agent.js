@@ -2,11 +2,11 @@
 id: はじめに
 title: はじめに
 ---
-You use [agent.js](https://cdn.userdive.com/agent.js) to measure the action of USERDIVE’s user. In the following, I explain a method to add to for a site.
+USERDIVE でアクションを測定するために[agent.js](https://cdn.userdive.com/agent.js) を使用します。 以下に、サイトへの追加方法を記載します。
 
-## Setting of the HTML `<script>` tag
+## `<script>` タグの設定
 
-We explain a method to set the following HTML `<script>` tag for tracking the site. We recommend that you list this before `</body>` tag of the site.
+トラッキング対象のサイトに`<script>` タグを設定する方法をいかに示します。 サイトHTML内の`</body>` タグよりも前に記述することを推奨します。
 
 The following `id` is ID published by every project. An account of USERDIVE is necessary to publish it.
 
