@@ -8,7 +8,7 @@ USERDIVE でアクションを測定するために[agent.js](https://cdn.userdi
 
 トラッキング対象のサイトに`<script>` タグを設定する方法をいかに示します。 サイトHTML内の`</body>` タグよりも前に記述することを推奨します。
 
-The following `id` is ID published by every project. An account of USERDIVE is necessary to publish it.
+以下の `id` にはプロジェクトごとに発行されたIDを指定します。 IDの発行には、USERDIVEのアカウントが必要です。
 
 ```html
 <script>
