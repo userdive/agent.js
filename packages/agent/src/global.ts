@@ -55,7 +55,7 @@ const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
 export default function (
   Agent: any,
-  cnt: { [key: string]: number },
+  lazyStack: { [key: string]: number },
   agents: { [key: string]: any }
 ) {
   const w: any = window
@@ -69,19 +69,21 @@ export default function (
     const args = obj2array(argsObject)
     const cmd = args.shift()
 
-    if (typeof cnt[cmd] !== 'number') {
-      cnt[cmd] = 0
+    if (typeof lazyStack[cmd] !== 'number') {
+      lazyStack[cmd] = 0
     }
 
     setTimeout(() => {
       const res = execute(Agent, agents)(cmd, ...args)
       if (!res) {
-        cnt[cmd]++
-        cnt[cmd] < 5 ? q.push(argsObject) : warning(`exezcute timeout: ${cmd}`)
+        lazyStack[cmd]++
+        lazyStack[cmd] < 5
+          ? q.push(argsObject)
+          : warning(`exezcute timeout: ${cmd}`)
       }
       const [next, ...queue] = obj2array(q)
       applyQueue(next, queue)
-    }, cnt[cmd] * 100)
+    }, lazyStack[cmd] * 100)
   }
 
   if (w[name] && w[name].q) {

@@ -96,12 +96,10 @@ export default class Agent {
 
   provide (name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
-    console.warn(this[PLUGINS], 'provide')
     return this[PLUGINS][name]
   }
 
   require (pluginName: string, pluginOptions?: any): boolean {
-    console.warn(this[PLUGINS], 'require')
     if (this[PLUGINS][pluginName]) {
       this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](
         this,
