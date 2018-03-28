@@ -16,4 +16,4 @@ class DebugAgent extends Agent {
   }
 }
 
-factory(DebugAgent)
+factory(DebugAgent, {}, {})

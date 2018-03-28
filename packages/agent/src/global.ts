@@ -1,15 +1,17 @@
 import { FieldsObject } from 'userdive/lib/types'
 import { NAMESPACE } from './constants'
+import { warning } from './logger'
 
-const agents: any = {}
-
-type AgentClass = new (
+export type AgentClass = new (
   projectId: string,
   cookieDomain: string,
   fieldsObject: FieldsObject
 ) => void
 
-const execute = (Agent: AgentClass) => (cmd: string, ...args: any[]) => {
+const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
+  cmd: string,
+  ...args: any[]
+) => {
   const [n, command] = cmd.split('.')
   if (n && command) {
     cmd = command
@@ -33,24 +35,29 @@ const execute = (Agent: AgentClass) => (cmd: string, ...args: any[]) => {
     ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
     return true
   }
+  if (!agents[trackerName]) {
+    return false
+  }
 
   const [pluginName, pluginFunctionName]: string[] = cmd.split(':')
   if (pluginName && pluginFunctionName) {
-    return (
-      agents[trackerName].run(pluginName, pluginFunctionName, ...args) || true
-    )
+    return agents[trackerName].run(pluginName, pluginFunctionName, ...args)
   }
 
-  if (agents[trackerName] && typeof agents[trackerName][cmd] === 'function') {
-    return agents[trackerName][cmd](...args) || true
+  if (typeof agents[trackerName][cmd] === 'function') {
+    return agents[trackerName][cmd](...args)
   }
 }
 
 type Arguments = { [key: number]: any }
 
-const toArray = (args: object) => [].map.call(args, (x: any) => x)
+const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
-export default function (Agent: any) {
+export default function (
+  Agent: any,
+  cnt: { [key: string]: number },
+  agents: { [key: string]: any }
+) {
   const w: any = window
   const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
   const name = element.getAttribute(NAMESPACE) as string
@@ -59,20 +66,27 @@ export default function (Agent: any) {
     if (!argsObject || !argsObject[0]) {
       return
     }
-    const args = toArray(argsObject)
+    const args = obj2array(argsObject)
     const cmd = args.shift()
-    const res = execute(Agent)(cmd, ...args)
-    if (!res) {
-      q.push(argsObject)
+
+    if (typeof cnt[cmd] !== 'number') {
+      cnt[cmd] = 0
     }
-    const [next, ...queue] = toArray(q)
-    applyQueue(next, queue)
+
+    setTimeout(() => {
+      const res = execute(Agent, agents)(cmd, ...args)
+      if (!res) {
+        cnt[cmd]++
+        cnt[cmd] < 5 ? q.push(argsObject) : warning(`exezcute timeout: ${cmd}`)
+      }
+      const [next, ...queue] = obj2array(q)
+      applyQueue(next, queue)
+    }, cnt[cmd] * 100)
   }
 
   if (w[name] && w[name].q) {
-    const { q } = w[name]
-    const [next, ...queue] = toArray(q)
+    const [next, ...queue] = obj2array(w[name].q)
     applyQueue(next, queue)
   }
-  w[name] = execute(Agent)
+  w[name] = execute(Agent, agents)
 }

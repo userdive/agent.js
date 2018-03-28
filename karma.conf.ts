@@ -71,9 +71,7 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
         reports: ['html', 'lcovonly', 'text-summary']
       },
       webpackMiddleware: {
-        stats: {
-          colors: true
-        }
+        stats: 'errors-only'
       },
       reporters: ['mocha', 'coverage-istanbul'],
       mochaReporter: {
