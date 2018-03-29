@@ -10,8 +10,8 @@ jobs:
   include:
   - stage: Lint
     script: npm run lint
-  - stage: Build
-    script: npm run build
+  - stage: Build Size
+    script: npm run postbuild
   - stage: Test
     script:
     - npm run test
