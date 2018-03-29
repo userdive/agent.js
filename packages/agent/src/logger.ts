@@ -23,12 +23,12 @@ export const setup = ({ Raven: raven }: { Raven?: RavenStatic }): boolean => {
 
 const capture = (err: CustomError, options?: RavenOptions): void => {
   if (isDefined(Raven)) {
+    console.warn(err, options)
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)
       return
     }
     Raven.captureException(err, options)
-    console.warn(err, options)
   }
 }
 
