@@ -54,16 +54,18 @@ const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
 export default function (
   Agent: any,
-  lazyStack: { [key: string]: number },
   agents: { [key: string]: any },
   name: string,
   w: any
 ) {
-  const applyQueue = (argsObject: any[], q: Arguments[]) => {
+  const applyQueue = (
+    argsObject: any[],
+    q: Arguments[],
+    lazyStack: { [key: string]: number }
+  ) => {
     if (!argsObject || !argsObject[0]) {
       return
     }
-
     const [cmd, ...args] = obj2array(argsObject)
     if (typeof lazyStack[cmd] !== 'number') {
       lazyStack[cmd] = 0
@@ -73,18 +75,18 @@ export default function (
       const res = execute(Agent, agents)(cmd, ...args)
       if (!res) {
         lazyStack[cmd]++
-        lazyStack[cmd] < 5
+        lazyStack[cmd] < 10
           ? q.push(argsObject)
-          : warning(`execute timeout: ${cmd}`)
+          : warning(`execute timeout: ${cmd}`, lazyStack)
       }
       const [next, ...queue] = obj2array(q)
-      applyQueue(next, queue)
+      applyQueue(next, queue, lazyStack)
     }, lazyStack[cmd] * lazyStack[cmd] * 100)
   }
 
   if (w[name] && w[name].q) {
     const [next, ...queue] = obj2array(w[name].q)
-    setTimeout(() => applyQueue(next, queue), 0)
+    setTimeout(() => applyQueue(next, queue, {}), 0)
   }
   w[name] = execute(Agent, agents)
 }
