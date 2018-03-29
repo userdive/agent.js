@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn build:examples
-      - run: cd examples && gh-pages -d build
+      - run: npm run deploy:examples
 
 workflows:
   version: 2
