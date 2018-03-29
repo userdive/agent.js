@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 import { EventFieldsObject, FieldsObject, HitType } from 'userdive/lib/types'
 
-import { validate } from './browser'
+import { getLocation, validate } from './browser'
 import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
@@ -70,7 +70,8 @@ export default class Agent {
       // _ud('send', 'pageview', { page: internet.url() })
       case 'pageview':
         this.core.pageview(
-          (typeof page === 'string' ? page : (data as string)) || location.href
+          (typeof page === 'string' ? page : (data as string)) ||
+            getLocation().href
         )
         break
       case 'event':

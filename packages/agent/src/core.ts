@@ -6,7 +6,7 @@ import { UIEventObserver } from 'ui-event-observer'
 import { EventFieldsObject } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
-import { getEnv } from './browser'
+import { getEnv, getLocation } from './browser'
 import {
   INTERACT as MAX_INTERACT,
   INTERVAL as INTERVAL_DEFAULT_SETTING,
@@ -35,17 +35,20 @@ const createInteractData = (d: Interact): string =>
     )}`
     : ''
 
-const findOrCreateUserId = ({
-  allowLinker,
-  cookieDomain,
-  cookieExpires: expires,
-  cookieName,
-  cookiePath: path,
-  linkerName
-}: SettingFieldsObject): string => {
+const findOrCreateUserId = (
+  {
+    allowLinker,
+    cookieDomain,
+    cookieExpires: expires,
+    cookieName,
+    cookiePath: path,
+    linkerName
+  }: SettingFieldsObject,
+  { search }: Location
+): string => {
   let userId = getCookie(cookieName)
   if (allowLinker) {
-    const qs = location.search.trim().replace(/^[?#&]/, '')
+    const qs = search.trim().replace(/^[?#&]/, '')
     const [linkerParam] = qs
       .split('&')
       .filter(s => s.length && s.split('=')[0] === linkerName)
@@ -87,7 +90,7 @@ export default class AgentCore extends Store {
     eventsClass: any[], // TODO
     settings: SettingFieldsObject
   ) {
-    const userId = findOrCreateUserId(settings)
+    const userId = findOrCreateUserId(settings, getLocation())
     super(userId)
 
     this.id = generateId()
