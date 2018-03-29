@@ -73,8 +73,17 @@ describe('global async', () => {
       hitType: 'pageview'
     })
     assert(agent3.loadTime)
+
+    name = lorem.word()
+    ;(factory() as any)(`create`, lorem.word(), { name }) // before v1 syntax
+    const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
+      dimension1: lorem.word()
+    })
+    assert(agent4.loadTime)
+
     assert(agent.id !== agent3.id)
     assert(agent2.id !== agent3.id)
+    assert(agent3.id !== agent4.id)
   })
 
   it('call plugins', () => {
@@ -128,9 +137,12 @@ describe('global async', () => {
   })
 
   it('debug global', () => {
+    const timer = useFakeTimers(new Date().getTime())
     assert(factory()('create', lorem.word(), 'auto') === undefined)
     assert(factory().q.length)
     require('../src/entrypoint/debug')
+    timer.tick(100)
     assert(factory().q === undefined)
+    timer.restore()
   })
 })
