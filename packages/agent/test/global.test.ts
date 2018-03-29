@@ -75,7 +75,7 @@ describe('global async', () => {
     assert(agent3.loadTime)
 
     name = lorem.word()
-    ;(factory() as any)(`create`, lorem.word(), { name }) // before v1 syntax
+    ;(factory() as any)(`create`, lorem.word(), { auto: true, name }) // v0.x supported options
     const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
       dimension1: lorem.word()
     })

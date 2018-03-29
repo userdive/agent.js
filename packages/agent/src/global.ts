@@ -25,7 +25,7 @@ const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
     if (typeof args[1] === 'object') {
       // _ud('create', 'id', { auto: true, name: 'myTracker' })
       args[2] = args[1]
-      args[1] = args[1].auto || args[1].cookieName
+      args[1] = args[1].auto ? 'auto' : args[1].cookieDomain
     }
     agents[
       (typeof args[2] === 'string' && args[2]) ||
