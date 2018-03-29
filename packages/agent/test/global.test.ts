@@ -42,7 +42,7 @@ describe('global async', () => {
     assert(factory().q.length === 2)
 
     require('../src/entrypoint/')
-    timer.tick(100)
+    timer.tick(1000)
     timer.restore()
     assert(factory().q === undefined)
     const agent: any = factory()('send', 'pageview')
@@ -130,7 +130,7 @@ describe('global async', () => {
     factory()('create', lorem.word(), 'auto')
 
     require('../src/entrypoint/')
-    timer.tick(3000)
+    timer.tick(5000)
     assert(spy.called)
     spy.restore()
     timer.restore()

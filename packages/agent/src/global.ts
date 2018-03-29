@@ -48,45 +48,38 @@ const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
   }
 }
 
-type Arguments = { [key: number]: any }
-
-const obj2array = (args: object) => [].map.call(args, (x: any) => x)
-
 export default function (
   Agent: any,
   agents: { [key: string]: any },
-  name: string,
-  w: any
+  name: string
 ) {
-  const applyQueue = (
-    argsObject: any[],
-    q: Arguments[],
-    lazyStack: { [key: string]: number }
-  ) => {
-    if (!argsObject || !argsObject[0]) {
-      return
-    }
-    const [cmd, ...args] = obj2array(argsObject)
-    if (typeof lazyStack[cmd] !== 'number') {
-      lazyStack[cmd] = 0
-    }
-
+  const applyQueue = (delay: number) => {
     setTimeout(() => {
+      if ((window as any)[name].q.length === 0) {
+        (window as any)[name] = execute(Agent, agents)
+        return
+      }
+
+      const next = (window as any)[name].q.shift()
+      const [cmd, ...args] = [].map.call(next, (x: any) => x)
+
       const res = execute(Agent, agents)(cmd, ...args)
       if (!res) {
-        lazyStack[cmd]++
-        lazyStack[cmd] < 10
-          ? q.push(argsObject)
-          : warning(`execute timeout: ${cmd}`, lazyStack)
+        delay++
+        if (delay > 10) {
+          warning(`execute timeout: ${cmd}`)
+          ;(window as any)[name] = execute(Agent, agents)
+          return
+        }
+        (window as any)[name](...next)
       }
-      const [next, ...queue] = obj2array(q)
-      applyQueue(next, queue, lazyStack)
-    }, lazyStack[cmd] * lazyStack[cmd] * 100)
+      applyQueue(delay)
+    }, delay * 100)
   }
 
-  if (w[name] && w[name].q) {
-    const [next, ...queue] = obj2array(w[name].q)
-    setTimeout(() => applyQueue(next, queue, {}), 0)
+  if ((window as any)[name] && (window as any)[name].q) {
+    applyQueue(0)
+  } else {
+    (window as any)[name] = execute(Agent, agents)
   }
-  w[name] = execute(Agent, agents)
 }
