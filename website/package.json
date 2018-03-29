@@ -1,6 +1,6 @@
 {
   "name": "userdive-developers",
-  "version": "1.0.0-beta5",
+  "version": "1.0.0-beta5.0",
   "dependencies": {
     "docusaurus": "1.0.9"
   },
