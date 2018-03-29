@@ -84,7 +84,7 @@ export default function (
 
   if (w[name] && w[name].q) {
     const [next, ...queue] = obj2array(w[name].q)
-    applyQueue(next, queue)
+    setTimeout(() => applyQueue(next, queue), 0)
   }
   w[name] = execute(Agent, agents)
 }
