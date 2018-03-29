@@ -25,7 +25,6 @@ describe('agent', () => {
     const agent2: any = new Agent(random.uuid(), 'auto', {
       allowLinker: true,
       cookieName,
-      cookieDomain: location.hostname,
       cookieExpires: random.number()
     })
     assert.equal(
