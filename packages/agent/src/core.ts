@@ -1,4 +1,4 @@
-import { save } from 'auto-cookie'
+import { save as autoSave } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
@@ -37,7 +37,7 @@ const createInteractData = (d: Interact): string =>
 
 const findOrCreateUserId = ({
   allowLinker,
-  cookieDomain: domain,
+  cookieDomain,
   cookieExpires: expires,
   cookieName,
   cookiePath: path,
@@ -54,11 +54,10 @@ const findOrCreateUserId = ({
       userId = id
     }
   }
-  const saveCookie = cookieName === 'auto' ? save : setCookie
   if (!userId || allowLinker) {
     userId = userId || generateId()
-    saveCookie(cookieName, userId, {
-      domain,
+    ;(cookieDomain === 'auto' ? autoSave : setCookie)(cookieName, userId, {
+      domain: cookieDomain === 'auto' ? undefined : cookieDomain,
       expires,
       path
     })
