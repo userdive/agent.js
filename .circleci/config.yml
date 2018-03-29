@@ -22,6 +22,11 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn build:examples
+      - run:
+          name: git config
+          command: |
+            git config --global user.email "develop+bot@uncovertruth.co.jp"
+            git config --global user.name "userdivebot"
       - run: npm run deploy:examples
 
 workflows:
