@@ -1,5 +1,4 @@
 import { FieldsObject } from 'userdive/lib/types'
-import { NAMESPACE } from './constants'
 import { warning } from './logger'
 
 export type AgentClass = new (
@@ -7,11 +6,6 @@ export type AgentClass = new (
   cookieDomain: string,
   fieldsObject: FieldsObject
 ) => void
-
-export const fetchName = (d: Document) => {
-  const element = d.querySelector(`[${NAMESPACE}]`) as HTMLElement
-  return element.getAttribute(NAMESPACE) as string
-}
 
 const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
   cmd: string,
@@ -69,9 +63,8 @@ export default function (
     if (!argsObject || !argsObject[0]) {
       return
     }
-    const args = obj2array(argsObject)
-    const cmd = args.shift()
 
+    const [cmd, ...args] = obj2array(argsObject)
     if (typeof lazyStack[cmd] !== 'number') {
       lazyStack[cmd] = 0
     }

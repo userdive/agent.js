@@ -1,4 +1,4 @@
-import { VERSION } from './constants'
+import { NAMESPACE, VERSION } from './constants'
 import { error } from './logger'
 import { ClientEnvironmentsData, Size } from './types'
 
@@ -22,6 +22,11 @@ const getScreenSize = (s: { height: number; width: number }): Size => ({
   h: s.height,
   w: s.width
 })
+
+export const getName = (d: Document) => {
+  const element = d.querySelector(`[${NAMESPACE}]`) as HTMLElement
+  return element.getAttribute(NAMESPACE) as string
+}
 
 export const getOffset = (w: Window) => ({
   x: w.scrollX || w.pageXOffset,

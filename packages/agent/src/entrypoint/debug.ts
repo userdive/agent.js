@@ -1,6 +1,7 @@
 import * as Raven from 'raven-js'
 import Agent from '../agent'
-import factory, { fetchName } from '../global'
+import { getName } from '../browser'
+import factory from '../global'
 import { SettingFieldsObject } from '../types'
 
 Raven.config(process.env.RAVEN_DSN as string).install()
@@ -16,4 +17,4 @@ class DebugAgent extends Agent {
   }
 }
 
-factory(DebugAgent, {}, {}, fetchName(document), window)
+factory(DebugAgent, {}, {}, getName(document), window)
