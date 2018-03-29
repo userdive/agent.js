@@ -24,6 +24,7 @@
     "eslint": "4.19.1",
     "faker": "4.1.0",
     "fixpack": "2.3.1",
+    "gh-pages": "1.1.0",
     "husky": "0.14.3",
     "is-url": "1.2.4",
     "istanbul-instrumenter-loader": "3.0.1",
@@ -81,11 +82,8 @@
     "bump": "lerna publish --skip-npm --skip-git && lerna-changelog",
     "ci:appveyor": "cross-env CI_MODE=IE karma start",
     "ci:sauce": "cross-env CI_MODE=sauce karma start",
-    "clean": "lerna clean --yes && lerna run clean && rimraf cdn",
-    "coverage": "run-p coverage:*",
-    "coverage:agent": "codecov -f ./packages/agent/coverage/lcov.info -F agent",
-    "coverage:linker": "codecov -f ./packages/linker/coverage/lcov.info -F linker",
-    "coverage:userdive": "codecov -f ./packages/userdive/coverage/lcov.info -F userdive",
+    "clean": "lerna clean --yes && lerna run clean && rimraf cdn coverage",
+    "coverage": "codecov -f ./coverage/lcov.info",
     "e2e": "lerna run e2e",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
@@ -100,7 +98,7 @@
     "prepare": "lerna run build --scope userdive && lerna run build --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "concurrently -k 'yarn w:examples' 'yarn w:website'",
-    "test": "lerna run test --parallel",
+    "test": "karma start",
     "w:examples": "webpack-dev-server --config examples/webpack.config.ts --output-path examples/build/assets",
     "w:html": "pug examples -o examples/build -P -s -w",
     "w:website": "cd website && npm start"
@@ -108,7 +106,7 @@
   "size-limit": [
     {
       "path": "cdn/agent.js",
-      "limit": "8.2 KB"
+      "limit": "8.4 KB"
     },
     {
       "path": "cdn/agent.d.js",

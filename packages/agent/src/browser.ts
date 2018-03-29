@@ -1,4 +1,4 @@
-import { VERSION } from './constants'
+import { NAMESPACE, VERSION } from './constants'
 import { error } from './logger'
 import { ClientEnvironmentsData, Size } from './types'
 
@@ -10,7 +10,7 @@ const getWindowSize = (w: {
   w: w.innerWidth
 })
 
-function getResourceSize (d: Document): Size {
+const getResourceSize = (d: Document): Size => {
   const body = d.body as HTMLElement
   return {
     h: body.clientHeight,
@@ -22,6 +22,13 @@ const getScreenSize = (s: { height: number; width: number }): Size => ({
   h: s.height,
   w: s.width
 })
+
+export const getLocation = (): Location => location
+
+export const getName = (d: Document) => {
+  const element = d.querySelector(`[${NAMESPACE}]`) as HTMLElement
+  return element.getAttribute(NAMESPACE) as string
+}
 
 export const getOffset = (w: Window) => ({
   x: w.scrollX || w.pageXOffset,

@@ -1,7 +1,7 @@
 import * as objectAssign from 'object-assign'
 import { EventFieldsObject, FieldsObject, HitType } from 'userdive/lib/types'
 
-import { validate } from './browser'
+import { getLocation, validate } from './browser'
 import { LISTENER, SETTINGS as SETTINGS_DEFAULT } from './constants'
 import AgentCore from './core'
 import Click from './events/click'
@@ -70,7 +70,8 @@ export default class Agent {
       // _ud('send', 'pageview', { page: internet.url() })
       case 'pageview':
         this.core.pageview(
-          (typeof page === 'string' ? page : (data as string)) || location.href
+          (typeof page === 'string' ? page : (data as string)) ||
+            getLocation().href
         )
         break
       case 'event':
@@ -96,6 +97,7 @@ export default class Agent {
 
   provide (name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
+    return this[PLUGINS][name]
   }
 
   require (pluginName: string, pluginOptions?: any): boolean {
@@ -109,8 +111,13 @@ export default class Agent {
     return false
   }
 
-  run (pluginName: string, methodName: string, ...args: any[]) {
-    this.plugins[pluginName][methodName](...args)
+  run (pluginName: string, methodName: string, ...args: any[]): boolean {
+    const p = this[PLUGINS][pluginName]
+    if (p && p[methodName]) {
+      const res = p[methodName](...args)
+      return res === undefined ? true : !!res
+    }
+    return false
   }
 
   subscribe (target: any, eventName: string, handler: Function): Function {

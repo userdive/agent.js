@@ -1,6 +1,8 @@
-# @userdive/agent
+<p align='center'>
+<a href="https://app.userdive.com/signup" alt="USERDIVE logo" target="_blank"><img src="http://style.uncovertruth.co.jp/assets/images/userdive/logo-text.svg" height="100"></a>
+</p>
 
-<p align='center'><a href="https://app.userdive.com/signup" alt="USERDIVE logo" target="_blank"><img src="http://style.uncovertruth.co.jp/assets/images/userdive/logo-text.svg" height="100"></a></p>
+# @userdive/agent
 
 [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
@@ -34,9 +36,9 @@ const agent = new Agent("projectId", "auto");
 agent.send("pageview");
 ```
 
-### Feature
+### Custom Dimensions
 
-#### Custom Dimensions and Metrics
+[docs](https://developers.userdive.com/docs/en/custom-variables.html)
 
 ```js
 import Agent from "@userdive/agent";
@@ -55,7 +57,7 @@ agent.set({
 agent.set("dimension15", "My Custom Dimension");
 ```
 
-#### Send Event
+### Send Event
 
 ```js
 import Agent from "@userdive/agent";

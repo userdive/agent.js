@@ -8,6 +8,8 @@ env:
   - secure: euv17ubtD4RUWl1GgfjL/gTtHtfO8snBz9j1wOwRCQpEJskTjTR8UjLfXuPDdtnW3laO+B7Ur4rg4FBm9BSGBaocPrFiYEJ/wp8qO+ryV5AtyMlmbzwH2qsXVYI7MWQOXFy2zaMMC7w7NEXKfHIPlqpMYqP4SMGJlOTH8aLNa/ZEuwMEdYc3EFl3DMSEtGjE8QhJ0iXxgA7/PkutK+xlRTpRflRILMj57rV1onXOBx3elTi1ELvVOfDA5xVN+/7Aznw4wo7QqZHL6wxfspdjpoAsnOexfidFcJQUHlC4UiJP7glMrkhlhLprvGB3x1b4dQl1hnE+PQRkDBIk35YL+68UxQDMcYs+QZ0Mj154b4OdqZneZPygmxDCA8q2t8Pp+bJc8wQKEj0/837WvnKiiiYqd9NqHTrqCDaNdvm0c34K/0sO9I6j4CEfJplaXLMoQkXgaTZAJjsBRLRRJWj0NWOvZh54nnyJKg8zogLdx/p+/yMcXVVI6oZfbkWScdmN7sSHb2any+n0+qRFdRt56jzlRnvhTidzNhM3SR8DfnAZ04TT49wMr6Vt4gKg49WGtkda7FyMF97LHJOJZtX2Cf1Bgp+T7fl+tqUn66rVKmX21LGiCRYw1xwoDXeSzFNkySaIFWbLByzafnZCOXceKiHxlQUuxtkAneyhuuAx0Zg=
 jobs:
   include:
+  - stage: Build Size
+    script: npm run postbuild
   - stage: Lint
     script: npm run lint
   - stage: Test
@@ -16,7 +18,7 @@ jobs:
     - npm run coverage
   - stage: Sauce
     script: npm run ci:sauce
-    if: (type = pr or branch = master) and (not branch =~ ^docs)
+    if: (type = pr or branch = master) and NOT branch =~ ^docs
   - stage: deploy
     script:
     - sudo apt-get update

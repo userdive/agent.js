@@ -1,4 +1,4 @@
-import { save } from 'auto-cookie'
+import { save as autoSave } from 'auto-cookie'
 import { EventEmitter } from 'events'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
@@ -6,7 +6,7 @@ import { UIEventObserver } from 'ui-event-observer'
 import { EventFieldsObject } from 'userdive/lib/types'
 import { v4 as uuid } from 'uuid'
 
-import { getEnv } from './browser'
+import { getEnv, getLocation } from './browser'
 import {
   INTERACT as MAX_INTERACT,
   INTERVAL as INTERVAL_DEFAULT_SETTING,
@@ -35,17 +35,20 @@ const createInteractData = (d: Interact): string =>
     )}`
     : ''
 
-const findOrCreateUserId = ({
-  allowLinker,
-  cookieDomain: domain,
-  cookieExpires: expires,
-  cookieName,
-  cookiePath: path,
-  linkerName
-}: SettingFieldsObject): string => {
+const findOrCreateUserId = (
+  {
+    allowLinker,
+    cookieDomain,
+    cookieExpires: expires,
+    cookieName,
+    cookiePath: path,
+    linkerName
+  }: SettingFieldsObject,
+  { search }: Location
+): string => {
   let userId = getCookie(cookieName)
   if (allowLinker) {
-    const qs = location.search.trim().replace(/^[?#&]/, '')
+    const qs = search.trim().replace(/^[?#&]/, '')
     const [linkerParam] = qs
       .split('&')
       .filter(s => s.length && s.split('=')[0] === linkerName)
@@ -54,11 +57,10 @@ const findOrCreateUserId = ({
       userId = id
     }
   }
-  const saveCookie = cookieName === 'auto' ? save : setCookie
   if (!userId || allowLinker) {
     userId = userId || generateId()
-    saveCookie(cookieName, userId, {
-      domain,
+    ;(cookieDomain === 'auto' ? autoSave : setCookie)(cookieName, userId, {
+      domain: cookieDomain === 'auto' ? undefined : cookieDomain,
       expires,
       path
     })
@@ -88,7 +90,7 @@ export default class AgentCore extends Store {
     eventsClass: any[], // TODO
     settings: SettingFieldsObject
   ) {
-    const userId = findOrCreateUserId(settings)
+    const userId = findOrCreateUserId(settings, getLocation())
     super(userId)
 
     this.id = generateId()

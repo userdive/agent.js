@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import { lorem } from 'faker'
 import 'mocha'
-import { spy as sinonSpy, stub as sinonStub } from 'sinon'
+import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
 
 import { inject, namespace, q } from 'userdive'
 import { USERDIVEApi } from 'userdive/lib/types'
@@ -14,7 +14,6 @@ describe('global async', () => {
     inject('', { [NAMESPACE]: GLOBAL_NAME })
   })
 
-  const w: any = window
   const factory = (): USERDIVEApi => q(GLOBAL_NAME, window)
   let stub: any
   beforeEach('generate queue', () => {
@@ -23,10 +22,12 @@ describe('global async', () => {
     stub.callsFake(() => {
       // nothing todo
     })
+    ;((w: any) => {
+      w[GLOBAL_NAME] = undefined
+    })(window)
   })
 
   afterEach(() => {
-    w[GLOBAL_NAME] = undefined
     stub.restore()
   })
 
@@ -35,12 +36,15 @@ describe('global async', () => {
   })
 
   it('find global', () => {
+    const timer = useFakeTimers(new Date().getTime())
     assert(factory()('set', 'dimension1', lorem.word()) === undefined)
     assert(factory()('create', lorem.word(), 'auto') === undefined)
-    assert(w[GLOBAL_NAME].q.length === 2)
+    assert(factory().q.length === 2)
 
     require('../src/entrypoint/')
-    assert(w[GLOBAL_NAME].q === undefined)
+    timer.tick(100)
+    timer.restore()
+    assert(factory().q === undefined)
     const agent: any = factory()('send', 'pageview')
     assert(agent.loadTime)
 
@@ -59,18 +63,27 @@ describe('global async', () => {
 
     let name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', name)
-    const agent2 = w[GLOBAL_NAME](`${name}.send`, 'pageview')
+    const agent2 = (factory() as any)(`${name}.send`, 'pageview')
     assert(agent2.loadTime)
     assert(agent.id !== agent2.id)
 
     name = lorem.word()
     factory()(`create`, lorem.word(), 'auto', { name })
-    const agent3 = w[GLOBAL_NAME](`${name}.send`, {
+    const agent3 = (factory() as any)(`${name}.send`, {
       hitType: 'pageview'
     })
     assert(agent3.loadTime)
+
+    name = lorem.word()
+    ;(factory() as any)(`create`, lorem.word(), { name }) // before v1 syntax
+    const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
+      dimension1: lorem.word()
+    })
+    assert(agent4.loadTime)
+
     assert(agent.id !== agent3.id)
     assert(agent2.id !== agent3.id)
+    assert(agent3.id !== agent4.id)
   })
 
   it('call plugins', () => {
@@ -86,18 +99,50 @@ describe('global async', () => {
         assert(value === 'hello')
       }
     }
+
     const spy = sinonSpy(Plugin.prototype, 'echo')
     factory()('provide', name, Plugin)
     factory()('require', name)
-
-    w[GLOBAL_NAME](`${name}:echo`, 'hello')
+    ;(factory() as any)(`${name}:echo`, 'hello')
     assert(spy.called)
+    spy.restore()
+  })
+
+  it('call plugin queue', () => {
+    const timer = useFakeTimers(new Date().getTime())
+    const name = lorem.word()
+    const expected = lorem.word()
+    class Plugin {
+      tracker: any
+      constructor (tracker: any) {
+        assert(tracker.plugins[name])
+      }
+      echo (value: string) {
+        assert(value === expected)
+      }
+    }
+    const spy = sinonSpy(Plugin.prototype, 'echo')
+
+    // reverse order queue
+    ;(factory() as any)(`${name}:echo`, expected)
+    factory()('require', name)
+    factory()('provide', name, Plugin)
+    factory()('create', lorem.word(), 'auto')
+
+    require('../src/entrypoint/')
+    timer.tick(3000)
+    assert(spy.called)
+    spy.restore()
+    timer.restore()
   })
 
   it('debug global', () => {
+    const timer = useFakeTimers(new Date().getTime())
     assert(factory()('create', lorem.word(), 'auto') === undefined)
     assert(factory().q.length)
     require('../src/entrypoint/debug')
+    timer.tick(100)
     assert(factory().q === undefined)
+    timer.restore()
   })
 })

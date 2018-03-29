@@ -1,16 +1,16 @@
 import { FieldsObject } from 'userdive/lib/types'
-import { NAMESPACE } from './constants'
+import { warning } from './logger'
 
-const CREATE = 'create'
-const agents: any = {}
+export type AgentClass = new (
+  projectId: string,
+  cookieDomain: string,
+  fieldsObject: FieldsObject
+) => void
 
-const execute = (
-  Agent: new (
-    projectId: string,
-    cookieDomain: string,
-    fieldsObject: FieldsObject
-  ) => void
-) => (cmd: string, ...args: any[]): void => {
+const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
+  cmd: string,
+  ...args: any[]
+) => {
   const [n, command] = cmd.split('.')
   if (n && command) {
     cmd = command
@@ -21,7 +21,7 @@ const execute = (
    * _ud('create', 'id', 'auto', 'myTracker')
    * _ud('create', 'id', 'auto')
    */
-  if (cmd === CREATE) {
+  if (cmd === 'create') {
     if (typeof args[1] === 'object') {
       // _ud('create', 'id', { auto: true, name: 'myTracker' })
       args[2] = args[1]
@@ -32,7 +32,10 @@ const execute = (
         (typeof args[2] === 'object' && args[2].name) ||
         trackerName
     ] = new Agent(args[0], args[1], typeof args[2] === 'object' ? args[2] : {})
-    return
+    return true
+  }
+  if (!agents[trackerName]) {
+    return false
   }
 
   const [pluginName, pluginFunctionName]: string[] = cmd.split(':')
@@ -47,24 +50,41 @@ const execute = (
 
 type Arguments = { [key: number]: any }
 
-const isCreateCmd = (isEqual: boolean) => ({ 0: cmd }: Arguments): boolean =>
-  isEqual === (cmd === CREATE)
+const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
-export default function (Agent: any) {
-  const w: any = window
-  const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
-  const name = element.getAttribute(NAMESPACE) as string
+export default function (
+  Agent: any,
+  lazyStack: { [key: string]: number },
+  agents: { [key: string]: any },
+  name: string,
+  w: any
+) {
+  const applyQueue = (argsObject: any[], q: Arguments[]) => {
+    if (!argsObject || !argsObject[0]) {
+      return
+    }
 
-  const applyQueue = (argsObject: any[]) => {
-    const args = [].map.call(argsObject, (x: any) => x)
-    const cmd = args.shift()
-    execute(Agent)(cmd, ...args)
+    const [cmd, ...args] = obj2array(argsObject)
+    if (typeof lazyStack[cmd] !== 'number') {
+      lazyStack[cmd] = 0
+    }
+
+    setTimeout(() => {
+      const res = execute(Agent, agents)(cmd, ...args)
+      if (!res) {
+        lazyStack[cmd]++
+        lazyStack[cmd] < 5
+          ? q.push(argsObject)
+          : warning(`execute timeout: ${cmd}`)
+      }
+      const [next, ...queue] = obj2array(q)
+      applyQueue(next, queue)
+    }, lazyStack[cmd] * lazyStack[cmd] * 100)
   }
 
   if (w[name] && w[name].q) {
-    const { q } = w[name]
-    q.filter(isCreateCmd(true)).forEach(applyQueue)
-    q.filter(isCreateCmd(false)).forEach(applyQueue)
+    const [next, ...queue] = obj2array(w[name].q)
+    setTimeout(() => applyQueue(next, queue), 0)
   }
-  w[name] = execute(Agent)
+  w[name] = execute(Agent, agents)
 }

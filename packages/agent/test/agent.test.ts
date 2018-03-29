@@ -1,9 +1,10 @@
 import * as assert from 'assert'
 import { internet, lorem, random } from 'faker'
+import { get as getCookie } from 'js-cookie'
 import 'mocha'
-import { spy as sinonSpy } from 'sinon'
+import { spy as sinonSpy, stub as sinonStub } from 'sinon'
 import Agent from '../src/agent'
-import { INTERVAL } from '../src/constants'
+import { INTERVAL, SETTINGS } from '../src/constants'
 
 describe('agent', () => {
   let agent: any
@@ -15,20 +16,35 @@ describe('agent', () => {
   it('constructor', () => {
     const agent: any = new Agent(random.uuid(), 'auto', {})
     assert(agent.core)
-    assert(agent.get('linkerParam'))
+    assert.equal(
+      agent.get('linkerParam'),
+      `${SETTINGS.linkerName}=${getCookie(SETTINGS.cookieName)}`
+    )
 
+    const cookieName = lorem.word()
     const agent2: any = new Agent(random.uuid(), 'auto', {
       allowLinker: true,
-      cookieName: lorem.word(),
-      cookieDomain: internet.domainName(),
+      cookieName,
       cookieExpires: random.number()
     })
-    assert(agent2.get('linkerParam'))
+    assert.equal(
+      agent2.get('linkerParam'),
+      `${SETTINGS.linkerName}=${getCookie(cookieName)}`
+    )
 
+    const stub = sinonStub(require('../src/browser'), 'getLocation')
+    const before = getCookie(SETTINGS.cookieName)
+    stub.callsFake(() => {
+      const link = document.createElement('a')
+      link.href = location.href
+      link.search = `${SETTINGS.linkerName}=${before}`
+      return link
+    })
     const agent3: any = new Agent(random.uuid(), 'auto', {
       allowLinker: true
     })
-    assert(agent3.get('linkerParam'))
+    assert.equal(agent3.get('linkerParam'), `${SETTINGS.linkerName}=${before}`)
+    stub.restore()
   })
 
   it('linkerParam', () => {
