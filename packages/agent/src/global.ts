@@ -8,6 +8,11 @@ export type AgentClass = new (
   fieldsObject: FieldsObject
 ) => void
 
+export const fetchName = (d: Document) => {
+  const element = d.querySelector(`[${NAMESPACE}]`) as HTMLElement
+  return element.getAttribute(NAMESPACE) as string
+}
+
 const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
   cmd: string,
   ...args: any[]
@@ -53,13 +58,13 @@ type Arguments = { [key: number]: any }
 
 const obj2array = (args: object) => [].map.call(args, (x: any) => x)
 
-export default function (Agent: any) {
-  const lazyStack: { [key: string]: number } = {}
-  const agents: { [key: string]: any } = {}
-  const w: any = window
-  const element = document.querySelector(`[${NAMESPACE}]`) as HTMLElement
-  const name = element.getAttribute(NAMESPACE) as string
-
+export default function (
+  Agent: any,
+  lazyStack: { [key: string]: number },
+  agents: { [key: string]: any },
+  name: string,
+  w: any
+) {
   const applyQueue = (argsObject: any[], q: Arguments[]) => {
     if (!argsObject || !argsObject[0]) {
       return
@@ -81,7 +86,7 @@ export default function (Agent: any) {
       }
       const [next, ...queue] = obj2array(q)
       applyQueue(next, queue)
-    }, lazyStack[cmd] * 100)
+    }, lazyStack[cmd] * lazyStack[cmd] * 100)
   }
 
   if (w[name] && w[name].q) {

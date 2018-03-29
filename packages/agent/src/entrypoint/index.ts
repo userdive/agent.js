@@ -1,3 +1,4 @@
 import Agent from '../agent'
-import factory from '../global'
-factory(Agent)
+import factory, { fetchName } from '../global'
+
+factory(Agent, {}, {}, fetchName(document), window)
