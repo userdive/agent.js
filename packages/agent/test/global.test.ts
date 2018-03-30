@@ -136,6 +136,20 @@ describe('global async', () => {
     timer.restore()
   })
 
+  it('timeout queue', () => {
+    const timer = useFakeTimers(new Date().getTime())
+    const spy = sinonSpy(require('../src/logger'), 'warning')
+
+    factory()('require', name) // undefined create
+    require('../src/entrypoint/')
+
+    timer.tick(5500)
+
+    assert(spy.called)
+    stub.restore()
+    timer.restore()
+  })
+
   it('debug global', () => {
     const timer = useFakeTimers(new Date().getTime())
     assert(factory()('create', lorem.word(), 'auto') === undefined)
