@@ -104,7 +104,7 @@ describe('agent', () => {
       agent.run(pluginName, 'echo', 'hello')
       assert(spy.calledOnce)
 
-      agent.provide(lorem.word(), Plugin)
+      agent.provide(random.uuid(), Plugin)
       assert(Object.keys(agent.plugins).length === 2)
     })
 

@@ -17,4 +17,4 @@ class DebugAgent extends Agent {
   }
 }
 
-factory(DebugAgent, {}, {}, getName(document), window)
+factory(DebugAgent, {}, getName(document))

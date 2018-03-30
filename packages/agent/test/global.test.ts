@@ -42,7 +42,7 @@ describe('global async', () => {
     assert(factory().q.length === 2)
 
     require('../src/entrypoint/')
-    timer.tick(100)
+    timer.tick(1000)
     timer.restore()
     assert(factory().q === undefined)
     const agent: any = factory()('send', 'pageview')
@@ -75,7 +75,7 @@ describe('global async', () => {
     assert(agent3.loadTime)
 
     name = lorem.word()
-    ;(factory() as any)(`create`, lorem.word(), { name }) // before v1 syntax
+    ;(factory() as any)(`create`, lorem.word(), { auto: true, name }) // v0.x supported options
     const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
       dimension1: lorem.word()
     })
@@ -130,9 +130,23 @@ describe('global async', () => {
     factory()('create', lorem.word(), 'auto')
 
     require('../src/entrypoint/')
-    timer.tick(3000)
+    timer.tick(5000)
     assert(spy.called)
     spy.restore()
+    timer.restore()
+  })
+
+  it('timeout queue', () => {
+    const timer = useFakeTimers(new Date().getTime())
+    const spy = sinonSpy(require('../src/logger'), 'warning')
+
+    factory()('require', name) // undefined create
+    require('../src/entrypoint/')
+
+    timer.tick(5500)
+
+    assert(spy.called)
+    stub.restore()
     timer.restore()
   })
 

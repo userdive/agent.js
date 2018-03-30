@@ -25,7 +25,7 @@ const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
     if (typeof args[1] === 'object') {
       // _ud('create', 'id', { auto: true, name: 'myTracker' })
       args[2] = args[1]
-      args[1] = args[1].auto || args[1].cookieName
+      args[1] = args[1].auto && 'auto'
     }
     agents[
       (typeof args[2] === 'string' && args[2]) ||
@@ -48,43 +48,38 @@ const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
   }
 }
 
-type Arguments = { [key: number]: any }
-
-const obj2array = (args: object) => [].map.call(args, (x: any) => x)
-
 export default function (
   Agent: any,
-  lazyStack: { [key: string]: number },
   agents: { [key: string]: any },
-  name: string,
-  w: any
+  name: string
 ) {
-  const applyQueue = (argsObject: any[], q: Arguments[]) => {
-    if (!argsObject || !argsObject[0]) {
-      return
-    }
-
-    const [cmd, ...args] = obj2array(argsObject)
-    if (typeof lazyStack[cmd] !== 'number') {
-      lazyStack[cmd] = 0
-    }
-
+  const applyQueue = (delay: number) => {
     setTimeout(() => {
+      if ((window as any)[name].q.length === 0) {
+        (window as any)[name] = execute(Agent, agents)
+        return
+      }
+
+      const next = (window as any)[name].q.shift()
+      const [cmd, ...args] = [].map.call(next, (x: any) => x)
+
       const res = execute(Agent, agents)(cmd, ...args)
       if (!res) {
-        lazyStack[cmd]++
-        lazyStack[cmd] < 5
-          ? q.push(argsObject)
-          : warning(`execute timeout: ${cmd}`)
+        delay++
+        if (delay > 10) {
+          warning(`execute timeout: ${cmd}`)
+          ;(window as any)[name] = execute(Agent, agents)
+          return
+        }
+        (window as any)[name](...next)
       }
-      const [next, ...queue] = obj2array(q)
-      applyQueue(next, queue)
-    }, lazyStack[cmd] * lazyStack[cmd] * 100)
+      applyQueue(delay)
+    }, delay * 100)
   }
 
-  if (w[name] && w[name].q) {
-    const [next, ...queue] = obj2array(w[name].q)
-    setTimeout(() => applyQueue(next, queue), 0)
+  if ((window as any)[name] && (window as any)[name].q) {
+    applyQueue(0)
+  } else {
+    (window as any)[name] = execute(Agent, agents)
   }
-  w[name] = execute(Agent, agents)
 }

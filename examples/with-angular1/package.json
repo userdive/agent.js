@@ -1,11 +1,11 @@
 {
   "name": "with-angular1",
-  "version": "1.0.0-beta5.1",
+  "version": "1.0.0-beta5.3",
   "dependencies": {
     "@types/angular": "1.6.43",
     "@uirouter/angularjs": "1.0.15",
     "angular": "1.6.9",
-    "userdive": "^1.0.0-beta5.1"
+    "userdive": "^1.0.0-beta5.3"
   },
   "private": true
 }
