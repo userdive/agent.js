@@ -227,9 +227,8 @@ var Agent = /** @class */ (function () {
             // _ud('send', 'pageview', internet.url())
             // _ud('send', 'pageview', { page: internet.url() })
             case 'pageview':
-                this.core.pageview(typeof page === 'string'
-                    ? page || location.href
-                    : data /* TODO */);
+                this.core.pageview((typeof page === 'string' ? page : data) ||
+                    browser_1.getLocation().href);
                 break;
             case 'event':
                 this.core.event(data);
@@ -250,6 +249,7 @@ var Agent = /** @class */ (function () {
     };
     Agent.prototype.provide = function (name, pluginConstructor) {
         this[PLUGINS][name] = pluginConstructor;
+        return this[PLUGINS][name];
     };
     Agent.prototype.require = function (pluginName, pluginOptions) {
         if (this[PLUGINS][pluginName]) {
@@ -263,8 +263,12 @@ var Agent = /** @class */ (function () {
         for (var _i = 2; _i < arguments.length; _i++) {
             args[_i - 2] = arguments[_i];
         }
-        (_a = this.plugins[pluginName])[methodName].apply(_a, args);
-        var _a;
+        var p = this[PLUGINS][pluginName];
+        if (p && p[methodName]) {
+            var res = p[methodName].apply(p, args);
+            return res === undefined ? true : !!res;
+        }
+        return false;
     };
     Agent.prototype.subscribe = function (target, eventName, handler) {
         return this.core.observer.subscribe(target, eventName, handler);
@@ -317,11 +321,12 @@ var createInteractData = function (d) {
         ? d.type + "," + d.id + "," + toInt(d.x) + "," + toInt(d.y) + "," + toInt(d.left) + "," + toInt(d.top)
         : '';
 };
-var findOrCreateUserId = function (_a) {
-    var allowLinker = _a.allowLinker, domain = _a.cookieDomain, expires = _a.cookieExpires, cookieName = _a.cookieName, path = _a.cookiePath, linkerName = _a.linkerName;
+var findOrCreateUserId = function (_a, _b) {
+    var allowLinker = _a.allowLinker, cookieDomain = _a.cookieDomain, expires = _a.cookieExpires, cookieName = _a.cookieName, path = _a.cookiePath, linkerName = _a.linkerName;
+    var search = _b.search;
     var userId = js_cookie_1.get(cookieName);
     if (allowLinker) {
-        var qs = location.search.trim().replace(/^[?#&]/, '');
+        var qs = search.trim().replace(/^[?#&]/, '');
         var linkerParam = qs
             .split('&')
             .filter(function (s) { return s.length && s.split('=')[0] === linkerName; })[0];
@@ -330,11 +335,10 @@ var findOrCreateUserId = function (_a) {
             userId = id;
         }
     }
-    var saveCookie = cookieName === 'auto' ? auto_cookie_1.save : js_cookie_1.set;
     if (!userId || allowLinker) {
         userId = userId || generateId();
-        saveCookie(cookieName, userId, {
-            domain: domain,
+        (cookieDomain === 'auto' ? auto_cookie_1.save : js_cookie_1.set)(cookieName, userId, {
+            domain: cookieDomain === 'auto' ? undefined : cookieDomain,
             expires: expires,
             path: path
         });
@@ -351,7 +355,7 @@ var AgentCore = /** @class */ (function (_super) {
     function AgentCore(id, eventsClass, // TODO
     settings) {
         var _this = this;
-        var userId = findOrCreateUserId(settings);
+        var userId = findOrCreateUserId(settings, browser_1.getLocation());
         _this = _super.call(this, userId) || this;
         _this.id = generateId();
         _this.clear();
@@ -1742,17 +1746,22 @@ var getWindowSize = function (w) { return ({
     h: w.innerHeight,
     w: w.innerWidth
 }); };
-function getResourceSize(d) {
+var getResourceSize = function (d) {
     var body = d.body;
     return {
         h: body.clientHeight,
         w: body.clientWidth
     };
-}
+};
 var getScreenSize = function (s) { return ({
     h: s.height,
     w: s.width
 }); };
+exports.getLocation = function () { return location; };
+exports.getName = function (d) {
+    var element = d.querySelector("[" + constants_1.NAMESPACE + "]");
+    return element.getAttribute(constants_1.NAMESPACE);
+};
 exports.getOffset = function (w) { return ({
     x: w.scrollX || w.pageXOffset,
     y: w.scrollY || w.pageYOffset
@@ -2038,12 +2047,12 @@ exports.setup = function (_a) {
 };
 var capture = function (err, options) {
     if (isDefined(Raven)) {
+        console.warn(err, options);
         if (typeof err === 'string') {
             Raven.captureMessage(err, options);
             return;
         }
         Raven.captureException(err, options);
-        console.warn(err, options);
     }
 };
 exports.error = function (err, extra) {
