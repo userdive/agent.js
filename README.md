@@ -11,6 +11,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/007cedb2144843ebb45db871c04a0045)](https://app.codacy.com/app/USERDIVE/agent.js/dashboard)
 [![BCH compliance](https://bettercodehub.com/edge/badge/userdive/agent.js?branch=master)](https://bettercodehub.com/)
 [![devDependencies Status](https://david-dm.org/userdive/agent.js/dev-status.svg)](https://david-dm.org/userdive/agent.js?type=dev)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/userdive/localized.svg)](https://crowdin.com/project/userdive)
 
 > Official USERDIVE module for webpage analytics
 
