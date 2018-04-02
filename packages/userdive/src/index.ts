@@ -1,16 +1,12 @@
 /*! userdive | Copyright (c) UNCOVER TRUTH Inc. */
 import { USERDIVEApi } from './types'
+
 const TAG_NAME = 'script'
-
-export interface IAttributes {
-  [key: string]: any
-}
-
-export function inject (source: string, attributes: IAttributes) {
-  const element: any = document.createElement(TAG_NAME)
+export function inject (source: string, attributes: { [key: string]: string }) {
+  const element = document.createElement(TAG_NAME) as HTMLScriptElement
   const script: any = document.getElementsByTagName(TAG_NAME)[0]
-  element.async = 1
-  element.defer = 1
+  element.async = true
+  element.defer = true
   element.src = source
   element.charset = 'UTF-8'
   Object.keys(attributes).forEach(key => {
@@ -30,13 +26,16 @@ export function q (name: string, global: any): USERDIVEApi {
 
 export const namespace = 'data-ud-namespace'
 
+let name: string
+let source: string
+
 export default function (
-  name?: string,
-  source?: string,
+  overrideName?: string,
+  overrideSource?: string,
   global?: any
 ): USERDIVEApi {
-  name = name || '_ud'
-  source = source || 'https://cdn.userdive.com/agent.js'
+  name = name || (overrideName || '_ud')
+  source = source || (overrideSource || 'https://cdn.userdive.com/agent.js')
   global = global || window
   if (global[name]) {
     return global[name]
