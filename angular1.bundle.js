@@ -1185,8 +1185,8 @@ var TAG_NAME = 'script';
 function inject(source, attributes) {
     var element = document.createElement(TAG_NAME);
     var script = document.getElementsByTagName(TAG_NAME)[0];
-    element.async = 1;
-    element.defer = 1;
+    element.async = true;
+    element.defer = true;
     element.src = source;
     element.charset = 'UTF-8';
     Object.keys(attributes).forEach(function (key) {
@@ -1205,9 +1205,11 @@ function q(name, global) {
 }
 exports.q = q;
 exports.namespace = 'data-ud-namespace';
-function default_1(name, source, global) {
-    name = name || '_ud';
-    source = source || 'https://cdn.userdive.com/agent.js';
+var name;
+var source;
+function default_1(overrideName, overrideSource, global) {
+    name = name || (overrideName || '_ud');
+    source = source || (overrideSource || 'https://cdn.userdive.com/agent.js');
     global = global || window;
     if (global[name]) {
         return global[name];
