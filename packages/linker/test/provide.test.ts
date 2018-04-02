@@ -3,8 +3,8 @@ import { random } from 'faker'
 import 'mocha'
 import { inject, namespace as NAMESPACE, q } from 'userdive'
 
+import provide from '@userdive/provider'
 import Linker from '../src/linker'
-import provide from '../src/provide'
 
 describe('provide', () => {
   const name = random.word()
