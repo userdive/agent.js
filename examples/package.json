@@ -16,7 +16,7 @@
   "scripts": {
     "build": "run-p build:*",
     "build:html": "pug . -o build -P -s",
-    "build:js": "webpack",
+    "build:js": "webpack --env production",
     "build:test": "tsc -m commonjs",
     "clean": "rimraf tests build",
     "e2e": "nightwatch",

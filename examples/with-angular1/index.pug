@@ -4,5 +4,7 @@ block content
   div#app(ng-app="myapp")
     div(ui-view)
 
+  include:markdown-it README.md
+
 block footer_content
   script(src='../angular1.bundle.js', defer)
