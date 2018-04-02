@@ -1,5 +1,8 @@
 extends ../index.pug
 
+block content
+  include:markdown-it README.md
+
 block footer_content
   script.
     !function(e,t,s,n,a,r,c,i){e[a]=e[a]||function(){(e[a].q=e[a].q||[]).push(arguments)},c=t.createElement(s),i=t.getElementsByTagName(s)[0],

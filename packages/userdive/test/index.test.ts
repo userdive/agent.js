@@ -2,19 +2,13 @@ import * as assert from 'assert'
 import { internet, lorem } from 'faker'
 import 'mocha'
 
-import userdive from '../src'
+import userdive, { namespace as NAMESPACE } from '../src'
 
 const DEFAULT_NAME = '_ud'
 
-interface IWindow {
-  [key: string]: any
-}
-
-describe('aync loader', () => {
-  const NAMESPACE = `data-ud-namespace`
-
-  it('undefined', () => {
-    assert((window as IWindow)[DEFAULT_NAME] === undefined)
+describe('userdive.js', () => {
+  beforeEach(() => {
+    (window as any)[DEFAULT_NAME] = undefined
   })
 
   it('entrypoint', () => {

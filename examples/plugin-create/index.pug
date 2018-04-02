@@ -1,6 +1,8 @@
 extends ../index.pug
 
 block content
+  #app
+
   include:markdown-it README.md
 
 block footer_content
@@ -10,6 +12,6 @@ block footer_content
     (window,document,"script","https://cdn.userdive.com/agent.js","_ud","UTF-8");
     _ud("create", 'af57h6gb', 'auto');
     _ud("send", "pageview");
-
-    _ud("create.clientTracker", 'af57h6gb', 'auto');
-    _ud("send.clientTracker", "pageview");
+    _ud("require", "myplugin");
+    _ud("myplugin:echoId");
+  script(src="/myPlugin.bundle.js" async)

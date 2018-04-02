@@ -3,5 +3,7 @@ extends ../index.pug
 block content
   #app
 
+  include:markdown-it README.md
+
 block footer_content
   script(src='../react.bundle.js', async)

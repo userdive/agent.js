@@ -13,33 +13,28 @@ It must invoke with the name of the plugin as the first argument followed by the
 `provide` command register to agent with userdive command queue.
 
 ```js
-// Plugin Construtor
-function MyPlugin() {
-    console.log("use plugin");
+class MyPlugin {
+    constructor(tracker, options) {
+        this.tracker = tracker;
+    }
+    echoId() {
+        console.log(this.tracker.get("linkerParam"));
+    }
 }
-// Register the plugin to agent
-_ud("provide", "myplugin", MyPlugin);
+```
+
+```js
+_ud("provide", pluginName, MyPlugin);
 ```
 
 Plugin supply needs to invoke global function obtained through `data-ud-namespace`.
 To resolve it, plugins should have check the object name, like below;
 
 ```js
-import {
-    q,
-    namespace // data-ud-namespace
-} from "userdive";
+import provide from "@userdive/provider";
+import { MyPlugin } from "./path/to/MyPlugin";
 
-try {
-    const name = document
-        .querySelector(`[${namespace}]`)
-        .getAttribute(namespace);
-    if (name) {
-        q(name)("provide", pluginName, pluginConstrucor);
-    }
-} catch (e) {
-    // not found agent.js snipet
-}
+provide("myplugin", MyPlugin);
 ```
 
 ## Use plugin
@@ -50,7 +45,7 @@ You can configure plugin instance via `require` command argument.
 
 ```js
 _ud("create", "id", "auto");
-_ud("require", "pluginName", { egg: "small", spam: true });
+_ud("require", "myplugin");
 _ud("send", "pageview");
 ```
 
@@ -59,7 +54,7 @@ _ud("send", "pageview");
 After invoke `require` command, you can invoke command to call the plugin method.
 
 ```js
-_ud("somePlugin:methodName", { egg: "large" });
+_ud("myplugin:echoId");
 ```
 
 ### Load plugin file

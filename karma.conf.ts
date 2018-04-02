@@ -32,6 +32,8 @@ if (
       reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
     }
   )
+} else {
+  process.env.CHROME_BIN = require('puppeteer').executablePath()
 }
 
 export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
@@ -77,7 +79,7 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       mochaReporter: {
         showDiff: true
       },
-      browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'PhantomJS'],
+      browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'ChromeHeadless'],
       singleRun: true
     },
     override
