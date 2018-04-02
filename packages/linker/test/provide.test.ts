@@ -1,9 +1,8 @@
+import provide from '@userdive/provider'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
 import { inject, namespace as NAMESPACE, q } from 'userdive'
-
-import provide from '@userdive/provider'
 import Linker from '../src/linker'
 
 describe('provide', () => {
