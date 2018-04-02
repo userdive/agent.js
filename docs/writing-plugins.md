@@ -31,21 +31,10 @@ Plugin supply needs to invoke global function obtained through `data-ud-namespac
 To resolve it, plugins should have check the object name, like below;
 
 ```js
-import {
-    q,
-    namespace // data-ud-namespace
-} from "userdive";
+import provide from "@userdive/provider";
+import { MyPlugin } from "./path/to/MyPlugin";
 
-try {
-    const name = document
-        .querySelector(`[${namespace}]`)
-        .getAttribute(namespace);
-    if (name) {
-        q(name, window)("provide", pluginName, pluginConstrucor);
-    }
-} catch (e) {
-    // not found agent.js snipet
-}
+provide("myplugin", MyPlugin);
 ```
 
 ## Use plugin
