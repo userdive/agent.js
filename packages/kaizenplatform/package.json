@@ -1,0 +1,40 @@
+{
+  "name": "@userdive/kaizenplatform-plugin",
+  "description": "webpage tracking agent linker plugin",
+  "version": "0.0.1",
+  "author": "UNCOVER TRUTH Inc.",
+  "bugs": {
+    "url": "https://github.com/userdive/agent.js/issues"
+  },
+  "dependencies": {
+    "@userdive/agent": "^1.0.0-beta5.3",
+    "userdive": "^1.0.0-beta5.3"
+  },
+  "engine": {
+    "node": "> 6"
+  },
+  "files": [
+    "lib/"
+  ],
+  "homepage": "https://github.com/userdive/agent.js#readme",
+  "keywords": [
+    "userdive"
+  ],
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/userdive/agent.js.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf coverage lib docs",
+    "prepublish": "npm run build",
+    "test": "karma start --single-run"
+  },
+  "types": "lib/index.d.ts"
+}
