@@ -1,6 +1,6 @@
 {
   "name": "@userdive/kaizenplatform-plugin",
-  "description": "webpage tracking agent linker plugin",
+  "description": "a plugin for webpage tracking with kaizenplatform",
   "version": "0.0.1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
