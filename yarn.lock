@@ -8802,9 +8802,9 @@ pug-lint-config-clock@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/pug-lint-config-clock/-/pug-lint-config-clock-2.0.0.tgz#77db919cd76c40d9dcdc22e079d202cb6c507f50"
 
-pug-lint-config-uncovertruth@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/pug-lint-config-uncovertruth/-/pug-lint-config-uncovertruth-4.0.0.tgz#054e891ca3231ccf06e186035bd446b969990ec0"
+pug-lint-config-uncovertruth@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/pug-lint-config-uncovertruth/-/pug-lint-config-uncovertruth-4.2.0.tgz#5a4551070210dd7fe2bd5d61c4bb2c13d810f56a"
   dependencies:
     pug-lint-config-clock "^2.0.0"
 

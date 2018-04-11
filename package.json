@@ -46,7 +46,7 @@
     "power-assert": "1.4.4",
     "prettier-eslint-cli": "4.7.1",
     "pug-lint": "2.5.0",
-    "pug-lint-config-uncovertruth": "4.0.0",
+    "pug-lint-config-uncovertruth": "4.2.0",
     "puppeteer": "1.2.0",
     "rimraf": "2.6.2",
     "sinon": "4.4.10",
