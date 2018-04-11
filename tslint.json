@@ -4,6 +4,8 @@
     "@uncovertruth/tslint-config"
   ],
   "rules": {
+    "member-access": false,
+    "no-submodule-imports": false,
     "object-literal-key-quotes": false
   },
   "linterOptions": {
