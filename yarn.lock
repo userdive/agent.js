@@ -374,9 +374,9 @@
   version "5.0.17"
   resolved "https://registry.yarnpkg.com/@uirouter/core/-/core-5.0.17.tgz#c85d422b1e9a45df885be8b84f9b7f53233a7973"
 
-"@uncovertruth/eslint-config-react@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@uncovertruth/eslint-config-react/-/eslint-config-react-4.0.0.tgz#3b9fb38499c283abe060558373e8c4e3c823684e"
+"@uncovertruth/eslint-config-react@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@uncovertruth/eslint-config-react/-/eslint-config-react-4.2.0.tgz#b7e43f8792df33a44319cbf1f6d2f486221ed306"
   dependencies:
     eslint-config-standard-react "^6.0.0"
     eslint-plugin-react "^7.7.0"
