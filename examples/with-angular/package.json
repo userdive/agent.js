@@ -16,7 +16,7 @@
     "rxjs": "5.5.9",
     "systemjs": "0.21.0",
     "userdive": "^1.0.0-beta5.3",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.26"
   },
   "private": true
 }
