@@ -10880,9 +10880,9 @@ syntax-error@^1.1.1:
   dependencies:
     acorn-node "^1.2.0"
 
-systemjs@0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-0.21.0.tgz#e3e61dd7beacaae421a52703c9679fb2543862f2"
+systemjs@0.21.2:
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-0.21.2.tgz#1fc17f3a6ac7db47151c4b11fa8185599295b9c1"
 
 table@4.0.2:
   version "4.0.2"
