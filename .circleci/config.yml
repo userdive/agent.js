@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:8-browsers@sha256:31161e3c8da62d12a143216d772a72c75d393f7420f9a10d57ab8d21785132fa
     working_directory: ~/repo
     steps:
       - checkout
@@ -16,7 +16,7 @@ jobs:
       - run: yarn e2e
   deploy:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:8-browsers@sha256:31161e3c8da62d12a143216d772a72c75d393f7420f9a10d57ab8d21785132fa
     working_directory: ~/repo
     steps:
       - checkout
