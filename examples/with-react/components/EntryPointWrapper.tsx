@@ -2,6 +2,8 @@ import * as H from 'history'
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import factory from 'userdive'
+// tslint:disable-next-line:no-submodule-imports
+import { USERDIVEApi } from 'userdive/lib/types'
 
 type Props = {
   children: any
@@ -11,15 +13,15 @@ type Props = {
 }
 
 class EntryPointWrapper extends React.PureComponent<Props> {
-  _ud: Function
+  public _ud: USERDIVEApi
   constructor (props: Props) {
     super(props)
     this._ud = factory()
   }
-  componentDidMount () {
+  public componentDidMount () {
     this._ud('send', 'pageview', this.props.location.pathname)
   }
-  render () {
+  public render () {
     return this.props.children
   }
 }

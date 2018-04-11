@@ -6,12 +6,12 @@ import { Sample2Component } from './components/sample2.component'
 
 const routes: Routes = [
   {
-    path: 'sample1',
-    component: Sample1Component
+    component: Sample1Component,
+    path: 'sample1'
   },
   {
-    path: 'sample2',
-    component: Sample2Component
+    component: Sample2Component,
+    path: 'sample2'
   },
   {
     path: '**',

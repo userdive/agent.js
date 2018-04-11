@@ -90,7 +90,7 @@
     "e2e": "lerna run e2e",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
-    "lint:examples": "tslint -c ./examples/tslint.json 'examples/**/*.ts{,x}'",
+    "lint:examples": "tslint examples/**/*.ts{,x}",
     "lint:js": "eslint -c website/.eslintrc.json website",
     "lint:md": "textlint 'packages/*/*.md' README.md docs",
     "lint:pug": "pug-lint examples/**/*.pug",
