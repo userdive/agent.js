@@ -16,7 +16,7 @@ cd <PROJECT_ROOT>
 
 ## Usage
 
-    yarn examples
+    yarn start
 
 ## Build
 
