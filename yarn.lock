@@ -395,9 +395,9 @@
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.0.0.tgz#a3014921991066193f6c8e47290d4d598dfd19e6"
 
-"@types/nightwatch@0.9.7":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.7.tgz#690993008374228a0c825d3920bdfe3721c079fe"
+"@types/nightwatch@0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.8.tgz#ae38fe9922e1541aabb40730771aec5944961786"
 
 "@types/node@*":
   version "9.6.0"
