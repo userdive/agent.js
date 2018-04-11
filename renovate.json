@@ -12,6 +12,7 @@
   "devDependencies": {
     "automerge": true
   },
+  "pinDigests": false,
   "labels": [
     "dependencies"
   ],
