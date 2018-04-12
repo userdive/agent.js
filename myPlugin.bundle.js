@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 161);
+/******/ 	return __webpack_require__(__webpack_require__.s = 159);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -113,14 +113,14 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ 161:
+/***/ 159:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__userdive_provider__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1____ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1____ = __webpack_require__(161);
 
 
 __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default()('myplugin', __WEBPACK_IMPORTED_MODULE_1____["a" /* MyPlugin */]);
@@ -128,7 +128,7 @@ __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default()('myplugin', __WEBPACK
 
 /***/ }),
 
-/***/ 162:
+/***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -144,7 +144,7 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ 163:
+/***/ 161:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
