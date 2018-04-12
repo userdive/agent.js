@@ -51,7 +51,7 @@ const findOrCreateUserId = (
     const qs = search.trim().replace(/^[?#&]/, '')
     const [linkerParam] = qs
       .split('&')
-      .filter(s => s.length && s.split('=')[0] === linkerName)
+      .filter((s) => s.length && s.split('=')[0] === linkerName)
     const id = linkerParam ? linkerParam.split('=')[1] : undefined
     if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
       userId = id
@@ -59,7 +59,8 @@ const findOrCreateUserId = (
   }
   if (!userId || allowLinker) {
     userId = userId || generateId()
-    ;(cookieDomain === 'auto' ? autoSave : setCookie)(cookieName, userId, {
+    const writeCookie = cookieDomain === 'auto' ? autoSave : setCookie
+    writeCookie(cookieName, userId, {
       domain: cookieDomain === 'auto' ? undefined : cookieDomain,
       expires,
       path
@@ -76,7 +77,7 @@ const pathname2href = (pathname: string) =>
 export default class AgentCore extends Store {
   observer: UIEventObserver
   private baseUrl: string
-  private cache: { a: Object; l: Object; [key: string]: Object }
+  private cache: { a: object; l: object; [key: string]: object }
   private emitter: EventEmitter
   private events: AgentEvent[]
   private interactId: number
@@ -102,7 +103,7 @@ export default class AgentCore extends Store {
     this.eventId = 0
     this.emitter = new EventEmitter()
     this.observer = new UIEventObserver() // singleton
-    eventsClass.forEach(Class => {
+    eventsClass.forEach((Class) => {
       this.events.push(new Class(this.id, this.emitter, this.observer))
     })
     if (!id || !userId) {
@@ -169,12 +170,12 @@ export default class AgentCore extends Store {
 
   destroy (): void {
     this.emitter.removeAllListeners(this.id)
-    this.events.forEach(e => e.off())
+    this.events.forEach((e) => e.off())
     this.loadTime = 0
   }
 
   send (query: string[], force?: boolean): void {
-    this.interacts.forEach(data => {
+    this.interacts.forEach((data) => {
       const q = createInteractData(data)
       if (q.length) {
         query.push(`d=${q}`)
@@ -197,7 +198,7 @@ export default class AgentCore extends Store {
   }
 
   private sendWithUpdate (): void {
-    Object.keys(this.cache).forEach(key => {
+    Object.keys(this.cache).forEach((key) => {
       const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
         cache.id = this.interactId
@@ -218,7 +219,7 @@ export default class AgentCore extends Store {
   }
 
   private bind () {
-    this.events.forEach(e => e.on())
+    this.events.forEach((e) => e.on())
   }
 
   private updateInteractCache (data: Interact): void {

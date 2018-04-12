@@ -13,7 +13,7 @@ import { SettingFieldsObject, SetType, State } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
-  pluginOptions?: Object
+  pluginOptions?: object
 ) => void
 const PLUGINS = 'plugins'
 
@@ -120,7 +120,15 @@ export default class Agent {
     return false
   }
 
-  subscribe (target: any, eventName: string, handler: Function): Function {
-    return this.core.observer.subscribe(target, eventName, handler)
+  subscribe (
+    target: any,
+    eventName: string,
+    handler: (event: any) => void
+  ): () => void {
+    return this.core.observer.subscribe(
+      target,
+      eventName,
+      handler
+    ) as () => void
   }
 }

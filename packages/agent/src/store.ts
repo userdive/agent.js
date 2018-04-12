@@ -87,7 +87,7 @@ export default class Store {
       this.state.env.l = obj.page
     }
     let data = {}
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       data = objectAssign({}, data, parseCustomData(key, obj[key]))
     })
     return this.merge({ type: 'custom', data })

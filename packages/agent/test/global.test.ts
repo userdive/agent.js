@@ -22,9 +22,10 @@ describe('global async', () => {
     stub.callsFake(() => {
       // nothing todo
     })
-    ;((w: any) => {
+    const clean = (w: any) => {
       w[GLOBAL_NAME] = undefined
-    })(window)
+    }
+    clean(window)
   })
 
   afterEach(() => {
@@ -62,20 +63,21 @@ describe('global async', () => {
     assert(_core.eventId === 2)
 
     let name = lorem.word()
-    factory()(`create`, lorem.word(), 'auto', name)
+    factory()('create', lorem.word(), 'auto', name)
     const agent2 = (factory() as any)(`${name}.send`, 'pageview')
     assert(agent2.loadTime)
     assert(agent.id !== agent2.id)
 
     name = lorem.word()
-    factory()(`create`, lorem.word(), 'auto', { name })
+    factory()('create', lorem.word(), 'auto', { name })
     const agent3 = (factory() as any)(`${name}.send`, {
       hitType: 'pageview'
     })
     assert(agent3.loadTime)
 
     name = lorem.word()
-    ;(factory() as any)(`create`, lorem.word(), { auto: true, name }) // v0.x supported options
+    const api = factory() as any
+    api('create', lorem.word(), { auto: true, name }) // v0.x supported options
     const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
       dimension1: lorem.word()
     })
@@ -103,7 +105,8 @@ describe('global async', () => {
     const spy = sinonSpy(Plugin.prototype, 'echo')
     factory()('provide', name, Plugin)
     factory()('require', name)
-    ;(factory() as any)(`${name}:echo`, 'hello')
+    const api = factory() as any
+    api(`${name}:echo`, 'hello')
     assert(spy.called)
     spy.restore()
   })
@@ -124,7 +127,8 @@ describe('global async', () => {
     const spy = sinonSpy(Plugin.prototype, 'echo')
 
     // reverse order queue
-    ;(factory() as any)(`${name}:echo`, expected)
+    const api = factory() as any
+    api(`${name}:echo`, expected)
     factory()('require', name)
     factory()('provide', name, Plugin)
     factory()('create', lorem.word(), 'auto')

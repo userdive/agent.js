@@ -54,13 +54,14 @@ export default function (
   name: string
 ) {
   const applyQueue = (delay: number) => {
+    const w = window as any
     setTimeout(() => {
-      if ((window as any)[name].q.length === 0) {
-        (window as any)[name] = execute(Agent, agents)
+      if (w[name].q.length === 0) {
+        w[name] = execute(Agent, agents)
         return
       }
 
-      const next = (window as any)[name].q.shift()
+      const next = w[name].q.shift()
       const [cmd, ...args] = [].map.call(next, (x: any) => x)
 
       const res = execute(Agent, agents)(cmd, ...args)
@@ -68,10 +69,10 @@ export default function (
         delay++
         if (delay > 10) {
           warning(`execute timeout: ${cmd}`)
-          ;(window as any)[name] = execute(Agent, agents)
+          w[name] = execute(Agent, agents)
           return
         }
-        (window as any)[name](...next)
+        w[name](...next)
       }
       applyQueue(delay)
     }, delay * 100)

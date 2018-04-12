@@ -31,7 +31,7 @@ describe('AgentCore', () => {
           },
           getType(type)
         )
-        emitter.on(type, data => super.emit(data))
+        emitter.on(type, (data) => super.emit(data))
       }
     }
 
@@ -236,9 +236,11 @@ describe('AgentCore', () => {
 
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake((url: any, query: any, onerror: Function) => {
-      onerror(url, query)
-    })
+    stub.callsFake(
+      (url: any, query: any, onerror: (...args: any[]) => void) => {
+        onerror(url, query)
+      }
+    )
 
     agent.pageview(location.href)
     assert(agent.loadTime === 0)

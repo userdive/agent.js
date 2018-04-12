@@ -18,7 +18,7 @@ describe('requests', () => {
       return /^[\x00-\x7F]*$/.test(str)
     }
     const queries = obj2query({ foo: random.word() })
-    queries.forEach(q => {
+    queries.forEach((q) => {
       assert(isASCII(q))
     })
 
