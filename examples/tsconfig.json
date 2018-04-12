@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "es2015",
+    "module": "commonjs",
     "experimentalDecorators": true,
     "jsx": "react",
     "outDir": "tests",
