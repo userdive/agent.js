@@ -5,7 +5,7 @@
     "docusaurus": "1.0.10"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.2",
+    "babel-eslint": "8.2.3",
     "crowdin-cli": "0.3.0"
   },
   "private": true,
