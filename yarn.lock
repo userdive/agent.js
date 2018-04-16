@@ -2176,12 +2176,11 @@ camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
-can-npm-publish@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/can-npm-publish/-/can-npm-publish-1.0.2.tgz#c7211bbc32d04597a37f6c57ac9d93ff29d3013f"
+can-npm-publish@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/can-npm-publish/-/can-npm-publish-1.1.0.tgz#20e851f65f2957a37fbce18279c306a95cd25f00"
   dependencies:
     meow "^4.0.0"
-    node-fetch "^1.7.3"
     read-pkg "^3.0.0"
     validate-npm-package-name "^3.0.0"
 
@@ -7673,7 +7672,7 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@^1.0.1, node-fetch@^1.7.3:
+node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
   dependencies:
