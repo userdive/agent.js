@@ -15,7 +15,8 @@ module.exports = {
     'kaizenplatform-plugin': path.join(
       __dirname,
       'packages/kaizenplatform/src/index.ts'
-    )
+    ),
+    'vwo-plugin': path.join(__dirname, 'packages/vwo/src/index.ts')
   },
   output: {
     path: path.join(__dirname, 'cdn'),
