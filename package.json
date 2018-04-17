@@ -16,7 +16,7 @@
     "@uncovertruth/eslint-config-react": "4.2.0",
     "@uncovertruth/stylelint-config": "4.2.0",
     "@uncovertruth/textlint-config-en": "4.0.0",
-    "@uncovertruth/tslint-config": "4.0.0",
+    "@uncovertruth/tslint-config": "4.3.1",
     "can-npm-publish": "1.1.0",
     "codecov": "3.0.0",
     "concurrently": "3.5.1",
