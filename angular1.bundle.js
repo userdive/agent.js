@@ -1478,7 +1478,8 @@ exports.trace = trace;
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1500,7 +1501,7 @@ var TransitionHookScope;
 //# sourceMappingURL=interface.js.map
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1655,7 +1656,7 @@ exports.TargetState = TargetState;
 //# sourceMappingURL=targetState.js.map
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1861,7 +1862,6 @@ exports.Param = Param;
 //# sourceMappingURL=param.js.map
 
 /***/ }),
-/* 25 */,
 /* 26 */,
 /* 27 */,
 /* 28 */,
@@ -1972,7 +1972,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @module transition
  */
 /** for typedoc */
-var interface_1 = __webpack_require__(22);
+var interface_1 = __webpack_require__(23);
 var common_1 = __webpack_require__(0);
 var strings_1 = __webpack_require__(15);
 var predicates_1 = __webpack_require__(1);
@@ -1980,7 +1980,7 @@ var hof_1 = __webpack_require__(2);
 var trace_1 = __webpack_require__(16);
 var coreservices_1 = __webpack_require__(6);
 var rejectFactory_1 = __webpack_require__(29);
-var targetState_1 = __webpack_require__(23);
+var targetState_1 = __webpack_require__(24);
 var defaultOptions = {
     current: common_1.noop,
     transition: null,
@@ -2359,12 +2359,12 @@ var strings_1 = __webpack_require__(15);
 var common_1 = __webpack_require__(0);
 var predicates_1 = __webpack_require__(1);
 var hof_1 = __webpack_require__(2);
-var interface_1 = __webpack_require__(22); // has or is using
+var interface_1 = __webpack_require__(23); // has or is using
 var transitionHook_1 = __webpack_require__(30);
 var hookRegistry_1 = __webpack_require__(58);
 var hookBuilder_1 = __webpack_require__(95);
 var pathUtils_1 = __webpack_require__(42);
-var param_1 = __webpack_require__(24);
+var param_1 = __webpack_require__(25);
 var resolvable_1 = __webpack_require__(31);
 var resolveContext_1 = __webpack_require__(43);
 /** @hidden */
@@ -3000,7 +3000,7 @@ exports.Transition = Transition;
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = __webpack_require__(0);
 var hof_1 = __webpack_require__(2);
-var targetState_1 = __webpack_require__(23);
+var targetState_1 = __webpack_require__(24);
 var pathNode_1 = __webpack_require__(59);
 /**
  * This class contains functions which convert TargetStates, Nodes and paths from one type to another.
@@ -3393,7 +3393,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = __webpack_require__(0);
 var hof_1 = __webpack_require__(2);
 var predicates_1 = __webpack_require__(1);
-var param_1 = __webpack_require__(24);
+var param_1 = __webpack_require__(25);
 var strings_1 = __webpack_require__(15);
 /** @hidden */
 function quoteRegExp(str, param) {
@@ -4242,7 +4242,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @module transition
  */ /** for typedoc */
 var common_1 = __webpack_require__(10);
-var interface_1 = __webpack_require__(22);
+var interface_1 = __webpack_require__(23);
 /**
  * Determines if the given state matches the matchCriteria
  *
@@ -4405,7 +4405,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /** @module path */ /** for typedoc */
 var common_1 = __webpack_require__(0);
 var hof_1 = __webpack_require__(2);
-var param_1 = __webpack_require__(24);
+var param_1 = __webpack_require__(25);
 /**
  * @internalapi
  *
@@ -4642,7 +4642,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @module transition
  */
 /** for typedoc */
-var interface_1 = __webpack_require__(22);
+var interface_1 = __webpack_require__(23);
 var transition_1 = __webpack_require__(41);
 var hookRegistry_1 = __webpack_require__(58);
 var coreResolvables_1 = __webpack_require__(207);
@@ -4989,7 +4989,7 @@ module.exports = angular;
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = __webpack_require__(0);
 var predicates_1 = __webpack_require__(1);
-var interface_1 = __webpack_require__(22);
+var interface_1 = __webpack_require__(23);
 var transitionHook_1 = __webpack_require__(30);
 /**
  * This class returns applicable TransitionHooks for a specific Transition instance.
@@ -5989,8 +5989,8 @@ var pathUtils_1 = __webpack_require__(42);
 var pathNode_1 = __webpack_require__(59);
 var transitionService_1 = __webpack_require__(61);
 var rejectFactory_1 = __webpack_require__(29);
-var targetState_1 = __webpack_require__(23);
-var param_1 = __webpack_require__(24);
+var targetState_1 = __webpack_require__(24);
+var param_1 = __webpack_require__(25);
 var glob_1 = __webpack_require__(56);
 var resolveContext_1 = __webpack_require__(43);
 var lazyLoad_1 = __webpack_require__(112);
@@ -6744,7 +6744,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var common_1 = __webpack_require__(0);
 var predicates_1 = __webpack_require__(1);
 var urlMatcher_1 = __webpack_require__(44);
-var param_1 = __webpack_require__(24);
+var param_1 = __webpack_require__(25);
 var paramTypes_1 = __webpack_require__(97);
 /**
  * Factory for [[UrlMatcher]] instances.
@@ -6877,7 +6877,7 @@ var predicates_1 = __webpack_require__(1);
 var urlMatcher_1 = __webpack_require__(44);
 var hof_1 = __webpack_require__(2);
 var urlRule_1 = __webpack_require__(108);
-var targetState_1 = __webpack_require__(23);
+var targetState_1 = __webpack_require__(24);
 var common_2 = __webpack_require__(10);
 /** @hidden */
 function appendBasePath(url, isHtml5, absolute, baseHref) {
@@ -44923,7 +44923,7 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(24));
+__export(__webpack_require__(25));
 __export(__webpack_require__(97));
 __export(__webpack_require__(98));
 __export(__webpack_require__(60));
@@ -44960,7 +44960,7 @@ __export(__webpack_require__(101));
 __export(__webpack_require__(102));
 __export(__webpack_require__(103));
 __export(__webpack_require__(104));
-__export(__webpack_require__(23));
+__export(__webpack_require__(24));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -45015,7 +45015,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /** @module hooks */ /** */
 var predicates_1 = __webpack_require__(1);
 var coreservices_1 = __webpack_require__(6);
-var targetState_1 = __webpack_require__(23);
+var targetState_1 = __webpack_require__(24);
 /**
  * A [[TransitionHookFn]] that redirects to a different state or params
  *
@@ -45390,7 +45390,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @preferred
  * @module transition
  */ /** for typedoc */
-__export(__webpack_require__(22));
+__export(__webpack_require__(23));
 __export(__webpack_require__(95));
 __export(__webpack_require__(58));
 __export(__webpack_require__(29));
