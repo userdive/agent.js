@@ -8,7 +8,7 @@ function getFirstTouch (e: TouchEvent): Touch {
 
 export default class TouchEvents extends EventBase {
   private start: Touch
-  on () {
+  public on () {
     super.on(
       'touchstart',
       (e: TouchEvent) => {

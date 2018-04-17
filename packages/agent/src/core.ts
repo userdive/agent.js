@@ -75,7 +75,7 @@ const pathname2href = (pathname: string) =>
     : pathname
 
 export default class AgentCore extends Store {
-  observer: UIEventObserver
+  private observer: UIEventObserver
   private baseUrl: string
   private cache: { a: object; l: object; [key: string]: object }
   private emitter: EventEmitter
@@ -114,7 +114,7 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 
-  pageview (page: string): void {
+  public pageview (page: string): void {
     this.send([], true)
     if (!this.loadTime) {
       this.bind()
@@ -143,7 +143,7 @@ export default class AgentCore extends Store {
     this.set('page', undefined) // remove locale cache
   }
 
-  event ({
+  public event ({
     eventCategory: category,
     eventLabel: label,
     eventAction: action,
@@ -168,13 +168,13 @@ export default class AgentCore extends Store {
     }
   }
 
-  destroy (): void {
+  public destroy (): void {
     this.emitter.removeAllListeners(this.id)
     this.events.forEach((e) => e.off())
     this.loadTime = 0
   }
 
-  send (query: string[], force?: boolean): void {
+  public send (query: string[], force?: boolean): void {
     this.interacts.forEach((data) => {
       const q = createInteractData(data)
       if (q.length) {

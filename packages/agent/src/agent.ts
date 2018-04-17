@@ -55,7 +55,7 @@ export default class Agent {
     }
   }
 
-  send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
+  public send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
     if (typeof type === 'object') {
       data = type
       type = type.hitType as HitType
@@ -82,25 +82,25 @@ export default class Agent {
     return this.core
   }
 
-  set (key: SetType | FieldsObject, value?: string | number): State {
+  public set (key: SetType | FieldsObject, value?: string | number): State {
     if (typeof key === 'string' && value) {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)
   }
 
-  get (key: string): string {
+  public get (key: string): string {
     return key === 'linkerParam'
       ? `${this.linkerName}=${this.core.get('userId')}`
       : ''
   }
 
-  provide (name: string, pluginConstructor: PluginConstructor) {
+  public provide (name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
     return this[PLUGINS][name]
   }
 
-  require (pluginName: string, pluginOptions?: any): boolean {
+  public require (pluginName: string, pluginOptions?: any): boolean {
     if (this[PLUGINS][pluginName]) {
       this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](
         this,
@@ -111,7 +111,7 @@ export default class Agent {
     return false
   }
 
-  run (pluginName: string, methodName: string, ...args: any[]): boolean {
+  public run (pluginName: string, methodName: string, ...args: any[]): boolean {
     const p = this[PLUGINS][pluginName]
     if (p && p[methodName]) {
       const res = p[methodName](...args)
@@ -120,7 +120,7 @@ export default class Agent {
     return false
   }
 
-  subscribe (
+  public subscribe (
     target: any,
     eventName: string,
     handler: (event: any) => void

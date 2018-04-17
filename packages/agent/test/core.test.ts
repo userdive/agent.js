@@ -20,10 +20,10 @@ describe('AgentCore', () => {
   const isUrl = require('is-url')
   const eventFactory = (type: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base {
-      validate () {
+      public validate () {
         return true
       }
-      on () {
+      public on () {
         super.on(
           type,
           () => {

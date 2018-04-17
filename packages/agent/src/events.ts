@@ -33,7 +33,7 @@ export default class Events implements AgentEventBase {
     this.emitter = eventEmitter
     this.observer = eventObserver
   }
-  on (
+  public on (
     eventName: EventType,
     handler: (event: any /* FIXME Event type */) => void,
     type: InteractType
@@ -55,7 +55,7 @@ export default class Events implements AgentEventBase {
     })
     this.type = type
   }
-  off (): void {
+  public off (): void {
     this.observer.unsubscribeAll()
   }
   protected error (err: CustomError): void {
