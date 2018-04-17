@@ -93,7 +93,6 @@ describe('global async', () => {
     factory()('create', lorem.word(), 'auto')
     const name = lorem.word()
     class Plugin {
-      private tracker: any
       constructor (tracker: any) {
         assert(tracker.plugins[name])
       }
@@ -116,7 +115,6 @@ describe('global async', () => {
     const name = lorem.word()
     const expected = lorem.word()
     class Plugin {
-      private tracker: any
       constructor (tracker: any) {
         assert(tracker.plugins[name])
       }

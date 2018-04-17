@@ -75,7 +75,7 @@ const pathname2href = (pathname: string) =>
     : pathname
 
 export default class AgentCore extends Store {
-  private observer: UIEventObserver
+  public observer: UIEventObserver
   private baseUrl: string
   private cache: { a: object; l: object; [key: string]: object }
   private emitter: EventEmitter

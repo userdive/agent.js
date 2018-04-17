@@ -9,7 +9,6 @@ describe('@userdive/provider', () => {
   it('plugin setting', () => {
     const name = lorem.word()
     class Plugin {
-      private tracker: any
       constructor (tracker: any) {
         assert(tracker.plugins[name])
       }

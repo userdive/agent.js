@@ -86,7 +86,6 @@ describe('agent', () => {
   describe('plugin', () => {
     const pluginName = lorem.word()
     class Plugin {
-      private tracker: any
       constructor (tracker: any) {
         assert(tracker.plugins[pluginName])
       }
