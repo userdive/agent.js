@@ -4,16 +4,7 @@
     "@uncovertruth/tslint-config"
   ],
   "rules": {
-    "member-access": false,
-    "no-submodule-imports": false,
-    "no-console": [true, "log"],
-    "no-string-literal": false,
-    "no-shadowed-variable": false,
-    "max-classes-per-file": [true, 5],
-    "object-literal-key-quotes": false,
-    "object-literal-sort-keys": false,
-    "only-arrow-functions": false,
-    "prefer-for-of": false
+    "no-console": [true, "log"]
   },
   "linterOptions": {
     "exclude": [
