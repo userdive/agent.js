@@ -4,8 +4,7 @@
     "@uncovertruth/tslint-config"
   ],
   "rules": {
-    "no-console": [true, "log"],
-    "no-var-requires": false  // for webpack.conf.ts
+    "no-console": [true, "log"]
   },
   "linterOptions": {
     "exclude": [

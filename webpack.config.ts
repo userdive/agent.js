@@ -1,3 +1,4 @@
+/* tslint:disable:no-var-requires */
 const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const path = require('path')
