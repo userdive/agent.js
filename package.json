@@ -86,7 +86,7 @@
     "ci:sauce": "cross-env CI_MODE=sauce karma start",
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn coverage",
     "coverage": "codecov -f ./coverage/lcov.info",
-    "deploy:examples": "gh-pages -d examples/build",
+    "deploy:examples": "gh-pages -d examples/build -m '[ci skip] Updates'",
     "e2e": "lerna run e2e",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'website/static/**/*.{css,scss}'",
