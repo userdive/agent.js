@@ -11,7 +11,7 @@ function getPotision (w: Window): Point {
 const eventName = 'scroll'
 
 export default class ScrollEvents extends EventBase {
-  on () {
+  public on () {
     super.on(
       eventName,
       () => {

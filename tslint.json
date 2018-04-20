@@ -1,7 +1,10 @@
 {
-  "extends": "@uncovertruth/tslint-config",
+  "extends": [
+    "tslint-react",
+    "@uncovertruth/tslint-config"
+  ],
   "rules": {
-    "no-unused-variable": true
+    "no-console": [true, "log"]
   },
   "linterOptions": {
     "exclude": [

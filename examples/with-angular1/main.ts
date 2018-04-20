@@ -15,16 +15,16 @@ main.config([
 
     $stateProvider
       .state('sample1', {
-        url: '/sample1',
-        templateUrl: 'sample1.html',
         controller: 'sample1Controller',
-        controllerAs: 'c'
+        controllerAs: 'c',
+        templateUrl: 'sample1.html',
+        url: '/sample1'
       })
       .state('sample2', {
-        url: '/sample2',
-        templateUrl: 'sample2.html',
         controller: 'sample2Controller',
-        controllerAs: 'c'
+        controllerAs: 'c',
+        templateUrl: 'sample2.html',
+        url: '/sample2'
       })
   }
 ])
@@ -33,7 +33,7 @@ main.controller('sample1Controller', Sample1)
 main.controller('sample2Controller', Sample2)
 main.controller('create', [
   '$scope',
-  $scope => {
+  ($scope) => {
     $scope.$on('viewContentLoaded', () => {
       _ud('create', 'af57h6gb', 'auto')
     })

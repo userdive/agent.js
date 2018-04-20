@@ -17,12 +17,12 @@ const router = new VueRouter({
 })
 
 new Vue({
-  mounted: function () {
+  mounted () {
     _ud('create', 'af57h6gb', 'auto')
   },
   router
 }).$mount('#app')
 
-router.afterEach(function () {
+router.afterEach(() => {
   _ud('send', 'pageview', location.href)
 })

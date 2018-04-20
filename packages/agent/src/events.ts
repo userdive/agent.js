@@ -7,7 +7,11 @@ import { CustomError, error, raise, warning } from './logger'
 import { EventType, InteractType, Point } from './types'
 
 export interface AgentEventBase {
-  on (eventName: EventType, handler: Function, type: InteractType): void
+  on (
+    eventName: EventType,
+    handler: (e: Event) => void,
+    type: InteractType
+  ): void
   off (): void
 }
 
@@ -29,7 +33,11 @@ export default class Events implements AgentEventBase {
     this.emitter = eventEmitter
     this.observer = eventObserver
   }
-  on (eventName: EventType, handler: Function, type: InteractType): void {
+  public on (
+    eventName: EventType,
+    handler: (event: any /* FIXME Event type */) => void,
+    type: InteractType
+  ): void {
     if (typeof handler !== 'function' || !(type === 'a' || type === 'l')) {
       return raise('please override on')
     }
@@ -47,7 +55,7 @@ export default class Events implements AgentEventBase {
     })
     this.type = type
   }
-  off (): void {
+  public off (): void {
     this.observer.unsubscribeAll()
   }
   protected error (err: CustomError): void {

@@ -7,8 +7,8 @@ import { Sample1Component } from './components/sample1.component'
 import { Sample2Component } from './components/sample2.component'
 
 @NgModule({
-  imports: [BrowserModule, routing],
+  bootstrap: [AppComponent],
   declarations: [AppComponent, Sample1Component, Sample2Component],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, routing]
 })
 export class AppModule {}

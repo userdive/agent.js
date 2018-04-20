@@ -69,7 +69,7 @@ function linkUrl (href: string, linkerParam: string): string {
     !qs
       .split('&')
       .filter(
-        link => link.length && link.split('=')[0] === linkerParam.split('=')[0]
+        (link) => link.length && link.split('=')[0] === linkerParam.split('=')[0]
       ).length
   ) {
     e.search = e.search ? `${e.search}&${linkerParam}` : linkerParam

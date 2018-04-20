@@ -7,8 +7,7 @@ import { EventEmitter } from 'events'
 import TouchEvents from '../src/events/touch'
 import { isTouchDevice } from './helpers/browser'
 
-const describeExcludeTouch = (): Function =>
-  !isTouchDevice() ? describe.skip : describe
+const describeExcludeTouch = () => (!isTouchDevice() ? describe.skip : describe)
 
 describeExcludeTouch()('touch', () => {
   let instance: any
