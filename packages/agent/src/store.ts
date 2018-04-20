@@ -54,7 +54,7 @@ export default class Store {
     this.reset()
     this.state.userId = id
   }
-  get (
+  public get (
     key: 'env' | 'custom' | 'userId'
   ): ClientEnvironmentsData | CustomData | string {
     const data = this.state[key]
@@ -63,7 +63,7 @@ export default class Store {
     }
     return data
   }
-  set (type: SetType, data: any): State {
+  public set (type: SetType, data: any): State {
     switch (type) {
       case 'page':
         this.state.env.l = data
@@ -77,17 +77,17 @@ export default class Store {
     }
     return this.state
   }
-  merge ({ type, data }: ClientEnvironments | Custom): State {
+  public merge ({ type, data }: ClientEnvironments | Custom): State {
     const stateObj = initialState()
     this.state[type] = objectAssign({}, stateObj[type], this.state[type], data)
     return this.state
   }
-  mergeDeep (obj: any): State {
+  public mergeDeep (obj: any): State {
     if (obj.page) {
       this.state.env.l = obj.page
     }
     let data = {}
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       data = objectAssign({}, data, parseCustomData(key, obj[key]))
     })
     return this.merge({ type: 'custom', data })

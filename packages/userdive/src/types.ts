@@ -124,7 +124,7 @@ export interface USERDIVEApi {
   (
     command: 'provide',
     pluginName: string,
-    pluginConstructor: new (tracker: any, pluginOptions?: Object) => void // TODO
+    pluginConstructor: new (tracker: any, pluginOptions?: object) => void // TODO
   ): void
 
   (

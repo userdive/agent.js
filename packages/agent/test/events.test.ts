@@ -12,7 +12,7 @@ import * as logger from '../src/logger'
 
 describe('events', () => {
   class DummyEvents extends Events {
-    validate () {
+    public validate () {
       return true
     }
   }
@@ -122,7 +122,7 @@ describe('events', () => {
     spy.restore()
 
     class InValidDummyEvents extends DummyEvents {
-      validate () {
+      public validate () {
         return false
       }
     }

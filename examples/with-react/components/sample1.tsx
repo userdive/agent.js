@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import EntryPointWrapper from './EntryPointWrapper'
 
 export default class Sample2 extends React.PureComponent<{}> {
-  render () {
+  public render () {
     return (
       <EntryPointWrapper>
         <Link to='/sample2'>Sample2</Link>

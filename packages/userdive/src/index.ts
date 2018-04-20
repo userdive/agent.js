@@ -9,7 +9,7 @@ export function inject (source: string, attributes: { [key: string]: string }) {
   element.defer = true
   element.src = source
   element.charset = 'UTF-8'
-  Object.keys(attributes).forEach(key => {
+  Object.keys(attributes).forEach((key) => {
     element.setAttribute(key, attributes[key])
   })
   script.parentNode.insertBefore(element, script)

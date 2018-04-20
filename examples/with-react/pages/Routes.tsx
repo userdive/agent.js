@@ -11,7 +11,7 @@ export default class App extends React.PureComponent<{}> {
     const _ud = factory()
     _ud('create', 'af57h6gb', 'auto')
   }
-  render () {
+  public render () {
     return (
       <HashRouter>
         <React.Fragment>

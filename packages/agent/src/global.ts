@@ -67,8 +67,8 @@ export default function (
       if (!res) {
         delay++
         if (delay > 10) {
+          (window as any)[name] = execute(Agent, agents)
           warning(`execute timeout: ${cmd}`)
-          ;(window as any)[name] = execute(Agent, agents)
           return
         }
         (window as any)[name](...next)
