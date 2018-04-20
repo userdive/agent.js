@@ -2,11 +2,11 @@ import Agent from '@userdive/agent'
 import { q } from 'userdive'
 
 export default class Plugin {
-  tracker: Agent
+  private tracker: Agent
   constructor (tracker: Agent) {
     this.tracker = tracker
   }
-  getVariation () {
+  public getVariation () {
     (q('kzs', window) as any)(
       'getVariation',
       (
