@@ -14,13 +14,12 @@ export default class Plugin {
         state: string
       ) => {
         try {
-          if (state === 'decided') {
+          state === 'decided' &&
             this.tracker.send('event', {
               eventCategory: 'kaizenplatform',
               eventAction: data.experimentType,
               eventLabel: data.variationId
             })
-          }
         } catch (e) {
           // Do nothing
         }
