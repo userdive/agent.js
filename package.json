@@ -28,7 +28,7 @@
     "husky": "0.14.3",
     "is-url": "1.2.4",
     "istanbul-instrumenter-loader": "3.0.1",
-    "jstransformer-markdown-it": "2.0.0",
+    "jstransformer-markdown-it": "2.1.0",
     "karma": "2.0.2",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage-istanbul-reporter": "1.4.2",
