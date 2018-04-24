@@ -3459,9 +3459,9 @@ doctypes@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/doctypes/-/doctypes-1.1.0.tgz#ea80b106a87538774e8a3a4a5afe293de489e0a9"
 
-docusaurus@1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-1.0.13.tgz#3d059f8740680d105c1f19dc1188a6d758387f3d"
+docusaurus@1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/docusaurus/-/docusaurus-1.0.14.tgz#5fc333bbcc0faa3faf04ec1d1c3430ee45b8754b"
   dependencies:
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.26.0"
