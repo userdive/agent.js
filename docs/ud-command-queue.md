@@ -1,9 +1,9 @@
 ---
-id: ud-command-queue
-title: ud Command Queue
+id: command-queue
+title: Command Queue
 ---
 
-The `ud()` command queue provides an interface for executing process with agent.js.
+The `ud()` command queue function provides an interface for executing process with agent.js.
 Commonly, you should invoke the queue command to control agent behavior.
 
 ## Adding commands to the userdive queue
@@ -45,7 +45,7 @@ _ud("create", [trackingId], [cookieDomain], [name], [fieldsObject]);
 
 **Parameters**
 
-Please see create [field reference](./field-reference.html).
+Please see create [field reference](./field-reference.html#create-only-fields).
 
 ---
 
@@ -80,7 +80,7 @@ _ud("[trackerName.]set", fieldObject);
 
 **Parameters**
 
-Please see [fieldObject reference](./field-reference.html#fieldObject).
+Please see [fieldObject reference](field-reference.html#field-object).
 
 ---
 

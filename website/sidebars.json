@@ -2,7 +2,7 @@
   "docs": {
     "Usage": [
       "getting-started",
-      "ud-command-queue",
+      "command-queue",
       "custom-variables",
       "events",
       "field-reference"
