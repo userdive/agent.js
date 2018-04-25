@@ -2,8 +2,10 @@
   "docs": {
     "Usage": [
       "getting-started",
+      "ud-command-queue",
       "custom-variables",
-      "events"
+      "events",
+      "field-reference"
     ],
     "Plugins": [
       "writing-plugins"
