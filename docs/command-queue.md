@@ -15,15 +15,15 @@ The queued commands will execute as agent’s function.
 _ud(command, [...fields], [fieldsObject]);
 ```
 
-| Name                | Type   | Required | Description                                                 |
-| :------------------ | :----- | :------- | :---------------------------------------------------------- |
-| [command](#command) | String | Yes      | An identifier representing the command to add to the queue. |
-| ...fields           | any    | No       | Able to set any custom variable. Max number of index: 20    |
-| fieldsObject        | Object | No       | Able to set any custom variable. Max number of index: 20    |
+| Name                | Type   | Required | Description                                                                                     |
+| :------------------ | :----- | :------- | :---------------------------------------------------------------------------------------------- |
+| [command](#command) | String | Yes      | An identifier representing the command to add to the queue.                                     |
+| ...fields           | any    | No       | Optional parameters for specifying common fields. Depending on the command method being called. |
+| fieldsObject        | Object | No       | An object for specifying agent's fields.                                                        |
 
 ### command
 
-The comannd identifier signature is `[trackerName.][pluginName:]methodName`.
+The command identifier signature is `[trackerName.][pluginName:]methodName`.
 
 | Name        | Required | Description                                                                                   |
 | :---------- | :------- | :-------------------------------------------------------------------------------------------- |
