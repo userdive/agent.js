@@ -6,7 +6,7 @@ title: Getting started
 You use [agent.js](https://cdn.userdive.com/agent.js) to measure the action of USERDIVE’s user.
 In the following, I explain a method to add to for a site.
 
-## Setting of the HTML `<script>` tag
+## Setting of the HTML script tag
 
 We explain a method to set the following HTML `<script>` tag for tracking the site.
 We recommend that you list this before `</body>` tag of the site.
