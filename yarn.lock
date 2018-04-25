@@ -401,9 +401,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/webpack@3.8.11":
-  version "3.8.11"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.11.tgz#df2d7f8db43dbc15b4e8ecbdc91e6f68ed6b83ab"
+"@types/webpack@3.8.12":
+  version "3.8.12"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.12.tgz#c5db4f273fb8f2a4929db6c486e19e68c350e7ac"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "^0"
