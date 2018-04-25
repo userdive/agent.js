@@ -13,7 +13,9 @@ title: Field Reference
 | :--------- | :----- | :------------ |
 | trackingId | String | _None_        |
 
-### Cookie Domain
+---
+
+#### Cookie Domain
 
 | Field Name   | Type   | Default Value |
 | :----------- | :----- | :------------ |
@@ -22,21 +24,25 @@ title: Field Reference
 You can using `'auto'` as this field value.
 When using 'auto', agent automatically determine the best cookie domain to use.
 
-### Tracker Name
+---
+
+#### Tracker Name
 
 | Field Name | Type   | Default Value |
 | :--------- | :----- | :------------ |
 | name       | String | 'default'     |
 
-### Setting Fields Object
+---
 
-| Field Name    | Type    | Default Value               |
-| :------------ | :------ | :-------------------------- |
-| allowLinker   | boolean | false                       |
-| linkerName    | String  | `'__ud'`                    |
-| baseUrl       | String  | `'https://v1.userdive.com'` |
-| cookieDomain  | String  | _None_                      |
-| cookieExpires | Integer | 730                         |
-| cookieName    | String  | `'_ud'`                     |
+#### Setting Fields Object
+
+| Field Name    | Type    | Default Value             |
+| :------------ | :------ | :------------------------ |
+| allowLinker   | boolean | false                     |
+| linkerName    | String  | '\_\_ud'                  |
+| baseUrl       | String  | 'https://v1.userdive.com' |
+| cookieDomain  | String  | _None_                    |
+| cookieExpires | Integer | 730                       |
+| cookieName    | String  | '\_ud'                    |
 
 ### Field Object
