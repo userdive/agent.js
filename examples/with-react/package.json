@@ -4,7 +4,7 @@
   "dependencies": {
     "@types/react": "16.3.12",
     "@types/react-dom": "16.0.5",
-    "@types/react-router": "4.0.23",
+    "@types/react-router": "4.0.24",
     "@types/react-router-dom": "4.2.6",
     "react": "16.3.2",
     "react-dom": "16.3.2",
