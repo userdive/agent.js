@@ -35,7 +35,7 @@ The command identifier signature is `[trackerName.][pluginName:]methodName`.
 
 ### create
 
-Creates a new tracker instance
+Creates a new tracker instance.
 
 **Usage**
 
@@ -50,6 +50,8 @@ Please see create [field reference](./field-reference.html#create-only-fields).
 ---
 
 ### send
+
+Sends tacking data to USERDIVE.
 
 **Usage**
 
@@ -88,9 +90,16 @@ Please see [fieldObject reference](field-reference.html#field-object).
 
 **Usage**
 
-> TBA
+```js
+_ud("[trackerName.]require", pluginName, [pluginOptions]);
+```
 
 **Parameters**
+
+| Name          | Type   | Required | Description                                                    |
+| :------------ | :----- | :------- | :------------------------------------------------------------- |
+| pluginName    | String | Yes      | The name of plugin named with `require` API by plugin vendor.  |
+| pluginOptions | Object | No       | An object to use in the plugin constructor upon instantiation. |
 
 ---
 
@@ -98,6 +107,15 @@ Please see [fieldObject reference](field-reference.html#field-object).
 
 **Usage**
 
-> TBA
+```js
+_ud("provide", pluginName, pluginConstuctor);
+```
+
+##### Note: `provide` api does not accept a tracker name.
 
 **Parameters**
+
+| Name             | Type   | Required | Description                                                                                                            |
+| :--------------- | :----- | :------- | :--------------------------------------------------------------------------------------------------------------------- |
+| pluginName       | String | Yes      | The name of plugin. The name must be the same name used by [`require`](#require) api.                                  |
+| pluginConstuctor | Object | No       | A constructor function the provides plugin. It will be invoked with pluginOptions object in [`require`](#require) api. |
