@@ -21,7 +21,7 @@ _ud(command, [...fields], [fieldsObject]);
 | ...fields           | any    | No       | Optional parameters for specifying common fields. Depending on the command method being called. |
 | fieldsObject        | Object | No       | An object for specifying agent's fields.                                                        |
 
-### command
+### command signature
 
 The command identifier signature is `[trackerName.][pluginName:]methodName`.
 
@@ -40,7 +40,7 @@ Creates a new tracker instance.
 **Usage**
 
 ```js
-_ud("create", [trackingId], [cookieDomain], [name], [fieldsObject]);
+_ud("create", [projectId], [cookieDomain], [name], [fieldsObject]);
 ```
 
 **Parameters**
@@ -111,7 +111,7 @@ _ud("[trackerName.]require", pluginName, [pluginOptions]);
 _ud("provide", pluginName, pluginConstuctor);
 ```
 
-##### Note: `provide` api does not accept a tracker name.
+_Note: `provide` api does not accept a tracker name._
 
 **Parameters**
 
