@@ -1,6 +1,6 @@
 ---
 id: field-reference
-title: Agent.js field reference
+title: Field reference
 ---
 
 ## Fields for Create
