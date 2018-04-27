@@ -1,9 +1,9 @@
 ---
 id: field-reference
-title: Field Reference
+title: Agent.js field reference
 ---
 
-## Agent.js field reference
+## Fields for Create
 
 ### Project ID
 
@@ -132,4 +132,78 @@ _ud("create", "exampleid", "auto", { coookieName: "ud_agent" });
 
 ---
 
-### Field Object
+## Field Object
+
+### Custom Dimensions
+
+You defined analytics dimension.
+
+| Field Name       | Type   | Default Value |
+| :--------------- | :----- | :------------ |
+| dimensions[0-9]+ | String | _None_        |
+
+For detail, please see [field reference](./custom-variables.html).
+
+---
+
+### Page
+
+Specify the full URL to associate for tracking.
+
+| Field Name | Type   | Default Value |
+| :--------- | :----- | :------------ |
+| page       | String | location.href |
+
+**Usage**
+
+```js
+_ud("set", "page", "http://developers.userdive.com/page/?p=1");
+```
+
+---
+
+## Event Tracking
+
+Agent can track events in page. The event data does not cache, and the send process will take immediate.
+For detail, please see [Event Tracking](./events.html).
+
+```js
+_ud("send", "event", {
+    eventCategory: "Category",
+    eventAction: "Action",
+    eventLabel: "Label",
+    eventValue: 1000
+});
+```
+
+### Event Category
+
+Specifies event category. Must not be empty.
+
+| Field         | Type   | Default Value | MaxLength |
+| :------------ | :----- | :------------ | :-------- |
+| eventCategory | String | _None_        | 150       |
+
+### Event Action
+
+Specifies event action. Must not be empty.
+
+| Field       | Type   | Default Value | MaxLength |
+| :---------- | :----- | :------------ | :-------- |
+| eventAction | String | _None_        | 500       |
+
+### Event Label
+
+Specifies event label. Optional feild.
+
+| Field      | Type   | Default Value | MaxLength |
+| :--------- | :----- | :------------ | :-------- |
+| eventLabel | String | _None_        | 500       |
+
+### Event Value
+
+Specifies event value. Optional, and must not be negative value.
+
+| Field      | Type             | Default Value | MaxLength |
+| :--------- | :--------------- | :------------ | :-------- |
+| eventValue | Positive Integer | _NOne_        | -         |
