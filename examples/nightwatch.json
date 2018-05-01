@@ -29,7 +29,7 @@
         "chromeOptions" : {
           "args" : ["--no-sandbox"]
         }
-      },
+      }
     },
     "chrome": {
       "desiredCapabilities": {
