@@ -95,7 +95,7 @@ When using 'auto', agent automatically determine the best cookie domain to use.
 **Usage**
 
 ```js
-_ud("create", "exampleid", "auto", { cookieDomain: "developers.userdive.com" });
+_ud("create", "exampleid", "developers.userdive.com");
 ```
 
 ---
@@ -142,7 +142,7 @@ You defined analytics dimension.
 | :--------------- | :----- | :------------ |
 | dimensions[0-9]+ | String | _None_        |
 
-For detail, please see [field reference](./custom-variables.html).
+For detail, please see [custom dimensions](./custom-variables.html).
 
 ---
 
@@ -206,4 +206,4 @@ Specifies event value. Optional, and must not be negative value.
 
 | Field      | Type             | Default Value | MaxLength |
 | :--------- | :--------------- | :------------ | :-------- |
-| eventValue | Positive Integer | _NOne_        | -         |
+| eventValue | Positive Integer | _None_        | -         |
