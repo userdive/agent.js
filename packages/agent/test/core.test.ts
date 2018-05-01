@@ -212,7 +212,7 @@ describe('AgentCore', () => {
     })
     assert(eventParams.length === 5)
     assert(eventParams[0] === '1')
-    spy.reset()
+    spy.resetHistory()
 
     eventParams = sendEvent({
       eventCategory: lorem.word(),
@@ -221,7 +221,7 @@ describe('AgentCore', () => {
     })
     assert(eventParams.length === 4)
     assert(eventParams[0] === '2')
-    spy.reset()
+    spy.resetHistory()
 
     eventParams = sendEvent({
       eventCategory: lorem.word(),
