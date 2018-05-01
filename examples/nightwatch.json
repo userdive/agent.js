@@ -25,14 +25,20 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
-      }
+        "acceptSslCerts": true,
+        "chromeOptions" : {
+          "args" : ["--no-sandbox"]
+        }
+      },
     },
     "chrome": {
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        "chromeOptions" : {
+          "args" : ["--no-sandbox"]
+        }
       }
     }
   },
