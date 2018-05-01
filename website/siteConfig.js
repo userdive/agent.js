@@ -39,7 +39,8 @@ const siteConfig = {
   },
   scripts: [],
   repoUrl,
-  twitter: true
+  twitter: true,
+  onPageNav: 'separate'
 }
 
 module.exports = siteConfig
