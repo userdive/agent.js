@@ -309,13 +309,10 @@ var Subscriber = (function (_super) {
                     break;
                 }
                 if (typeof destinationOrNext === 'object') {
-                    // HACK(benlesh): To resolve an issue where Node users may have multiple
-                    // copies of rxjs in their node_modules directory.
-                    if (isTrustedSubscriber(destinationOrNext)) {
-                        var trustedSubscriber = destinationOrNext[rxSubscriber_1.rxSubscriber]();
-                        this.syncErrorThrowable = trustedSubscriber.syncErrorThrowable;
-                        this.destination = trustedSubscriber;
-                        trustedSubscriber.add(this);
+                    if (destinationOrNext instanceof Subscriber) {
+                        this.syncErrorThrowable = destinationOrNext.syncErrorThrowable;
+                        this.destination = destinationOrNext;
+                        this.destination.add(this);
                     }
                     else {
                         this.syncErrorThrowable = true;
@@ -401,7 +398,7 @@ var Subscriber = (function (_super) {
         this.destination.complete();
         this.unsubscribe();
     };
-    /** @deprecated internal use only */ Subscriber.prototype._unsubscribeAndRecycle = function () {
+    Subscriber.prototype._unsubscribeAndRecycle = function () {
         var _a = this, _parent = _a._parent, _parents = _a._parents;
         this._parent = null;
         this._parents = null;
@@ -522,7 +519,7 @@ var SafeSubscriber = (function (_super) {
         }
         return false;
     };
-    /** @deprecated internal use only */ SafeSubscriber.prototype._unsubscribe = function () {
+    SafeSubscriber.prototype._unsubscribe = function () {
         var _parentSubscriber = this._parentSubscriber;
         this._context = null;
         this._parentSubscriber = null;
@@ -530,9 +527,6 @@ var SafeSubscriber = (function (_super) {
     };
     return SafeSubscriber;
 }(Subscriber));
-function isTrustedSubscriber(obj) {
-    return obj instanceof Subscriber || ('syncErrorThrowable' in obj && obj[rxSubscriber_1.rxSubscriber]);
-}
 //# sourceMappingURL=Subscriber.js.map
 
 /***/ }),
@@ -770,7 +764,7 @@ var Observable = (function () {
             }, reject, resolve);
         });
     };
-    /** @deprecated internal use only */ Observable.prototype._subscribe = function (subscriber) {
+    Observable.prototype._subscribe = function (subscriber) {
         return this.source.subscribe(subscriber);
     };
     /**
@@ -21032,7 +21026,7 @@ var Subject = (function (_super) {
             return _super.prototype._trySubscribe.call(this, subscriber);
         }
     };
-    /** @deprecated internal use only */ Subject.prototype._subscribe = function (subscriber) {
+    Subject.prototype._subscribe = function (subscriber) {
         if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
@@ -21088,7 +21082,7 @@ var AnonymousSubject = (function (_super) {
             this.destination.complete();
         }
     };
-    /** @deprecated internal use only */ AnonymousSubject.prototype._subscribe = function (subscriber) {
+    AnonymousSubject.prototype._subscribe = function (subscriber) {
         var source = this.source;
         if (source) {
             return this.source.subscribe(subscriber);
@@ -28926,7 +28920,7 @@ var ArrayObservable = (function (_super) {
         state.index = index + 1;
         this.schedule(state);
     };
-    /** @deprecated internal use only */ ArrayObservable.prototype._subscribe = function (subscriber) {
+    ArrayObservable.prototype._subscribe = function (subscriber) {
         var index = 0;
         var array = this.array;
         var count = array.length;
@@ -29021,7 +29015,7 @@ var EmptyObservable = (function (_super) {
         var subscriber = arg.subscriber;
         subscriber.complete();
     };
-    /** @deprecated internal use only */ EmptyObservable.prototype._subscribe = function (subscriber) {
+    EmptyObservable.prototype._subscribe = function (subscriber) {
         var scheduler = this.scheduler;
         if (scheduler) {
             return scheduler.schedule(EmptyObservable.dispatch, 0, { subscriber: subscriber });
@@ -41628,7 +41622,7 @@ var ScalarObservable = (function (_super) {
         state.done = true;
         this.schedule(state);
     };
-    /** @deprecated internal use only */ ScalarObservable.prototype._subscribe = function (subscriber) {
+    ScalarObservable.prototype._subscribe = function (subscriber) {
         var value = this.value;
         var scheduler = this.scheduler;
         if (scheduler) {
@@ -41875,7 +41869,7 @@ var RefCountSubscriber = (function (_super) {
         _super.call(this, destination);
         this.connectable = connectable;
     }
-    /** @deprecated internal use only */ RefCountSubscriber.prototype._unsubscribe = function () {
+    RefCountSubscriber.prototype._unsubscribe = function () {
         var connectable = this.connectable;
         if (!connectable) {
             this.connection = null;
@@ -41996,7 +41990,7 @@ var PromiseObservable = (function (_super) {
     PromiseObservable.create = function (promise, scheduler) {
         return new PromiseObservable(promise, scheduler);
     };
-    /** @deprecated internal use only */ PromiseObservable.prototype._subscribe = function (subscriber) {
+    PromiseObservable.prototype._subscribe = function (subscriber) {
         var _this = this;
         var promise = this.promise;
         var scheduler = this.scheduler;
@@ -78804,18 +78798,17 @@ var refCount_1 = __webpack_require__(86);
  */
 var ConnectableObservable = (function (_super) {
     __extends(ConnectableObservable, _super);
-    function ConnectableObservable(/** @deprecated internal use only */ source, 
-        /** @deprecated internal use only */ subjectFactory) {
+    function ConnectableObservable(source, subjectFactory) {
         _super.call(this);
         this.source = source;
         this.subjectFactory = subjectFactory;
-        /** @deprecated internal use only */ this._refCount = 0;
+        this._refCount = 0;
         this._isComplete = false;
     }
-    /** @deprecated internal use only */ ConnectableObservable.prototype._subscribe = function (subscriber) {
+    ConnectableObservable.prototype._subscribe = function (subscriber) {
         return this.getSubject().subscribe(subscriber);
     };
-    /** @deprecated internal use only */ ConnectableObservable.prototype.getSubject = function () {
+    ConnectableObservable.prototype.getSubject = function () {
         var subject = this._subject;
         if (!subject || subject.isStopped) {
             this._subject = this.subjectFactory();
@@ -78872,7 +78865,7 @@ var ConnectableSubscriber = (function (_super) {
         this._unsubscribe();
         _super.prototype._complete.call(this);
     };
-    /** @deprecated internal use only */ ConnectableSubscriber.prototype._unsubscribe = function () {
+    ConnectableSubscriber.prototype._unsubscribe = function () {
         var connectable = this.connectable;
         if (connectable) {
             this.connectable = null;
@@ -78909,7 +78902,7 @@ var RefCountSubscriber = (function (_super) {
         _super.call(this, destination);
         this.connectable = connectable;
     }
-    /** @deprecated internal use only */ RefCountSubscriber.prototype._unsubscribe = function () {
+    RefCountSubscriber.prototype._unsubscribe = function () {
         var connectable = this.connectable;
         if (!connectable) {
             this.connection = null;
@@ -83331,7 +83324,7 @@ var BehaviorSubject = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /** @deprecated internal use only */ BehaviorSubject.prototype._subscribe = function (subscriber) {
+    BehaviorSubject.prototype._subscribe = function (subscriber) {
         var subscription = _super.prototype._subscribe.call(this, subscriber);
         if (subscription && !subscription.closed) {
             subscriber.next(this._value);
@@ -83850,7 +83843,7 @@ var FromObservable = (function (_super) {
         }
         throw new TypeError((ish !== null && typeof ish || ish) + ' is not observable');
     };
-    /** @deprecated internal use only */ FromObservable.prototype._subscribe = function (subscriber) {
+    FromObservable.prototype._subscribe = function (subscriber) {
         var ish = this.ish;
         var scheduler = this.scheduler;
         if (scheduler == null) {
@@ -83918,7 +83911,7 @@ var IteratorObservable = (function (_super) {
         }
         this.schedule(state);
     };
-    /** @deprecated internal use only */ IteratorObservable.prototype._subscribe = function (subscriber) {
+    IteratorObservable.prototype._subscribe = function (subscriber) {
         var index = 0;
         var _a = this, iterator = _a.iterator, scheduler = _a.scheduler;
         if (scheduler) {
@@ -84089,7 +84082,7 @@ var ArrayLikeObservable = (function (_super) {
         state.index = index + 1;
         this.schedule(state);
     };
-    /** @deprecated internal use only */ ArrayLikeObservable.prototype._subscribe = function (subscriber) {
+    ArrayLikeObservable.prototype._subscribe = function (subscriber) {
         var index = 0;
         var _a = this, arrayLike = _a.arrayLike, scheduler = _a.scheduler;
         var length = arrayLike.length;
