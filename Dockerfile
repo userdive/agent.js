@@ -35,16 +35,17 @@ RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
       google-chrome-stable=66.0.3359.139-1 && \
     google-chrome --version
 
-RUN apt-get clean
+RUN apt-get clean all
 
 COPY package.json "/var/agent.js/package.json"
 RUN yarn install --ignore-scripts
-
+RUN yarn global add wait-on
 
 ENV DISPLAY :99
 RUN printf '#!/bin/sh\nXvfb :99 -screen 0 1280x1024x24 &\nexec "$@"\n' > /tmp/entrypoint && \
     chmod +x /tmp/entrypoint && \
     mv /tmp/entrypoint /docker-entrypoint.sh
 
+VOLUME /var/agent.js
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/sh"]
