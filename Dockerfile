@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20180417
+FROM ubuntu:bionic-20180426
 
 ENV LANG C.UTF-8
 WORKDIR /var/agent.js
@@ -8,6 +8,7 @@ RUN apt-get update -q && \
     apt-get install --no-install-recommends -y \
       curl \
       ca-certificates \
+      gnupg \
       unzip \
       xvfb
 
@@ -19,7 +20,7 @@ RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
       nodejs \
       yarn
 
-RUN echo "deb-src http://ppa.launchpad.net/openjdk-r/ppa/ubuntu trusty main" | tee /etc/apt/sources.list.d/openjdk.list && \
+RUN echo "deb-src http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main" | tee /etc/apt/sources.list.d/openjdk.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-key DA1A4A13543B466853BAF164EB9B1D8886F44E2A && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
