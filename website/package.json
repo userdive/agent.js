@@ -2,7 +2,7 @@
   "name": "userdive-developers",
   "version": "1.0.0-beta5.3",
   "dependencies": {
-    "docusaurus": "1.0.14"
+    "docusaurus": "1.0.15"
   },
   "devDependencies": {
     "babel-eslint": "8.2.3",
