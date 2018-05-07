@@ -50,15 +50,15 @@ workflows:
                 - master
     jobs:
       - build
-      - test
-        requires:
-          - build
+      - test:
+          requires:
+            - build
   build-test-and-deploy:
     jobs:
       - build
       - test
-        requires:
-          build
+          requires:
+            - build
       - deploy:
           requires:
             - test
