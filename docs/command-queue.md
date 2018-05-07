@@ -17,7 +17,7 @@ _ud(command, [...fields], [fieldsObject]);
 
 | Name                | Type   | Required | Description                                                                                     |
 | :------------------ | :----- | :------- | :---------------------------------------------------------------------------------------------- |
-| [command](#command) | String | Yes      | An identifier representing the command to add to the queue.                                     |
+| [command](#command) | String | Yes      | An identifier representing the command method to add to the queue.                              |
 | ...fields           | any    | No       | Optional parameters for specifying common fields. Depending on the command method being called. |
 | fieldsObject        | Object | No       | An object for specifying agent's fields.                                                        |
 
@@ -63,7 +63,7 @@ _ud("[trackerName.]send", [hitType], [fieldsObject]);
 
 | Hit Type | Fields Object                        |
 | :------- | ------------------------------------ |
-| pageview | page                                 |
+| pageview | [page](./field-reference.html#page)  |
 | event    | see [event tracking](./events.html). |
 
 ---
