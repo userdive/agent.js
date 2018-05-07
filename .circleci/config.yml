@@ -52,7 +52,7 @@ workflows:
       - build
       - test
         requires:
-          build
+          - build
   build-test-and-deploy:
     jobs:
       - build
