@@ -102,7 +102,7 @@ _ud("create", "exampleid", "developers.userdive.com");
 
 ### Cookie Expires
 
-The expires times of agent cookie (seconds).
+The expires times of agent cookie (days).
 
 | Field Name    | Type    | Default Value |
 | :------------ | :------ | :------------ |
