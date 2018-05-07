@@ -204,6 +204,6 @@ Specifies event label. Optional feild.
 
 Specifies event value. Optional, and must not be negative value.
 
-| Field      | Type             | Default Value | MaxLength |
-| :--------- | :--------------- | :------------ | :-------- |
-| eventValue | Positive Integer | _None_        | -         |
+| Field      | Type    | Default Value | MaxLength |
+| :--------- | :------ | :------------ | :-------- |
+| eventValue | Integer | _None_        | -         |

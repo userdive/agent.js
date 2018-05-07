@@ -63,7 +63,7 @@ _ud("[trackerName.]send", [hitType], [fieldsObject]);
 
 | Hit Type | Fields Object                        |
 | :------- | ------------------------------------ |
-| pageview | page                                 |
+| pageview | [page](./field-reference.html#page)  |
 | event    | see [event tracking](./events.html). |
 
 ---
