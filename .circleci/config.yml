@@ -23,7 +23,7 @@ jobs:
       - type: cache-restore
         key: docker-cache-{{ checksum "Dockerfile" }}
       - run: docker load -i ~/cache/image.tar
-      - docker run -it -v $(pwd):/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
+      - docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
   deploy:
     docker:
       - image: circleci/node:8.11.1
