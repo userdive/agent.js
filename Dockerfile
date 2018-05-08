@@ -10,7 +10,9 @@ RUN apt-get update -q && \
       curl=7.58.0-2ubuntu3 \
       gnupg=2.2.4-1ubuntu1 \
       unzip=6.0-21ubuntu1 \
-      xvfb=2:1.19.6-1ubuntu4
+      xvfb=2:1.19.6-1ubuntu4 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
@@ -18,7 +20,9 @@ RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
       nodejs=9.11.1-1nodesource1 \
-      yarn=1.6.0-1
+      yarn=1.6.0-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN echo "deb-src http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main" | tee /etc/apt/sources.list.d/openjdk.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-key DA1A4A13543B466853BAF164EB9B1D8886F44E2A && \
@@ -27,17 +31,19 @@ RUN echo "deb-src http://ppa.launchpad.net/openjdk-r/ppa/ubuntu bionic main" | t
       openjdk-8-jre=8u162-b12-1 \
       openjdk-8-jre-headless=8u162-b12-1 \
       openjdk-8-jdk=8u162-b12-1 \
-      openjdk-8-jdk-headless=8u162-b12-1
+      openjdk-8-jdk-headless=8u162-b12-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google.list && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
       google-chrome-stable=66.0.3359.139-1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     google-chrome --version
 
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 COPY package.json "/var/agent.js/package.json"
 RUN yarn install --ignore-scripts
