@@ -36,7 +36,8 @@ RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
       google-chrome-stable=66.0.3359.139-1 && \
     google-chrome --version
 
-RUN apt-get clean all
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY package.json "/var/agent.js/package.json"
 RUN yarn install --ignore-scripts
