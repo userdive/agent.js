@@ -3,7 +3,7 @@
   "version": "1.0.0-beta5.3",
   "devDependencies": {
     "@types/nightwatch": "0.9.8",
-    "chromedriver": "2.37.0",
+    "chromedriver": "2.38.2",
     "gh-pages": "1.1.0",
     "nightwatch": "0.9.21",
     "pug": "2.0.3",

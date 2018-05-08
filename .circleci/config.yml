@@ -1,22 +1,32 @@
 version: 2
 jobs:
-  test:
-    docker:
-      - image: circleci/node:8-browsers
-    working_directory: ~/repo
+  build:
+    machine: true
     steps:
       - checkout
-      - run: yarn install
-      - run: yarn build:examples
-      - run:
-          name: start SPAs
-          command: yarn w:examples
-          background: true
-      - run: sleep 30
-      - run: yarn e2e
+      - type: cache-restore
+        key: docker-cache-{{ checksum "Dockerfile" }}
+      - run: |
+          if [ -d ~/cache -a "${CIRCLE_BRANCH}" != "master" ]; then
+            docker load -i ~/cache/image.tar
+          fi
+      - run: docker build -t node-agent.js .
+      - run: mkdir -p ~/cache && docker save -o ~/cache/image.tar node-agent.js $(docker history -q node-agent.js | tail -n +2 | grep -v \<missing\> | tr '\n' ' ')
+      - type: cache-save
+        key: docker-cache-{{ checksum "Dockerfile" }}
+        paths:
+        - ~/cache
+  test:
+    machine: true
+    steps:
+      - checkout
+      - type: cache-restore
+        key: docker-cache-{{ checksum "Dockerfile" }}
+      - run: docker load -i ~/cache/image.tar
+      - run: docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
   deploy:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:8
     working_directory: ~/repo
     steps:
       - checkout
@@ -40,10 +50,16 @@ workflows:
               only:
                 - master
     jobs:
-      - test
+      - build
+      - test:
+          requires:
+            - build
   build-test-and-deploy:
     jobs:
-      - test
+      - build
+      - test:
+          requires:
+            - build
       - deploy:
           requires:
             - test
