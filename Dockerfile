@@ -1,4 +1,5 @@
 FROM ubuntu:bionic-20180426
+MAINTAINER UNCOVER TRUTH Inc. <develop@uncovertruth.jp>
 
 ENV LANG C.UTF-8
 WORKDIR /var/agent.js
