@@ -11,7 +11,7 @@
     "@types/node": "9.6.12",
     "@types/object-assign": "4.0.30",
     "@types/sinon": "4.3.1",
-    "@types/webpack": "3.8.12",
+    "@types/webpack": "4.1.4",
     "@uncovertruth/eslint-config": "4.2.0",
     "@uncovertruth/eslint-config-react": "4.3.1",
     "@uncovertruth/stylelint-config": "4.2.0",
@@ -61,7 +61,7 @@
     "typescript-eslint-parser": "15.0.0",
     "uglify-js": "3.3.24",
     "uglifyjs-webpack-plugin": "1.2.5",
-    "webpack": "3.11.0",
+    "webpack": "4.8.1",
     "webpack-dev-server": "2.11.2",
     "webpack-espower-loader": "2.0.0"
   },
