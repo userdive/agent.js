@@ -10,7 +10,7 @@
     "@types/mocha": "5.2.0",
     "@types/node": "9.6.12",
     "@types/object-assign": "4.0.30",
-    "@types/sinon": "4.3.1",
+    "@types/sinon": "4.3.3",
     "@types/webpack": "3.8.12",
     "@uncovertruth/eslint-config": "4.2.0",
     "@uncovertruth/eslint-config-react": "4.3.1",
