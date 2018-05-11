@@ -1,7 +1,7 @@
 export const customLaunchers = {
-  // SL_IOS10: { base: 'SauceLabs', browserName: 'iphone', version: '10.0' },
+  SL_IOS10: { base: 'SauceLabs', browserName: 'iphone', version: '10.0' },
   SL_IOS11: { base: 'SauceLabs', browserName: 'iphone', version: '11.0' },
-  // SL_ANDROID5: { base: 'SauceLabs', browserName: 'android', version: '5.1' },
+  SL_ANDROID5: { base: 'SauceLabs', browserName: 'android', version: '5.1' },
   SL_ANDROID6: {
     base: 'SauceLabs',
     browserName: 'Chrome',
