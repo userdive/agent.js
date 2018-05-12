@@ -47,7 +47,7 @@
     "prettier-eslint-cli": "4.7.1",
     "pug-lint": "2.5.0",
     "pug-lint-config-uncovertruth": "4.2.0",
-    "puppeteer": "1.3.0",
+    "puppeteer": "1.4.0",
     "rimraf": "2.6.2",
     "sinon": "5.0.7",
     "size-limit": "0.17.0",
