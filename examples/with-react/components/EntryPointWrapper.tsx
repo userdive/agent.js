@@ -10,6 +10,7 @@ type Props = {
   location: H.Location
   history: H.History
   match: any
+  staticContext: undefined
 }
 
 class EntryPointWrapper extends React.PureComponent<Props> {
