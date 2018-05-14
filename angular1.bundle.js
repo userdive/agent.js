@@ -1285,7 +1285,8 @@ var Category;
     Category[Category["HOOK"] = 2] = "HOOK";
     Category[Category["UIVIEW"] = 3] = "UIVIEW";
     Category[Category["VIEWCONFIG"] = 4] = "VIEWCONFIG";
-})(Category = exports.Category || (exports.Category = {}));
+})(Category || (Category = {}));
+exports.Category = Category;
 /** @hidden */
 var _tid = hof_1.parse('$id');
 /** @hidden */
@@ -1510,7 +1511,8 @@ var RejectType;
      * This generally means a hook threw an error or returned a rejected promise
      */
     RejectType[RejectType["ERROR"] = 6] = "ERROR";
-})(RejectType = exports.RejectType || (exports.RejectType = {}));
+})(RejectType || (RejectType = {}));
+exports.RejectType = RejectType;
 /** @hidden */
 var id = 0;
 var Rejection = /** @class */ (function () {
@@ -1598,12 +1600,14 @@ var TransitionHookPhase;
     TransitionHookPhase[TransitionHookPhase["RUN"] = 2] = "RUN";
     TransitionHookPhase[TransitionHookPhase["SUCCESS"] = 3] = "SUCCESS";
     TransitionHookPhase[TransitionHookPhase["ERROR"] = 4] = "ERROR";
-})(TransitionHookPhase = exports.TransitionHookPhase || (exports.TransitionHookPhase = {}));
+})(TransitionHookPhase || (TransitionHookPhase = {}));
+exports.TransitionHookPhase = TransitionHookPhase;
 var TransitionHookScope;
 (function (TransitionHookScope) {
     TransitionHookScope[TransitionHookScope["TRANSITION"] = 0] = "TRANSITION";
     TransitionHookScope[TransitionHookScope["STATE"] = 1] = "STATE";
-})(TransitionHookScope = exports.TransitionHookScope || (exports.TransitionHookScope = {}));
+})(TransitionHookScope || (TransitionHookScope = {}));
+exports.TransitionHookScope = TransitionHookScope;
 //# sourceMappingURL=interface.js.map
 
 /***/ }),
@@ -1787,7 +1791,8 @@ var DefType;
     DefType[DefType["PATH"] = 0] = "PATH";
     DefType[DefType["SEARCH"] = 1] = "SEARCH";
     DefType[DefType["CONFIG"] = 2] = "CONFIG";
-})(DefType = exports.DefType || (exports.DefType = {}));
+})(DefType || (DefType = {}));
+exports.DefType = DefType;
 /** @hidden */
 function unwrapShorthand(cfg) {
     cfg = (isShorthand(cfg) && { value: cfg }) || cfg;
@@ -1810,7 +1815,11 @@ function getType(cfg, urlType, location, id, paramTypes) {
     if (!cfg.type) {
         var type = location === DefType.CONFIG
             ? 'any'
-            : location === DefType.PATH ? 'path' : location === DefType.SEARCH ? 'query' : 'string';
+            : location === DefType.PATH
+                ? 'path'
+                : location === DefType.SEARCH
+                    ? 'query'
+                    : 'string';
         return paramTypes.type(type);
     }
     return cfg.type instanceof paramType_1.ParamType ? cfg.type : paramTypes.type(cfg.type);
@@ -8632,7 +8641,7 @@ main.run([
 /**
  * State-based routing for AngularJS 1.x
  * This bundle requires the ui-router-core.js bundle from the @uirouter/core package.
- * @version v1.0.16
+ * @version v1.0.17
  * @link https://ui-router.github.io
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -10210,6 +10219,10 @@ main.run([
         .filter('isState', $IsStateFilter)
         .filter('includedByState', $IncludedByStateFilter);
 
+    /**
+     * @ng1api
+     * @module directives
+     */
     /**
      * `ui-view`: A viewport directive which is filled in by a view from the active state.
      *
