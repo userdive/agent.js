@@ -1,6 +1,6 @@
 import * as H from 'history'
 import * as React from 'react'
-import { withRouter } from 'react-router'
+import { StaticContext, withRouter } from 'react-router'
 import factory from 'userdive'
 // tslint:disable-next-line:no-submodule-imports
 import { USERDIVEApi } from 'userdive/lib/types'
@@ -10,6 +10,7 @@ type Props = {
   location: H.Location
   history: H.History
   match: any
+  staticContext: StaticContext | undefined
 }
 
 class EntryPointWrapper extends React.PureComponent<Props> {
