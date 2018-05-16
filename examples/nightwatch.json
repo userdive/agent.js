@@ -14,7 +14,7 @@
   },
   "test_settings": {
     "default": {
-      "launch_url": "http://localhost:8080",
+      "launch_url": "http://localhost:8080/agent.js",
       "selenium_port": 4444,
       "selenium_host": "localhost",
       "silent": true,
