@@ -15,7 +15,7 @@
   "private": true,
   "scripts": {
     "build": "run-p build:*",
-    "build:html": "pug . -o build -P -s",
+    "build:html": "pug . -o build/agent.js -P -s",
     "build:js": "webpack --env production",
     "build:test": "tsc -m commonjs",
     "clean": "rimraf tests build",

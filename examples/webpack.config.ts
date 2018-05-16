@@ -4,7 +4,8 @@ const path = require('path')
 module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'build'),
-    openPage: '/simple/'
+    openPage: '/simple/',
+    publicPath: '/agent.js/'
   },
   devtool: 'cheap-source-map',
   entry: {
@@ -20,7 +21,7 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, 'build')
+    path: path.join(__dirname, 'build/agent.js')
   },
   resolve: {
     alias: {
