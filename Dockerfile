@@ -8,7 +8,7 @@ RUN apt-get update -q && \
     apt-get dist-upgrade -y -qq && \
     apt-get install --no-install-recommends -y \
       ca-certificates=20180409 \
-      curl=7.58.0-2ubuntu3 \
+      curl=7.58.0-2ubuntu3.1 \
       gnupg=2.2.4-1ubuntu1 \
       unzip=6.0-21ubuntu1 \
       xvfb=2:1.19.6-1ubuntu4 && \
