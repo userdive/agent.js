@@ -1,7 +1,7 @@
 {
   "name": "@userdive/agent",
   "description": "webpage tracking agent",
-  "version": "1.0.0-beta5.3",
+  "version": "1.0.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -12,7 +12,7 @@
     "object-assign": "^4.1.1",
     "raven-js": "^3.23.1",
     "ui-event-observer": "^2.0.0",
-    "userdive": "^1.0.0-beta5.3",
+    "userdive": "^1.0.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
