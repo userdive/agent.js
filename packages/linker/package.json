@@ -1,14 +1,14 @@
 {
   "name": "@userdive/linker",
   "description": "webpage tracking agent linker plugin",
-  "version": "1.0.0-beta5.3",
+  "version": "1.0.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^1.0.0-beta5.3",
-    "userdive": "^1.0.0-beta5.3"
+    "@userdive/agent": "^1.0.0",
+    "userdive": "^1.0.0"
   },
   "engine": {
     "node": "> 5"
