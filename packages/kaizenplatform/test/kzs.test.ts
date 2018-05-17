@@ -2,7 +2,6 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
-import { spy as sinonSpy } from 'sinon'
 import Kzs from '../src/plugin'
 
 describe('kzs', () => {
