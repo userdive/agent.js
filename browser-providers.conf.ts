@@ -35,12 +35,12 @@ export const customLaunchers = {
   //   platform: 'Windows 10',
   //   version: 'beta'
   // },
-  SL_SAFARI10: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'macOS 10.13',
-    version: '11.0'
-  },
+  // SL_SAFARI10: {
+  //   base: 'SauceLabs',
+  //   browserName: 'safari',
+  //   platform: 'OS X 10.12',
+  //   version: '10.0'
+  // },
   // SL_SAFARI11: {
   //   base: 'SauceLabs',
   //   browserName: 'safari',
@@ -52,11 +52,11 @@ export const customLaunchers = {
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
     version: '11'
-  },
-  SL_EDGE17: {
-    base: 'SauceLabs',
-    browserName: 'MicrosoftEdge',
-    platform: 'Windows 10',
-    version: '17.17134'
   }
+  // SL_EDGE14: {
+  //   base: 'SauceLabs',
+  //   browserName: 'MicrosoftEdge',
+  //   platform: 'Windows 10',
+  //   version: '14.14393'
+  // }
 }

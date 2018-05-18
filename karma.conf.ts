@@ -1,5 +1,4 @@
 import * as objectAssign from 'object-assign'
-import * as puppeteer from 'puppeteer'
 import { customLaunchers } from './browser-providers.conf'
 
 let override = {}
@@ -24,6 +23,7 @@ if (
         }
       },
       customLaunchers,
+      concurrency: 3,
       captureTimeout: 180000,
       browserDisconnectTimeout: 180000,
       browserDisconnectTolerance: 3,
@@ -33,7 +33,7 @@ if (
     }
   )
 } else {
-  process.env.CHROME_BIN = puppeteer.executablePath()
+  process.env.CHROME_BIN = require('puppeteer').executablePath()
 }
 
 export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
