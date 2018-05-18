@@ -30,7 +30,7 @@
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="/agent.js/simple/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> examples</a></li>
-        <li class="active">Cross-domain using query parameter</li>
+        <li class="active">Send events</li>
       </ol>
       <div class="jumbotron">
         <h1>Example</h1>
@@ -38,7 +38,11 @@
         <p><a class="btn btn-primary btn-lg" href="https://github.com/userdive/agent.js/tree/master/examples" role="button">github.com</a></p>
       </div>
       <div class="panel panel-default">
-        <div class="panel-body form-horizontal"><p>TBA</p>
+        <div class="panel-body form-horizontal"><h1>USERDIVE example</h1>
+<p><a href="https://circleci.com/gh/userdive/agent.js/tree/master"><img src="https://circleci.com/gh/userdive/agent.js/tree/master.svg?style=svg" alt="CircleCI"></a></p>
+<blockquote>
+<p>TBA</p>
+</blockquote>
 
         </div>
       </div>
@@ -126,11 +130,25 @@
       !function(e,t,s,n,a,r,c,i){e[a]=e[a]||function(){(e[a].q=e[a].q||[]).push(arguments)},c=t.createElement(s),i=t.getElementsByTagName(s)[0],
       c.async=1,c.src=n,c.charset=r,c.setAttribute("data-ud-namespace",a),i.parentNode.insertBefore(c,i)}
       (window,document,"script","https://cdn.userdive.com/agent.js","_ud","UTF-8");
-      _ud("create", 'af57h6gb', 'auto', { allowLinker: true });
-      _ud("require", 'linker');
+      _ud("create", 'af57h6gb', 'auto');
       _ud("send", "pageview");
-      _ud("linker:autoLink", ['developers.userdive.com']);
+      _ud("send", "event", {
+      eventCategory: "Category",
+      eventAction: "Action",
+      eventLabel: "Label",
+      eventValue: 1000
+      });
+      window.addEventListener('click', (event) => {
+        if(event.target.className === 'navbar-brand') {
+          _ud("send", "event", {
+            eventCategory: "Interaction",
+            eventAction: "Click",
+            eventLabel: "navbar-brand",
+            eventValue: 0
+            });
+        }
+        return false;
+      })
     </script>
-    <script src="//cdn.userdive.com/linker.js" async></script>
   </body>
 </html>
