@@ -12,7 +12,8 @@ export default {
     browser
       .url(`${browser.launch_url}${testPath}`)
       .waitForElementVisible('body', 1000)
-      .click(linkSelector)
-      .assert.urlContains(linkPramKey)
+      .click(linkSelector, () => {
+        browser.assert.urlContains(linkPramKey)
+      })
       .end()
 }
