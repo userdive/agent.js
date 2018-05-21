@@ -16,4 +16,10 @@ describe('kzs', () => {
     const instance: any = kzs
     assert(instance.tracker)
   })
+
+  it('getVariation', () => {
+    assert.doesNotThrow(() => {
+      kzs.getVariation()
+    })
+  })
 })
