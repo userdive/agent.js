@@ -8641,7 +8641,7 @@ main.run([
 /**
  * State-based routing for AngularJS 1.x
  * This bundle requires the ui-router-core.js bundle from the @uirouter/core package.
- * @version v1.0.17
+ * @version v1.0.18
  * @link https://ui-router.github.io
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -9393,9 +9393,9 @@ main.run([
      * @module ng1
      * @preferred
      */
-    ng.module('ui.router.angular1', []);
-    var mod_init = ng.module('ui.router.init', []);
-    var mod_util = ng.module('ui.router.util', ['ng', 'ui.router.init']);
+    ng.module("ui.router.angular1", []);
+    var mod_init = ng.module('ui.router.init', ['ng']);
+    var mod_util = ng.module('ui.router.util', ['ui.router.init']);
     var mod_rtr = ng.module('ui.router.router', ['ui.router.util']);
     var mod_state = ng.module('ui.router.state', ['ui.router.router', 'ui.router.util', 'ui.router.angular1']);
     var mod_main = ng.module('ui.router', ['ui.router.init', 'ui.router.state', 'ui.router.angular1']);
@@ -9602,7 +9602,9 @@ main.run([
             if (!(button > 1 || e.ctrlKey || e.metaKey || e.shiftKey || el.attr('target'))) {
                 // HACK: This is to allow ng-clicks to be processed before the transition is initiated:
                 var transition_1 = $timeout(function () {
-                    $state.go(target.uiState, target.uiStateParams, target.uiStateOpts);
+                    if (!el.attr('disabled')) {
+                        $state.go(target.uiState, target.uiStateParams, target.uiStateOpts);
+                    }
                 });
                 e.preventDefault();
                 // if the state has no URL, ignore one preventDefault from the <a> directive.
