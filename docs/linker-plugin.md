@@ -29,18 +29,7 @@ _ud("require", "linker");
 
 ---
 
-### Allow linker
-
-For identify client by [linker parameter](./field-reference.html#linker-name), [allowLinker field](./field-reference.html#allow-linker-parameter) must set to true.
-
-```js
-// on destination domain
-_ud("create", "exampleid", "auto", { allowLinker: true });
-```
-
----
-
-## Linking with autoLink
+### Linking with autoLink
 
 To set up cross-domain auto linking on the source domain call `autoLink` method.
 
@@ -57,3 +46,46 @@ _ud("[trackerName.]linker:autoLink", domains);
 | Name    | Type                 | Required | Description                                                       |
 | :------ | :------------------- | :------- | :---------------------------------------------------------------- |
 | domains | Array<string/RegExp> | Yes      | An array of strings or regular expressions, matching to hostname. |
+
+## Configuring a site to accept linker parameters
+
+For identify client ID by [linker parameter](./field-reference.html#linker-name), [allowLinker field](./field-reference.html#allow-linker-parameter) must set to true.
+
+```js
+// on destination domain
+_ud("create", "exampleid", "auto", { allowLinker: true });
+```
+
+## Bi-directional cross-domain tracking
+
+You should create tracker that allowed linker, and enable to auto linking.
+
+**On a domain**
+
+```js
+_ud("create", "exampleid", "auto", { allowLinker: true });
+_ud("require", "linker");
+_ud("linker:autoLink", ["ther-first-domain.example.com"]);
+```
+
+**On another domain**
+
+```js
+_ud("create", "exampleid", "auto", { allowLinker: true });
+_ud("require", "linker");
+_ud("linker:autoLink", ["ther-second-domain.example.net"]);
+```
+
+### Using single snippet
+
+The `autoLink` method can accept domains list including self one.
+To simplify snippet for tracking, You can use same it in each domains, like below.
+
+```js
+_ud("create", "exampleid", "auto", { allowLinker: true });
+_ud("require", "linker");
+_ud("linker:autoLink", [
+    "ther-first-domain.example.com",
+    "ther-second-domain.example.net"
+]);
+```
