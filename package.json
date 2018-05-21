@@ -120,7 +120,7 @@
       "limit": "1.2 KB"
     },
     {
-      "path": "cdn/kaizenplatform-event-plugin.js",
+      "path": "cdn/kaizenplatform-plugin.js",
       "limit": " 700 B"
     }
   ],
