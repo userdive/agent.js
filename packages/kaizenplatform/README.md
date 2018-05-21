@@ -5,8 +5,6 @@
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
 
-> TBA
-
 ## Table of Contents
 
 *   [Install](#install)
