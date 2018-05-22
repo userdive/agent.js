@@ -21,7 +21,7 @@
     "can-npm-publish": "1.1.0",
     "codecov": "3.0.2",
     "concurrently": "3.5.1",
-    "cross-env": "5.1.5",
+    "cross-env": "5.1.6",
     "eslint": "4.19.1",
     "faker": "4.1.0",
     "fixpack": "2.3.1",
