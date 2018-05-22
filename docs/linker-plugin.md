@@ -49,7 +49,16 @@ _ud("[trackerName.]linker:autoLink", domains);
 
 ## Configuring a site to accept linker parameters
 
-For identify client ID by [linker parameter](./field-reference.html#linker-name), [allowLinker field](./field-reference.html#allow-linker-parameter) must set to true.
+For sharing client ID via [linker parameter](./field-reference.html#linker-name) on souce domain, use `autoLink` like below.
+
+```js
+// on source domain
+_ud("create", "exampleid", "auto");
+_ud("require", "linker");
+_ud("linker:autoLink", ["destination-domain.example.com"]);
+```
+
+For identify client, [allowLinker field](./field-reference.html#allow-linker-parameter) must set to true on destination domain.
 
 ```js
 // on destination domain
