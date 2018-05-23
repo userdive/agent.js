@@ -50,7 +50,7 @@
     "pug-lint-config-uncovertruth": "4.2.0",
     "puppeteer": "1.4.0",
     "rimraf": "2.6.2",
-    "sinon": "5.0.7",
+    "sinon": "5.0.8",
     "size-limit": "0.18.1",
     "stylelint": "9.2.1",
     "textlint": "10.2.1",
