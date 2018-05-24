@@ -1,4 +1,5 @@
 const React = require('react')
+const { version } = require('../package.json')
 
 module.exports = function Footer ({
   language,
@@ -48,6 +49,7 @@ module.exports = function Footer ({
 
       <section className='copyright'>
         Copyright &copy; {new Date().getFullYear()} UNCOVER TRUTH
+        <p>version {version}</p>
       </section>
       <script
         dangerouslySetInnerHTML={{
