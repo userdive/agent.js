@@ -9,7 +9,8 @@
     ],
     "Plugins": [
       "writing-plugins",
-      "linker-plugin"
+      "linker-plugin",
+      "kaizenplatform-plugin"
     ],
     "Integrations": [
       "integrations"
