@@ -377,9 +377,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/sinon@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-4.3.3.tgz#97cbbfddc3282b5fd40c7abf80b99db426fd4237"
+"@types/sinon@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-5.0.0.tgz#e5d49a422f64b2c658bbeb8529679c9a6a0b5a3a"
 
 "@types/tapable@^0":
   version "0.2.5"
@@ -10760,9 +10760,9 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sinon@5.0.8:
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.8.tgz#0cbfc0d6b1787aee99ad512e1f10154e1602ab36"
+sinon@5.0.10:
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.10.tgz#a282b36a7475664c9f98719108e5546907129023"
   dependencies:
     "@sinonjs/formatio" "^2.0.0"
     diff "^3.5.0"
