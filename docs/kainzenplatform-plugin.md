@@ -31,7 +31,8 @@ _ud("require", "kzs");
 **Usage**
 
 The Kaizen Platform script will inject kzs queue under window.
-`getVariation` work as add task to this queue, sending event with Kaizen parameter.
+And variation data can collect by invoke Kaizen Platform [API](https://support.kaizenplatform.net/hc/en-us/articles/206075262-Collecting-Variation-data).
+`getVariation` work as add task to this queue, sending event with variation data of Kaizen Platform.
 
 ```js
 _ud("kzs:getVariation");
