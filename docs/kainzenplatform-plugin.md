@@ -12,7 +12,7 @@ This plugin will send A/B testing informaiton as [Event data](./field-reference.
 | eventCategory | Constant string as 'kaizenplatform'.          |
 | eventAction   | The experimentType string in Kaizen Platform. |
 | eventLabel    | The variationId for renderd.                  |
-| eventValue    | **None**                                      |
+| eventValue    | _None_                                        |
 
 ## Provided Name
 
