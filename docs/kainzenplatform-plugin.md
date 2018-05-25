@@ -18,7 +18,7 @@ This plugin will send A/B testing informaiton as [Event data](./field-reference.
 
 This plugin name is `kzs`.
 
-You can register this plugin use this name.
+You can register to tracker via `require` API as below.
 
 ```js
 _ud("require", "kzs");
