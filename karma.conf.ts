@@ -15,6 +15,7 @@ if (
       sauceLabs: {
         testName: '@userdive/agent',
         recordVideo: false,
+        recordScreenshots: false,
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         options: {
           'selenium-version': '3.1.0',
@@ -24,10 +25,9 @@ if (
         }
       },
       customLaunchers,
-      captureTimeout: 180000,
-      browserDisconnectTimeout: 180000,
+      browserDisconnectTimeout: 300000,
       browserDisconnectTolerance: 3,
-      browserNoActivityTimeout: 180000,
+      browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
       reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
     }
