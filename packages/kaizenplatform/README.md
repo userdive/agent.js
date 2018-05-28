@@ -1,4 +1,4 @@
-# @userdive/kaizenplatform-events-plugin
+# @userdive/kaizenplatform-plugin
 
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -25,6 +25,7 @@ import Plugin from "@userdive/kaizenplatform-plugin";
 const agent = new Agent("projectId", "auto");
 agent.provide("kaizenplatform-plugin", Plugin);
 agent.require("kaizenplatform-plugin");
+agent.run("kzs", "getVariation");
 ```
 
 ## Contribute
