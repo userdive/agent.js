@@ -1,12 +1,12 @@
 import Agent from '@userdive/agent'
 
 export default class Plugin {
-  tracker: Agent
+  private tracker: Agent
   constructor (tracker: Agent) {
     this.tracker = tracker
   }
 
-  getVariation (global: any, pollInterval?: number, maxTry?: number) {
+  public getVariation (global: any, pollInterval?: number, maxTry?: number) {
     const interval: number = pollInterval || 200
     const max: number = maxTry || 10
     let isSent = false
