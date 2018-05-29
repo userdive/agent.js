@@ -107,24 +107,6 @@
     "w:html": "pug examples -o examples/build/agent.js -P -s -w",
     "w:website": "cd website && npm start"
   },
-  "size-limit": [
-    {
-      "path": "cdn/agent.js",
-      "limit": "8.4 KB"
-    },
-    {
-      "path": "cdn/agent.d.js",
-      "limit": "21 KB"
-    },
-    {
-      "path": "cdn/linker.js",
-      "limit": "1.2 KB"
-    },
-    {
-      "path": "cdn/kaizenplatform-plugin.js",
-      "limit": " 700 B"
-    }
-  ],
   "workspaces": [
     "packages/*",
     "website",
