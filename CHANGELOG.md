@@ -1,3 +1,49 @@
+## v1.1.0 (2018-05-28)
+
+#### :rocket: Enhancement
+* `kaizenplatform`, `userdive`
+  * [#440](https://github.com/userdive/agent.js/pull/440) feat(packages/kaizenplatform) Added integration . ([@9renpoto](https://github.com/9renpoto))
+
+#### Committers: 3
+- Keisuke Kan ([9renpoto](https://github.com/9renpoto))
+- Shoota Kumano ([shoota](https://github.com/shoota))
+- [renovate[bot]](https://github.com/apps/renovate)
+
+
+## v1.0.0 (2018-05-17)
+
+#### :rocket: Enhancement
+* Other
+  * [#554](https://github.com/userdive/agent.js/pull/554) Update Google Chrome version. ([@heavenshell](https://github.com/heavenshell))
+* `agent`, `linker`, `userdive`
+  * [#407](https://github.com/userdive/agent.js/pull/407) [breaking changes] Added global interface. ([@9renpoto](https://github.com/9renpoto))
+  * [#404](https://github.com/userdive/agent.js/pull/404) fix(packages) Added global entrypoint type. ([@9renpoto](https://github.com/9renpoto))
+* `agent`, `linker`
+  * [#364](https://github.com/userdive/agent.js/pull/364) send event. ([@shoota](https://github.com/shoota))
+
+#### :bug: Bug Fix
+* Other
+  * [#442](https://github.com/userdive/agent.js/pull/442) fix(examples) update example link. ([@9renpoto](https://github.com/9renpoto))
+* `agent`, `linker`, `userdive`
+  * [#430](https://github.com/userdive/agent.js/pull/430) fix(packages/agent) fix v0.x auto options. ([@9renpoto](https://github.com/9renpoto))
+  * [#424](https://github.com/userdive/agent.js/pull/424) fix(packages/agent) Added lazy queue . ([@9renpoto](https://github.com/9renpoto))
+  * [#407](https://github.com/userdive/agent.js/pull/407) [breaking changes] Added global interface. ([@9renpoto](https://github.com/9renpoto))
+  * [#404](https://github.com/userdive/agent.js/pull/404) fix(packages) Added global entrypoint type. ([@9renpoto](https://github.com/9renpoto))
+* `agent`
+  * [#425](https://github.com/userdive/agent.js/pull/425) fix(packages/agent) fix send pageview default. ([@9renpoto](https://github.com/9renpoto))
+* `agent`, `linker`
+  * [#389](https://github.com/userdive/agent.js/pull/389)  fix(packages/agent) create queue first . ([@9renpoto](https://github.com/9renpoto))
+  * [#297](https://github.com/userdive/agent.js/pull/297) [breaking changes] fix(packages) create global entrypoint. ([@9renpoto](https://github.com/9renpoto))
+
+#### Committers: 6
+- Keisuke Kan ([9renpoto](https://github.com/9renpoto))
+- Shinya Ohyanagi ([heavenshell](https://github.com/heavenshell))
+- Shoota Kumano ([shoota](https://github.com/shoota))
+- [opapy](https://github.com/opapy)
+- [renovate[bot]](https://github.com/apps/renovate)
+- [sae1116](https://github.com/sae1116)
+
+
 ## v0.15.0 (2018-03-16)
 
 #### :rocket: Enhancement
