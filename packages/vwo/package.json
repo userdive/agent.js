@@ -1,6 +1,6 @@
 {
-  "name": "@userdive/vwo-evnents-plugin",
-  "description": "a plugin for webpage tracking with vwo",
+  "name": "@userdive/vwo-plugin",
+  "description": "a plugin to integrate Visual Website Optimizer",
   "version": "0.0.1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
