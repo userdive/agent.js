@@ -4,28 +4,32 @@ import { random } from 'faker'
 import 'mocha'
 import Vwo from '../src/plugin'
 
-const emulate = (instance: any) => {
+const emulate = (global = window as any, ready = false) => {
   const expId: string = `${random.number()}`
   const combinationChosen = `${random.number()}`
-  return instance.sendEvent(window, [expId], { [expId]: {
+  global._vis_opt_queue = []
+  global._vwo_exp_ids = [expId]
+  global._vwo_exp = { [expId]: {
     combination_chosen: combinationChosen,
     comb_n: { [combinationChosen]: random.word },
-    ready: true
-  }})
+    ready
+  }}
 }
 
 describe('vwo', () => {
   let agent: any
-  let vwo: Vwo
+  let vwo: any
+  let global: any
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
     vwo = new Vwo(agent)
+    global = window as any
+    global._vis_opt_queue = undefined
   })
 
   it('constructor', () => {
-    const instance: any = vwo
-    assert(instance.tracker)
-    assert(instance.isSent === false)
+    assert(vwo.tracker)
+    assert(vwo.isSent === false)
   })
 
   it('getVariation', () => {
@@ -37,16 +41,26 @@ describe('vwo', () => {
     })
   })
 
-  it('fail sendEvent', () => {
-    const instance: any = vwo
-    instance.sendEvent(window, [], {})()
-    assert(instance.isSent === false)
+  it('add queue', () => {
+    emulate(global)
+    vwo.getVariation()
+    assert(global._vis_opt_queue.length === 1)
+    assert(vwo.isSent === false)
   })
 
-  it('success sendEvent', () => {
-    const instance: any = vwo
-    emulate(instance)()
-    assert(instance.isSent)
+  it('not ready', () => {
+    emulate(global)
+    vwo.getVariation()
+    assert(global._vis_opt_queue.length === 1)
+    global._vis_opt_queue[0]()
+    assert(vwo.isSent === false)
   })
 
+  it('ready', () => {
+    emulate(global, true)
+    vwo.getVariation()
+    assert(global._vis_opt_queue.length === 1)
+    global._vis_opt_queue[0]()
+    assert(vwo.isSent)
+  })
 })

@@ -10,17 +10,10 @@ export default class Plugin {
 
   public getVariation (global = window as any, interval = 200, max = 10) {
     let tryCount = 0
-    const sendVariation = (q: any[], vwoExpIds: string[], vwoExp: any) => {
-      const sendEvent = this.sendEvent(global, vwoExpIds, vwoExp)
-      q.push(sendEvent)
-    }
     const pollingForReady = (): void => {
       if (typeof global._vwo_exp_ids !== 'undefined') {
-        sendVariation(
-          global._vis_opt_queue,
-          global._vwo_exp_ids,
-          global._vwo_exp
-        )
+        const sendEvent = this.sendEvent(global, global._vwo_exp_ids, global._vwo_exp)
+        global._vis_opt_queue.push(sendEvent)
         if (tryCount < max && !this.isSent) {
           tryCount++
           setTimeout(pollingForReady, interval)
