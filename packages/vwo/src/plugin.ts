@@ -3,18 +3,13 @@ import Agent from '@userdive/agent'
 export default class Plugin {
   private tracker: Agent
   private isSent: boolean
-  private tryCount: number
   constructor (tracker: Agent) {
     this.tracker = tracker
-    this.init()
-  }
-
-  public init = () => {
     this.isSent = false
-    this.tryCount = 0
   }
 
   public getVariation (global?: any, interval?: number, max?: number) {
+    let tryCount = 0
     global = global || window
     const sendVariation = (q: any[], vwoExpIds: string[], vwoExp: any[]) => {
       const sendEvent = this.sendEvent(global, vwoExpIds, vwoExp)
@@ -29,8 +24,8 @@ export default class Plugin {
           global._vwo_exp_ids,
           global._vwo_exp
         )
-        if (this.tryCount < max && !this.isSent) {
-          this.tryCount++
+        if (tryCount < max && !this.isSent) {
+          tryCount++
           setTimeout(pollingForReady, interval)
         }
       }
