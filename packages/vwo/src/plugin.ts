@@ -47,12 +47,8 @@ export default class Plugin {
           if (!exp.ready) {
             continue
           }
-          let visCombination: string = global._vis_opt_readCookie(
-            '_vis_opt_exp_' + visId + '_combi'
-          )
-          if (typeof exp.combination_chosen !== 'undefined') {
-            visCombination = exp.combination_chosen
-          }
+          const visCombination: string = (typeof exp.combination_chosen !== 'undefined') ?
+          exp.combination_chosen : global._vis_opt_readCookie(`_vis_opt_exp_${visId}_combi`)
           if (typeof exp.comb_n[visCombination] !== 'undefined') {
             this.isSent = true
             this.tracker.send('event', {

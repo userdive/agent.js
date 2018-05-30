@@ -18,6 +18,6 @@ module.exports = [
   },
   {
     path: `${dir}/vwo-plugin.js`,
-    limit: ' 810 B'
+    limit: ' 860 B'
   }
 ]
