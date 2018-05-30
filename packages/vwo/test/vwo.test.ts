@@ -4,6 +4,16 @@ import { random } from 'faker'
 import 'mocha'
 import Vwo from '../src/plugin'
 
+const emulate = (instance: any) => {
+  const expId: string = `${random.number()}`
+  const combinationChosen = `${random.number()}`
+  return instance.sendEvent(window, [expId], { [expId]: {
+    combination_chosen: combinationChosen,
+    comb_n: { [combinationChosen]: random.word },
+    ready: true
+  }})
+}
+
 describe('vwo', () => {
   let agent: any
   let vwo: Vwo
@@ -15,6 +25,7 @@ describe('vwo', () => {
   it('constructor', () => {
     const instance: any = vwo
     assert(instance.tracker)
+    assert(instance.isSent === false)
   })
 
   it('getVariation', () => {
@@ -25,4 +36,17 @@ describe('vwo', () => {
       vwo.getVariation(window, 300, 20)
     })
   })
+
+  it('fail sendEvent', () => {
+    const instance: any = vwo
+    instance.sendEvent(window, [], {})()
+    assert(instance.isSent === false)
+  })
+
+  it('success sendEvent', () => {
+    const instance: any = vwo
+    emulate(instance)()
+    assert(instance.isSent)
+  })
+
 })

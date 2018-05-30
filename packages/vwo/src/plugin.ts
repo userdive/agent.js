@@ -11,7 +11,7 @@ export default class Plugin {
   public getVariation (global?: any, interval?: number, max?: number) {
     let tryCount = 0
     global = global || window
-    const sendVariation = (q: any[], vwoExpIds: string[], vwoExp: any[]) => {
+    const sendVariation = (q: any[], vwoExpIds: string[], vwoExp: any) => {
       const sendEvent = this.sendEvent(global, vwoExpIds, vwoExp)
       q.push(sendEvent)
     }
@@ -34,7 +34,7 @@ export default class Plugin {
     pollingForReady()
   }
 
-  private sendEvent = (global: any, vwoExpIds: string[], vwoExp: any[]) => {
+  private sendEvent = (global: any, vwoExpIds: string[], vwoExp: any) => {
     return () => {
       try {
         for (let i = 0; i < vwoExpIds.length; i++) {
