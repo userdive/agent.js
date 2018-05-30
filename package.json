@@ -58,7 +58,7 @@
     "ts-node": "6.0.5",
     "tslint": "5.10.0",
     "tslint-react": "3.6.0",
-    "typescript": "2.8.3",
+    "typescript": "2.8.4",
     "typescript-eslint-parser": "15.0.0",
     "uglify-js": "3.3.28",
     "uglifyjs-webpack-plugin": "1.2.5",
