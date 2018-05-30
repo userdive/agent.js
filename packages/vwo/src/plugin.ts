@@ -14,14 +14,15 @@ export default class Plugin {
     this.tryCount = 0
   }
 
-  public getVariation (global: any, pollInterval?: number, maxTry?: number) {
-    const interval: number = pollInterval || 200
-    const max: number = maxTry || 10
+  public getVariation (global?: any, interval?: number, max?: number) {
+    global = global || window
     const sendVariation = (q: any[], vwoExpIds: string[], vwoExp: any[]) => {
       const sendEvent = this.sendEvent(global, vwoExpIds, vwoExp)
       q.push(sendEvent)
     }
     const pollingForReady = (): void => {
+      interval = interval || 200
+      max = max || 10
       if (typeof global._vwo_exp_ids !== 'undefined') {
         sendVariation(
           global._vis_opt_queue,

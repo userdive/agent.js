@@ -1,39 +1,49 @@
 ---
 id: kaizenplatform-plugin
-title: Kaizen Platform
+title: Visual Website Optimizer
 ---
 
-The Kaizen Platform plugin works A/B testing integration for Kaizen Platform.
+The VWO plugin works A/B testing integration for Visual Website Optimizer (VWO).
 
 This plugin will send A/B testing informaiton as [Event data](./field-reference.html#event-tracking).
 
-| Field         | Assigned Value                                |
-| :------------ | :-------------------------------------------- |
-| eventCategory | Constant string as 'kaizenplatform'.          |
-| eventAction   | The experimentType string in Kaizen Platform. |
-| eventLabel    | The variationId for renderd.                  |
-| eventValue    | _None_                                        |
+| Field         | Assigned Value                   |
+| :------------ | :------------------------------- |
+| eventCategory | Constant string as 'vwo'.        |
+| eventAction   | The experiment ID string in VWO. |
+| eventLabel    | The variation ID for renderd.    |
+| eventValue    | _None_                           |
 
 ## Provided Name
 
-This plugin name is `kzs`.
+This plugin name is `vwo`.
 
 You can register to tracker via `require` API as below.
 
 ```js
-_ud("require", "kzs");
+_ud("require", "vwo");
 ```
 
 ## Provided Functions
 
 ### getValiation
 
+The VWO script will inject \_vis_opt_queue queue under window.
+And experiment ID and variation ID can gather from global variables.
+`getVariation` push a task to this queue at intervals of configured millisecond.
+The task will try gather these variables and send event once if get it.
+In case of able to send event , this function will not push task.
+
 **Usage**
 
-The Kaizen Platform script will inject kzs queue under window.
-And variation data can collect by invoke Kaizen Platform [API](https://support.kaizenplatform.net/hc/en-us/articles/206075262-Collecting-Variation-data).
-`getVariation` work as add task to this queue, sending event with variation data of Kaizen Platform.
-
 ```js
-_ud("kzs:getVariation");
+_ud("vwo:getVariation", [global], [interval], [maxTry]);
 ```
+
+**Parameters**
+
+| Name     | Type   | Required | Description                                        |
+| :------- | :----- | :------- | :------------------------------------------------- |
+| global   | any    | No       | The Object having \_vis_opt_queue. Default: window |
+| interval | Number | No       | Interval to push task (milliseconds). Default: 200 |
+| maxTry   | Number | No       | Number of times to tyr to gather data. Default: 10 |
