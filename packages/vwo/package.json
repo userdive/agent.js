@@ -32,9 +32,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf coverage lib docs",
+    "clean": "rimraf coverage lib",
     "prepublish": "npm run build",
     "test": "karma start --single-run"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/plugin.d.ts"
 }

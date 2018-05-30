@@ -1,4 +1,4 @@
-# @userdive/vwo-events-plugin
+# @userdive/vwo-plugin
 
 [![Build Status](https://travis-ci.org/userdive/agent.js.svg?branch=master)](https://travis-ci.org/userdive/agent.js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
