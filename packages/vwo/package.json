@@ -7,8 +7,8 @@
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^1.0.0-beta5.3",
-    "userdive": "^1.0.0-beta5.3"
+    "@userdive/agent": "^1.1.0",
+    "userdive": "^1.1.0"
   },
   "engine": {
     "node": "> 6"
