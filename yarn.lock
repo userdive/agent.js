@@ -293,9 +293,9 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.1.0.tgz#a8916246aa994db646c66d54c854916213300a51"
 
-"@types/karma-fixture@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@types/karma-fixture/-/karma-fixture-0.2.3.tgz#fec335d7e5bf5557361b46ea5511c6bd13149193"
+"@types/karma-fixture@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@types/karma-fixture/-/karma-fixture-0.2.4.tgz#3828da1774fffe0e47ffcc567e1a7adb7971e748"
 
 "@types/mocha@5.2.1":
   version "5.2.1"
