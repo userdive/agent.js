@@ -10,7 +10,8 @@
     "Plugins": [
       "writing-plugins",
       "linker-plugin",
-      "kaizenplatform-plugin"
+      "kaizenplatform-plugin",
+      "vwo-plugin"
     ],
     "Integrations": [
       "integrations"

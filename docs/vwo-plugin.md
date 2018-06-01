@@ -1,5 +1,5 @@
 ---
-id: kaizenplatform-plugin
+id: vwo-plugin
 title: Visual Website Optimizer
 ---
 
@@ -46,4 +46,4 @@ _ud("vwo:getVariation", [global], [interval], [maxTry]);
 | :------- | :----- | :------- | :------------------------------------------------- |
 | global   | any    | No       | The Object having \_vis_opt_queue. Default: window |
 | interval | Number | No       | Interval to push task (milliseconds). Default: 200 |
-| maxTry   | Number | No       | Number of times to tyr to gather data. Default: 10 |
+| maxTry   | Number | No       | Number of times to try to gather data. Default: 10 |
