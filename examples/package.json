@@ -4,7 +4,7 @@
   "devDependencies": {
     "@types/nightwatch": "0.9.8",
     "chromedriver": "2.38.3",
-    "gh-pages": "1.1.0",
+    "gh-pages": "1.2.0",
     "nightwatch": "0.9.21",
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
