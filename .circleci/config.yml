@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-     docker:
+    docker:
       - image: circleci/node:8-browsers
       working_directory: ~/repo
     steps:
@@ -15,11 +15,10 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
   test:
     steps:
       - checkout
-      - run: docker load -i ~/cache/image.tar
+      - run: docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
   deploy:
     docker:
       - image: circleci/node:8
