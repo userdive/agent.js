@@ -43,6 +43,7 @@ RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
       google-chrome-stable && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
+    ln -s /usr/bin/google-chrome /usr/local/bin/chrome && \
     google-chrome --version
 
 
