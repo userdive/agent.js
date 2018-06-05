@@ -15,7 +15,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e
+      - run: yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e
   deploy:
     docker:
       - image: circleci/node:8
