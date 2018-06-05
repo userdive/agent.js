@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+import * as qs from 'query-string'
 import { ClientFunction, Selector } from 'testcafe'
 import { baseUrl } from '../testcafe-conf'
 
@@ -28,4 +29,9 @@ export const changeToSample2 = (path: string) => {
 export const spaTest = (path: string) => {
   displayTop()
   changeToSample2(path)
+}
+
+export const query = (record: Request) => {
+  const query = record.request.url.split('?')[1]
+  return query ? qs.parse(query) : {}
 }

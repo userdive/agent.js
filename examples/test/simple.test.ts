@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe'
 import { baseUrl } from '../testcafe-conf'
 
-fixture('simple page').page(baseUrl)
+fixture('simple page').page(`${baseUrl}/simple/`)
 
 test('select a value', async (t) => {
   const select = Selector('select[class="form-control"]')
