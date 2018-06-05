@@ -15,7 +15,7 @@
     "build:html": "pug . -o build/agent.js -P -s",
     "build:js": "webpack --env production",
     "clean": "rimraf tests build",
-    "e2e": "testcafe chrome test/",
+    "e2e": "testcafe 'chrome --no-sandobox' test/",
     "prebuild": "npm run clean"
   }
 }
