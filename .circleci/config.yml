@@ -15,8 +15,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm install -g wait-on
-      - run: yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e
+      - run: npm install wait-on
+      - run: yarn install &&  yarn build:examples && yarn w:examples & ./node_modules/.bin/wait-on http://localhost:8080 && yarn e2e
       - store_test_results:
           path: /tmp/test-results
   deploy:
