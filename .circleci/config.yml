@@ -15,7 +15,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn add global wait-on --ignore-workspace-root-check
+      - run: npm install -g wait-on
       - run: yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e
       - store_test_results:
           path: /tmp/test-results
