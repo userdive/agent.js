@@ -12,13 +12,11 @@ jobs:
           - v1-dependencies-
       - run: yarn install
       - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-  test:
-    steps:
-      - checkout
-      - run: docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn install &&  yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn global add wait-on
+      - run: docker run -it -v `pwd`:/var/agent.js node-agent.js:latest bash -c "yarn build:examples && yarn w:examples & wait-on  http://localhost:8080 && yarn e2e"
   deploy:
     docker:
       - image: circleci/node:8
@@ -46,18 +44,12 @@ workflows:
                 - master
     jobs:
       - build
-      - test:
-          requires:
-            - build
   build-test-and-deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
       - deploy:
           requires:
-            - test
+            - build
           filters:
             branches:
               only: master
