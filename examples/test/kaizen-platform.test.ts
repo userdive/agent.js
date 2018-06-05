@@ -14,5 +14,6 @@ fixture('deploy host').page(`${deployBaseUrl}/kaizen-platform/`)
 test('display experiment text', async (t) => {
   const nav = Selector('.navbar-brand')
   await t
+    .wait(1000)
     .expect(await nav.innerText).eql('USERDIVE Kaizen Platform Integration example')
 })
