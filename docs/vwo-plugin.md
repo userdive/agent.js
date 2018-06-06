@@ -32,7 +32,7 @@ The VWO script will inject \_vis_opt_queue queue under window.
 And experiment ID and variation ID can gather from global variables.
 `getVariation` push a task to this queue at intervals of configured millisecond.
 The task will try gather these variables and send event once if get it.
-In case of able to send event , this function will not push task.
+In case of able to send event, this function will not push task.
 
 **Usage**
 
