@@ -1,7 +1,7 @@
 {
-  "name": "@userdive/kaizenplatform-plugin",
-  "description": "a plugin to integrate Kaizen Platform A/B testing",
-  "version": "1.1.0",
+  "name": "@userdive/vwo-plugin",
+  "description": "a plugin to integrate Visual Website Optimizer",
+  "version": "0.0.1",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
@@ -22,6 +22,7 @@
   ],
   "license": "GPL-3.0",
   "main": "lib/index.js",
+  "private": true,
   "publishConfig": {
     "access": "public"
   },
