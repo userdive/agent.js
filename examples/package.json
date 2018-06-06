@@ -2,13 +2,12 @@
   "name": "userdive-examples",
   "version": "1.1.0",
   "devDependencies": {
-    "@types/nightwatch": "0.9.8",
-    "chromedriver": "2.38.3",
+    "@types/query-string": "5.1.0",
     "gh-pages": "1.2.0",
-    "nightwatch": "0.9.21",
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
-    "selenium-server-standalone-jar": "3.12.0"
+    "query-string": "6.1.0",
+    "testcafe": "0.20.2"
   },
   "license": "MIT",
   "main": "n/a",
@@ -17,9 +16,8 @@
     "build": "run-p build:*",
     "build:html": "pug . -o build/agent.js -P -s",
     "build:js": "webpack --env production",
-    "build:test": "tsc -m commonjs",
     "clean": "rimraf tests build",
-    "e2e": "nightwatch",
+    "e2e": "testcafe 'chrome --no-sandobox' test/",
     "prebuild": "npm run clean"
   }
 }
