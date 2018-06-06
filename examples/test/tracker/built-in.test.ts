@@ -5,7 +5,7 @@ import { baseUrl, envRegex } from '../../testcafe-conf'
 import { query } from '../test-util'
 
 const envLogger = RequestLogger(envRegex)
-const l = `${baseUrl}/simple/`
+const l = `${baseUrl}/built-in/`
 
 fixture('basic tracker').page(l)
 
