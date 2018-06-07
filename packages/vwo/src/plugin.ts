@@ -39,8 +39,8 @@ export default class Plugin {
             this.isSent = true
             this.tracker.send('event', {
               eventCategory: 'vwo',
-              eventAction: visCombination,
-              eventLabel: visId
+              eventAction: visId,
+              eventLabel: visCombination
             })
           }
         }
