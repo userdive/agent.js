@@ -13,6 +13,6 @@ block footer_content
     _ud('send', 'pageview');
     document.getElementById('page')
     .addEventListener('click', function () {
-      _ud('send', 'pageview', { page: location.origin+location.pathname+'/dummy'+location.search });
+      _ud('send', 'pageview', { page: location.origin+'/agent.js/orverride'+location.search });
     });
 
