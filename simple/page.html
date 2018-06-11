@@ -12,18 +12,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- Google Tag Manager-->
-    <noscript>
-      <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WBBV8N" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-WBBV8N');
-    </script>
-    <!-- End Google Tag Manager-->
   </head>
   <body><a href="https://github.com/userdive/"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
     <nav class="navbar navbar-inverse">
@@ -42,7 +30,6 @@
     <div class="container">
       <ol class="breadcrumb">
         <li><a href="/agent.js/simple/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> examples</a></li>
-        <li class="active">Kaizen Platform</li>
       </ol>
       <div class="jumbotron">
         <h1>Example</h1>
@@ -50,9 +37,21 @@
         <p><a class="btn btn-primary btn-lg" href="https://github.com/userdive/agent.js/tree/master/examples" role="button">github.com</a></p>
       </div>
       <div class="panel panel-default">
-        <div class="panel-body form-horizontal"><h1>USERDIVE Kaizen Platform integration example</h1>
+        <div class="panel-body form-horizontal"><h1>USERDIVE example</h1>
 <p><a href="https://circleci.com/gh/userdive/agent.js/tree/master"><img src="https://circleci.com/gh/userdive/agent.js/tree/master.svg?style=svg" alt="CircleCI"></a></p>
+<ul>
+<li><a href="./index.html">Getting started</a> show most simple example.</li>
+<li><a href="./multiple.html">Creating trackers</a> show create named tracker and use another trackers.</li>
+<li>Custom Dimensions
+<ul>
+<li><a href="./cd-with-send.html">Send with Custom Dimensions</a> show how to send custom dimensions with <code>send</code> method.</li>
+<li><a href="./cd-with-set.html">Set Custom Dimensions</a> show how to send custom dimensions with <code>set</code> method.</li>
+</ul>
+</li>
+<li><a href="./events.html">Send events</a> send events when fired load and click on <code>USERDIVE Integration example</code> element.</li>
+</ul>
 
+          <button class="btn btn-primary btn-sm" id="page">page</button>
         </div>
       </div>
       <div class="panel panel-default">
@@ -139,5 +138,16 @@
         </div>
       </div>
     </div>
+    <script>
+      !function(e,t,s,n,a,r,c,i){e[a]=e[a]||function(){(e[a].q=e[a].q||[]).push(arguments)},c=t.createElement(s),i=t.getElementsByTagName(s)[0],
+      c.async=1,c.src=n,c.charset=r,c.setAttribute("data-ud-namespace",a),i.parentNode.insertBefore(c,i)}
+      (window,document,"script","https://cdn.userdive.com/agent.js","_ud","UTF-8");
+      _ud("create", 'af57h6gb', 'auto');
+      _ud('send', 'pageview');
+      document.getElementById('page')
+      .addEventListener('click', function () {
+        _ud('send', 'pageview', { page: location.origin+'/agent.js/orverride'+location.search });
+      });
+    </script>
   </body>
 </html>
