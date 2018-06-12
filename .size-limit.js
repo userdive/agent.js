@@ -6,7 +6,7 @@ module.exports = [
   },
   {
     path: `${dir}/agent.d.js`,
-    limit: '21 KB'
+    limit: '21.1 KB'
   },
   {
     path: `${dir}/linker.js`,
