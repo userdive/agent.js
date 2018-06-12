@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 237);
+/******/ 	return __webpack_require__(__webpack_require__.s = 235);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 13:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -113,14 +113,14 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ 237:
+/***/ 235:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__userdive_provider__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1____ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1____ = __webpack_require__(237);
 
 
 __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default()('myplugin', __WEBPACK_IMPORTED_MODULE_1____["a" /* MyPlugin */]);
@@ -128,13 +128,13 @@ __WEBPACK_IMPORTED_MODULE_0__userdive_provider___default()('myplugin', __WEBPACK
 
 /***/ }),
 
-/***/ 238:
+/***/ 236:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var userdive_1 = __webpack_require__(13);
+var userdive_1 = __webpack_require__(11);
 function default_1(pluginName, pluginConstructor) {
     var element = document.querySelector("[" + userdive_1.namespace + "]");
     return userdive_1.q(element.getAttribute(userdive_1.namespace), window)('provide', pluginName, pluginConstructor);
@@ -144,7 +144,7 @@ exports.default = default_1;
 
 /***/ }),
 
-/***/ 239:
+/***/ 237:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
