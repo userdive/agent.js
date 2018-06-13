@@ -6,7 +6,7 @@ import * as Raven from 'raven-js'
 import { error, raise, setup, warning } from '../src/logger'
 
 describe('logger', () => {
-  const args = [random.word(), new Error(random.word())]
+  const args = [`Logger Test / ${random.word()}`, new Error(random.word())]
 
   function createDSN () {
     return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`

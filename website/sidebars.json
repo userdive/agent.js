@@ -8,7 +8,10 @@
       "field-reference"
     ],
     "Plugins": [
-      "writing-plugins"
+      "writing-plugins",
+      "linker-plugin",
+      "kaizenplatform-plugin",
+      "vwo-plugin"
     ],
     "Integrations": [
       "integrations"

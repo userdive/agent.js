@@ -19,15 +19,20 @@
 
 This repository is a monorepo that we manage using [Lerna](https://github.com/lerna/lerna). That means that we actually publish [packages](./packages) to npm from the same codebase, including:
 
-| Package                                  | Version                                                                                                             |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **[@userdive/agent](/packages/agent)**   | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)   |
-| **[@userdive/linker](/packages/linker)** | [![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker) |
-| **[userdive](/packages/userdive)**       | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                     |
+| Package                                                         | Version                                                                                                                    |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **[@userdive/agent](/packages/agent)**                          | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)          |
+| **[@userdive/linker](/packages/linker)**                        | [![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker)        |
+| **[@userdive/kaizenplatform-plugin](/packages/kaizenplatform)** | [![npm version](https://badge.fury.io/js/%40userdive%2Fkaizenplatform-plugin.svg)](https://www.npmjs.com/package/userdive) |
+| **[userdive](/packages/userdive)**                              | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                            |
 
 ## Support Browsers
 
 [![Build Status](https://saucelabs.com/browser-matrix/userdive.svg)](https://saucelabs.com/open_sauce/user/userdive/builds)
+
+## Change Log
+
+see [CHANGELOG.md](/CHANGELOG.md)
 
 ## Contribute
 
