@@ -7,8 +7,17 @@ import { Sample1Component } from './components/sample1.component'
 import { Sample2Component } from './components/sample2.component'
 
 @NgModule({
-  bootstrap: [AppComponent],
-  declarations: [AppComponent, Sample1Component, Sample2Component],
-  imports: [BrowserModule, routing]
+  declarations: [
+    AppComponent,
+    Sample1Component,
+    Sample2Component
+  ],
+  imports: [
+    BrowserModule,
+    routing
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
-export class AppModule {}
+export class AppModule { }

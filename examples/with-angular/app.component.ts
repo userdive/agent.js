@@ -4,7 +4,7 @@ import userdive from 'userdive'
 const _ud = userdive()
 
 @Component({
-  providers: [AppComponent],
+  providers: [ AppComponent ],
   selector: 'app',
   template: `<router-outlet></router-outlet>`
 })
