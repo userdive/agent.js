@@ -1,21 +1,21 @@
 {
   "name": "with-angular",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "dependencies": {
-    "@angular/common": "5.2.10",
-    "@angular/compiler": "5.2.10",
-    "@angular/core": "5.2.10",
-    "@angular/forms": "5.2.10",
-    "@angular/http": "5.2.10",
-    "@angular/platform-browser": "5.2.10",
-    "@angular/platform-browser-dynamic": "5.2.10",
-    "@angular/router": "5.2.10",
-    "@angular/upgrade": "5.2.10",
-    "core-js": "2.5.7",
-    "reflect-metadata": "0.1.12",
-    "systemjs": "0.21.4",
+    "@angular/animations": "^6.0.4",
+    "@angular/common": "^6.0.4",
+    "@angular/compiler": "^6.0.4",
+    "@angular/core": "^6.0.4",
+    "@angular/forms": "^6.0.4",
+    "@angular/http": "^6.0.4",
+    "@angular/platform-browser": "^6.0.4",
+    "@angular/platform-browser-dynamic": "^6.0.4",
+    "@angular/router": "^6.0.4",
+    "core-js": "^2.5.7",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.2.1",
     "userdive": "^1.1.0",
-    "zone.js": "0.8.26"
+    "zone.js": "^0.8.26"
   },
   "private": true
 }
