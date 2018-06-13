@@ -1019,6 +1019,7 @@ exports.namespace = 'data-ud-namespace';
 var name;
 var source;
 function default_1(overrideName, overrideSource, global) {
+    var _a;
     name = name || (overrideName || '_ud');
     source = source || (overrideSource || 'https://cdn.userdive.com/agent.js');
     global = global || window;
@@ -1027,7 +1028,6 @@ function default_1(overrideName, overrideSource, global) {
     }
     inject(source, (_a = {}, _a[exports.namespace] = name, _a));
     return q(name, global);
-    var _a;
 }
 exports.default = default_1;
 //# sourceMappingURL=index.js.map

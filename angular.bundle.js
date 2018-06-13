@@ -909,6 +909,7 @@ exports.namespace = 'data-ud-namespace';
 var name;
 var source;
 function default_1(overrideName, overrideSource, global) {
+    var _a;
     name = name || (overrideName || '_ud');
     source = source || (overrideSource || 'https://cdn.userdive.com/agent.js');
     global = global || window;
@@ -917,7 +918,6 @@ function default_1(overrideName, overrideSource, global) {
     }
     inject(source, (_a = {}, _a[exports.namespace] = name, _a));
     return q(name, global);
-    var _a;
 }
 exports.default = default_1;
 //# sourceMappingURL=index.js.map
@@ -83288,6 +83288,7 @@ var AppComponent = /** @class */ (function () {
             }
         });
     };
+    var AppComponent_1;
     AppComponent = AppComponent_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             providers: [AppComponent_1],
@@ -83297,7 +83298,6 @@ var AppComponent = /** @class */ (function () {
         __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]))
     ], AppComponent);
     return AppComponent;
-    var AppComponent_1;
 }());
 
 
