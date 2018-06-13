@@ -259,9 +259,9 @@
   dependencies:
     "@textlint/text-to-ast" "^3.0.8"
 
-"@types/angular@1.6.45":
-  version "1.6.45"
-  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.45.tgz#5b0b91a51d717f6fc816d59e1234d5292f33f7b9"
+"@types/angular@1.6.47":
+  version "1.6.47"
+  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.47.tgz#f7a31279a02c0892ed9aa76aae2da1b17791bacd"
 
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.2"
@@ -744,9 +744,9 @@ amqplib@^0.5.2:
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
 
-angular@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.0.tgz#e45d679fc8d81040a4894c7ccc16a4e1ad0a9ca6"
+angular@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.2.tgz#687b955dbe5c533f8d73460461707af00360251f"
 
 ansi-escapes@^1.0.0:
   version "1.4.0"
@@ -12364,11 +12364,7 @@ typescript-eslint-parser@^11.0.0:
     lodash.unescape "4.0.1"
     semver "5.4.1"
 
-typescript@2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
-
-typescript@^2.2.2, typescript@^2.5.1:
+typescript@2.9.1, typescript@^2.2.2, typescript@^2.5.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
