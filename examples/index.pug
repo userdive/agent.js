@@ -25,7 +25,7 @@ html
             span.icon-bar
             span.icon-bar
           a.navbar-brand(href='#') USERDIVE Integration example
-        .collapse.navbar-collapse
+        #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
               a(href='/agent.js/simple/') Home
@@ -39,6 +39,7 @@ html
             |  examples
         li
           a(href='/agent.js/simple/')
+            span.glyphicon.glyphicon-home(aria-hidden='true')
             |  examples
         block breadcrumb-current
       .jumbotron
