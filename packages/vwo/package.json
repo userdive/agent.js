@@ -22,7 +22,6 @@
   ],
   "license": "GPL-3.0",
   "main": "lib/index.js",
-  "private": true,
   "publishConfig": {
     "access": "public"
   },

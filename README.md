@@ -24,6 +24,7 @@ This repository is a monorepo that we manage using [Lerna](https://github.com/le
 | **[@userdive/agent](/packages/agent)**                          | [![npm version](https://badge.fury.io/js/%40userdive%2Fagent.svg)](https://www.npmjs.com/package/@userdive/agent)          |
 | **[@userdive/linker](/packages/linker)**                        | [![npm version](https://badge.fury.io/js/%40userdive%2Flinker.svg)](https://www.npmjs.com/package/@userdive/linker)        |
 | **[@userdive/kaizenplatform-plugin](/packages/kaizenplatform)** | [![npm version](https://badge.fury.io/js/%40userdive%2Fkaizenplatform-plugin.svg)](https://www.npmjs.com/package/userdive) |
+| **[@userdive/vwo-plugin](/packages/vwo)**                       | [![npm version](https://badge.fury.io/js/%40userdive%2Fvwo-plugin.svg)](https://www.npmjs.com/package/userdive)            |
 | **[userdive](/packages/userdive)**                              | [![npm version](https://badge.fury.io/js/userdive.svg)](https://www.npmjs.com/package/userdive)                            |
 
 ## Support Browsers
