@@ -26,11 +26,28 @@ if (process.env.CI_MODE === 'browserstack') {
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage-istanbul', 'browserstack']
+      reporters: ['mocha', 'coverage-istanbul', 'BrowserStack']
     }
   )
 } else {
   process.env.CHROME_BIN = puppeteer.executablePath()
+  override = objectAssign(
+    {},
+    {
+      customLaunchers: {
+        ChromeHeadlessNoSandbox: {
+          base: 'ChromeHeadless',
+          flags: [
+            '--no-sandbox',
+            '--disable-web-security',
+            '--enable-gpu'
+          ]
+        }
+      },
+      browsers: ['ChromeHeadlessNoSandbox'],
+      reporters: ['mocha', 'coverage-istanbul']
+    }
+  )
 }
 
 export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
@@ -72,20 +89,8 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       webpackMiddleware: {
         stats: 'errors-only'
       },
-      reporters: ['mocha', 'coverage-istanbul'],
       mochaReporter: {
         showDiff: true
-      },
-      browsers: ['ChromeHeadlessNoSandbox'],
-      customLaunchers: {
-        ChromeHeadlessNoSandbox: {
-          base: 'ChromeHeadless',
-          flags: [
-            '--no-sandbox',
-            '--disable-web-security',
-            '--enable-gpu'
-          ]
-        }
       },
       singleRun: true
     },
