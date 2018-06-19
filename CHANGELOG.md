@@ -4,7 +4,7 @@
 * `vwo`
   * [#601](https://github.com/userdive/agent.js/pull/601) vwo plugin . ([@9renpoto](https://github.com/shoota))
 
-#### Committers: 3
+#### Committers: 2
 - Shoota Kumano ([shoota](https://github.com/shoota))
 - [renovate[bot]](https://github.com/apps/renovate)
 
