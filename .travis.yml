@@ -1,9 +1,10 @@
 sudo: false
 language: node_js
 node_js: lts/*
-cache: yarn
-addons:
-  chrome: stable
+cache:
+  yarn: true
+  directories:
+  - node_modules
 env:
   global:
   - secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
@@ -22,6 +23,8 @@ jobs:
     - npm run lint
   - stage: test
     env: CI_MODE=Test
+    addons:
+      chrome: stable
     script:
     - npm run test
     - npm run coverage
