@@ -5,15 +5,16 @@ import { customLaunchers } from './browser-providers.conf'
 let override = {}
 
 if (
-  process.env.SAUCE_USERNAME &&
-  process.env.SAUCE_ACCESS_KEY &&
-  process.env.CI_MODE === 'sauce'
+  process.env.BROWSERSTACK_USERNAME &&
+  process.env.BROWSERSTACK_ACCESS_KEY &&
+  process.env.CI_MODE === 'browserstack'
 ) {
   override = objectAssign(
     {},
     {
-      sauceLabs: {
-        testName: '@userdive/agent',
+      browserStack: {
+        username: process.env.BROWSERSTACK_USERNAME,
+        accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
         recordVideo: false,
         recordScreenshots: false,
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
@@ -29,7 +30,7 @@ if (
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
+      reporters: ['mocha', 'coverage-istanbul', 'browserstack']
     }
   )
 } else {
