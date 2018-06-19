@@ -19,7 +19,19 @@ jobs:
     - npm run test
     - npm run coverage
   - stage: Sauce
-    script: npm run ci:sauce
+    script:
+    - |
+    if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '.+'
+    then
+      echo "Checking $TRAVIS_COMMIT_RANGE for code file changes"
+      if ! git diff --name-only $TRAVIS_COMMIT_RANGE \
+          | grep -E '(\.(ts|tsx|js|jsx|yml|json)$)|(^(test|lib))/'
+      then
+        echo "Not found changes in code files. Skip Sauce CI."
+        exit 0
+      fi
+    fi
+    - npm run ci:sauce
     if: "(type = pr or branch = master) and NOT branch =~ ^docs"
   - stage: deploy
     script:
