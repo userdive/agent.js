@@ -1,3 +1,14 @@
+## v1.2.0 (2018-06-19)
+
+#### :rocket: Enhancement
+* `vwo`
+  * [#601](https://github.com/userdive/agent.js/pull/601) vwo plugin . ([@9renpoto](https://github.com/shoota))
+
+#### Committers: 3
+- Shoota Kumano ([shoota](https://github.com/shoota))
+- [renovate[bot]](https://github.com/apps/renovate)
+
+
 ## v1.1.0 (2018-05-28)
 
 #### :rocket: Enhancement
