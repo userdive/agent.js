@@ -10,9 +10,5 @@ export const customLaunchers = {
     device: 'iPhone X',
     os: 'ios',
     os_version: '10.0'
-  },
-  ChromeHeadlessNoSandbox: {
-    base: 'ChromeHeadless',
-    flags: ['--no-sandbox']
   }
 }

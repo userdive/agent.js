@@ -4,11 +4,7 @@ import { customLaunchers } from './browser-providers.conf'
 
 let override = {}
 
-if (
-  process.env.BROWSERSTACK_USERNAME &&
-  process.env.BROWSERSTACK_ACCESS_KEY &&
-  process.env.CI_MODE === 'browserstack'
-) {
+if (process.env.CI_MODE === 'browserstack') {
   override = objectAssign(
     {},
     {
@@ -80,7 +76,17 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       mochaReporter: {
         showDiff: true
       },
-      browsers: ['ChromeHeadless', 'ChromeHeadlessNoSandbox'],
+      browsers: ['ChromeHeadlessNoSandbox'],
+      customLaunchers: {
+        ChromeHeadlessNoSandbox: {
+          base: 'ChromeHeadless',
+          flags: [
+            '--no-sandbox',
+            '--disable-web-security',
+            '--enable-gpu'
+          ]
+        }
+      },
       singleRun: true
     },
     override
