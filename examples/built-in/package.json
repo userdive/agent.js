@@ -1,9 +1,9 @@
 {
   "name": "built-in",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "dependencies": {
-    "@userdive/agent": "^1.1.0",
-    "@userdive/linker": "^1.1.0"
+    "@userdive/agent": "^1.2.0",
+    "@userdive/linker": "^1.2.0"
   },
   "license": "MIT",
   "main": "n/a",
