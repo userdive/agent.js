@@ -5,7 +5,7 @@ export const customLaunchers = {
     os: 'ios',
     os_version: '11.0'
   },
-  iPhoneXIOS11: {
+  iPhoneXIOS10: {
     base: 'BrowserStack',
     device: 'iPhone X',
     os: 'ios',
