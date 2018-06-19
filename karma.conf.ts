@@ -80,7 +80,7 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       mochaReporter: {
         showDiff: true
       },
-      browsers: ['ChromeHeadlessNoSandbox'],
+      browsers: ['ChromeHeadless', 'ChromeHeadlessNoSandbox'],
       singleRun: true
     },
     override
