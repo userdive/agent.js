@@ -48,7 +48,7 @@ if (
           ]
         }
       },
-      browsers: ['ChromeHeadlessNoSandbox'],
+      browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'ChromeHeadlessNoSandbox'],
       reporters: ['mocha', 'coverage-istanbul']
     }
   )
