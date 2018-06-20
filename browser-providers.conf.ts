@@ -1,19 +1,19 @@
 export const customLaunchers = {
-  iPhoneXIOS11: {
+  ios11: {
     base: 'BrowserStack',
     device: 'iPhone X',
     os: 'ios',
     os_version: '11.0',
     real_mobile: 'true'
   },
-  iPhone7IOS10: {
+  ios10: {
     base: 'BrowserStack',
     device: 'iPhone 7',
     os: 'ios',
     os_version: '10.0',
     real_mobile: 'true'
   },
-  pixelAndroid8: {
+  android8: {
     base: 'BrowserStack',
     device: 'Google Pixel',
     os: 'android',
@@ -36,14 +36,14 @@ export const customLaunchers = {
     os_version: '10',
     resolution : '1366x768'
   },
-  safari: {
-    base: 'BrowserStack',
-    browser: 'safari',
-    browser_version: '11.1',
-    os: 'OS X',
-    os_version: 'High Sierra',
-    resolution : '1366x768'
-  },
+  // safari: {
+  //   base: 'BrowserStack',
+  //   browser: 'safari',
+  //   browser_version: '11.1',
+  //   os: 'OS X',
+  //   os_version: 'High Sierra',
+  //   resolution : '1366x768'
+  // },
   ie11: {
     base: 'BrowserStack',
     browser: 'ie',
