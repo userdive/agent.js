@@ -13,13 +13,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
-  <body><a href="https://github.com/userdive/"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+  <body>
     <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
           <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="#">USERDIVE Integration example</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/agent.js/simple/">Home</a></li>
             <li><a href="https://developers.userdive.com/docs/en/getting-started.html">Document</a></li>
@@ -50,7 +50,18 @@
         <div class="panel-heading">
           <h1 class="panel-title"><span class="glyphicon glyphicon-link" aria-hidden="true"></span>Sample links</h1>
         </div>
-        <div class="list-group"><a class="list-group-item" href="/agent.js/simple/">Getting started</a><a class="list-group-item" href="/agent.js/simple/multiple.html">Creating trackers</a><a class="list-group-item" href="/agent.js/simple/cd-with-send.html">Send with Custom Dimensions</a><a class="list-group-item" href="/agent.js/simple/cd-with-set.html">Set Custom Dimensions</a><a class="list-group-item" href="/agent.js/simple/events.html">Send events</a><a class="list-group-item" href="/agent.js/simple/page.html">Override location</a><a class="list-group-item" href="/agent.js/plugin-linker/">Cross-domain using query parameter</a><a class="list-group-item" href="/agent.js/plugin-create/">plugin create example</a><a class="list-group-item" href="/agent.js/with-google-tag-manager/">use with Google Tag Manager</a><a class="list-group-item" href="/agent.js/built-in/">use with Node.js</a><a class="list-group-item" href="/agent.js/with-angular/">use with Angular</a><a class="list-group-item" href="/agent.js/with-angular1/">use with AngularJS</a><a class="list-group-item" href="/agent.js/with-react/">use with React</a><a class="list-group-item" href="/agent.js/with-vue/">use with Vue.js</a></div>
+        <div class="list-group"><a class="list-group-item" href="#simple" data-toggle="collapse">Simple Usage Examples</a>
+          <div class="panel-collapse collapse" id="simple">
+            <div class="panel-body">
+              <div class="list-group list-group-flush"><a class="list-group-item" href="/agent.js/simple/">Getting started</a><a class="list-group-item" href="/agent.js/simple/multiple.html">Creating trackers</a><a class="list-group-item" href="/agent.js/simple/cd-with-send.html">Send with Custom Dimensions</a><a class="list-group-item" href="/agent.js/simple/cd-with-set.html">Set Custom Dimensions</a><a class="list-group-item" href="/agent.js/simple/events.html">Send events</a><a class="list-group-item" href="/agent.js/simple/page.html">Override location</a></div>
+            </div>
+          </div><a class="list-group-item" href="/agent.js/plugin-linker/">Cross-domain using query parameter</a><a class="list-group-item" href="/agent.js/plugin-create/">plugin create example</a><a class="list-group-item" href="/agent.js/with-google-tag-manager/">use with Google Tag Manager</a><a class="list-group-item" href="/agent.js/built-in/">use with Node.js</a><a class="list-group-item" href="#spa" data-toggle="collapse">Single Page Application Frameworks</a>
+          <div class="panel-collapse collapse" id="spa">
+            <div class="panel-body">
+              <div class="list-group list-group-flush"><a class="list-group-item" href="/agent.js/with-angular/">use with Angular</a><a class="list-group-item" href="/agent.js/with-angular1/">use with AngularJS</a><a class="list-group-item" href="/agent.js/with-react/">use with React</a><a class="list-group-item" href="/agent.js/with-vue/">use with Vue.js</a></div>
+            </div>
+          </div>
+        </div>
         <div class="panel-heading">
           <h1 class="panel-title"><span class="glyphicon glyphicon-link" aria-hidden="true"></span>Third-party Integration</h1>
         </div>
