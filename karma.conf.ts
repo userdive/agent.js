@@ -25,6 +25,7 @@ if (
         }
       },
       customLaunchers,
+      concurrency: 2,
       browserDisconnectTimeout: 300000,
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
