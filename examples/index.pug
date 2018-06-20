@@ -14,8 +14,6 @@ html
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
     block loader
   body
-    a(href='https://github.com/userdive/')
-      img(style='position: absolute; top: 0; right: 0; border: 0; z-index: 2000;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png', alt='Fork me on GitHub')
     nav.navbar.navbar-inverse
       .container
         .navbar-header
@@ -25,7 +23,7 @@ html
             span.icon-bar
             span.icon-bar
           a.navbar-brand(href='#') USERDIVE Integration example
-        .collapse.navbar-collapse
+        #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.active
               a(href='/agent.js/simple/') Home
@@ -52,20 +50,28 @@ html
             span.glyphicon.glyphicon-link(aria-hidden='true')
             | Sample links
         .list-group
-          a.list-group-item(href='/agent.js/simple/') Getting started
-          a.list-group-item(href='/agent.js/simple/multiple.html') Creating trackers
-          a.list-group-item(href='/agent.js/simple/cd-with-send.html') Send with Custom Dimensions
-          a.list-group-item(href='/agent.js/simple/cd-with-set.html') Set Custom Dimensions
-          a.list-group-item(href='/agent.js/simple/events.html') Send events
-          a.list-group-item(href='/agent.js/simple/page.html') Override location
+          a.list-group-item(href='#simple', data-toggle="collapse") Simple Usage Examples
+          #simple.panel-collapse.collapse
+            .panel-body
+              .list-group.list-group-flush
+                a.list-group-item(href='/agent.js/simple/') Getting started
+                a.list-group-item(href='/agent.js/simple/multiple.html') Creating trackers
+                a.list-group-item(href='/agent.js/simple/cd-with-send.html') Send with Custom Dimensions
+                a.list-group-item(href='/agent.js/simple/cd-with-set.html') Set Custom Dimensions
+                a.list-group-item(href='/agent.js/simple/events.html') Send events
+                a.list-group-item(href='/agent.js/simple/page.html') Override location
           a.list-group-item(href='/agent.js/plugin-linker/') Cross-domain using query parameter
           a.list-group-item(href='/agent.js/plugin-create/') plugin create example
           a.list-group-item(href='/agent.js/with-google-tag-manager/') use with Google Tag Manager
           a.list-group-item(href='/agent.js/built-in/') use with Node.js
-          a.list-group-item(href='/agent.js/with-angular/') use with Angular
-          a.list-group-item(href='/agent.js/with-angular1/') use with AngularJS
-          a.list-group-item(href='/agent.js/with-react/') use with React
-          a.list-group-item(href='/agent.js/with-vue/') use with Vue.js
+          a.list-group-item(href='#spa', data-toggle="collapse") Single Page Application Frameworks
+          #spa.panel-collapse.collapse
+            .panel-body
+              .list-group.list-group-flush
+                a.list-group-item(href='/agent.js/with-angular/') use with Angular
+                a.list-group-item(href='/agent.js/with-angular1/') use with AngularJS
+                a.list-group-item(href='/agent.js/with-react/') use with React
+                a.list-group-item(href='/agent.js/with-vue/') use with Vue.js
         .panel-heading
           h1.panel-title
             span.glyphicon.glyphicon-link(aria-hidden='true')
