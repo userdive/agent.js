@@ -1,7 +1,15 @@
+sudo: false
 language: node_js
-sudo: true
 node_js: lts/*
-cache: yarn
+cache:
+  yarn: true
+  directories:
+  - node_modules
+  - website/node_modules
+  - examples/node_modules
+  - examples/with-react/node_modules
+  - examples/with-angular/node_modules
+  - packages/agent/node_modules
 env:
   global:
   - secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
@@ -10,15 +18,23 @@ env:
   - secure: WOeCng9yBvOTRBCryCuL7iNKXXR20t1urB88eIfJgIK/jQOHO536wuZRDuI4pKi5ZFLQ5HewgWaPzYUdpIv95D+S4j7+2BKM0rajmpAtw4i7QRRHSyQvmdqhppqstOsG8Y30VyVUPSRuMENlmMPKY4ExlmFv6pYconIjgMjylISY877s2ll121ZQGHRTQuIvi2m9hSpCRpXJ5XSoS7nVmwjqdE+78oWuLJ/AhNAr85RXWSTH1Rzq0dBOY5psQ0bbYpGmueSU/51WK4Nh8a2X8rl9GfAk5Z7fUORuWGhk45ReqiYVu2hEafdY3mg6e/i6lDkG+Ob5lgAcEK1j1Zj5b9RbP0hnU923D6EOmo7pVQamb+SPLjJmcRXO59Hy6s7gAn9qz+DJucuAirqAMivP3kuhq2+feHgBNzyA358ZpRzVcycRhubNWuBWsXa+9omgM5tzuaoummYaoHW5yyAA0MYXAT5119noTUG9uzK0SZMBaWHiIt5TUfQ2+/+htEdhDOAPEueEF+EVOloQUgnd1SR7KHDNPbiSWpZcYyWKh557v3+kSKvTDHZGAp8gwZD9ZeavQM52otqnxcnfhXSxtW77b0dMkH3dGoJKxW4uvtlEtvJCGM9rwSgowOcYRWGQ9wMV7VJweonN692k40aiBXxB3CAFnwbtttptABP8Gpc=
 jobs:
   include:
-  - stage: Build Size
-    script: npm run postbuild
-  - stage: Lint
-    script: npm run lint
-  - stage: Test
+  - stage: test
+    env: CI_MODE=Build Size
+    script:
+    - npm run postbuild
+  - stage: test
+    env: CI_MODE=Lint
+    script:
+    - npm run lint
+  - stage: test
+    env: CI_MODE=Test
+    addons:
+      chrome: stable
     script:
     - npm run test
     - npm run coverage
-  - stage: Sauce
+  - stage: test
+    env: CI_MODE=E2E
     script:
     - |
         if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '.+'
@@ -30,15 +46,19 @@ jobs:
             exit 0
           fi
         fi
-        npm run ci:sauce
+        npm run ci:testingbot
     if: "(type = pr or branch = master) and NOT branch =~ ^docs"
   - stage: deploy
+    addons:
+      apt:
+        sources:
+        - sourceline: 'deb https://artifacts.crowdin.com/repo/deb/ /'
+          keyurl: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
+        packages:
+        - crowdin
+        - default-jre
+        - rsync
     script:
-    - sudo apt-get update
-    - sudo apt-get install default-jre rsync
-    - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
-    - sudo dpkg -i crowdin.deb
-    - sleep 5
     - npm run build
     deploy:
     - provider: script

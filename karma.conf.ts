@@ -4,25 +4,12 @@ import { customLaunchers } from './browser-providers.conf'
 
 let override = {}
 
-if (
-  process.env.SAUCE_USERNAME &&
-  process.env.SAUCE_ACCESS_KEY &&
-  process.env.CI_MODE === 'sauce'
-) {
+if (process.env.CI_MODE === 'testingbot') {
   override = objectAssign(
     {},
     {
-      sauceLabs: {
-        testName: '@userdive/agent',
-        recordVideo: false,
-        recordScreenshots: false,
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-        options: {
-          'selenium-version': '3.1.0',
-          'command-timeout': 600,
-          'idle-timeout': 600,
-          'max-duration': 5400
-        }
+      testingbot: {
+        recordScreenshots: false
       },
       customLaunchers,
       concurrency: 2,
@@ -30,11 +17,32 @@ if (
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
+      reporters: ['mocha', 'coverage-istanbul', 'testingbot'],
+      options: {
+        'selenium-version': '3.1.0',
+        'idletimeout': 600
+      }
     }
   )
 } else {
   process.env.CHROME_BIN = puppeteer.executablePath()
+  override = objectAssign(
+    {},
+    {
+      customLaunchers: {
+        ChromeHeadlessNoSandbox: {
+          base: 'ChromeHeadless',
+          flags: [
+            '--no-sandbox',
+            '--disable-web-security',
+            '--enable-gpu'
+          ]
+        }
+      },
+      browsers: ['ChromeHeadlessNoSandbox'],
+      reporters: ['mocha', 'coverage-istanbul']
+    }
+  )
 }
 
 export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
@@ -76,11 +84,9 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       webpackMiddleware: {
         stats: 'errors-only'
       },
-      reporters: ['mocha', 'coverage-istanbul'],
       mochaReporter: {
         showDiff: true
       },
-      browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'ChromeHeadless'],
       singleRun: true
     },
     override
