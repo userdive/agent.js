@@ -1,9 +1,6 @@
 extends ../index.pug
 
 block loader
-  // Google Tag Manager
-  noscript
-    iframe(src='//www.googletagmanager.com/ns.html?id=GTM-WKDF5D', height='0', width='0', style='display:none;visibility:hidden')
   script.
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -17,6 +14,6 @@ block content
   include:markdown-it README.md
 
 block breadcrumb-current
-  li.active use with Google Tag Manager
+  li.active Google Optimize
 
   block link_list
