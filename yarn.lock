@@ -2333,10 +2333,11 @@ camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
-can-npm-publish@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/can-npm-publish/-/can-npm-publish-1.1.0.tgz#20e851f65f2957a37fbce18279c306a95cd25f00"
+can-npm-publish@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/can-npm-publish/-/can-npm-publish-1.2.0.tgz#1b887176b10551f36140927b2786fc2d15999ffd"
   dependencies:
+    cross-spawn "^6.0.5"
     meow "^4.0.0"
     read-pkg "^3.0.0"
     validate-npm-package-name "^3.0.0"
