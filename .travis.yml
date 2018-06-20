@@ -5,6 +5,11 @@ cache:
   yarn: true
   directories:
   - node_modules
+  - website/node_modules
+  - examples/node_modules
+  - examples/with-react/node_modules
+  - examples/with-angular/node_modules
+  - packages/agent/node_modules
 env:
   global:
   - secure: eMzPfJSrLuDVCILlalM1QY7cuQn8PjZuKtY3u7y/3EUvb5XKg0TojJSyDGQNKuHCSonSByuR5AP68VzCZBC5YSWiTwSCRysppr5/PyQcojRTEehET+AOS7MWlZprDsrF3KsP5OmLS4fbVIkD/FklIOxCvALcSGmN/ZIavPk42dYcKAd63oYjijR/34VXyBaQ/LEhwgnsQ+arKAiuHCc0KADbw+qnqKuMNwBIv/VzNJdMLK+8qPew0AEhQSEZm8v1ihaobLqKq+Oif43ft8ldS6L92kTnZCaCFgGPUGa398E9FJcqcct5m+I2A6T9VN0AL8RB61T7r/M9ow6sYTQW5KnunX+ZPGKergtP9yrmd9PaMv5xr+vMIYUTyw2bQos8f/hkXd+BXS0V5PvpQ1aLZZH0YYx++GFAMRdVnBfZaMKXrH0VWyHlt4TRMxab7PmuWE5w/vymCl29DHLdiLO9syM4rvvrVXJVe1hw2rjuNsprp4KSbCrDlgvkIsql5BourjA8pOeP8U56Mo/PPtNLbgza4DNqmtu+pdg8Qh1Xd6i7/bBYJRBQuHjuXTLy60r42rZvnkO0TINv47HUyzed0DM3DnaWnYlvkV89ZQzaMAa7z77fPYbB5dTzFrGGOvtGg/kJd/sVyI2ojQ7elK88tU6/Wk+vX2Hlff/INOkIQJE=
@@ -30,12 +35,6 @@ jobs:
     - npm run coverage
   - stage: test
     env: CI_MODE=E2E
-    addons:
-      chrome: stable
-      browserstack:
-        username: uncovertruthinc1
-        access_key:
-          secure: Axg54ditWCkZ0djOGSQanmvvU37iprwqoTlN2SMqidq3UZSSVL0SuTAz+92lpeLx/WcdTlvgrwIoMdN0U4sSLA/F2Mv4/OeER2Mw7jPh5gTUNRM07CpZizv0dMF55WqMpm0NhaKj1olacRhroXQIEeyYBf+LJYkOl9BGiZLeyfvz1CCVULjyTCTaozOcQXO7q+Agp9VbhtvUJn5CuVkgkvgW3JcZ7YDBvU/i/QAwO4ZbBGK1iNr6/R1VSjHBO5gwdBrNi5RIO/lwP13/4R+YIpm44Pmp21sbsXwWSqQYd/6ChnC3neQ6PE9F7Epkdah93WsnYaJYgDAcJ6xE4IGAL6ki8EiOHxNOol463n64VvyajBN3598+ffSTa/tOU/CgYzpLQhhAH3VIEbVOSBlR6Eu4JK0UjWcSts0acitqS3dRhA2++p4Jxcdv36FO+GFWNnXuG9dEUOUAjYugNmFocM2lRONxD1aZ8HlJIwDIwZop02kC6V3WXit5qC6GwWUpNkMlGatckLc+E4iDcRzvW2l1C34tAGsEjlvX5COO8+RmsqfglvAYI6bGSKfdF7sPu5tzSczMq2TvdHeX8CCps9hOxkGaGrbaZWm+XnidfyS0TdwEmu+3oyxKUULnJdwNc1psuWAeTNUrcSepwS3GWzY/MkT0rukhNu95mUARrcc=
     script:
     - |
         if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '.+'
@@ -47,7 +46,7 @@ jobs:
             exit 0
           fi
         fi
-        npm run ci:browserstack
+        npm run ci:testingbot
     if: "(type = pr or branch = master) and NOT branch =~ ^docs"
   - stage: deploy
     addons:

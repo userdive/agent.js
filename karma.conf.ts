@@ -4,30 +4,23 @@ import { customLaunchers } from './browser-providers.conf'
 
 let override = {}
 
-if (process.env.CI_MODE === 'browserstack') {
+if (process.env.CI_MODE === 'testingbot') {
   override = objectAssign(
     {},
     {
-      browserStack: {
-        username: process.env.BROWSERSTACK_USERNAME,
-        accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
-        recordVideo: false,
-        recordScreenshots: false,
-        startTunnel: process.env.BROWSERSTACK_LOCAL,
-        tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
-        options: {
-          'selenium-version': '3.1.0',
-          'command-timeout': 600,
-          'idle-timeout': 600,
-          'max-duration': 5400
-        }
+      testingbot: {
+        recordScreenshots: false
       },
       customLaunchers,
       browserDisconnectTimeout: 300000,
       browserDisconnectTolerance: 3,
       browserNoActivityTimeout: 300000,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage-istanbul', 'BrowserStack']
+      reporters: ['mocha', 'coverage-istanbul', 'testingbot'],
+      options: {
+        'selenium-version': '3.1.0',
+        'idletimeout': 600
+      }
     }
   )
 } else {
