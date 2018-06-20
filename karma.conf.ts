@@ -13,7 +13,8 @@ if (process.env.CI_MODE === 'browserstack') {
         accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
         recordVideo: false,
         recordScreenshots: false,
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+        startTunnel: process.env.BROWSERSTACK_LOCAL,
+        tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
         options: {
           'selenium-version': '3.1.0',
           'command-timeout': 600,
