@@ -32,6 +32,7 @@ jobs:
     - npm run test
     - npm run coverage
   - stage: test
+    if: "(type = pr or branch = master) and NOT branch =~ ^docs"
     env: Cross browser
     script:
     - |
@@ -45,7 +46,6 @@ jobs:
           fi
         fi
         npm run ci:sauce
-    if: "(type = pr or branch = master) and NOT branch =~ ^docs"
   - stage: deploy
     addons:
       apt:
