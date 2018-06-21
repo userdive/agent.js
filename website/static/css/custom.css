@@ -19,6 +19,7 @@ body {
 
 .mainContainer {
   background: #fff;
+  padding: inherit;
 }
 
 .homeContainer {
