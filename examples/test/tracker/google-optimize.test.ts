@@ -8,7 +8,7 @@ const intLogger = RequestLogger(intRegex)
 
 const l = `${deployBaseUrl}/google-optimize/`
 
-fixture('vwo event').page(l)
+fixture('google-optimize event').page(l)
 
 test.requestHooks(intLogger)('tracking request', async (t) => {
   await t.wait(5000)
