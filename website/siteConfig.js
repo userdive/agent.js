@@ -40,7 +40,8 @@ const siteConfig = {
   scripts: [],
   repoUrl,
   twitter: true,
-  onPageNav: 'separate'
+  onPageNav: 'separate',
+  usePrism: ['js']
 }
 
 module.exports = siteConfig
