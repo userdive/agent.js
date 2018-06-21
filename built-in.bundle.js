@@ -65,7 +65,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 118:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -241,7 +241,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 119:
+/***/ 118:
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -550,7 +550,7 @@ function isUndefined(arg) {
 
 /***/ }),
 
-/***/ 120:
+/***/ 119:
 /***/ (function(module, exports) {
 
 // Unique ID creation requires a high quality random # generator.  In the
@@ -589,7 +589,7 @@ if (getRandomValues) {
 
 /***/ }),
 
-/***/ 121:
+/***/ 120:
 /***/ (function(module, exports) {
 
 /**
@@ -724,7 +724,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = __webpack_require__(20);
-var logger_1 = __webpack_require__(40);
+var logger_1 = __webpack_require__(39);
 var getWindowSize = function (w) { return ({
     h: w.innerHeight,
     w: w.innerWidth
@@ -848,7 +848,7 @@ var click_1 = __webpack_require__(229);
 var mousemove_1 = __webpack_require__(230);
 var scroll_1 = __webpack_require__(231);
 var touch_1 = __webpack_require__(232);
-var logger_1 = __webpack_require__(40);
+var logger_1 = __webpack_require__(39);
 var PLUGINS = 'plugins';
 var Agent = /** @class */ (function () {
     function Agent(projectId, cookieDomain, fieldsObject) {
@@ -948,14 +948,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var auto_cookie_1 = __webpack_require__(218);
-var events_1 = __webpack_require__(119);
-var js_cookie_1 = __webpack_require__(118);
+var events_1 = __webpack_require__(118);
+var js_cookie_1 = __webpack_require__(117);
 var objectAssign = __webpack_require__(13);
 var ui_event_observer_1 = __webpack_require__(219);
 var uuid_1 = __webpack_require__(224);
 var browser_1 = __webpack_require__(19);
 var constants_1 = __webpack_require__(20);
-var logger_1 = __webpack_require__(40);
+var logger_1 = __webpack_require__(39);
 var requests_1 = __webpack_require__(227);
 var store_1 = __webpack_require__(228);
 var generateId = function () { return uuid_1.v4().replace(/-/g, ''); };
@@ -1130,7 +1130,7 @@ exports.default = AgentCore;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var cookies = __webpack_require__(118);
+var cookies = __webpack_require__(117);
 function removeNaked() {
     var domain = "" + location.hostname;
     return domain.indexOf('www.') === 0 ? domain.substring(4) : domain;
@@ -1379,7 +1379,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var EventEmitter = __webpack_require__(119);
+var EventEmitter = __webpack_require__(118);
 /**
  * The EventEmitter bind `eventName`
  */
@@ -1800,8 +1800,8 @@ module.exports = uuid;
 /***/ 225:
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(120);
-var bytesToUuid = __webpack_require__(121);
+var rng = __webpack_require__(119);
+var bytesToUuid = __webpack_require__(120);
 
 // **`v1()` - Generate time-based UUID**
 //
@@ -1916,8 +1916,8 @@ module.exports = v1;
 /***/ 226:
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(120);
-var bytesToUuid = __webpack_require__(121);
+var rng = __webpack_require__(119);
+var bytesToUuid = __webpack_require__(120);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -2096,7 +2096,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(19);
-var events_1 = __webpack_require__(41);
+var events_1 = __webpack_require__(40);
 var ClickEvents = /** @class */ (function (_super) {
     __extends(ClickEvents, _super);
     function ClickEvents() {
@@ -2139,7 +2139,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(19);
-var events_1 = __webpack_require__(41);
+var events_1 = __webpack_require__(40);
 var MouseMoveEvents = /** @class */ (function (_super) {
     __extends(MouseMoveEvents, _super);
     function MouseMoveEvents() {
@@ -2183,7 +2183,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(19);
 var constants_1 = __webpack_require__(20);
-var events_1 = __webpack_require__(41);
+var events_1 = __webpack_require__(40);
 function getPotision(w) {
     var _a = browser_1.getOffset(w), x = _a.x, y = _a.y;
     return { x: x + w.innerWidth / 2, y: y + w.innerHeight / 2 };
@@ -2228,7 +2228,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = __webpack_require__(19);
 var constants_1 = __webpack_require__(20);
-var events_1 = __webpack_require__(41);
+var events_1 = __webpack_require__(40);
 function getFirstTouch(e) {
     return e.changedTouches ? e.changedTouches[0] : e.touches[0];
 }
@@ -2577,7 +2577,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 40:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2621,7 +2621,7 @@ exports.warning = function (err, extra) {
 
 /***/ }),
 
-/***/ 41:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2630,7 +2630,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var objectAssign = __webpack_require__(13);
 var browser_1 = __webpack_require__(19);
 var constants_1 = __webpack_require__(20);
-var logger_1 = __webpack_require__(40);
+var logger_1 = __webpack_require__(39);
 var Events = /** @class */ (function () {
     function Events(emitName, eventEmitter, eventObserver) {
         this.name = emitName;
