@@ -32,7 +32,7 @@ jobs:
     - npm run test
     - npm run coverage
   - stage: test
-    if: type = pull_request OR branch = master
+    if: branch = master
     env: Cross browser
     script:
     - |
