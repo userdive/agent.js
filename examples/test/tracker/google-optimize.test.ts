@@ -6,7 +6,7 @@ import { query } from '../test-util'
 
 const intLogger = RequestLogger(intRegex)
 
-const l = `${deployBaseUrl}/vwo/`
+const l = `${deployBaseUrl}/google-optimize/`
 
 fixture('vwo event').page(l)
 
@@ -17,7 +17,7 @@ test.requestHooks(intLogger)('tracking request', async (t) => {
   assert.equal(intRecord.request.method, 'get')
   const event = query(intRecord)['e'].split(',')
   assert.equal(event[0], '1')
-  assert.equal(event[1], 'vwo')
+  assert.equal(event[1], 'optimize')
   assert.ok(event[2])
   assert.ok(event[3])
 })
