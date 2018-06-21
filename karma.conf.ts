@@ -17,12 +17,9 @@ if (
         recordVideo: false,
         recordScreenshots: false,
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-        options: {
-          'selenium-version': '3.1.0',
-          'command-timeout': 600,
-          'idle-timeout': 600,
-          'max-duration': 5400
-        }
+        commandTimeout: 600,
+        idleTimeout: 600,
+        maxDuration: 5400
       },
       customLaunchers,
       concurrency: 2,
