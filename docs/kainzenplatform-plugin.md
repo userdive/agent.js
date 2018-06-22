@@ -14,6 +14,8 @@ This plugin will send A/B testing informaiton as [Event data](./field-reference.
 | eventLabel    | The variationId for renderd.                  |
 | eventValue    | _None_                                        |
 
+Show [example](https://userdive.github.io/agent.js/kaizen-platform/)
+
 ## Provided Name
 
 This plugin name is `kzs`.

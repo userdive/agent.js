@@ -15,6 +15,8 @@ _ud("send", "pageview", {
 });
 ```
 
+Show [example](https://userdive.github.io/agent.js/simple/cd-with-send.html)
+
 ## Set Data
 
 ```js
@@ -29,3 +31,5 @@ _ud("set", {
     dimension10: "custom dimension data"
 });
 ```
+
+Show [example](https://userdive.github.io/agent.js/simple/cd-with-set.html)
