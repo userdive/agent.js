@@ -59,7 +59,7 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
         'text/x-typescript': ['ts']
       },
       basePath: '',
-      frameworks: process.env.CI_MODE === 'IE' ? ['mocha', 'sinon', 'fixture'] : ['mocha', 'fixture'],
+      frameworks: ['mocha', 'fixture'],
       files: [{ pattern }],
       preprocessors: {
         [pattern]: ['webpack']
