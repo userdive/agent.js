@@ -32,14 +32,13 @@ const siteConfig = {
   copyright: 'Copyright © ' + new Date().getFullYear() + ' UNCOVER TRUTH',
   organizationName: 'userdive',
   highlight: {
-    // Highlight.js theme to use for syntax highlighting in code blocks
-    theme: 'default'
+    theme: 'atom-one-dark'
   },
   scripts: [],
   repoUrl,
+  scrollToTop: true,
   twitter: true,
-  onPageNav: 'separate',
-  usePrism: ['js']
+  onPageNav: 'separate'
 }
 
 module.exports = siteConfig
