@@ -31,6 +31,8 @@ The command identifier signature is `[trackerName.][pluginName:]methodName`.
 | pluginName  | No       | The name of an agent.js plugin. The plugin must register with `require` command before.                                       |
 | methodName  | Yes      | The name of method. When do not specify pluginName, it must be one of the [command methods](#command-methods) describe below. |
 
+Show [example](https://userdive.github.io/agent.js/simple/multiple.html)
+
 ## Command methods
 
 ### create

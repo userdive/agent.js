@@ -30,3 +30,5 @@ _ud("send", {
     eventValue: 1000
 });
 ```
+
+Show [example](https://userdive.github.io/agent.js/simple/events.html)

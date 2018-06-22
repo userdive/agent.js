@@ -98,3 +98,5 @@ _ud("linker:autoLink", [
     "ther-second-domain.example.net"
 ]);
 ```
+
+Show [example](https://userdive.github.io/agent.js/plugin-linker/)

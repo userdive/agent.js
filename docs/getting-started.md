@@ -23,3 +23,5 @@ _ud("create","id","auto");
 _ud("send","pageview");
 </script>
 ```
+
+Show [example](https://userdive.github.io/agent.js/simple/)

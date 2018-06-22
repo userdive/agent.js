@@ -37,6 +37,8 @@ import { MyPlugin } from "./path/to/MyPlugin";
 provide("myplugin", MyPlugin);
 ```
 
+Show [example](https://userdive.github.io/agent.js/plugin-create/)
+
 ## Use plugin
 
 ### Configuring plugin instance

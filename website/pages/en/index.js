@@ -105,7 +105,7 @@ const Migrate = props => (
   <Block background='dark'>
     {[
       {
-        content: 'To next generation USERIDVE',
+        content: 'To next generation USERDIVE',
         image: imgUrl('classic.png'),
         imageAlign: 'right',
         title: 'Migrate'
@@ -144,7 +144,7 @@ module.exports = function Index ({ language }) {
   return (
     <div>
       <HomeSplash language={language || ''} />
-      <div className='mainContainer'>
+      <div className='indexMainContainer'>
         <Service />
         <Integrations />
         <div className='collaborationSection'>

@@ -21,6 +21,10 @@ body {
   background: #fff;
 }
 
+.indexMainContainer {
+  padding: 0;
+}
+
 .homeContainer {
   background: #272e37;
 }

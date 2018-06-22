@@ -17,16 +17,14 @@ const siteConfig = {
   projectName: 'USERDIVE',
   headerLinks: [
     { doc: 'getting-started', label: 'Usage' },
-    // {doc: 'doc4', label: 'API'},
-    // {page: 'help', label: 'Help'},
     { href: repoUrl, label: 'GitHub' },
     { blog: true, label: 'Blog' },
     { search: true }
   ],
   users,
-  headerIcon: 'img/logo_horizontal_white.png',
+  headerIcon: 'img/logo.svg',
   footerIcon: 'img/logo.svg',
-  favicon: 'img/favicon.png',
+  favicon: 'img/favicon/favicon.ico',
   colors: {
     primaryColor: '#272e37',
     secondaryColor: '#232930'
@@ -34,11 +32,11 @@ const siteConfig = {
   copyright: 'Copyright © ' + new Date().getFullYear() + ' UNCOVER TRUTH',
   organizationName: 'userdive',
   highlight: {
-    // Highlight.js theme to use for syntax highlighting in code blocks
-    theme: 'default'
+    theme: 'atom-one-dark'
   },
   scripts: [],
   repoUrl,
+  scrollToTop: true,
   twitter: true,
   onPageNav: 'separate'
 }
