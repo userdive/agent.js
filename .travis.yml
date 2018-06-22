@@ -16,6 +16,11 @@ env:
   - secure: euv17ubtD4RUWl1GgfjL/gTtHtfO8snBz9j1wOwRCQpEJskTjTR8UjLfXuPDdtnW3laO+B7Ur4rg4FBm9BSGBaocPrFiYEJ/wp8qO+ryV5AtyMlmbzwH2qsXVYI7MWQOXFy2zaMMC7w7NEXKfHIPlqpMYqP4SMGJlOTH8aLNa/ZEuwMEdYc3EFl3DMSEtGjE8QhJ0iXxgA7/PkutK+xlRTpRflRILMj57rV1onXOBx3elTi1ELvVOfDA5xVN+/7Aznw4wo7QqZHL6wxfspdjpoAsnOexfidFcJQUHlC4UiJP7glMrkhlhLprvGB3x1b4dQl1hnE+PQRkDBIk35YL+68UxQDMcYs+QZ0Mj154b4OdqZneZPygmxDCA8q2t8Pp+bJc8wQKEj0/837WvnKiiiYqd9NqHTrqCDaNdvm0c34K/0sO9I6j4CEfJplaXLMoQkXgaTZAJjsBRLRRJWj0NWOvZh54nnyJKg8zogLdx/p+/yMcXVVI6oZfbkWScdmN7sSHb2any+n0+qRFdRt56jzlRnvhTidzNhM3SR8DfnAZ04TT49wMr6Vt4gKg49WGtkda7FyMF97LHJOJZtX2Cf1Bgp+T7fl+tqUn66rVKmX21LGiCRYw1xwoDXeSzFNkySaIFWbLByzafnZCOXceKiHxlQUuxtkAneyhuuAx0Zg=
   - secure: PhV3zfO/MZSfnzaeJnw2sK2pcMy0OFQMy4Kmyt8+CEfF06nHtLPVAlvk3q3Rs5DQ3YSqmz1AYgrBw6oYWqYijsp3DdcUDS7GF4n8M7HqP0cOvgjEECDnzIk9Q4VyIVR+zqoqSQOV4ZTSySzuPCj3eRa+Dfp0vki/4tgWqL/5iVHaKGXnQL6y6v3xi//BwdLYPQDBlp/Il4MjXF9/+fXFtj81FhU9k+6bCIvYyP4AAdoOh+FZJUZP8bJkP1t18+AouH+XGvii5mUrWDyTcTiany3PyVvV5VRfIvAGb+WdHDTxOMO/zrypTokBibGLiJlsd2g0Roj3t9m7KSoLMVbkV7+40ApMUBfLJTfbuuRyJD5GKDBCkqxNwjHOuA9jBPqz2IZ18DMgk8UJ9C/KaEYduSinNcSzMSK1YZS+8qDTH6znFzB0Fb21Tf1lR+V8WL5M/h9kaUAbq9D+bZXaHVFO1Hyob3lzSu73CLhflKggUDOJDLussgyo0mR4QTa9jgDqp18YyXbascbNqcIZcCiq3q5LvJX8/DrxromvarK8AqIzxzRW3e84cYsbhLLLdID4GVfRPAZz0hdmA8RWcRBPGfzZNl+LjBkbdZHIcNAV9XjynIVDbnT+Jw6r9aGvjGAML4tWqX7xOUvz33nSrLk3reHe+4vmT1pGD0r4UXUorqA=
   - secure: WOeCng9yBvOTRBCryCuL7iNKXXR20t1urB88eIfJgIK/jQOHO536wuZRDuI4pKi5ZFLQ5HewgWaPzYUdpIv95D+S4j7+2BKM0rajmpAtw4i7QRRHSyQvmdqhppqstOsG8Y30VyVUPSRuMENlmMPKY4ExlmFv6pYconIjgMjylISY877s2ll121ZQGHRTQuIvi2m9hSpCRpXJ5XSoS7nVmwjqdE+78oWuLJ/AhNAr85RXWSTH1Rzq0dBOY5psQ0bbYpGmueSU/51WK4Nh8a2X8rl9GfAk5Z7fUORuWGhk45ReqiYVu2hEafdY3mg6e/i6lDkG+Ob5lgAcEK1j1Zj5b9RbP0hnU923D6EOmo7pVQamb+SPLjJmcRXO59Hy6s7gAn9qz+DJucuAirqAMivP3kuhq2+feHgBNzyA358ZpRzVcycRhubNWuBWsXa+9omgM5tzuaoummYaoHW5yyAA0MYXAT5119noTUG9uzK0SZMBaWHiIt5TUfQ2+/+htEdhDOAPEueEF+EVOloQUgnd1SR7KHDNPbiSWpZcYyWKh557v3+kSKvTDHZGAp8gwZD9ZeavQM52otqnxcnfhXSxtW77b0dMkH3dGoJKxW4uvtlEtvJCGM9rwSgowOcYRWGQ9wMV7VJweonN692k40aiBXxB3CAFnwbtttptABP8Gpc=
+stages:
+  - test
+  - name: cross-browser
+    if: type = pull_request OR branch = master
+  - deploy
 jobs:
   include:
   - stage: test
@@ -31,7 +36,7 @@ jobs:
     script:
     - npm run test
     - npm run coverage
-  - stage: test
+  - stage: cross-browser
     env: Cross browser
     script:
     - |
@@ -45,7 +50,6 @@ jobs:
           fi
         fi
         npm run ci:sauce
-    if: "(type = pr or branch = master) and NOT branch =~ ^docs"
   - stage: deploy
     addons:
       apt:
