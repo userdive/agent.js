@@ -15,7 +15,7 @@
     "@types/webpack": "3.8.12",
     "@uncovertruth/eslint-config": "4.2.0",
     "@uncovertruth/eslint-config-react": "4.3.2",
-    "@uncovertruth/stylelint-config": "4.3.2",
+    "@uncovertruth/stylelint-config": "4.4.0",
     "@uncovertruth/textlint-config-en": "4.0.0",
     "@uncovertruth/tslint-config": "4.3.2",
     "can-npm-publish": "1.2.0",
