@@ -1,4 +1,4 @@
-import { ModuleWithProviders } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { Sample1Component } from './components/sample1.component'
@@ -19,6 +19,8 @@ const routes: Routes = [
   }
 ]
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {
-  useHash: true
+@NgModule({
+  imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
+  exports: [ RouterModule ]
 })
+export class RoutingModule { }
