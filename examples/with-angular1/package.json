@@ -2,7 +2,7 @@
   "name": "with-angular1",
   "version": "1.2.0",
   "dependencies": {
-    "@types/angular": "1.6.47",
+    "@types/angular": "1.6.48",
     "@uirouter/angularjs": "1.0.18",
     "angular": "1.7.2",
     "userdive": "^1.1.0"
