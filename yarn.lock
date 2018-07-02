@@ -351,9 +351,16 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router@*", "@types/react-router@4.0.27":
+"@types/react-router@*":
   version "4.0.27"
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.27.tgz#553f54df7c4b09d6046b0201ce9b91c46b2940e3"
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-router@4.0.28":
+  version "4.0.28"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.28.tgz#b0445fc38613c81e92ca9ec0e08ab36697d51003"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
