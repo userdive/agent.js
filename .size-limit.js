@@ -2,22 +2,22 @@ const dir = 'cdn'
 module.exports = [
   {
     path: `${dir}/agent.js`,
-    limit: '8.4 KB'
+    limit: '8.3 KB'
   },
   {
     path: `${dir}/agent.d.js`,
-    limit: '21.2 KB'
+    limit: '21.1 KB'
   },
   {
     path: `${dir}/linker.js`,
-    limit: '1.2 KB'
+    limit: '1.1 KB'
   },
   {
     path: `${dir}/kaizenplatform-plugin.js`,
-    limit: ' 700 B'
+    limit: ' 600 B'
   },
   {
     path: `${dir}/vwo-plugin.js`,
-    limit: ' 860 B'
+    limit: ' 800 B'
   }
 ]

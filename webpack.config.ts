@@ -23,6 +23,18 @@ module.exports = {
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
+  optimization: {
+    minimizer: [
+      new UglifyJSPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
+  },
   resolve: {
     extensions: ['.ts', '.js']
   },
@@ -36,14 +48,6 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
       'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN)
-    }),
-    new UglifyJSPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        output: {
-          comments: false
-        }
-      }
     }),
     new webpack.BannerPlugin({
       banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
