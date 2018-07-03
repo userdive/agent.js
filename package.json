@@ -98,11 +98,8 @@
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive --scope @userdive/provider --scope @userdive/*",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
-    "start": "concurrently -k 'yarn w:examples' 'yarn w:website' 'yarn w:html'",
-    "test": "karma start",
-    "w:examples": "webpack-dev-server --config examples/webpack.config.ts --env production",
-    "w:html": "pug examples -o examples/build/agent.js -P -s -w",
-    "w:website": "cd website && npm start"
+    "start": "lerna run start --scope userdive-examples --scope userdive-developers --stream",
+    "test": "karma start"
   },
   "workspaces": [
     "packages/*",

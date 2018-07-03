@@ -21,6 +21,9 @@
     "lint": "run-p lint:*",
     "lint:pug": "pug-lint ./**/*.pug",
     "lint:ts": "tslint ./**/*.ts{,x}",
-    "prebuild": "npm run clean"
+    "prebuild": "npm run clean",
+    "start": "concurrently -k 'yarn w:ts' 'yarn w:html'",
+    "w:html": "pug . -o build/agent.js -P -s -w",
+    "w:ts": "webpack-dev-server --env production"
   }
 }
