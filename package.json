@@ -96,7 +96,7 @@
     "lint:types": "tsc",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
-    "prepare": "lerna run build --scope userdive --scope @userdive/provider --scope @userdive/*",
+    "prepare": "lerna run build --scope userdive --scope @userdive/provider --scope @userdive/* --stream",
     "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
     "start": "lerna run start --scope userdive-examples --scope userdive-developers --stream",
     "test": "karma start"
