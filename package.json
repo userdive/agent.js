@@ -91,7 +91,7 @@
     "e2e": "lerna run e2e",
     "lint": "run-p lint:*",
     "lint:md": "textlint 'packages/*/*.md' README.md docs",
-    "lint:packages": "lerna run lint",
+    "lint:packages": "lerna run lint --stream",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "lint:types": "tsc",
     "postbuild": "webpack --env=production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
