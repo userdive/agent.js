@@ -6,18 +6,18 @@ module.exports = [
   },
   {
     path: `${dir}/agent.d.js`,
-    limit: '21.1 KB'
+    limit: '21.2 KB'
   },
   {
     path: `${dir}/linker.js`,
-    limit: '1.1 KB'
+    limit: '1.2 KB'
   },
   {
     path: `${dir}/kaizenplatform-plugin.js`,
-    limit: ' 600 B'
+    limit: '700 B'
   },
   {
     path: `${dir}/vwo-plugin.js`,
-    limit: ' 800 B'
+    limit: '860 B'
   }
 ]
