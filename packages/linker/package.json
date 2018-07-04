@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@userdive/agent": "^1.2.0",
+    "@userdive/provider": "^1.2.0",
     "userdive": "^1.1.0"
   },
   "engine": {

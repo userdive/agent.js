@@ -18,6 +18,12 @@
     "build:js": "webpack --env production",
     "clean": "rimraf tests build",
     "e2e": "testcafe 'chrome --no-sandobox' test/",
-    "prebuild": "npm run clean"
+    "lint": "run-p lint:*",
+    "lint:pug": "pug-lint ./**/*.pug",
+    "lint:ts": "tslint ./**/*.ts{,x}",
+    "prebuild": "npm run clean",
+    "start": "concurrently -k 'yarn w:ts' 'yarn w:html'",
+    "w:html": "pug . -o build/agent.js -P -s -w",
+    "w:ts": "webpack-dev-server --env production"
   }
 }
