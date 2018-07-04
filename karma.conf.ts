@@ -82,7 +82,8 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
         resolve: {
           extensions: ['.ts', '.js']
         },
-        node: { fs: 'empty' }
+        node: { fs: 'empty' },
+        mode: 'development'
       },
       coverageIstanbulReporter: {
         reports: ['html', 'lcovonly', 'text-summary']

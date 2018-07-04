@@ -31,8 +31,6 @@ Gruntfile.js
 .flowconfig
 .documentup.json
 .yarn-metadata.json
-.*.yml
-*.yml
 
 # misc
 *.gz
