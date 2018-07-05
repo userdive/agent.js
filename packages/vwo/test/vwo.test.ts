@@ -2,6 +2,7 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
+import { spy as sinonSpy } from 'sinon'
 import Vwo from '../src/plugin'
 
 const emulate = (global = window as any, ready = false) => {
@@ -25,6 +26,7 @@ describe('vwo', () => {
     vwo = new Vwo(agent)
     global = window as any
     global._vis_opt_queue = undefined
+    global._vwo_exp_ids = undefined
   })
 
   it('constructor', () => {
@@ -45,7 +47,7 @@ describe('vwo', () => {
     emulate(global)
     vwo.getVariation()
     assert(global._vis_opt_queue.length === 1)
-    assert(vwo.isSent === false)
+    assert(!vwo.isSent)
   })
 
   it('not ready', () => {
@@ -53,14 +55,23 @@ describe('vwo', () => {
     vwo.getVariation()
     assert(global._vis_opt_queue.length === 1)
     global._vis_opt_queue[0]()
-    assert(vwo.isSent === false)
+    assert(!vwo.isSent)
   })
 
   it('ready', () => {
     emulate(global, true)
+    const spy = sinonSpy(vwo, 'sendEvent')
     vwo.getVariation()
     assert(global._vis_opt_queue.length === 1)
     global._vis_opt_queue[0]()
+    assert(spy.calledOnce)
     assert(vwo.isSent)
   })
+
+  it('not injected vwo object', () => {
+    const spy = sinonSpy(vwo, 'sendEvent')
+    vwo.getVariation()
+    assert(!spy.called)
+  })
+
 })

@@ -14,10 +14,10 @@ export default class Plugin {
       if (typeof global._vwo_exp_ids !== 'undefined') {
         const sendEvent = this.sendEvent(global, global._vwo_exp_ids, global._vwo_exp)
         global._vis_opt_queue.push(sendEvent)
-        if (tryCount < max && !this.isSent) {
-          tryCount++
-          setTimeout(pollingForReady, interval)
-        }
+      }
+      if (tryCount < max && !this.isSent) {
+        tryCount++
+        setTimeout(pollingForReady, interval)
       }
     }
 
@@ -35,7 +35,7 @@ export default class Plugin {
           }
           const visCombination: string = (typeof exp.combination_chosen !== 'undefined') ?
           exp.combination_chosen : global._vis_opt_readCookie(`_vis_opt_exp_${visId}_combi`)
-          if (typeof exp.comb_n[visCombination] !== 'undefined') {
+          if (typeof exp.comb_n[visCombination] !== 'undefined' && !this.isSent) {
             this.isSent = true
             this.tracker.send('event', {
               eventCategory: 'vwo',
