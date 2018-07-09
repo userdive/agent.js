@@ -1,6 +1,6 @@
 {
   "name": "with-react",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "dependencies": {
     "@types/react": "16.4.6",
     "@types/react-dom": "16.0.6",
