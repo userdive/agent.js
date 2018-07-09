@@ -19,7 +19,7 @@
     "@uncovertruth/textlint-config-en": "4.0.0",
     "@uncovertruth/tslint-config": "4.4.0",
     "can-npm-publish": "1.2.0",
-    "codecov": "3.0.2",
+    "codecov": "3.0.4",
     "concurrently": "3.6.0",
     "cross-env": "5.2.0",
     "eslint": "5.0.1",
