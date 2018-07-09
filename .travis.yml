@@ -51,11 +51,9 @@ jobs:
         fi
         npm run ci:sauce
   - stage: deploy
-    addons:
-      apt:
-        - default-jre
-        - rsync
     script:
+    - sudo apt-get update
+    - sudo apt-get install default-jre rsync
     - wget https://artifacts.crowdin.com/repo/deb/crowdin.deb -O crowdin.deb
     - sudo dpkg -i crowdin.deb
     - sleep 5
