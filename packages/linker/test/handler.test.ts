@@ -1,7 +1,6 @@
 import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { image, internet, random } from 'faker'
-import { cleanup, set } from 'karma-fixture'
 import 'mocha'
 import { link, submit } from '../src/handler'
 
@@ -20,12 +19,12 @@ describe('handler', () => {
   })
 
   afterEach(() => {
-    cleanup()
+    fixture.cleanup()
   })
 
   it('string domain', () => {
     const l = toLink(internet.url())
-    set(`<a href="${l.href}" />`, true)
+    fixture.set(`<a href="${l.href}" />`, true)
     const a = document.getElementsByTagName('a')[0]
     link([l.hostname], param, 10)({ target: a } as any)
     assert(`${l.href}?${param}` === a.href)
@@ -33,7 +32,7 @@ describe('handler', () => {
 
   it('regexp match domain', () => {
     const l = toLink(internet.url())
-    set(`<a href="${l.href}">${random.word()}</a>`, true)
+    fixture.set(`<a href="${l.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
     link([new RegExp(`${l.hostname}`)], param, 10)({ target: a } as any)
@@ -42,7 +41,7 @@ describe('handler', () => {
 
   it('email link', () => {
     const l = toLink(`mailto:${internet.email()}`)
-    set(`<a href=${l.href}>${random.word()}</a>`, true)
+    fixture.set(`<a href=${l.href}>${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
     link([l.hostname], param, 10)({ target: a } as any)
@@ -50,7 +49,7 @@ describe('handler', () => {
   })
 
   it('match domain', () => {
-    set(`<a href="${location.href}">${random.word()}</a>`, true)
+    fixture.set(`<a href="${location.href}">${random.word()}</a>`, true)
 
     const a = document.getElementsByTagName('a')[0]
     link([location.hostname], param, 10)({ target: a } as any)
@@ -61,7 +60,7 @@ describe('handler', () => {
     const domain = internet.domainName()
     const search = `?a=b`
     const hash = `#anker`
-    set(
+    fixture.set(
       `<a href="https://${domain}/${search + hash}">${random.word()}</a>`,
       true
     )
@@ -73,15 +72,15 @@ describe('handler', () => {
 
   it('bubbling', () => {
     const l = toLink(internet.url())
-    set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
+    fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
 
     link([l.hostname], param, 10)({
       target: document.getElementsByTagName('img')[0]
     } as any)
     assert(`${l.href}?${param}` === document.getElementsByTagName('a')[0].href)
 
-    cleanup()
-    set(
+    fixture.cleanup()
+    fixture.set(
       `<a href="${l.href}"><div><img src="${image.imageUrl()}"></div></a>`
     )
 
@@ -96,7 +95,7 @@ describe('handler', () => {
 
   it('submit post', () => {
     const l = toLink(internet.url())
-    set(`<form method="post" action="${l.href}"><form>`, true)
+    fixture.set(`<form method="post" action="${l.href}"><form>`, true)
 
     const form = document.getElementsByTagName('form')[0]
     submit([l.hostname], param)({ target: form } as any)
@@ -106,7 +105,7 @@ describe('handler', () => {
   it('submit javascript:void(0);', () => {
     const l = toLink(internet.url())
     const action = 'javascript:void(0)'
-    set(
+    fixture.set(
       `
       <form action="${action}">
         <input type="submit" value="test" >
@@ -124,7 +123,7 @@ describe('handler', () => {
   it('submit get', () => {
     const link = toLink(internet.url())
     const handler = submit([link.hostname], param)
-    set(`<form method="get" action="${link.href}"><form>`, true)
+    fixture.set(`<form method="get" action="${link.href}"><form>`, true)
     const form = document.getElementsByTagName('form')[0]
 
     // idempotence
