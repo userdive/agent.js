@@ -51,7 +51,7 @@
     "puppeteer": "1.5.0",
     "rimraf": "2.6.2",
     "sinon": "5.1.1",
-    "size-limit": "0.18.4",
+    "size-limit": "0.18.5",
     "stylelint": "9.3.0",
     "textlint": "10.2.1",
     "ts-loader": "4.4.2",
