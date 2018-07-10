@@ -22,8 +22,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf lib coverage build",
-    "prepublish": "npm run build",
-    "test": "karma start"
+    "prepublish": "npm run build"
   },
   "types": "lib/index.d.ts"
 }
