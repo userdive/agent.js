@@ -1,6 +1,7 @@
 import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { image, internet, random } from 'faker'
+import * as FixtureType from 'karma-fixture'
 import 'mocha'
 import { link, submit } from '../src/handler'
 
@@ -8,6 +9,10 @@ const toLink = (href: string) => {
   const link = document.createElement('a')
   link.href = href
   return link
+}
+
+declare global {
+  const fixture: typeof FixtureType
 }
 
 describe('handler', () => {

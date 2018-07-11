@@ -33,8 +33,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf coverage lib docs",
-    "prepublish": "npm run build",
-    "test": "karma start --single-run"
+    "prepublish": "npm run build"
   },
   "types": "lib/linker.d.ts"
 }
