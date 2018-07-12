@@ -1,14 +1,18 @@
-import { Component, Inject } from '@angular/core'
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  Inject
+} from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import userdive from 'userdive'
 const _ud = userdive()
 
 @Component({
-  providers: [AppComponent],
   selector: 'app',
   template: `<router-outlet></router-outlet>`
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit, AfterViewChecked {
   constructor (@Inject(Router) private router: Router) {}
 
   public ngAfterViewInit () {
