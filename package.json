@@ -12,7 +12,7 @@
     "@types/object-assign": "4.0.30",
     "@types/puppeteer": "1.5.0",
     "@types/sinon": "5.0.1",
-    "@types/webpack": "4.4.5",
+    "@types/webpack": "4.4.7",
     "@uncovertruth/eslint-config": "4.4.0",
     "@uncovertruth/eslint-config-react": "4.4.0",
     "@uncovertruth/stylelint-config": "4.4.0",
@@ -62,7 +62,7 @@
     "typescript-eslint-parser": "16.0.1",
     "uglify-js": "3.4.4",
     "uglifyjs-webpack-plugin": "1.2.7",
-    "webpack": "4.16.0",
+    "webpack": "4.16.1",
     "webpack-cli": "3.0.8",
     "webpack-dev-server": "3.1.4",
     "webpack-espower-loader": "2.0.0"
