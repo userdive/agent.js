@@ -10,7 +10,7 @@ export class Plugin {
     this.isSent = false
   }
 
-  public getVariation (global = window as any, interval = 50, max = 3) {
+  public getVariation (global = window as any, interval = 100, max = 3) {
     let tryCount = 0
     const pollingForReady = (): void => {
       if (typeof global[name] !== 'undefined') {
@@ -30,8 +30,8 @@ export class Plugin {
       const campaignIds = Object.keys(campaignStates)
       if (campaignIds.length && !this.isSent) {
         campaignIds.forEach((campaignId) => {
-          const experimentId: string = campaignStates[campaignId].experiment.id
-          const variationId: string = campaignStates[campaignId].variation.id
+          const experimentId: string = campaignStates[campaignId].experiment.id || ''
+          const variationId: string = campaignStates[campaignId].variation.id || ''
           if (experimentId === '' || variationId === '') {
             return
           }
