@@ -40,8 +40,8 @@ export class Plugin {
             eventAction: experimentId,
             eventLabel: variationId
           })
+          this.isSent = true
         })
-        this.isSent = true
       }
     } catch (e) {
       // do nothing

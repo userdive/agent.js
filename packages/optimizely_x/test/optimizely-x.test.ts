@@ -5,7 +5,7 @@ import 'mocha'
 import { spy as sinonSpy } from 'sinon'
 import { name, Plugin as Optimizely } from '../src/plugin'
 
-const emulate = (global = window as any, ready = false) => {
+const emulate = (global = window as any, ready = false, match = true) => {
   if (!ready) {
     return
   }
@@ -14,8 +14,8 @@ const emulate = (global = window as any, ready = false) => {
     return {
       campaignId : {
         id: campaignId,
-        experiment: { id: `${random.number()}`, name: '' },
-        variation: { id: `${random.number()}`, name: `${random.word}` }
+        experiment: { id: match ? `${random.number()}` : '', name: '' },
+        variation: { id: match ? `${random.number()}` : '' , name: `${random.word}` }
       }
     }
   }
@@ -45,11 +45,11 @@ describe('optimizely', () => {
 
   it('getVariation', () => {
     assert.doesNotThrow(() => {
-      emulate()
+      emulate(global, true)
       optimizely.getVariation(window)
     })
     assert.doesNotThrow(() => {
-      emulate()
+      emulate(global, true)
       optimizely.getVariation(window, 100, 10)
     })
   })
@@ -66,6 +66,16 @@ describe('optimizely', () => {
   })
 
   it('ready', () => {
+    emulate(global, true)
+    optimizely.getVariation()
+    assert(optimizely.isSent)
+  })
+
+  it('loaded and no given experiment', () => {
+    emulate(global, true, false)
+    optimizely.getVariation()
+    assert(optimizely.isSent === false)
+
     emulate(global, true)
     optimizely.getVariation()
     assert(optimizely.isSent)
