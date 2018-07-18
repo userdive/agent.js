@@ -2,6 +2,7 @@ import Agent from '@userdive/agent'
 import * as assert from 'assert'
 import { random } from 'faker'
 import 'mocha'
+import { spy as sinonSpy } from 'sinon'
 import { name, Plugin as Optimizely } from '../src/plugin'
 
 const emulate = (global = window as any, ready = false) => {
@@ -68,5 +69,13 @@ describe('optimizely', () => {
     emulate(global, true)
     optimizely.getVariation()
     assert(optimizely.isSent)
+  })
+
+  it('after send', () => {
+    const spy = sinonSpy(optimizely, 'sendEvents')
+    optimizely.isSent = true
+    optimizely.getVariation()
+    emulate(global, true)
+    assert(!spy.called)
   })
 })
