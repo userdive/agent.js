@@ -28,21 +28,21 @@ export class Plugin {
   private sendEvents = (campaignStates: {[campaignId: string]: any}) => {
     try {
       const campaignIds = Object.keys(campaignStates)
-      if (campaignIds.length && !this.isSent) {
-        campaignIds.forEach((campaignId) => {
-          const experimentId: string = campaignStates[campaignId].experiment.id || ''
-          const variationId: string = campaignStates[campaignId].variation.id || ''
-          if (experimentId === '' || variationId === '') {
-            return
-          }
+      if (campaignIds.length === 0 || this.isSent) {
+        return
+      }
+      campaignIds.forEach((campaignId) => {
+        const experimentId: string = campaignStates[campaignId].experiment.id || ''
+        const variationId: string = campaignStates[campaignId].variation.id || ''
+        if (experimentId !== '' || variationId !== '') {
           this.tracker.send('event', {
             eventCategory: name,
             eventAction: experimentId,
             eventLabel: variationId
           })
           this.isSent = true
-        })
-      }
+        }
+      })
     } catch (e) {
       // do nothing
     }
