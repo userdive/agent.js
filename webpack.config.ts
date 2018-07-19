@@ -16,7 +16,8 @@ module.exports = {
       __dirname,
       'packages/kaizenplatform/src/index.ts'
     ),
-    'vwo-plugin': path.join(__dirname, 'packages/vwo/src/index.ts')
+    'vwo-plugin': path.join(__dirname, 'packages/vwo/src/index.ts'),
+    'optimizely-x-plugin': path.join(__dirname, 'packages/optimizely_x/src/index.ts')
   },
   output: {
     path: path.join(__dirname, 'cdn'),
