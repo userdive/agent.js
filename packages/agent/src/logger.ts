@@ -6,7 +6,6 @@ export const raise = (msg: string) => {
   if (process.env.NODE_ENV !== 'production') {
     throw new Error(msg)
   }
-  console.warn(msg)
 }
 
 const isDefined = (instance: any): boolean => instance && instance.isSetup()
@@ -23,7 +22,6 @@ export const setup = ({ Raven: raven }: { Raven?: RavenStatic }): boolean => {
 
 const capture = (err: CustomError, options?: RavenOptions): void => {
   if (isDefined(Raven)) {
-    console.warn(err, options)
     if (typeof err === 'string') {
       Raven.captureMessage(err, options)
       return
