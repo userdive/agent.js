@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import { Selector } from 'testcafe'
 import { deployBaseUrl } from '../testcafe-conf'
 
-fixture('deploy host').page(`${deployBaseUrl}/kaizen-platform/`)
+fixture('kaizen platform').page(`${deployBaseUrl}/kaizen-platform/`)
 
 test('display experiment text', async (t) => {
   const nav = await Selector('.navbar-brand')

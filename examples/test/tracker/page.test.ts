@@ -9,7 +9,7 @@ const search = '?q=e2e'
 const l = `${baseUrl}/simple/page.html${search}`
 const override = `${baseUrl}/orverride${search}`
 
-fixture('basic tracker').page(l)
+fixture(' page set. test env').page(l)
 
 test.requestHooks(envLogger)('override location with click', async (t) => {
   await t.wait(2000)

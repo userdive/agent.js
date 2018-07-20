@@ -8,7 +8,7 @@ const intLogger = RequestLogger(intRegex)
 
 const l = `${deployBaseUrl}/optimizely-x/`
 
-fixture('optimizely x event').page(l)
+fixture('optimizely-x event').page(l)
 
 test.requestHooks(intLogger)('tracking request', async (t) => {
   await t.wait(5000)
