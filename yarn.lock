@@ -325,9 +325,9 @@
   version "4.0.30"
   resolved "https://registry.yarnpkg.com/@types/object-assign/-/object-assign-4.0.30.tgz#8949371d5a99f4381ee0f1df0a9b7a187e07e652"
 
-"@types/puppeteer@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.5.0.tgz#95b6feff9522d3a054ed09b49798e7232f24d558"
+"@types/puppeteer@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-1.5.1.tgz#8e924528322e184d1cd171f33fd2c94329bf059e"
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
