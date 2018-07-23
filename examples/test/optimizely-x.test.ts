@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import { Selector } from 'testcafe'
 import { baseUrl } from '../testcafe-conf'
 
-fixture('vwo').page(`${baseUrl}/vwo/`)
+fixture('optimizely x').page(`${baseUrl}/optimizely-x/`)
 
 test('display original text', async (t) => {
   const nav = Selector('.navbar-brand')

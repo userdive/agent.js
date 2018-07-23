@@ -7,7 +7,7 @@ import { query } from '../test-util'
 const envLogger = RequestLogger(envRegex)
 const l = `${baseUrl}/simple/`
 
-fixture('basic tracker').page(l)
+fixture('basic env').page(l)
 
 test.requestHooks(envLogger)('environment request', async (t) => {
   await t.wait(2000)
