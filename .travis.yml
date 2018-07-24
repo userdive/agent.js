@@ -51,11 +51,13 @@ jobs:
         npm run ci:sauce
     if: type = pull_request OR branch = master
   - stage: deploy
-    before_install:
-    # https://support.crowdin.com/cli-tool/#debian
-    - wget -qO - https://artifacts.crowdin.com/repo/GPG-KEY-crowdin | sudo apt-key add -
-    - echo "deb https://artifacts.crowdin.com/repo/deb/ /" > /etc/apt/sources.list.d/crowdin.list
-    - sudo apt-get update && sudo apt-get install crowdin
+    addons:
+      apt:
+        sources:
+        - sourceline: deb https://artifacts.crowdin.com/repo/deb/ /
+          key_url: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
+        packages:
+        - crowdin
     script: null
     before_deploy:
     - npm run build
