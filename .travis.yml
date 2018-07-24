@@ -38,7 +38,7 @@ jobs:
     env: Cross browser
     script:
     - |
-        if [ "$TRAVIS_PULL_REQUEST" != "false" ];
+        if [ "$TRAVIS_PULL_REQUEST" = "false" ];
         then
           echo "Run only pull request";
           exit 0
