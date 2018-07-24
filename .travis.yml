@@ -1,4 +1,4 @@
-sudo: true
+sudo: false
 language: node_js
 node_js: lts/*
 cache:
@@ -19,7 +19,6 @@ env:
 stages:
 - name: test
 - name: deploy
-  if: type = push
 jobs:
   include:
   - stage: test
@@ -37,6 +36,7 @@ jobs:
     - npm run coverage
   - stage: test
     env: Cross browser
+    if: type = pull_request OR tag IS present OR branch = "master"
     script:
     - |
         if git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qE '.+'
@@ -49,8 +49,9 @@ jobs:
           fi
         fi
         npm run ci:sauce
-    if: type = pull_request OR branch = master
   - stage: deploy
+    env: Deploy
+    if: type = push
     addons:
       apt:
         sources:
