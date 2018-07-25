@@ -5,6 +5,7 @@ import 'mocha'
 import { spy as sinonSpy, stub as sinonStub } from 'sinon'
 import Agent from '../src/agent'
 import { INTERVAL, SETTINGS } from '../src/constants'
+import * as requests from '../src/requests'
 
 describe('agent', () => {
   let agent: any
@@ -52,7 +53,7 @@ describe('agent', () => {
   })
 
   it('send', () => {
-    const spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(requests, 'get')
 
     const page = internet.url()
     const dimension1 = lorem.word()

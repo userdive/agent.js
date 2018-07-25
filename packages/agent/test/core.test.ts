@@ -1,6 +1,7 @@
 import * as assert from 'assert'
 import { EventEmitter } from 'events'
 import { internet, lorem, random } from 'faker'
+import isUrl = require('is-url')
 import 'mocha'
 import * as objectAssign from 'object-assign'
 import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
@@ -13,11 +14,11 @@ import {
 } from '../src/constants'
 import Agent from '../src/core'
 import Base from '../src/events'
+import * as requests from '../src/requests'
 import { EventType } from '../src/types'
 import { getType } from './helpers/Event'
 
 describe('AgentCore', () => {
-  const isUrl = require('is-url')
   const eventFactory = (type: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base {
       public validate () {
@@ -130,7 +131,7 @@ describe('AgentCore', () => {
   it('send success', () => {
     agent.pageview(location.href)
 
-    const spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(requests, 'get')
 
     assert(agent.interacts.length === 0)
     emitter.emit('scroll', {
@@ -164,7 +165,7 @@ describe('AgentCore', () => {
   })
 
   it('send success auto', () => {
-    const spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(requests, 'get')
     const autoAgent = agentFactory({ cookieName: 'auto' })
     autoAgent.pageview(location.href)
 
@@ -181,7 +182,7 @@ describe('AgentCore', () => {
   })
 
   it('send success pathname', () => {
-    const spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(requests, 'get')
     const autoAgent = agentFactory({ cookieName: 'auto' })
     autoAgent.pageview(location.pathname)
 
@@ -194,7 +195,7 @@ describe('AgentCore', () => {
   it('send event', () => {
     const agent = agentFactory({ auto: true })
     agent.pageview(internet.url())
-    const spy = sinonSpy(require('../src/requests'), 'get')
+    const spy = sinonSpy(requests, 'get')
 
     const sendEvent = (data: FieldsObject) => {
       agent.event(data)
@@ -235,7 +236,7 @@ describe('AgentCore', () => {
   })
 
   it('send fail', () => {
-    const stub = sinonStub(require('../src/requests'), 'get')
+    const stub = sinonStub(requests, 'get')
     stub.callsFake(
       (url: any, query: any, onerror: (...args: any[]) => void) => {
         onerror(url, query)
