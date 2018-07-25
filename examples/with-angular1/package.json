@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "dependencies": {
     "@types/angular": "1.6.49",
-    "@uirouter/angularjs": "1.0.18",
+    "@uirouter/angularjs": "1.0.19",
     "angular": "1.7.2",
     "userdive": "^1.1.0"
   },
