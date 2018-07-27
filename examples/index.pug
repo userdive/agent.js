@@ -47,10 +47,11 @@ html
       .panel.panel-default
         .panel-heading
           h1.panel-title
-            span.glyphicon.glyphicon-link(aria-hidden='true')
-            | Sample links
+            | agent.js Examples
         .list-group
-          a.list-group-item(href='#simple', data-toggle="collapse") Simple Usage Examples
+          a.list-group-item(href='#simple', data-toggle="collapse")
+            span.badge 5
+            | Basic Usage Examples
           #simple.panel-collapse.collapse
             .panel-body
               .list-group.list-group-flush
@@ -59,22 +60,30 @@ html
                 a.list-group-item(href='/agent.js/simple/cd-with-send.html') Send with Custom Dimensions
                 a.list-group-item(href='/agent.js/simple/cd-with-set.html') Set Custom Dimensions
                 a.list-group-item(href='/agent.js/simple/events.html') Send events
+        .list-group
+          a.list-group-item(href='#advanced', data-toggle="collapse")
+            span.badge 3
+            | Advanced Usage Examples
+          #advanced.panel-collapse.collapse
+            .panel-body
+              .list-group.list-group-flush
                 a.list-group-item(href='/agent.js/simple/page.html') Override location
-          a.list-group-item(href='/agent.js/plugin-linker/') Cross-domain using query parameter
-          a.list-group-item(href='/agent.js/plugin-create/') plugin create example
-          a.list-group-item(href='/agent.js/with-google-tag-manager/') use with Google Tag Manager
-          a.list-group-item(href='/agent.js/built-in/') use with Node.js
-          a.list-group-item(href='#spa', data-toggle="collapse") Single Page Application Frameworks
+                a.list-group-item(href='/agent.js/plugin-linker/') Cross-domain using query parameter
+                a.list-group-item(href='/agent.js/with-google-tag-manager/') Use with Google Tag Manager
+          a.list-group-item(href='#spa', data-toggle="collapse")
+            span.badge 4
+            | Single Page Application Frameworks
           #spa.panel-collapse.collapse
             .panel-body
               .list-group.list-group-flush
-                a.list-group-item(href='/agent.js/with-angular/') use with Angular
-                a.list-group-item(href='/agent.js/with-angular1/') use with AngularJS
-                a.list-group-item(href='/agent.js/with-react/') use with React
-                a.list-group-item(href='/agent.js/with-vue/') use with Vue.js
+                a.list-group-item(href='/agent.js/with-angular/') Use with Angular
+                a.list-group-item(href='/agent.js/with-angular1/') Use with AngularJS
+                a.list-group-item(href='/agent.js/with-react/') Use with React
+                a.list-group-item(href='/agent.js/with-vue/') Use with Vue.js
+          a.list-group-item(href='/agent.js/built-in/') Use with Node.js
+          a.list-group-item(href='/agent.js/plugin-create/') How to create plugin
         .panel-heading
           h1.panel-title
-            span.glyphicon.glyphicon-link(aria-hidden='true')
             | Third-party Integration
         .list-group
           a.list-group-item(href='/agent.js/kaizen-platform/') Kaizen Platform

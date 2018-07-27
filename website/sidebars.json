@@ -11,7 +11,8 @@
       "writing-plugins",
       "linker-plugin",
       "kaizenplatform-plugin",
-      "vwo-plugin"
+      "vwo-plugin",
+      "optimizely_x-plugin"
     ],
     "Integrations": [
       "integrations"
