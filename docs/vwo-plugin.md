@@ -11,7 +11,7 @@ This plugin will send A/B testing informaiton as [Event data](./field-reference.
 | :------------ | :------------------------------- |
 | eventCategory | Constant string as 'vwo'.        |
 | eventAction   | The experiment ID string in VWO. |
-| eventLabel    | The variation ID for renderd.    |
+| eventLabel    | The variation ID for rendered.   |
 | eventValue    | _None_                           |
 
 Show [example](https://userdive.github.io/agent.js/vwo/)

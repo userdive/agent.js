@@ -7,12 +7,12 @@ The Optimizely X plugin works A/B testing integration for Optimizely X.
 
 This plugin will send A/B testing informaiton as [Event data](./field-reference.html#event-tracking).
 
-| Field         | Assigned Value                   |
-| :------------ | :------------------------------- |
-| eventCategory | Constant string as 'optimizely'. |
-| eventAction   | The experiment ID string in VWO. |
-| eventLabel    | The variation ID for renderd.    |
-| eventValue    | _None_                           |
+| Field         | Assigned Value                            |
+| :------------ | :---------------------------------------- |
+| eventCategory | Constant string as 'optimizely'.          |
+| eventAction   | The experiment ID string in Optimizely X. |
+| eventLabel    | The variation ID for rendered.            |
+| eventValue    | _None_                                    |
 
 Show [example](https://userdive.github.io/agent.js/optimizely-x/)
 
