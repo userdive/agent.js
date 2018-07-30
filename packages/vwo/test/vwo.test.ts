@@ -74,4 +74,11 @@ describe('vwo', () => {
     assert(!spy.called)
   })
 
+  it('after send', () => {
+    const spy = sinonSpy(vwo, 'sendEvents')
+    vwo.isSent = true
+    vwo.getVariation()
+    emulate(global, true)
+    assert(!spy.called)
+  })
 })
