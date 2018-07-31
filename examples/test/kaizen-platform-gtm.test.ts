@@ -1,11 +1,6 @@
-import * as assert from 'assert'
-import { Selector } from 'testcafe'
 import { deployBaseUrl } from '../testcafe-conf'
+import { ABTestingTest } from './test-util'
 
 fixture('kaizen platform').page(`${deployBaseUrl}/kaizen-platform/`)
 
-test('display experiment text', async (t) => {
-  const nav = await Selector('.navbar-brand')
-  await t.wait(3000)
-  assert.equal(await nav.innerText, 'USERDIVE Kaizen Platform Integration example')
-})
+test('display experiment text', ABTestingTest('USERDIVE Kaizen Platform Integration example', 3000))
