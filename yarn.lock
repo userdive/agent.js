@@ -359,9 +359,9 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-router@4.0.29":
-  version "4.0.29"
-  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.29.tgz#1a906dd99abf21297a5b7cf003d1fd36e7a92069"
+"@types/react-router@4.0.30":
+  version "4.0.30"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.30.tgz#64bcd886befd1f932779b74d17954adbefb7a3a7"
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
