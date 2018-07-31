@@ -1,11 +1,5 @@
-import * as assert from 'assert'
-import { Selector } from 'testcafe'
 import { deployBaseUrl } from '../testcafe-conf'
+import { ABTestingTest } from './test-util'
 
 fixture('vwo').page(`${deployBaseUrl}/vwo/`)
-
-test('display experiment text', async (t) => {
-  const nav = Selector('.navbar-brand')
-  await t.wait(3000)
-  assert.equal(await nav.innerText, 'USERDIVE VWO Integration example')
-})
+test('display experiment text', ABTestingTest('USERDIVE VWO Integration example', 3000))

@@ -35,3 +35,11 @@ export const query = (record: Request) => {
   const query = record.request.url.split('?')[1]
   return query ? qs.parse(query) : {}
 }
+
+export const ABTestingTest = (expectText: string, wait: number = 500) => {
+  return async (t: TestController) => {
+    const nav = Selector('.navbar-brand')
+    await t.wait(wait)
+    assert.equal(await nav.innerText, expectText)
+  }
+}
