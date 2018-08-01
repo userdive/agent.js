@@ -21,6 +21,8 @@ stages:
   - name: cross-browser
     if: type = pull_request OR branch = master
   - deploy
+  - name: pre-release
+    if: branch =~ ^release
 jobs:
   include:
   - stage: test
@@ -36,6 +38,10 @@ jobs:
     script:
     - npm run test
     - npm run coverage
+  - stage: pre-release
+    env: Dry Run
+    script:
+    - npm run dry-release
   - stage: cross-browser
     env: Cross browser
     script:

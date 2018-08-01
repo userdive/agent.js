@@ -89,6 +89,7 @@
     "clean": "lerna clean --yes && lerna run clean && rimraf cdn coverage",
     "coverage": "codecov -f ./coverage/lcov.info",
     "deploy:examples": "gh-pages -d examples/build/agent.js -m '[ci skip] Updates'",
+    "dry-release": "lerna exec --no-bail -- 'can-npm-publish && npm root'",
     "e2e": "lerna run e2e",
     "lint": "run-p lint:*",
     "lint:md": "textlint 'packages/*/*.md' README.md docs",
@@ -98,7 +99,7 @@
     "postbuild": "webpack --mode production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive --scope @userdive/* --stream",
-    "release": "lerna exec --bail=false -- 'can-npm-publish && npm publish'",
+    "release": "lerna exec --no-bail -- 'can-npm-publish && npm publish --access public'",
     "start": "lerna run start --scope userdive-examples --scope userdive-developers --stream",
     "test": "karma start"
   },
