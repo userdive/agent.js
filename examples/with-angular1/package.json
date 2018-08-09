@@ -4,7 +4,7 @@
   "dependencies": {
     "@types/angular": "1.6.49",
     "@uirouter/angularjs": "1.0.19",
-    "angular": "1.7.2",
+    "angular": "1.7.3",
     "userdive": "^1.3.0"
   },
   "private": true
