@@ -12,7 +12,7 @@
     "@types/object-assign": "4.0.30",
     "@types/puppeteer": "1.6.0",
     "@types/sinon": "5.0.1",
-    "@types/webpack": "4.4.9",
+    "@types/webpack": "4.4.10",
     "@uncovertruth/eslint-config": "4.5.0",
     "@uncovertruth/eslint-config-react": "4.4.0",
     "@uncovertruth/stylelint-config": "4.4.0",
