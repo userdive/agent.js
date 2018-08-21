@@ -62,7 +62,7 @@
     "typescript-eslint-parser": "17.0.1",
     "uglify-js": "3.4.7",
     "uglifyjs-webpack-plugin": "1.2.7",
-    "webpack": "4.16.5",
+    "webpack": "4.17.0",
     "webpack-cli": "3.1.0",
     "webpack-dev-server": "3.1.5",
     "webpack-espower-loader": "2.0.0"
