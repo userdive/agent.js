@@ -30,7 +30,7 @@
     "is-url": "1.2.4",
     "istanbul-instrumenter-loader": "3.0.1",
     "jstransformer-markdown-it": "2.1.0",
-    "karma": "2.0.5",
+    "karma": "3.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage-istanbul-reporter": "2.0.1",
     "karma-fixture": "0.2.6",
