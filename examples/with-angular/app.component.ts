@@ -14,7 +14,6 @@ export class AppComponent {
   constructor (@Inject(Router) private router: Router) {
     this.router.events
     .filter((e) => (e instanceof NavigationEnd))
-    .pairwise()
     .subscribe(() => {
       const w = window as any
       w._ud('send', 'pageview')
@@ -23,6 +22,5 @@ export class AppComponent {
 
   public ngAfterViewInit () {
     _ud('create', 'af57h6gb', 'auto')
-    _ud('send', 'pageview')
   }
 }
