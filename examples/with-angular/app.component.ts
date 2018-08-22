@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
 import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/pairwise'
 import userdive from 'userdive'
 const _ud = userdive()
 
