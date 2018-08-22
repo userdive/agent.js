@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core'
 import { NavigationEnd, Router } from '@angular/router'
+import 'rxjs/add/operator/filter'
+import 'rxjs/add/operator/pairwise'
 import userdive from 'userdive'
 const _ud = userdive()
 
@@ -9,17 +11,18 @@ const _ud = userdive()
   template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
-  constructor (@Inject(Router) private router: Router) {}
+  constructor (@Inject(Router) private router: Router) {
+    this.router.events
+    .filter((e) => (e instanceof NavigationEnd))
+    .pairwise()
+    .subscribe(() => {
+      const w = window as any
+      w._ud('send', 'pageview')
+    })
+  }
 
   public ngAfterViewInit () {
     _ud('create', 'af57h6gb', 'auto')
-  }
-
-  public ngAfterViewChecked () {
-    this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd) {
-        _ud('send', 'pageview', location.href)
-      }
-    })
+    _ud('send', 'pageview')
   }
 }
