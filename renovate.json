@@ -1,4 +1,5 @@
 {
+  "timezone": "Japan",
   "extends": [
     "config:base",
     "monorepo:angular",
@@ -22,5 +23,6 @@
     "**/__tests__/**",
     "**/test/**",
     "**/tests/**"
-  ]
+  ],
+  "schedule": "before 3am on Monday"
 }
