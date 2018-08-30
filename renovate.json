@@ -22,5 +22,6 @@
     "**/__tests__/**",
     "**/test/**",
     "**/tests/**"
-  ]
+  ],
+  "schedule": "before 3am on Monday"
 }
