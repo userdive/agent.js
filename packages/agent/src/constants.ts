@@ -19,6 +19,7 @@ export const SETTINGS: SettingFieldsObject = {
   allowLinker: false,
   linkerName: '__ud',
   baseUrl: 'https://v1.userdive.com',
+  cookiePath: '/',
   cookieDomain: '',
   cookieExpires: 730, // TODO
   cookieName: '_ud',
