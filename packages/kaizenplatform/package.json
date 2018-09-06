@@ -1,14 +1,14 @@
 {
   "name": "@userdive/kaizenplatform-plugin",
   "description": "a plugin to integrate Kaizen Platform A/B testing",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^1.3.0",
-    "@userdive/provider": "^1.3.0",
+    "@userdive/agent": "^2.0.0",
+    "@userdive/provider": "^2.0.0",
     "userdive": "^1.3.0"
   },
   "engine": {
