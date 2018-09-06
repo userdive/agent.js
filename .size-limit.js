@@ -2,7 +2,7 @@ const dir = 'cdn'
 module.exports = [
   {
     path: `${dir}/agent.js`,
-    limit: '8.3 KB'
+    limit: '8.4 KB'
   },
   {
     path: `${dir}/agent.d.js`,
