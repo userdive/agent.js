@@ -12,6 +12,8 @@ title: Event Tracking
 
 ## Send Event Data
 
+You can send event like below.
+
 ```js
 _ud("send", "event", {
     eventCategory: "Category",
@@ -20,6 +22,8 @@ _ud("send", "event", {
     eventValue: 1000
 });
 ```
+
+Or, use `hitType` assigned `"events"`
 
 ```js
 _ud("send", {
