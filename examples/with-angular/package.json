@@ -13,6 +13,7 @@
     "@angular/upgrade": "5.2.11",
     "core-js": "2.5.7",
     "reflect-metadata": "0.1.12",
+    "rxjs": "5.5.10",
     "systemjs": "0.21.4",
     "userdive": "^2.0.2",
     "zone.js": "0.8.26"
