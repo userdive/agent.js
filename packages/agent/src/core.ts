@@ -91,7 +91,7 @@ export default class AgentCore extends Store {
     eventsClass: any[], // TODO
     settings: SettingFieldsObject
   ) {
-    const userId = findOrCreateUserId(settings, getLocation())
+    const userId = settings.userId ? settings.userId : findOrCreateUserId(settings, getLocation())
     super(userId)
 
     this.id = generateId()

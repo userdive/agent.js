@@ -7,6 +7,7 @@ export interface SettingFieldsObject extends FieldsObject {
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
+  readonly userId?: string
   Raven?: RavenStatic
 }
 

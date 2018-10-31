@@ -9,7 +9,7 @@ export default class Linker {
 
   public autoLink (domains: Domain[]) {
     const events: string[] = ['mousedown', 'keyup']
-    const param = this.agent.get('linkerParam')
+    const param = this.agent.get('linkerParam') as string
     events.forEach((event: string) =>
       this.agent.subscribe(document, event, link(domains, param, 100))
     )

@@ -142,6 +142,7 @@ export interface USERDIVEApi {
   ): void
   (command: 'set', fieldsObject: FieldsObject): void
   (command: 'set', key: Dimension, value: string): void
+  (command: 'get', key: string): any
   // (command: "set", key: Metric, value: number): void
   (command: string, ...args: any[]): void
 }
