@@ -20,7 +20,7 @@ describe('handler', () => {
   let param: string
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
-    param = agent.get('linkerParam')
+    param = agent.get('linkerParam') as string
   })
 
   afterEach(() => {
