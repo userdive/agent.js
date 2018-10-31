@@ -9,7 +9,7 @@ import MouseMove from './events/mousemove'
 import Scroll from './events/scroll'
 import TouchEnd from './events/touch'
 import { setup } from './logger'
-import { SettingFieldsObject, SetType, State } from './types'
+import { ClientEnvironmentsData, CustomData, SettingFieldsObject, SetType, State, StateKey } from './types'
 
 export type PluginConstructor = new (
   tracker: Agent,
@@ -89,10 +89,10 @@ export default class Agent {
     return this.core.mergeDeep(key)
   }
 
-  public get (key: string): string {
+  public get (key: StateKey | 'linkerParam'): ClientEnvironmentsData | CustomData | string {
     return key === 'linkerParam'
       ? `${this.linkerName}=${this.core.get('userId')}`
-      : ''
+      : this.core.get(key)
   }
 
   public provide (name: string, pluginConstructor: PluginConstructor) {

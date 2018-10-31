@@ -70,6 +70,8 @@ export type Custom = {
   data: CustomData
 }
 
+export type StateKey = 'env' | 'custom' | 'userId'
+
 export type ClientEnvironmentsData = {
   readonly v: number
   readonly uid?: number
