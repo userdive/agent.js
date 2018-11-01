@@ -53,7 +53,7 @@ describe('agent', () => {
   })
 
   it('get with undefined key', () => {
-    assert(agent.get(random.word()) === undefined, 'undefined key')
+    assert(agent.get(random.word()) === '', 'undefined key')
   })
 
   it('send', () => {
