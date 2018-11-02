@@ -35,7 +35,7 @@ const createInteractData = (d: Interact): string =>
     )}`
     : ''
 
-const findOrCreateUserId = (
+const findOrCreateClientId = (
   {
     allowLinker,
     cookieDomain,
@@ -46,7 +46,7 @@ const findOrCreateUserId = (
   }: SettingFieldsObject,
   { search }: Location
 ): string => {
-  let userId = getCookie(cookieName)
+  let clientId = getCookie(cookieName)
   if (allowLinker) {
     const qs = search.trim().replace(/^[?#&]/, '')
     const [linkerParam] = qs
@@ -54,19 +54,19 @@ const findOrCreateUserId = (
       .filter((s) => s.length && s.split('=')[0] === linkerName)
     const id = linkerParam ? linkerParam.split('=')[1] : undefined
     if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
-      userId = id
+      clientId = id
     }
   }
-  if (!userId || allowLinker) {
-    userId = userId || generateId()
+  if (!clientId || allowLinker) {
+    clientId = clientId || generateId()
     const writeCookie = cookieDomain === 'auto' ? autoSave : setCookie
-    writeCookie(cookieName, userId, {
+    writeCookie(cookieName, clientId, {
       domain: cookieDomain === 'auto' ? undefined : cookieDomain,
       expires,
       path
     })
   }
-  return userId
+  return clientId
 }
 
 const pathname2href = (pathname: string) =>
@@ -91,8 +91,8 @@ export default class AgentCore extends Store {
     eventsClass: any[], // TODO
     settings: SettingFieldsObject
   ) {
-    const userId = findOrCreateUserId(settings, getLocation())
-    super(userId)
+    const clientId = settings.clientId ? settings.clientId : findOrCreateClientId(settings, getLocation())
+    super(clientId)
 
     this.id = generateId()
     this.clear()
@@ -106,11 +106,11 @@ export default class AgentCore extends Store {
     eventsClass.forEach((Class) => {
       this.events.push(new Class(this.id, this.emitter, this.observer))
     })
-    if (!id || !userId) {
+    if (!id || !clientId) {
       raise('need generated id')
       return
     }
-    this.baseUrl = `${settings.baseUrl}/${id}/${userId}`
+    this.baseUrl = `${settings.baseUrl}/${id}/${clientId}`
     this.emitter.on(this.id, this.updateInteractCache.bind(this))
   }
 

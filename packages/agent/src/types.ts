@@ -7,6 +7,7 @@ export interface SettingFieldsObject extends FieldsObject {
   readonly cookieExpires: number
   readonly cookieName: string
   readonly linkerName: string
+  readonly clientId?: string
   Raven?: RavenStatic
 }
 
@@ -70,6 +71,8 @@ export type Custom = {
   data: CustomData
 }
 
+export type StateKey = 'env' | 'custom' | 'clientId'
+
 export type ClientEnvironmentsData = {
   readonly v: number
   readonly uid?: number
@@ -90,7 +93,7 @@ export type ClientEnvironments = {
 }
 
 export type State = {
-  userId: string
+  clientId: string
   env: ClientEnvironmentsData
   custom: CustomData
 }

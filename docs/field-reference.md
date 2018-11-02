@@ -21,6 +21,22 @@ _ud("create", "exampleid", "auto");
 
 ---
 
+### Client ID
+
+The Client ID for USERDIVE. The ID will write to cookie as value.
+
+| Field Name | Type   | Default Value      |
+| :--------- | :----- | :----------------- |
+| clientId   | String | _genereated value_ |
+
+**Usage**
+
+```js
+_ud("create", "exampleid", "auto");
+```
+
+---
+
 ### Tracker Name
 
 The name of tracker.

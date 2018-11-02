@@ -47,7 +47,12 @@ describe('agent', () => {
     stub.restore()
   })
 
-  it('linkerParam', () => {
+  it('get clientId', () => {
+    const clientId = getCookie(SETTINGS.cookieName)
+    assert.equal(agent.get('clientId'), clientId)
+  })
+
+  it('get with undefined key', () => {
     assert(agent.get(random.word()) === '', 'undefined key')
   })
 

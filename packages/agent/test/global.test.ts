@@ -1,11 +1,12 @@
 import * as assert from 'assert'
-import { lorem } from 'faker'
+import { lorem, random } from 'faker'
+import { get as getCookie } from 'js-cookie'
 import 'mocha'
 import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
 
 import { inject, namespace, q } from 'userdive'
 import { USERDIVEApi } from 'userdive/lib/types'
-import { NAMESPACE } from '../src/constants'
+import { NAMESPACE, SETTINGS } from '../src/constants'
 
 const GLOBAL_NAME: string = lorem.word()
 
@@ -86,6 +87,15 @@ describe('global async', () => {
     assert(agent.id !== agent3.id)
     assert(agent2.id !== agent3.id)
     assert(agent3.id !== agent4.id)
+  })
+
+  it('should be create with clientId', () => {
+    require('../src/entrypoint/')
+    const clientId = random.uuid()
+    factory()('create', lorem.word(), { clientId })
+
+    assert(clientId, getCookie(SETTINGS.cookieName))
+    assert(clientId, factory()('get', 'clientId'))
   })
 
   it('call plugins', () => {

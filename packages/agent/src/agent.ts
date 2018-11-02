@@ -89,10 +89,15 @@ export default class Agent {
     return this.core.mergeDeep(key)
   }
 
-  public get (key: string): string {
-    return key === 'linkerParam'
-      ? `${this.linkerName}=${this.core.get('userId')}`
-      : ''
+  public get (key: 'clientId' | 'linkerParam'): string {
+    switch (key) {
+      case 'linkerParam':
+        return `${this.linkerName}=${this.core.get('clientId')}`
+      case 'clientId':
+        return this.core.get(key) as string
+      default:
+        return ''
+    }
   }
 
   public provide (name: string, pluginConstructor: PluginConstructor) {

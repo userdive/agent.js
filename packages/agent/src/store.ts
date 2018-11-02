@@ -7,7 +7,8 @@ import {
   Custom,
   CustomData,
   SetType,
-  State
+  State,
+  StateKey
 } from './types'
 
 const parseCustomDataKey = (long: string, prefix: string): string => {
@@ -32,7 +33,7 @@ const parseCustomData = (
 }
 
 const initialState = (): State => ({
-  userId: '',
+  clientId: '',
   env: {
     v,
     l: '',
@@ -52,10 +53,10 @@ export default class Store {
   private state: State
   constructor (id: string) {
     this.reset()
-    this.state.userId = id
+    this.state.clientId = id
   }
   public get (
-    key: 'env' | 'custom' | 'userId'
+    key: StateKey
   ): ClientEnvironmentsData | CustomData | string {
     const data = this.state[key]
     if (key === 'custom') {
