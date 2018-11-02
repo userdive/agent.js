@@ -89,11 +89,11 @@ export default class Agent {
     return this.core.mergeDeep(key)
   }
 
-  public get (key: 'userId' | 'linkerParam'): string {
+  public get (key: 'clientId' | 'linkerParam'): string {
     switch (key) {
       case 'linkerParam':
-        return `${this.linkerName}=${this.core.get('userId')}`
-      case 'userId':
+        return `${this.linkerName}=${this.core.get('clientId')}`
+      case 'clientId':
         return this.core.get(key) as string
       default:
         return ''

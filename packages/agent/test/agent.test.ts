@@ -47,9 +47,9 @@ describe('agent', () => {
     stub.restore()
   })
 
-  it('get userId', () => {
-    const userId = getCookie(SETTINGS.cookieName)
-    assert.equal(agent.get('userId'), userId)
+  it('get clientId', () => {
+    const clientId = getCookie(SETTINGS.cookieName)
+    assert.equal(agent.get('clientId'), clientId)
   })
 
   it('get with undefined key', () => {

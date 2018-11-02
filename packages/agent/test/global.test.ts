@@ -89,13 +89,13 @@ describe('global async', () => {
     assert(agent3.id !== agent4.id)
   })
 
-  it('should be create with userId', () => {
+  it('should be create with clientId', () => {
     require('../src/entrypoint/')
-    const userId = random.uuid()
-    factory()('create', lorem.word(), { userId })
+    const clientId = random.uuid()
+    factory()('create', lorem.word(), { clientId })
 
-    assert(userId, getCookie(SETTINGS.cookieName))
-    assert(userId, factory()('get', 'userId'))
+    assert(clientId, getCookie(SETTINGS.cookieName))
+    assert(clientId, factory()('get', 'clientId'))
   })
 
   it('call plugins', () => {
