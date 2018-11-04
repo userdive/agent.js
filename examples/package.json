@@ -2,11 +2,11 @@
   "name": "userdive-examples",
   "version": "2.0.2",
   "devDependencies": {
-    "@types/query-string": "6.1.0",
+    "@types/query-string": "6.1.1",
     "gh-pages": "1.2.0",
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
-    "query-string": "6.1.0",
+    "query-string": "6.2.0",
     "testcafe": "0.23.0"
   },
   "license": "MIT",
