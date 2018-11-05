@@ -1018,10 +1018,10 @@
   dependencies:
     "@textlint/text-to-ast" "^3.0.9"
 
-"@types/angular@1.6.50":
-  version "1.6.50"
-  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.50.tgz#8b6599088d80f68ef0cad7d3a2062248ebe72b3d"
-  integrity sha512-D3KB0PdaxdwtA44yOpK+NtptTscKWgUzXmf8fiLaaVxnX+b7QQ+dUMsyeVDweCQ6VX4PMwkd6x2hJ0X+ISIsoQ==
+"@types/angular@1.6.51":
+  version "1.6.51"
+  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.51.tgz#a67515b0ba6a2ff68894a39405c1343cbf9c36d4"
+  integrity sha512-wYU+/zlJWih7ZmonWVjGQ18tG7GboI9asMNjRBM5fpIFJWXSioQttCTw9qGL44cP82ghM8sCV9apEqm1zBDq2w==
 
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.4"
@@ -1734,10 +1734,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular@1.7.3:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.3.tgz#0f25a661d079fc84d5ccc877a2ef9d7178575ddb"
-  integrity sha512-hQRhU56shs72y88cS0Uy9g+UAMHoztJ3V+r+iF8o1AK/Bpu8ewmjFDk9j2LjSuN05a9mhxW1rOHnYKOwyTS/Zg==
+angular@1.7.5:
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.5.tgz#d1c1c01c6f5dc835638f3f9aa51012857bdac49e"
+  integrity sha512-760183yxtGzni740IBTieNuWLtPNAoMqvmC0Z62UoU0I3nqk+VJuO3JbQAXOyvo3Oy/ZsdNQwrSTh/B0OQZjNw==
 
 ansi-colors@^3.0.0:
   version "3.0.6"
