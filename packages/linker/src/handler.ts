@@ -4,8 +4,10 @@ export function link (domains: Domain[], linkerParam: string, max: number) {
   return ({ target, srcElement }: Event) => {
     let node = (target || srcElement) as Node
     for (let i = 0; i < max && node; i++) {
-      // TODO need area tag support?
-      if (node instanceof HTMLAnchorElement && linkable(domains, node)) {
+      if (
+        (node instanceof HTMLAnchorElement || node instanceof HTMLAreaElement)
+        && linkable(domains, node)
+      ) {
         node.href = linkUrl(node.href, linkerParam)
         return
       }
@@ -32,7 +34,7 @@ export function submit (domains: Domain[], linkerParam: string) {
 
 function linkable (
   domains: Domain[],
-  { protocol, href }: HTMLAnchorElement
+  { protocol, href }: HTMLAnchorElement | HTMLAreaElement
 ): boolean {
   const isHttp = protocol === 'http:' || protocol === 'https:'
   if (!href || !isHttp) {

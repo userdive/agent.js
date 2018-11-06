@@ -61,6 +61,22 @@ describe('handler', () => {
     assert(location.href === a.href)
   })
 
+  it('domain of area tag', () => {
+    const l = toLink(internet.url())
+    fixture.set(`
+      <map>
+        <area
+          shape="rect"
+          coords="${random.number},${random.number},${random.number},${random.number}"
+          href="${l.href}"
+        />
+      </map>
+    `)
+    const area = document.getElementsByTagName('area')[0]
+    link([l.hostname], param, 10)({ target: area } as any)
+    assert(`${l.href}?${param}` === area.href)
+  })
+
   it('is defined query', () => {
     const domain = internet.domainName()
     const search = `?a=b`
