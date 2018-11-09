@@ -7,7 +7,8 @@ export function link (domains: Domain[], linkerParam: string, max: number) {
     let node = (target || srcElement) as Node
     for (let i = 0; i < max && node; i++) {
       if (linkable(domains, node)) {
-        (node as LinkElements).href = linkUrl((node as LinkElements).href, linkerParam)
+        let href = (node as LinkElements).href
+        href = linkUrl(href, linkerParam)
         return
       }
       node = node.parentNode as Node
