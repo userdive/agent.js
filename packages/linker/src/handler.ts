@@ -2,12 +2,9 @@ export type Domain = string | RegExp
 
 export function link (domains: Domain[], linkerParam: string, max: number) {
   return ({ target, srcElement }: Event) => {
-    let node = (target || srcElement) as Node
+    let node: any = (target || srcElement) as Node
     for (let i = 0; i < max && node; i++) {
-      if (
-        (node instanceof HTMLAnchorElement || node instanceof HTMLAreaElement)
-        && linkable(domains, node)
-      ) {
+      if (linkable(domains, node)) {
         node.href = linkUrl(node.href, linkerParam)
         return
       }
@@ -34,12 +31,19 @@ export function submit (domains: Domain[], linkerParam: string) {
 
 function linkable (
   domains: Domain[],
-  { protocol, href }: HTMLAnchorElement | HTMLAreaElement
+  node: any
 ): boolean {
+  if (!(node.href && node.nodeName.match(/^a(?:rea)?$/i))) {
+    return false
+  }
+
+  type LinkElements = HTMLAnchorElement | HTMLAreaElement
+  const { protocol, href }: LinkElements = node
   const isHttp = protocol === 'http:' || protocol === 'https:'
   if (!href || !isHttp) {
     return false
   }
+
   return matchDomain(domains, href)
 }
 

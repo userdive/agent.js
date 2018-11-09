@@ -61,13 +61,13 @@ describe('handler', () => {
     assert(location.href === a.href)
   })
 
-  it('domain of area tag', () => {
+  it('area tag link', () => {
     const l = toLink(internet.url())
     fixture.set(`
       <map>
         <area
           shape="rect"
-          coords="${random.number},${random.number},${random.number},${random.number}"
+          coords="${random.number()},${random.number()},${random.number()},${random.number()}"
           href="${l.href}"
         />
       </map>
