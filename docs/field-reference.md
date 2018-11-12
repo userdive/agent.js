@@ -55,7 +55,7 @@ _ud("create", "exampleid", "auto", { name: "myAgent" });
 
 ### Allow Linker Parameter
 
-If set true, you can share userId by query parameter in cross-domain tracking.
+If set true, you can share client ID by query parameter in cross-domain tracking.
 
 | Field Name  | Type    | Default Value |
 | :---------- | :------ | :------------ |
@@ -71,7 +71,7 @@ _ud("create", "exampleid", "auto", { allowLinker: true });
 
 ### Linker Name
 
-The name of userId query parameter.
+The name of client ID query parameter.
 
 | Field Name | Type   | Default Value |
 | :--------- | :----- | :------------ |
