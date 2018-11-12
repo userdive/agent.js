@@ -1,6 +1,6 @@
 {
   "name": "with-angular",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "dependencies": {
     "@angular/common": "5.2.11",
     "@angular/compiler": "5.2.11",
@@ -15,7 +15,7 @@
     "reflect-metadata": "0.1.12",
     "rxjs": "5.5.10",
     "systemjs": "0.21.4",
-    "userdive": "^2.0.2",
+    "userdive": "^2.1.0",
     "zone.js": "0.8.26"
   },
   "private": true

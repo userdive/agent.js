@@ -1,15 +1,15 @@
 {
   "name": "@userdive/optimizely-x-plugin",
   "description": "a plugin to integrate Optimizely X A/B testing",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^2.0.2",
-    "@userdive/provider": "^2.0.2",
-    "userdive": "^2.0.2"
+    "@userdive/agent": "^2.1.0",
+    "@userdive/provider": "^2.1.0",
+    "userdive": "^2.1.0"
   },
   "engine": {
     "node": "> 6"
