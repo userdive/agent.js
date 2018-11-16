@@ -1,0 +1,20 @@
+extends ../index.pug
+
+block breadcrumb-current
+  li.active Cross-domain using query parameter via area tag
+
+block footer_content
+  script.
+    !function(e,t,s,n,a,r,c,i){e[a]=e[a]||function(){(e[a].q=e[a].q||[]).push(arguments)},c=t.createElement(s),i=t.getElementsByTagName(s)[0],
+    c.async=1,c.src=n,c.charset=r,c.setAttribute("data-ud-namespace",a),i.parentNode.insertBefore(c,i)}
+    (window,document,"script","https://cdn.userdive.com/agent.js","_ud","UTF-8");
+    _ud("create", 'af57h6gb', 'auto', { allowLinker: true });
+    _ud("require", 'linker');
+    _ud("send", "pageview");
+    _ud("linker:autoLink", ['developers.userdive.com']);
+  script(src="//cdn.userdive.com/linker.js" async)
+
+block content 
+  map(name='example')
+    area(href='#' shape='rect' coords='0,0,150,150' alt='rect')
+  img(usemap='#example' src='https://dummyimage.com/150x150/000/fff')
