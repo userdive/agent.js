@@ -13,7 +13,14 @@
   "devDependencies": {
     "automerge": true
   },
-  "pinDigests": false,
+  "packageRules": [
+    {
+      "groupName": "definitelyTyped",
+      "packagePatterns": [
+        "^@types/"
+      ]
+    }
+  ],
   "labels": [
     "dependencies"
   ],
