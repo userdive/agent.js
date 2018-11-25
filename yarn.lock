@@ -1070,10 +1070,10 @@
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.2.0.tgz#ae2eabaa4bc892ba553c664cca21e6ee5224e5b5"
   integrity sha512-k0umv2jvUvl1/OdOgFwEIPF6qKllf2jEsrd5ka9aVQo2ilxaBb2vsh1AmAAZ3eqt54vNrdbGW5QPOKJBmCNS7g==
 
-"@types/karma-fixture@0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@types/karma-fixture/-/karma-fixture-0.2.4.tgz#3828da1774fffe0e47ffcc567e1a7adb7971e748"
-  integrity sha512-LAWZWfddAgyJu7zIc56E20qimqsrGKgWUBp18Q5HgtxJvPl9uZQD2fcEbBb/1gQbNTyayUpLOzbLYjgWN9k4HA==
+"@types/karma-fixture@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@types/karma-fixture/-/karma-fixture-0.2.5.tgz#fa0a27fa74b3bf56e90a2b051790be7c6fe6d64e"
+  integrity sha512-BvVjIBk81sMCCL5vJDluvXOgf9PlgcGDahj61alE8QIrJWgwh4w8SOxQOsXM2lO229fsteFOufIF2yVYrfc1og==
 
 "@types/lodash@^4.14.72":
   version "4.14.116"
