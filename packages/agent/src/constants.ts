@@ -7,6 +7,9 @@ function push (t: number, n: number) {
 }
 push(2, 300)
 
+export const MAX_INTERACT_SEQ = 300
+export const INTERACT_TYPE_ACTION = 'a'
+export const INTERACT_TYPE_LOOK = 'l'
 export const CUSTOM_INDEX = 20
 export const INTERACT = 5
 export const INTERVAL = intervals.sort()
