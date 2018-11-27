@@ -24,7 +24,7 @@ if (
       concurrency: 2,
       browserDisconnectTimeout: 30000,
       browserDisconnectTolerance: 5,
-      browserNoActivityTimeout: 60000,
+      browserNoActivityTimeout: 300000,
       browserConsoleLogOptions: { level: 'error', format: '%b %T: %m', terminal: true },
       customLaunchers,
       browsers: Object.keys(customLaunchers),
