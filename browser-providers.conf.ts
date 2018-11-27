@@ -22,7 +22,12 @@ export const customLaunchers = {
     platform: 'Linux',
     version: '48'
   },
-  SL_CHROME_LATEST: { base: 'SauceLabs', browserName: 'chrome', version: 'latest' },
+  SL_CHROME_70: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: '"Windows 7',
+    version: '70'
+  },
   SL_FIREFOX: {
     base: 'SauceLabs',
     browserName: 'firefox',
