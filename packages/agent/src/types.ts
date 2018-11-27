@@ -101,7 +101,23 @@ export type State = {
   custom: CustomData
 }
 
-export type Interact = {
+export type InteractionPosition = {
+  readonly x: number
+  readonly y: number
+}
+
+export type InteractionOffset = {
+  readonly top: number
+  readonly left: number
+}
+
+export type InteractionData = InteractionPosition & InteractionOffset
+export type InteractionEvent = InteractionData & {
+  id: number
+  type: InteractionType
+}
+
+export type Interaction = {
   id: number
   readonly left: number
   readonly top: number

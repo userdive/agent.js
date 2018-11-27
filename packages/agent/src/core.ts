@@ -16,11 +16,11 @@ import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
-import { Interact, SettingFieldsObject } from './types'
+import { Interaction, SettingFieldsObject } from './types'
 
 const generateId = () => uuid().replace(/-/g, '')
 
-const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
+const cacheValidator = ({ x, y, type, left, top }: Interaction): boolean => {
   if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
@@ -28,7 +28,7 @@ const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
 }
 
 const toInt = (n: number) => Math.floor(n)
-const createInteractData = (d: Interact): string =>
+const createInteractionData = (d: Interaction): string =>
   cacheValidator(d)
     ? `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(
       d.top
@@ -77,12 +77,16 @@ const pathname2href = (pathname: string) =>
 export default class AgentCore extends Store {
   public observer: UIEventObserver
   private baseUrl: string
-  private cache: { a: object; l: object; [key: string]: object }
+  private cache: {
+    a: (Interaction | object);
+    l: (Interaction | object);
+    [key: string]: object
+  }
   private emitter: EventEmitter
   private events: AgentEvent[]
   private interactId: number
   private eventId: number
-  private interacts: Interact[]
+  private interacts: Interaction[]
   private interval: number[]
   private loadTime: number
   private id: string
@@ -111,7 +115,7 @@ export default class AgentCore extends Store {
       return
     }
     this.baseUrl = `${settings.baseUrl}/${id}/${clientId}`
-    this.emitter.on(this.id, this.updateInteractCache.bind(this))
+    this.emitter.on(this.id, this.updateInteractionCache.bind(this))
   }
 
   public pageview (page: string): void {
@@ -176,7 +180,7 @@ export default class AgentCore extends Store {
 
   public send (query: string[], force?: boolean): void {
     this.interacts.forEach((data) => {
-      const q = createInteractData(data)
+      const q = createInteractionData(data)
       if (q.length) {
         query.push(`d=${q}`)
       }
@@ -205,7 +209,6 @@ export default class AgentCore extends Store {
         this.interacts.push(cache)
       }
     })
-
     this.clear()
     this.send([])
 
@@ -222,7 +225,7 @@ export default class AgentCore extends Store {
     this.events.forEach((e) => e.on())
   }
 
-  private updateInteractCache (data: Interact): void {
+  private updateInteractionCache (data: Interaction): void {
     if (cacheValidator(data) && this.loadTime) {
       this.cache[data.type] = data
     }
