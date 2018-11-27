@@ -52,7 +52,7 @@
     "rimraf": "2.6.2",
     "sinon": "5.1.1",
     "size-limit": "0.21.0",
-    "stylelint": "9.7.1",
+    "stylelint": "9.9.0",
     "textlint": "11.0.1",
     "ts-loader": "4.5.0",
     "ts-node": "7.0.1",
