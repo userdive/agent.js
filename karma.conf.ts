@@ -22,9 +22,10 @@ if (
         maxDuration: 5400
       },
       concurrency: 2,
-      browserDisconnectTimeout: 300000,
-      browserDisconnectTolerance: 3,
-      browserNoActivityTimeout: 300000,
+      browserDisconnectTimeout: 10000,
+      browserDisconnectTolerance: 5,
+      browserNoActivityTimeout: 60000,
+      browserConsoleLogOptions: { level: 'error', format: '%b %T: %m', terminal: true },
       customLaunchers,
       browsers: Object.keys(customLaunchers),
       reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
