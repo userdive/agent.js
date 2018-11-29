@@ -15,7 +15,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm install wait-for-localhost
       - run: yarn install && ./node_modules/.bin/lerna run start --scope userdive-examples & ./node_modules/.bin/wait-for-localhost 8080 && yarn e2e
       - store_test_results:
           path: /tmp/test-results
