@@ -25,10 +25,10 @@ stages:
     if: branch =~ ^release
 jobs:
   include:
-  - stage: test
-    env: Build Size
-    script:
-    - npm run postbuild
+  # - stage: test
+  #   env: Build Size
+  #   script:
+  #   - npm run postbuild
   - stage: test
     env: Lint
     script:
