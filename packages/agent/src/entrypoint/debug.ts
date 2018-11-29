@@ -1,10 +1,8 @@
-import * as Raven from 'raven-js'
+import { captureException, captureMessage, init } from '@sentry/browser'
 import Agent from '../agent'
 import { getName } from '../browser'
 import factory from '../global'
 import { SettingFieldsObject } from '../types'
-
-Raven.config(process.env.RAVEN_DSN as string).install()
 
 class DebugAgent extends Agent {
   constructor (
@@ -12,7 +10,15 @@ class DebugAgent extends Agent {
     cookieName: string,
     options: SettingFieldsObject
   ) {
-    options['Raven'] = Raven
+    init({
+      dsn: process.env.RAVEN_DSN as string,
+      release: process.env.VERSION as string
+    })
+    options = {
+      ...options,
+      captureException,
+      captureMessage
+    }
     super(projectId, cookieName, options)
   }
 }

@@ -892,6 +892,58 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@sentry/browser@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.4.0.tgz#278632e94a83e43f9ef87f89fd7e42a89516118f"
+  integrity sha512-/JDA4cq9ikK5IGgDOxReVUJpjJ4RxqX2VBnOPCVz5c4qLsiqcV+Y5UTQ5s+tjPvYJInNrTLfvlcbzo4JY1EK+A==
+  dependencies:
+    "@sentry/core" "4.4.0"
+    "@sentry/types" "4.4.0"
+    "@sentry/utils" "4.4.0"
+    tslib "^1.9.3"
+
+"@sentry/core@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.4.0.tgz#32caf17751cbd50345214d7bb61d498d51bb13c5"
+  integrity sha512-t/qKC6LhAaAp3/bgfNaZ2Ed5de6FpJT0xEvB9dpILYLy083tg4evmBZA/DspuGn0XZek9GKDhcxbO7BA5/QBpA==
+  dependencies:
+    "@sentry/hub" "4.4.0"
+    "@sentry/minimal" "4.4.0"
+    "@sentry/types" "4.4.0"
+    "@sentry/utils" "4.4.0"
+    tslib "^1.9.3"
+
+"@sentry/hub@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.4.0.tgz#9aa47ce9143cbd44de6ac1aeddd2a6532517673c"
+  integrity sha512-nsKNKD9hcj5b95KBqVH7sCPXezI7kngyP36Cst4GXUKU9StQ6F4ZUG2fUflvREUo+Rj1lz3y2UB8+WrcnLejag==
+  dependencies:
+    "@sentry/types" "4.4.0"
+    "@sentry/utils" "4.4.0"
+    tslib "^1.9.3"
+
+"@sentry/minimal@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.4.0.tgz#e2c19296312311851704bb5d61f6892253ae52e6"
+  integrity sha512-BBI/dL+imR8mAh4gHxnsfAgCjvOGtLWalIOV29QsVXM6OgXX+se/14zAbSlAk8a/u9bFQq+/235P/OCMVb9mqA==
+  dependencies:
+    "@sentry/hub" "4.4.0"
+    "@sentry/types" "4.4.0"
+    tslib "^1.9.3"
+
+"@sentry/types@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.4.0.tgz#99e662c1b9955f293e2673433a1c84b50db1ed64"
+  integrity sha512-db0Vw8EofVszUOTj86cE4YeM0ZGQIp/YYi/isu3SV28+tLUJlDPlU11xhXCSsoyvqk0L0Ld6QFOfIKJeMCtl5Q==
+
+"@sentry/utils@4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.4.0.tgz#1e81f8849763477bb32707d6eba60897c9de9044"
+  integrity sha512-n3uqSiAhKjMS24NS2RLOl3OFsODr82D6aSHwIByXH83O+tHdLeyin3yEuosfiKkvvurELPI1tSh9QPCgW35dJw==
+  dependencies:
+    "@sentry/types" "4.4.0"
+    tslib "^1.9.3"
+
 "@sinonjs/formatio@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/formatio/-/formatio-3.0.0.tgz#9d282d81030a03a03fa0c5ce31fd8786a4da311a"
@@ -12509,11 +12561,6 @@ range-parser@^1.0.3, range-parser@^1.2.0, range-parser@~1.2.0:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
   integrity sha1-9JvmtIeJTdxA3MlKMi9hEJLgDV4=
 
-raven-js@^3.23.1:
-  version "3.27.0"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.27.0.tgz#9f47c03e17933ce756e189f3669d49c441c1ba6e"
-  integrity sha512-vChdOL+yzecfnGA+B5EhEZkJ3kY3KlMzxEhShKh6Vdtooyl0yZfYNFQfYzgMf2v4pyQa+OTZ5esTxxgOOZDHqw==
-
 raw-body@2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.3.2.tgz#bcd60c77d3eb93cde0050295c3f379389bc88f89"
@@ -15320,7 +15367,7 @@ tslib@1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
   integrity sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==
 
-tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==

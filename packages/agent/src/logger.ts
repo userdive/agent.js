@@ -1,4 +1,5 @@
-import { RavenOptions, RavenStatic } from 'raven-js'
+import { Severity } from '@sentry/types'
+import { SettingFieldsObject } from './types'
 
 export type CustomError = string | Error
 
@@ -9,32 +10,19 @@ export const raise = (msg: string) => {
   console.warn(msg)
 }
 
-const isDefined = (instance: any): boolean => instance && instance.isSetup()
-
-let Raven: any
-export const setup = ({ Raven: raven }: { Raven?: RavenStatic }): boolean => {
-  const isSetup = isDefined(raven)
-  if (isSetup) {
-    Raven = raven
-    Raven.setRelease(process.env.VERSION as string)
-  }
-  return isSetup
+let capture: (_: CustomError, level?: Severity) => void = function (_: CustomError) {
+  // noting todo
 }
-
-const capture = (err: CustomError, options?: RavenOptions): void => {
-  if (isDefined(Raven)) {
-    console.warn(err, options)
+export const setup = ({ captureException, captureMessage }: SettingFieldsObject): void => {
+  capture = (err: CustomError, level?: Severity): void => {
+    console.warn(err, level)
     if (typeof err === 'string') {
-      Raven.captureMessage(err, options)
+      captureMessage && captureMessage(err, level)
       return
     }
-    Raven.captureException(err, options)
+    captureException && captureException(err)
   }
 }
 
-export const error = (err: CustomError, extra?: RavenOptions): void => {
-  capture(err, { level: 'error', extra })
-}
-export const warning = (err: CustomError, extra?: RavenOptions): void => {
-  capture(err, { level: 'warning', extra })
-}
+export const error = (err: CustomError): void => capture(err, Severity.Error)
+export const warning = (err: CustomError): void => capture(err, Severity.Warning)

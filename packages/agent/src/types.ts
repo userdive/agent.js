@@ -1,4 +1,4 @@
-import { RavenStatic } from 'raven-js'
+import { Severity } from '@sentry/types'
 import { Dimension, FieldsObject, Metric } from 'userdive/lib/types'
 
 export interface SettingFieldsObject extends FieldsObject {
@@ -8,7 +8,8 @@ export interface SettingFieldsObject extends FieldsObject {
   readonly cookieName: string
   readonly linkerName: string
   readonly clientId?: string
-  Raven?: RavenStatic
+  captureMessage?: (message: string, level?: Severity) => string
+  captureException?: (exeption: any) => string
 }
 
 export type Point = {

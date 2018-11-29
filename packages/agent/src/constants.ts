@@ -23,6 +23,7 @@ export const SETTINGS: SettingFieldsObject = {
   cookieDomain: '',
   cookieExpires: 730, // TODO
   cookieName: '_ud2',
-  Raven: undefined
+  captureException: undefined,
+  captureMessage: undefined
 }
 export const MAX_EVENT_SEQ = 10
