@@ -13,9 +13,7 @@ block loader
   // End Google Tag Manager
 
 block breadcrumb-current
-  li.active Cross-domain using query parameter - with area tag and Google Tag Manager
+  li.active Cross-domain using query parameter - with anchor tag and Google Tag Manager
 
-block content 
-  map(name='example')
-    area(href='https://developers.userdive.com/docs/en/getting-started.html' shape='rect' coords='0,0,150,150' alt='rect')
-  img(usemap='#example' src='https://dummyimage.com/150x150/000/fff&text=Document')
+block content
+  include:markdown-it README.md
