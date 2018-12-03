@@ -14,15 +14,27 @@
     "automerge": true
   },
   "pinDigests": false,
+  "packageRules": [
+    {
+      "packagePatterns": [
+        "*"
+      ]
+    },
+    {
+      "depTypeList": [
+        "peerDependencies"
+      ],
+      "groupName": "peerDependencies"
+    },
+    {
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "groupName": "devDependencies"
+    }
+  ],
   "labels": [
     "dependencies"
-  ],
-  "ignorePaths": [
-    "**/node_modules/**",
-    "**/bower_components/**",
-    "**/__tests__/**",
-    "**/test/**",
-    "**/tests/**"
   ],
   "schedule": "before 3am on Monday"
 }
