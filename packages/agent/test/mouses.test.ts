@@ -7,12 +7,12 @@ import {
   MAX_INTERACTION_SEQUENCE
 } from '../src/constants'
 import InteractionEventEmitter from '../src/interactions'
-import { isTouchDevice } from './helpers/browser'
-import { createTouchEvent } from './helpers/Event'
+import { isMouseMoveDevice } from './helpers/browser'
+import { createMouseEvent } from './helpers/Event'
 
-const describeExcludeTouch = () => (!isTouchDevice() ? describe.skip : describe)
+const describeExcludeTouch = () => (!isMouseMoveDevice() ? describe.skip : describe)
 
-describeExcludeTouch()('touch interactions', () => {
+describeExcludeTouch()('mouse interactions', () => {
   let clock: sinon.SinonFakeTimers
   let target: Window | HTMLElement
 
@@ -38,11 +38,8 @@ describeExcludeTouch()('touch interactions', () => {
     clock.restore()
   })
 
-  it('emit look when touchstart', () => {
-    target.dispatchEvent(createTouchEvent('touchstart', document.createElement('div'), [
-      { identifier: 1, pageY: 1, pageX: 1 },
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
+  it('emit look when mousedown', () => {
+    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -81,11 +78,8 @@ describeExcludeTouch()('touch interactions', () => {
     )
   })
 
-  it('emit look when touchmove', () => {
-    target.dispatchEvent(createTouchEvent('touchmove', document.createElement('div'), [
-      { identifier: 1, pageY: 1, pageX: 1 },
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
+  it('emit look when mousemove', () => {
+    target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 1, 1))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -135,16 +129,10 @@ describeExcludeTouch()('touch interactions', () => {
     )
   })
 
-  it('emit action when touchstart and touchend', () => {
+  it('emit action when mousedown and mouseup', () => {
     const eventTarget = document.createElement('a')
-    target.dispatchEvent(createTouchEvent('touchstart', eventTarget, [
-      { identifier: 1, pageY: 1, pageX: 1 },  // Use touchend's value
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
-    target.dispatchEvent(createTouchEvent('touchend', eventTarget, [
-      { identifier: 1, pageY: 10, pageX: 10 },  // Use touchend's value
-      { identifier: 2, pageY: 20, pageX: 20 }
-    ]))
+    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
+    target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 10, 10))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -152,7 +140,7 @@ describeExcludeTouch()('touch interactions', () => {
 
     // Emit 1st look
     clock.tick(INTERACTION_EMIT_INTERVAL)
-    sinon.assert.calledOnce(spyLookEvent)  // Emit look when touchstart
+    sinon.assert.calledOnce(spyLookEvent)  // Emit look when mousedown
     sinon.assert.calledOnce(spyActionEvent)
     sinon.assert.calledWith(
       spyActionEvent,
@@ -171,20 +159,11 @@ describeExcludeTouch()('touch interactions', () => {
     sinon.assert.callCount(spyActionEvent, 1)
   })
 
-  it('cancel action when touchstart and touchend with touchmove', () => {
+  it('cancel action when mousedown and mouseup with mousemove', () => {
     const eventTarget = document.createElement('a')
-    target.dispatchEvent(createTouchEvent('touchstart', eventTarget, [
-      { identifier: 1, pageY: 1, pageX: 1 },
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
-    target.dispatchEvent(createTouchEvent('touchmove', eventTarget, [
-      { identifier: 1, pageY: 1, pageX: 1 },
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
-    target.dispatchEvent(createTouchEvent('touchend', eventTarget, [
-      { identifier: 1, pageY: 1, pageX: 1 },
-      { identifier: 2, pageY: 2, pageX: 2 }
-    ]))
+    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
+    target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 2, 2))
+    target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 3, 3))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -192,7 +171,7 @@ describeExcludeTouch()('touch interactions', () => {
 
     // Emit 1st look
     clock.tick(INTERACTION_EMIT_INTERVAL)
-    sinon.assert.calledOnce(spyLookEvent)  // Emit look when touchstart
+    sinon.assert.calledOnce(spyLookEvent)  // Emit look when mousedown
     sinon.assert.notCalled(spyActionEvent)
   })
 })

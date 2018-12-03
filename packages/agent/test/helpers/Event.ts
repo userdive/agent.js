@@ -44,6 +44,46 @@ export function createTouchEvent (
   return touchEvent
 }
 
+export function createMouseEvent (
+  eventName: EventType,
+  screenY: number,
+  screenX: number,
+  clientY: number,
+  clientX: number
+): MouseEvent {
+  if ('MouseEvent' in window && MouseEvent.length > 0) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+    return new MouseEvent(
+      eventName, {
+        screenY,
+        screenX,
+        clientY,
+        clientX
+      }
+    )
+  }
+  const mouseEvent = document.createEvent('MouseEvent')
+  // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/initMouseEvent
+  mouseEvent.initMouseEvent(
+    eventName,
+    true,
+    true,
+    window,
+    0,
+    screenX,
+    screenY,
+    clientX,
+    clientY,
+    false,
+    false,
+    false,
+    false,
+    0,
+    null
+  )
+  return mouseEvent
+}
+
 export function getType (type: EventType): InteractionType {
   switch (type) {
     case 'click':

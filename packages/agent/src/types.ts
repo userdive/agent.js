@@ -127,7 +127,9 @@ export type Interaction = {
 }
 
 export type EventType =
+  | 'mousedown'
   | 'mousemove'
+  | 'mouseup'
   | 'click'
   | 'scroll'
   | 'touchend'

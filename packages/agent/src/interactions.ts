@@ -12,6 +12,7 @@ import {
   INTERACTION_TYPE_ACTION,
   INTERACTION_TYPE_LOOK,
   MAX_INTERACTION_SEQUENCE,
+  MOUSE_EVENTS,
   TOUCH_EVENTS
 } from './constants'
 import {
@@ -37,12 +38,21 @@ class InteractionEventEmitter extends EventEmitter {
   private latestActionPosition?: InteractionData
 
   // For touch events
-  private touchedElement?: EventTarget
+  private touchDownElement?: EventTarget
   private touchMoved: boolean
   private touchEventHandlerMap: { [eventName: string]: (event: Event) => void } = {
     'touchstart': (event: Event) => (this.handleTouchStart(event as TouchEvent)),
     'touchmove': (event: Event) => (this.handleTouchMove(event as TouchEvent)),
     'touchend': (event: Event) => (this.handleTouchEnd(event as TouchEvent))
+  }
+
+  // For mouse events
+  private mousedownElement?: EventTarget
+  private mouseMoved: boolean
+  private mouseEventHandlerMap: { [eventName: string]: (event: Event) => void } = {
+    'mousedown': (event: Event) => (this.handleMouseDown(event as MouseEvent)),
+    'mousemove': (event: Event) => (this.handleMouseMove(event as MouseEvent)),
+    'mouseup': (event: Event) => (this.handleMouseUp(event as MouseEvent))
   }
 
   constructor () {
@@ -68,6 +78,14 @@ class InteractionEventEmitter extends EventEmitter {
           }
         }
       }
+      if (checkSupportedEvents(target, MOUSE_EVENTS)) {
+        for (const eventName in this.mouseEventHandlerMap) {
+          if (this.mouseEventHandlerMap.hasOwnProperty(eventName)) {
+            this.handle(target, eventName, this.mouseEventHandlerMap[eventName])
+          }
+        }
+      }
+
       this.bound = true
       this.emitInteraction()
     }
@@ -119,12 +137,12 @@ class InteractionEventEmitter extends EventEmitter {
   protected handleTouchStart (event: TouchEvent): void {
     this.touchMoved = false
     if (event !== undefined) {
-      const touchedElement = getTargetElementFromEvent(event)
-      if (touchedElement) {
+      const touchDownElement = getTargetElementFromEvent(event)
+      if (touchDownElement) {
         const touch = getFirstTouch(event)
         if (touch && touch.pageX && touch.pageY) {
           // https://developer.mozilla.org/en-US/docs/Web/API/Touch
-          this.touchedElement = touchedElement
+          this.touchDownElement = touchDownElement
           this.updateLatestPosition(
             INTERACTION_TYPE_LOOK,
             {
@@ -139,7 +157,7 @@ class InteractionEventEmitter extends EventEmitter {
 
   protected handleTouchMove (event: TouchEvent) {
     this.touchMoved = true
-    this.touchedElement = undefined
+    this.touchDownElement = undefined
     if (event !== undefined) {
       const touch = getFirstTouch(event)
       if (touch && touch.pageX && touch.pageY) {
@@ -159,7 +177,7 @@ class InteractionEventEmitter extends EventEmitter {
     const targetElement = getTargetElementFromEvent(event)
     if (
       targetElement !== undefined &&
-      this.touchedElement === targetElement &&
+      this.touchDownElement === targetElement &&
       !this.touchMoved
     ) {
       const touch = getFirstTouch(event)
@@ -170,6 +188,61 @@ class InteractionEventEmitter extends EventEmitter {
           {
             y: touch.pageY,
             x: touch.pageX
+          }
+        )
+      }
+    }
+  }
+
+  protected handleMouseDown (event: MouseEvent): void {
+    this.mouseMoved = false
+    if (event !== undefined) {
+      const mousedownElement = getTargetElementFromEvent(event)
+      if (mousedownElement) {
+        this.mousedownElement = mousedownElement
+        if (event.pageX && event.pageY) {
+          // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+          this.updateLatestPosition(
+            INTERACTION_TYPE_LOOK,
+            {
+              y: event.pageY,
+              x: event.pageX
+            }
+          )
+        }
+      }
+    }
+  }
+
+  protected handleMouseMove (event: MouseEvent) {
+    this.mouseMoved = true
+    this.mousedownElement = undefined
+    if (event !== undefined && event.pageX && event.pageY) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+      this.updateLatestPosition(
+        INTERACTION_TYPE_LOOK,
+        {
+          y: event.pageY,
+          x: event.pageX
+        }
+      )
+    }
+  }
+
+  protected handleMouseUp (event: MouseEvent) {
+    const targetElement = getTargetElementFromEvent(event)
+    if (
+      targetElement !== undefined &&
+      this.mousedownElement === targetElement &&
+      !this.mouseMoved
+    ) {
+      if (event.pageX && event.pageY) {
+        // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+        this.updateLatestPosition(
+          INTERACTION_TYPE_ACTION,
+          {
+            y: event.pageY,
+            x: event.pageX
           }
         )
       }
