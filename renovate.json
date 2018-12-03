@@ -1,10 +1,7 @@
 {
   "timezone": "Japan",
   "extends": [
-    "config:base",
-    "monorepo:angular",
-    "monorepo:angular1",
-    "monorepo:react"
+    "config:base"
   ],
   "automerge": true,
   "major": {
