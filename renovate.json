@@ -36,5 +36,13 @@
   "labels": [
     "dependencies"
   ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**"
+  ],
   "schedule": "before 3am on Monday"
 }
