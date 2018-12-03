@@ -22,9 +22,9 @@
     },
     {
       "depTypeList": [
-        "peerDependencies"
+        "dependencies"
       ],
-      "groupName": "peerDependencies"
+      "groupName": "dependencies"
     },
     {
       "depTypeList": [
