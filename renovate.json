@@ -1,10 +1,7 @@
 {
   "timezone": "Japan",
   "extends": [
-    "config:base",
-    "monorepo:angular",
-    "monorepo:angular1",
-    "monorepo:react"
+    "config:base"
   ],
   "automerge": true,
   "major": {
@@ -14,12 +11,32 @@
     "automerge": true
   },
   "pinDigests": false,
+  "packageRules": [
+    {
+      "packagePatterns": [
+        "*"
+      ]
+    },
+    {
+      "depTypeList": [
+        "dependencies"
+      ],
+      "groupName": "dependencies"
+    },
+    {
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "groupName": "devDependencies"
+    }
+  ],
   "labels": [
     "dependencies"
   ],
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
+    "**/vendor/**",
     "**/__tests__/**",
     "**/test/**",
     "**/tests/**"
