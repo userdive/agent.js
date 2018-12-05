@@ -1,79 +1,80 @@
 export const customLaunchers = {
-  SL_IOS11: {
+  SL_IOS_NEXT_MOST_RECENT: {
     base: 'SauceLabs',
     browserName: 'iphone',
-    version: '11.0'
+    version: 'latest-1'
   },
-  SL_IOS12: {
+  SL_IOS_LATEST: {
     base: 'SauceLabs',
     browserName: 'iphone',
-    version: '12.0'
+    version: 'latest'
   },
-  SL_ANDROID5: {
+  SL_ANDROID_5: {
     base: 'SauceLabs',
     browserName: 'android',
     version: '5.1'
   },
-  SL_ANDROID6: {
+  SL_ANDROID_NEXT_MOST_RECENT: {
     base: 'SauceLabs',
     browserName: 'Chrome',
     platform: 'Android',
-    version: '6.0',
+    version: 'latest-1',
     device: 'Android Emulator'
   },
-  SL_ANDROID7: {
+  SL_ANDROID_LATEST: {
     base: 'SauceLabs',
     browserName: 'Chrome',
     platform: 'Android',
-    version: '7.1',
+    version: 'latest',
     device: 'Android GoogleAPI Emulator'
   },
-  SL_CHROME48: {
+  SL_CHROME_LINUX_LATEST: {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Linux',
-    version: '48'
+    version: 'latest'
   },
+  // TODO: Revert to beta version after pass tests
   SL_CHROME_BETA: {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Windows 8',
     version: 'latest'
   },
-  SL_FIREFOX: {
+  SL_FIREFOX_58: {
     base: 'SauceLabs',
     browserName: 'firefox',
     platform: 'Windows 10',
     version: '58'
   },
-  // SL_FIREFOX_BETA: {
-  //   base: 'SauceLabs',
-  //   browserName: 'firefox',
-  //   platform: 'Windows 10',
-  //   version: 'beta'
-  // },
-  // SL_SAFARI10: {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   platform: 'OS X 10.12',
-  //   version: '10.0'
-  // },
-  // SL_SAFARI11: {
-  //   base: 'SauceLabs',
-  //   browserName: 'safari',
-  //   platform: 'OS X 10.12',
-  //   version: '10.0'
-  // },
-  SL_IE11: {
+  SL_FIREFOX_BETA: {
+    base: 'SauceLabs',
+    browserName: 'firefox',
+    platform: 'Windows 10',
+    version: 'beta'
+  },
+  SL_SAFARI_NEXT_MOST_RECENT: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.13',
+    version: 'latest-1'
+  },
+  SL_SAFARI_LATEST: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.13',
+    version: 'latest'
+  },
+  SL_IE_LATEST: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
-    version: '11'
+    version: 'latest'
+  },
+  SL_EDGE_LATEST: {
+    base: 'SauceLabs',
+    browserName: 'MicrosoftEdge',
+    platform: 'Windows 10',
+    version: 'latest'
   }
-  // SL_EDGE14: {
-  //   base: 'SauceLabs',
-  //   browserName: 'MicrosoftEdge',
-  //   platform: 'Windows 10',
-  //   version: '14.14393'
-  // }
 }
