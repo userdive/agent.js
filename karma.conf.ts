@@ -5,8 +5,6 @@ import { customLaunchers } from './browser-providers.conf'
 let override = {}
 
 if (
-  process.env.SAUCE_USERNAME &&
-  process.env.SAUCE_ACCESS_KEY &&
   process.env.CI_MODE === 'sauce'
 ) {
   override = objectAssign(
@@ -16,7 +14,12 @@ if (
         testName: '@userdive/agent',
         recordVideo: false,
         recordScreenshots: false,
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+        startConnect: ('TRAVIS' in process.env) === false,
+        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER || new Date().getTime(),
+        build: process.env.TRAVIS_BUILD_NUMBER || 'local',
+        tags: [
+          process.env.TRAVIS_BRANCH || 'local'
+        ],
         commandTimeout: 600,
         idleTimeout: 600,
         maxDuration: 5400
