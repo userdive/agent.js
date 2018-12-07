@@ -4,6 +4,7 @@ node_js: lts/*
 cache:
   yarn: true
   directories:
+  - $HOME/.nvm
   - node_modules
   - website/node_modules
   - examples/node_modules
