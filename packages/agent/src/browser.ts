@@ -61,5 +61,5 @@ export const getEnv = (page: string): ClientEnvironmentsData | void => {
 export const validate = (apis: string[]): boolean =>
   !apis.some((api: string) => !(api in window))
 
-export const checkSupportedEvents = (target: Window | HTMLElement, apis: string[]) =>
+export const checkSupportedEvents = (target: Window | Document, apis: string[]) =>
   !apis.some((api: string) => !(api in target))

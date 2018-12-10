@@ -14,7 +14,7 @@ const describeExcludeTouch = () => (!isMouseMoveDevice() ? describe.skip : descr
 
 describeExcludeTouch()('mouse interactions', () => {
   let clock: sinon.SinonFakeTimers
-  let target: Window | HTMLElement
+  let target: Window | Document
 
   let instance: InteractionEventEmitter
   let spyLookEvent: sinon.SinonSpy
@@ -29,7 +29,7 @@ describeExcludeTouch()('mouse interactions', () => {
     instance.on(INTERACTION_TYPE_LOOK, spyLookEvent)
     instance.on(INTERACTION_TYPE_ACTION, spyActionEvent)
 
-    target = window.addEventListener ? window : document.body
+    target = 'addEventListener' in window ? window : document
     instance.bind(target)
   })
 
@@ -130,7 +130,6 @@ describeExcludeTouch()('mouse interactions', () => {
   })
 
   it('emit action when mousedown and mouseup', () => {
-    const eventTarget = document.createElement('a')
     target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
     target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 10, 10))
 
@@ -160,7 +159,6 @@ describeExcludeTouch()('mouse interactions', () => {
   })
 
   it('cancel action when mousedown and mouseup with mousemove', () => {
-    const eventTarget = document.createElement('a')
     target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
     target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 2, 2))
     target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 3, 3))

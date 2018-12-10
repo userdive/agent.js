@@ -3,11 +3,11 @@ import * as sinon from 'sinon'
 import InteractionEventEmitter from '../src/interactions'
 
 describe('interactions', () => {
-  let target: Window | HTMLElement
+  let target: Window | Document
   let instance: InteractionEventEmitter
 
   beforeEach(function () {
-    target = window.addEventListener ? window : document.body
+    target = 'addEventListener' in window ? window : document
     instance = new InteractionEventEmitter()
     instance.bind(target)
   })

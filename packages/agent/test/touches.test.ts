@@ -14,7 +14,7 @@ const describeExcludeTouch = () => (!isTouchDevice() ? describe.skip : describe)
 
 describeExcludeTouch()('touch interactions', () => {
   let clock: sinon.SinonFakeTimers
-  let target: Window | HTMLElement
+  let target: Window | Document
 
   let instance: InteractionEventEmitter
   let spyLookEvent: sinon.SinonSpy
@@ -29,7 +29,7 @@ describeExcludeTouch()('touch interactions', () => {
     instance.on(INTERACTION_TYPE_LOOK, spyLookEvent)
     instance.on(INTERACTION_TYPE_ACTION, spyActionEvent)
 
-    target = window.addEventListener ? window : document.body
+    target = 'addEventListener' in window ? window : document
     instance.bind(target)
   })
 

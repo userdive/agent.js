@@ -8,6 +8,7 @@ import {
   getOffset
 } from './browser'
 import {
+  CLICK_EVENTS,
   INTERACTION_EMIT_INTERVAL,
   INTERACTION_TYPE_ACTION,
   INTERACTION_TYPE_LOOK,
@@ -36,6 +37,11 @@ class InteractionEventEmitter extends EventEmitter {
   private sequentialNumber: number
   private latestLookPosition?: InteractionData
   private latestActionPosition?: InteractionData
+
+  // For click events
+  private clickEventHandlerMap: { [eventName: string]: (event: Event) => void } = {
+    'click': (event: Event) => (this.handleClick(event as MouseEvent))
+  }
 
   // For touch events
   private touchDownElement?: EventTarget
@@ -69,8 +75,15 @@ class InteractionEventEmitter extends EventEmitter {
     this.sequentialNumber = 0
   }
 
-  public bind (target: Window | HTMLElement) {
+  public bind (target: Window | Document) {
     if (!this.bound) {
+      if (checkSupportedEvents(target, CLICK_EVENTS)) {
+        for (const eventName in this.clickEventHandlerMap) {
+          if (this.clickEventHandlerMap.hasOwnProperty(eventName)) {
+            this.handle(target, eventName, this.clickEventHandlerMap[eventName])
+          }
+        }
+      }
       if (checkSupportedEvents(target, TOUCH_EVENTS)) {
         for (const eventName in this.touchEventHandlerMap) {
           if (this.touchEventHandlerMap.hasOwnProperty(eventName)) {
@@ -85,7 +98,6 @@ class InteractionEventEmitter extends EventEmitter {
           }
         }
       }
-
       this.bound = true
       this.emitInteraction()
     }
@@ -99,7 +111,7 @@ class InteractionEventEmitter extends EventEmitter {
   }
 
   protected handle (
-    target: Window | HTMLElement,
+    target: Window | Document,
     eventName: string,
     handler: (event: Event) => void
   ) {
@@ -131,6 +143,26 @@ class InteractionEventEmitter extends EventEmitter {
       } else if (interactionType === INTERACTION_TYPE_LOOK) {
         this.latestLookPosition = eventPosition
       }
+    }
+  }
+
+  protected handleClick (event: MouseEvent) {
+    if (event.pageX && event.pageY) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+      this.updateLatestPosition(
+        INTERACTION_TYPE_LOOK,
+        {
+          y: event.pageY,
+          x: event.pageX
+        }
+      )
+      this.updateLatestPosition(
+        INTERACTION_TYPE_ACTION,
+        {
+          y: event.pageY,
+          x: event.pageX
+        }
+      )
     }
   }
 

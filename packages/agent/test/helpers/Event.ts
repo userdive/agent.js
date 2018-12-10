@@ -55,6 +55,8 @@ export function createMouseEvent (
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
     return new MouseEvent(
       eventName, {
+        bubbles: false,
+        cancelable: true,
         screenY,
         screenX,
         clientY,
@@ -66,7 +68,7 @@ export function createMouseEvent (
   // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/initMouseEvent
   mouseEvent.initMouseEvent(
     eventName,
-    true,
+    false,
     true,
     window,
     0,
