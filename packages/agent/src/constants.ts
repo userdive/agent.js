@@ -17,10 +17,11 @@ export const INTERVAL = intervals.sort()
 export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
+export const CLICK_EVENTS = ['onclick']
+export const MOUSE_EVENTS = ['onmousedown', 'onmousemove', 'onmouseup']
+export const POINTER_EVENTS = ['onpointerdown', 'onpointermove', 'onpointerup']
 export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
 export const TOUCH_EVENTS = TOUCH
-export const MOUSE_EVENTS = ['onmousedown', 'onmousemove', 'onmouseup']
-export const CLICK_EVENTS = ['onclick']
 export const VERSION = 2
 export const SETTINGS: SettingFieldsObject = {
   allowLinker: false,

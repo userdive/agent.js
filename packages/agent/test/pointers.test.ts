@@ -7,12 +7,12 @@ import {
   MAX_INTERACTION_SEQUENCE
 } from '../src/constants'
 import InteractionEventEmitter from '../src/interactions'
-import { isMouseDevice } from './helpers/browser'
-import { createMouseEvent } from './helpers/Event'
+import { isPointerDevice } from './helpers/browser'
+import { createPointerEvent } from './helpers/Event'
 
-const describeExcludeTouch = () => (!isMouseDevice() ? describe.skip : describe)
+const describeExcludeTouch = () => (!isPointerDevice() ? describe.skip : describe)
 
-describeExcludeTouch()('mouse interactions', () => {
+describeExcludeTouch()('pointer interactions', () => {
   let clock: sinon.SinonFakeTimers
   let target: Window | Document
 
@@ -38,8 +38,8 @@ describeExcludeTouch()('mouse interactions', () => {
     clock.restore()
   })
 
-  it('emit look when mousedown', () => {
-    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
+  it('emit look when pointerdown', () => {
+    target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -78,8 +78,8 @@ describeExcludeTouch()('mouse interactions', () => {
     )
   })
 
-  it('emit look when mousemove', () => {
-    target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 1, 1))
+  it('emit look when pointermove', () => {
+    target.dispatchEvent(createPointerEvent('pointermove', 0, 0, 1, 1))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -129,9 +129,9 @@ describeExcludeTouch()('mouse interactions', () => {
     )
   })
 
-  it('emit action when mousedown and mouseup', () => {
-    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
-    target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 10, 10))
+  it('emit action when pointerdown and pointerup', () => {
+    target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
+    target.dispatchEvent(createPointerEvent('pointerup', 0, 0, 10, 10))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -139,7 +139,7 @@ describeExcludeTouch()('mouse interactions', () => {
 
     // Emit 1st look
     clock.tick(INTERACTION_EMIT_INTERVAL)
-    sinon.assert.calledOnce(spyLookEvent)  // Emit look when mousedown
+    sinon.assert.calledOnce(spyLookEvent)  // Emit look when pointerdown
     sinon.assert.calledOnce(spyActionEvent)
     sinon.assert.calledWith(
       spyActionEvent,
@@ -158,10 +158,10 @@ describeExcludeTouch()('mouse interactions', () => {
     sinon.assert.callCount(spyActionEvent, 1)
   })
 
-  it('cancel action when mousedown and mouseup with mousemove', () => {
-    target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
-    target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 2, 2))
-    target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 3, 3))
+  it('cancel action when pointerdown and pointerup with pointermove', () => {
+    target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
+    target.dispatchEvent(createPointerEvent('pointermove', 0, 0, 2, 2))
+    target.dispatchEvent(createPointerEvent('pointerup', 0, 0, 3, 3))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -169,7 +169,7 @@ describeExcludeTouch()('mouse interactions', () => {
 
     // Emit 1st look
     clock.tick(INTERACTION_EMIT_INTERVAL)
-    sinon.assert.calledOnce(spyLookEvent)  // Emit look when mousedown
+    sinon.assert.calledOnce(spyLookEvent)  // Emit look when pointerdown
     sinon.assert.notCalled(spyActionEvent)
   })
 })
