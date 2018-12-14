@@ -10,6 +10,9 @@ cache:
   - examples/with-react/node_modules
   - examples/with-angular/node_modules
   - packages/agent/node_modules
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.12.3
+  - export PATH=$HOME/.yarn/bin:$PATH
 env:
   global:
   - secure: mmnT2bR4F6fDEoBYC/6+8i5p16WkFDsXhz3ymTa9S6P7PkEnq2Y1yhgAjp01gZYimLlbR0RgATlXHsJFIkxXBcQ9UkWp7L7Y+FpeaJyYXJ0dvBD/v2JdDAKQcS3G7snAc6zYGHko3QxA+taOXU6eOwYTHzYZcVhUvf7k+AO4CcI4SX8+9ruoM6rYRp9Ql8AYV7GbquOcHYl/apImCrb5Eb0szX8OwR/R3PVnSXqBzaZgpvrBmqNOCa0Iyis2oTmo2ZSLJPjgrF5lbAkTneL/Mqk/nVAqInXeYOEI/VDngLAxrO/ANZB/kqjxTQHZlTpaz+mhKUY8cDb2KTXMb7HTmPeeq3dp/pv8ZmIgTInlPuE12A9oeGHfLSMqKoKwQQwYaIM4UNWJaTkJrByds+Qyc/QF6kG7RWklb9KynEFIUHmrynsbMuiSOG1vs/0c48qyNspL23khK4t0erd4NoOOVXc/ROXrgIr2gMpb4LzGz+f3ocEuidYGpVh7iUZ8b9CxcWG4mPWgzqvsFuKGrWhrH5LsC7B4KLvSMDslx36CnD1cBj27sbmylfFq8IHoZqiSEXsv7nZJyvM71ILbhm3i5OFpKn4RaRHfN5P8q7VMUyRjvxTe1ONnJXP4m2Ns1PThnHnaAMkDBQHRxhSBYJY6R7fKwx1M/fGa7Vwg6HLfqJ4=
