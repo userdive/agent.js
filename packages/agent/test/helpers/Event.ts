@@ -14,7 +14,7 @@ export function createEvent (eventName: EventType): Event {
 }
 
 interface SupportDeprecatedTouchEvent extends TouchEvent {
-  touches: TouchList
+  initTouchEvent (...args: any[]): void
 }
 
 export function createMouseEvent (
@@ -95,14 +95,37 @@ export function createTouchEvent (
       }
     )
   }
+  const touches = document.createTouchList(...touchData.map(({ identifier, pageX, pageY }) =>
+    document.createTouch(window, target, identifier, pageX, pageY, 0, 0)
+  ))
   const touchEvent = document.createEvent('TouchEvent') as SupportDeprecatedTouchEvent
   // https://developer.mozilla.org/ja/docs/Web/API/Document/createEvent
-  touchEvent.initUIEvent(eventName, true, true, window, 1)
-  touchEvent.touches = document.createTouchList(
-    ...touchData.map(({ identifier, pageX, pageY }) =>
-      document.createTouch(window, target, identifier, pageX, pageY, 0, 0)
+  if (/Android/.test(navigator.userAgent)) {
+    touchEvent.initTouchEvent(
+      touches,
+      touches,
+      touches,
+      eventName
     )
-  )
+  } else {
+    touchEvent.initTouchEvent(
+      eventName,
+      true,
+      true,
+      window,
+      0,
+      0,
+      0,
+      0,
+      false,
+      false,
+      false,
+      false,
+      touches,
+      touches,
+      touches
+    )
+  }
   return touchEvent
 }
 

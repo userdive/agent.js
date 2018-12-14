@@ -7,6 +7,7 @@ import Kzs from '../src/plugin'
 describe('kzs', () => {
   let agent: any
   let kzs: Kzs
+
   beforeEach(() => {
     agent = new Agent(random.uuid(), 'auto')
     kzs = new Kzs(agent)

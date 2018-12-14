@@ -14,7 +14,7 @@ const describeExcludeTouch = () => (!isPointerDevice() ? describe.skip : describ
 
 describeExcludeTouch()('pointer interactions', () => {
   let clock: sinon.SinonFakeTimers
-  let target: Window | Document
+  let target: EventTarget
 
   let instance: InteractionEventEmitter
   let spyLookEvent: sinon.SinonSpy

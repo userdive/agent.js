@@ -14,7 +14,7 @@ const describeExcludeTouch = () => (!isMouseDevice() ? describe.skip : describe)
 
 describeExcludeTouch()('mouse interactions', () => {
   let clock: sinon.SinonFakeTimers
-  let target: Window | Document
+  let target: EventTarget
 
   let instance: InteractionEventEmitter
   let spyLookEvent: sinon.SinonSpy

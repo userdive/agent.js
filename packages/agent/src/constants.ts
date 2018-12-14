@@ -22,6 +22,7 @@ export const MOUSE_EVENTS = ['onmousedown', 'onmousemove', 'onmouseup']
 export const POINTER_EVENTS = ['onpointerdown', 'onpointermove', 'onpointerup']
 export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
 export const TOUCH_EVENTS = TOUCH
+export const SCROLL_PROPERTIES = ['onscroll', 'pageXOffset', 'pageYOffset', 'innerWidth', 'innerHeight']
 export const VERSION = 2
 export const SETTINGS: SettingFieldsObject = {
   allowLinker: false,

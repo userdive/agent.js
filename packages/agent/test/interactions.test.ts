@@ -3,7 +3,7 @@ import * as sinon from 'sinon'
 import InteractionEventEmitter from '../src/interactions'
 
 describe('interactions', () => {
-  let target: Window | Document
+  let target: EventTarget
   let instance: InteractionEventEmitter
 
   beforeEach(function () {

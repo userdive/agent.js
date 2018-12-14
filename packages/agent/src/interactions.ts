@@ -4,7 +4,7 @@ import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
 
 import {
-  checkSupportedEvents,
+  checkSupportedFeatures,
   getOffset
 } from './browser'
 import {
@@ -15,6 +15,7 @@ import {
   MAX_INTERACTION_SEQUENCE,
   MOUSE_EVENTS,
   POINTER_EVENTS,
+  SCROLL_PROPERTIES,
   TOUCH_EVENTS
 } from './constants'
 import {
@@ -27,8 +28,13 @@ function getTargetElementFromEvent (event: Event): EventTarget | null {
   return event.target || event.srcElement
 }
 
-function getFirstTouch (event: TouchEvent): Touch {
-  return event.changedTouches ? event.changedTouches[0] : event.touches[0]
+function getFirstTouch (event: TouchEvent): Touch | null {
+  return event.changedTouches ? event.changedTouches[0] : event.touches ? event.touches[0] : null
+}
+
+function getCenterPotision (w: Window): InteractionPosition {
+  const { left, top } = getOffset(w)
+  return { x: left + w.innerWidth / 2, y: top + w.innerHeight / 2 }
 }
 
 class InteractionEventEmitter extends EventEmitter {
@@ -70,6 +76,9 @@ class InteractionEventEmitter extends EventEmitter {
     'touchmove': (event: Event) => (this.handleTouchMove(event as TouchEvent)),
     'touchend': (event: Event) => (this.handleTouchEnd(event as TouchEvent))
   }
+  private scrollEventHandlerMap: { [eventName: string]: () => void } = {
+    'scroll': () => (this.handleScroll())
+  }
 
   constructor () {
     super()
@@ -85,33 +94,40 @@ class InteractionEventEmitter extends EventEmitter {
     this.sequentialNumber = 0
   }
 
-  public bind (target: Window | Document) {
+  public bind (target: EventTarget) {
     if (!this.bound) {
-      if (checkSupportedEvents(target, CLICK_EVENTS)) {
+      if (checkSupportedFeatures(target, CLICK_EVENTS)) {
         for (const eventName in this.clickEventHandlerMap) {
           if (this.clickEventHandlerMap.hasOwnProperty(eventName)) {
             this.handle(target, eventName, this.clickEventHandlerMap[eventName])
           }
         }
       }
-      if (checkSupportedEvents(target, MOUSE_EVENTS)) {
+      if (checkSupportedFeatures(target, MOUSE_EVENTS)) {
         for (const eventName in this.mouseEventHandlerMap) {
           if (this.mouseEventHandlerMap.hasOwnProperty(eventName)) {
             this.handle(target, eventName, this.mouseEventHandlerMap[eventName])
           }
         }
       }
-      if (checkSupportedEvents(target, POINTER_EVENTS)) {
+      if (checkSupportedFeatures(target, POINTER_EVENTS)) {
         for (const eventName in this.pointerEventHandlerMap) {
           if (this.pointerEventHandlerMap.hasOwnProperty(eventName)) {
             this.handle(target, eventName, this.pointerEventHandlerMap[eventName])
           }
         }
       }
-      if (checkSupportedEvents(target, TOUCH_EVENTS)) {
+      if (checkSupportedFeatures(target, TOUCH_EVENTS)) {
         for (const eventName in this.touchEventHandlerMap) {
           if (this.touchEventHandlerMap.hasOwnProperty(eventName)) {
             this.handle(target, eventName, this.touchEventHandlerMap[eventName])
+          }
+        }
+        if (checkSupportedFeatures(window, SCROLL_PROPERTIES)) {
+          for (const eventName in this.scrollEventHandlerMap) {
+            if (this.scrollEventHandlerMap.hasOwnProperty(eventName)) {
+              this.handle(window, eventName, this.scrollEventHandlerMap[eventName])
+            }
           }
         }
       }
@@ -128,7 +144,7 @@ class InteractionEventEmitter extends EventEmitter {
   }
 
   protected handle (
-    target: Window | Document,
+    target: EventTarget,
     eventName: string,
     handler: (event: Event) => void
   ) {
@@ -350,6 +366,13 @@ class InteractionEventEmitter extends EventEmitter {
           }
         )
       }
+    }
+  }
+
+  protected handleScroll () {
+    const centerPosition = getCenterPotision(window)
+    if (centerPosition.y > 0 && centerPosition.x > 0) {
+      this.updateLatestPosition(INTERACTION_TYPE_LOOK, centerPosition)
     }
   }
 

@@ -7,9 +7,12 @@ import {
   MAX_INTERACTION_SEQUENCE
 } from '../src/constants'
 import InteractionEventEmitter from '../src/interactions'
-import { createMouseEvent } from './helpers/Event'
+import { isTouchDevice } from './helpers/browser'
+import { createTouchEvent } from './helpers/Event'
 
-describe('mouse clicks', () => {
+const describeExcludeTouch = () => (!isTouchDevice() ? describe.skip : describe)
+
+describeExcludeTouch()('scroll interactions', () => {
   let clock: sinon.SinonFakeTimers
   let target: EventTarget
 
@@ -35,8 +38,11 @@ describe('mouse clicks', () => {
     clock.restore()
   })
 
-  it('emit action when click', () => {
-    target.dispatchEvent(createMouseEvent('click', 0, 0, 1, 1))
+  it('emit look when scroll', () => {
+    target.dispatchEvent(createTouchEvent('touchstart', document.createElement('div'), [
+      { identifier: 1, pageY: 1, pageX: 1 },
+      { identifier: 2, pageY: 2, pageX: 2 }
+    ]))
 
     // Not emitted yet
     sinon.assert.notCalled(spyActionEvent)
@@ -44,22 +50,34 @@ describe('mouse clicks', () => {
 
     // Emit 1st look
     clock.tick(INTERACTION_EMIT_INTERVAL)
-    sinon.assert.calledOnce(spyLookEvent)  // Emit look when mousedown
-    sinon.assert.calledOnce(spyActionEvent)
+    sinon.assert.notCalled(spyActionEvent)
+    sinon.assert.calledOnce(spyLookEvent)
     sinon.assert.calledWith(
-      spyActionEvent,
+      spyLookEvent,
       {
         id: 1,
         left: 0,
         top: 0,
         x: 1,
         y: 1,
-        type: INTERACTION_TYPE_ACTION
+        type: INTERACTION_TYPE_LOOK
       }
     )
 
-    // Emit action only once
-    clock.tick(MAX_INTERACTION_SEQUENCE * INTERACTION_EMIT_INTERVAL + INTERACTION_EMIT_INTERVAL)
-    sinon.assert.callCount(spyActionEvent, 1)
+    // Emit 2nd look
+    clock.tick(INTERACTION_EMIT_INTERVAL)
+    sinon.assert.notCalled(spyActionEvent)
+    sinon.assert.calledTwice(spyLookEvent)
+    sinon.assert.calledWith(
+      spyLookEvent,
+      {
+        id: 2,
+        left: 0,
+        top: 0,
+        x: 1,
+        y: 1,
+        type: INTERACTION_TYPE_LOOK
+      }
+    )
   })
 })
