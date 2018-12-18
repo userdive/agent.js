@@ -19,7 +19,7 @@ import { getType } from './helpers/Event'
 describe('AgentCore', () => {
   const isUrl = require('is-url')
   const eventFactory = (type: EventType, emitter: EventEmitter) =>
-    class DummyEvents extends Base {
+    class DummyEvents extends Base<UIEvent> {
       public validate () {
         return true
       }

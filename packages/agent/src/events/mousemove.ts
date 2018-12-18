@@ -1,7 +1,7 @@
 import { validate } from '../browser'
 import EventBase from '../events'
 
-export default class MouseMoveEvents extends EventBase {
+export default class MouseMoveEvents extends EventBase<MouseEvent> {
   public on () {
     super.on(
       'mousemove',

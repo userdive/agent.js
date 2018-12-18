@@ -6,7 +6,7 @@ function getFirstTouch (e: TouchEvent): Touch {
   return e.changedTouches ? e.changedTouches[0] : e.touches[0]
 }
 
-export default class TouchEvents extends EventBase {
+export default class TouchEvents extends EventBase<TouchEvent> {
   private start: Touch
   public on () {
     super.on(
