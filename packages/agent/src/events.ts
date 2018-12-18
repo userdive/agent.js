@@ -6,20 +6,20 @@ import { LISTENER, SCROLL } from './constants'
 import { CustomError, error, raise, warning } from './logger'
 import { EventType, InteractType, Point } from './types'
 
-export interface AgentEventBase {
+export interface AgentEventBase<T> {
   on (
     eventName: EventType,
-    handler: (e: Event) => void,
+    handler: (e: T) => void,
     type: InteractType
   ): void
   off (): void
 }
 
-export interface AgentEvent extends AgentEventBase {
+export interface AgentEvent extends AgentEventBase<UIEvent> {
   on (): void
 }
 
-export default class Events implements AgentEventBase {
+export default class Events<T> implements AgentEventBase<T> {
   private observer: any
   private emitter: EventEmitter
   private name: string
@@ -35,7 +35,7 @@ export default class Events implements AgentEventBase {
   }
   public on (
     eventName: EventType,
-    handler: (event: any /* FIXME Event type */) => void,
+    handler: (event: T) => void,
     type: InteractType
   ): void {
     if (typeof handler !== 'function' || !(type === 'a' || type === 'l')) {

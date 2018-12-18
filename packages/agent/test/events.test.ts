@@ -11,7 +11,7 @@ import Events from '../src/events'
 import * as logger from '../src/logger'
 
 describe('events', () => {
-  class DummyEvents extends Events {
+  class DummyEvents extends Events<UIEvent> {
     public validate () {
       return true
     }
