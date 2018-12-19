@@ -11,7 +11,6 @@ Reloaded before every execution run.
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 </head>
 <body>
-  <div style="height: 2048px; background: #f00;">Verry long contents to scroll enabled</div>
   <!-- The scripts need to be in the body DOM element, as some test running frameworks need the body
        to have already been created so they can insert their magic into it. For example, if loaded
        before body, Angular Scenario test framework fails to find the body and crashes and burns in
@@ -35,5 +34,6 @@ Reloaded before every execution run.
   <script nomodule>
     window.__karma__.loaded();
   </script>
+  <div style="height: 128rem; background: #f00;">Verry long contents to enable scroll</div>
 </body>
 </html>

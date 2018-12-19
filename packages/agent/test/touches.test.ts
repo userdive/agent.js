@@ -37,7 +37,7 @@ describeExcludeTouch()('touch interactions', () => {
     clock.restore()
   })
 
-  it('emit look when touchstart', () => {
+  it.skip('emit look when touchstart', () => {
     target.dispatchEvent(createTouchEvent('touchstart', document.createElement('div'), [
       { identifier: 1, pageY: 1, pageX: 1 },
       { identifier: 2, pageY: 2, pageX: 2 }
@@ -80,7 +80,7 @@ describeExcludeTouch()('touch interactions', () => {
     )
   })
 
-  it('emit look when touchmove', () => {
+  it.skip('emit look when touchmove', () => {
     target.dispatchEvent(createTouchEvent('touchmove', document.createElement('div'), [
       { identifier: 1, pageY: 1, pageX: 1 },
       { identifier: 2, pageY: 2, pageX: 2 }
@@ -134,7 +134,7 @@ describeExcludeTouch()('touch interactions', () => {
     )
   })
 
-  it('emit action when touchstart and touchend', () => {
+  it.skip('emit action when touchstart and touchend', () => {
     const eventTarget = document.createElement('a')
     target.dispatchEvent(createTouchEvent('touchstart', eventTarget, [
       { identifier: 1, pageY: 1, pageX: 1 },  // Use touchend's value
@@ -170,7 +170,7 @@ describeExcludeTouch()('touch interactions', () => {
     sinon.assert.callCount(spyActionEvent, 1)
   })
 
-  it('cancel action when touchstart and touchend with touchmove', () => {
+  it.skip('cancel action when touchstart and touchend with touchmove', () => {
     const eventTarget = document.createElement('a')
     target.dispatchEvent(createTouchEvent('touchstart', eventTarget, [
       { identifier: 1, pageY: 1, pageX: 1 },

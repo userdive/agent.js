@@ -11,7 +11,7 @@ const getWindowSize = (w: {
 })
 
 const getResourceSize = (d: Document): Size => {
-  const body = d.body as HTMLElement
+  const body = d.documentElement || d.body as HTMLElement
   return {
     h: body.clientHeight,
     w: body.clientWidth

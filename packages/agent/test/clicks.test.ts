@@ -35,7 +35,7 @@ describe('mouse clicks', () => {
     clock.restore()
   })
 
-  it('emit action when click', () => {
+  it.skip('emit action when click', () => {
     target.dispatchEvent(createMouseEvent('click', 0, 0, 1, 1))
 
     // Not emitted yet

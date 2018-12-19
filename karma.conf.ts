@@ -61,8 +61,8 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
       basePath: '',
       frameworks: ['mocha', 'fixture'],
       files: [{ pattern }],
-      customContextFile: 'static/context.html',
-      customClientContextFile: 'static/client_with_context.html',
+      customContextFile: 'static/long_context.html',
+      customClientContextFile: 'static/long_client_with_context.html',
       preprocessors: {
         [pattern]: ['webpack']
       },

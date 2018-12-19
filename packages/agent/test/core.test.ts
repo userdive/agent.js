@@ -177,7 +177,8 @@ describe('AgentCore', () => {
     assert(url.split('/')[6] === 'env.gif')
 
     const query = spy.getCall(0).args[1]
-    assert(query.length === 8)
+    // v, l, r, h, w, sh, sw, wh, ww
+    assert(query.length === 9)
     assert(query[1] === `l=${encodeURIComponent(location.href)}`)
     spy.restore()
   })
@@ -188,7 +189,7 @@ describe('AgentCore', () => {
     autoAgent.pageview(location.pathname)
 
     const query = spy.getCall(0).args[1]
-    assert(query.length === 8)
+    assert(query.length === 9)
     assert(query[1] === `l=${encodeURIComponent(location.href)}`)
     spy.restore()
   })

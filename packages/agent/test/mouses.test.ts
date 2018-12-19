@@ -38,7 +38,7 @@ describeExcludeTouch()('mouse interactions', () => {
     clock.restore()
   })
 
-  it('emit look when mousedown', () => {
+  it.skip('emit look when mousedown', () => {
     target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
 
     // Not emitted yet
@@ -78,7 +78,7 @@ describeExcludeTouch()('mouse interactions', () => {
     )
   })
 
-  it('emit look when mousemove', () => {
+  it.skip('emit look when mousemove', () => {
     target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 1, 1))
 
     // Not emitted yet
@@ -129,7 +129,7 @@ describeExcludeTouch()('mouse interactions', () => {
     )
   })
 
-  it('emit action when mousedown and mouseup', () => {
+  it.skip('emit action when mousedown and mouseup', () => {
     target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
     target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 10, 10))
 
@@ -158,7 +158,7 @@ describeExcludeTouch()('mouse interactions', () => {
     sinon.assert.callCount(spyActionEvent, 1)
   })
 
-  it('cancel action when mousedown and mouseup with mousemove', () => {
+  it.skip('cancel action when mousedown and mouseup with mousemove', () => {
     target.dispatchEvent(createMouseEvent('mousedown', 0, 0, 1, 1))
     target.dispatchEvent(createMouseEvent('mousemove', 0, 0, 2, 2))
     target.dispatchEvent(createMouseEvent('mouseup', 0, 0, 3, 3))

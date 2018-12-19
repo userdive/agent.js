@@ -38,7 +38,7 @@ describeExcludeTouch()('pointer interactions', () => {
     clock.restore()
   })
 
-  it('emit look when pointerdown', () => {
+  it.skip('emit look when pointerdown', () => {
     target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
 
     // Not emitted yet
@@ -78,7 +78,7 @@ describeExcludeTouch()('pointer interactions', () => {
     )
   })
 
-  it('emit look when pointermove', () => {
+  it.skip('emit look when pointermove', () => {
     target.dispatchEvent(createPointerEvent('pointermove', 0, 0, 1, 1))
 
     // Not emitted yet
@@ -129,7 +129,7 @@ describeExcludeTouch()('pointer interactions', () => {
     )
   })
 
-  it('emit action when pointerdown and pointerup', () => {
+  it.skip('emit action when pointerdown and pointerup', () => {
     target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
     target.dispatchEvent(createPointerEvent('pointerup', 0, 0, 10, 10))
 
@@ -158,7 +158,7 @@ describeExcludeTouch()('pointer interactions', () => {
     sinon.assert.callCount(spyActionEvent, 1)
   })
 
-  it('cancel action when pointerdown and pointerup with pointermove', () => {
+  it.skip('cancel action when pointerdown and pointerup with pointermove', () => {
     target.dispatchEvent(createPointerEvent('pointerdown', 0, 0, 1, 1))
     target.dispatchEvent(createPointerEvent('pointermove', 0, 0, 2, 2))
     target.dispatchEvent(createPointerEvent('pointerup', 0, 0, 3, 3))
