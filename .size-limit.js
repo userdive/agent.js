@@ -18,7 +18,7 @@ module.exports = [
   },
   {
     path: `${dir}/vwo-plugin.js`,
-    limit: '860 B'
+    limit: '870 B'
   },
   {
     path: `${dir}/optimizely-x-plugin.js`,
