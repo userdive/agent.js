@@ -36,6 +36,12 @@ stages:
   - deploy
   - name: pre-release
     if: branch =~ ^release
+before_install:
+- mkdir -p "$HOME/.yarn/bin"
+- ln -s /usr/bin/yarn "$HOME/.yarn/bin"
+- export PATH="$HOME/.yarn/bin:$PATH"
+- which yarn
+- yarn --version
 jobs:
   include:
   - stage: test
@@ -48,9 +54,6 @@ jobs:
     - npm run lint
   - stage: test
     env: Test
-    before_script:
-    - npm --version
-    - yarn --version
     script:
     - npm run test
     - npm run coverage
