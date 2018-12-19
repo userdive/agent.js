@@ -8,10 +8,12 @@ function getFirstTouch (e: TouchEvent): Touch {
 
 export default class TouchEvents extends EventBase<TouchEvent> {
   private start: Touch
+  private isTapEnable: boolean = false
   public on () {
     super.on(
       'touchstart',
       (e: TouchEvent) => {
+        this.isTapEnable = true
         this.start = getFirstTouch(e)
         this.emit({ x: this.start.pageX, y: this.start.pageY })
       },
@@ -21,6 +23,7 @@ export default class TouchEvents extends EventBase<TouchEvent> {
     super.on(
       'touchmove',
       (e: TouchEvent) => {
+        this.isTapEnable = false
         const t = getFirstTouch(e)
         this.emit({ x: t.pageX, y: t.pageY })
       },
@@ -36,7 +39,8 @@ export default class TouchEvents extends EventBase<TouchEvent> {
         }
         if (
           Math.abs(this.start.pageX - t.pageX) < 10 &&
-          Math.abs(this.start.pageY - t.pageY) < 10
+          Math.abs(this.start.pageY - t.pageY) < 10 &&
+          this.isTapEnable
         ) {
           this.emit({ x: t.pageX, y: t.pageY })
         }
