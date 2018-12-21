@@ -37,7 +37,7 @@ export const customLaunchers = {
   SL_CHROME_BETA: {
     base: 'SauceLabs',
     browserName: 'chrome',
-    platform: 'Windows 8',
+    platform: 'Windows 10',
     version: 'latest'
   },
   SL_FIREFOX: {
