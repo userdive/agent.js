@@ -14,7 +14,7 @@ export const LISTENER = ['addEventListener', 'removeEventListener']
 export const NAMESPACE = `data-ud-namespace`
 export const SCROLL = ['pageXOffset', 'pageYOffset']
 export const TOUCH = ['ontouchstart', 'ontouchmove', 'ontouchend']
-export const VERSION = 1
+export const VERSION = 2
 export const SETTINGS: SettingFieldsObject = {
   allowLinker: false,
   linkerName: '__ud',

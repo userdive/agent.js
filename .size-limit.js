@@ -6,7 +6,7 @@ module.exports = [
   },
   {
     path: `${dir}/agent.d.js`,
-    limit: '21.2 KB'
+    limit: '21.3 KB'
   },
   {
     path: `${dir}/linker.js`,
@@ -18,7 +18,7 @@ module.exports = [
   },
   {
     path: `${dir}/vwo-plugin.js`,
-    limit: '860 B'
+    limit: '870 B'
   },
   {
     path: `${dir}/optimizely-x-plugin.js`,
