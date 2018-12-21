@@ -38,7 +38,7 @@ export const customLaunchers = {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Windows 10',
-    version: 'stable'
+    version: 'latest-1'
   },
   // SL_CHROME_BETA: {  // Chrome 71 Does not worked
   //   base: 'SauceLabs',
