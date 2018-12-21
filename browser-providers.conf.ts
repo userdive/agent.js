@@ -34,12 +34,18 @@ export const customLaunchers = {
     platform: 'Linux',
     version: '48'
   },
-  SL_CHROME_BETA: {
+  SL_CHROME_STABLE: {
     base: 'SauceLabs',
     browserName: 'chrome',
     platform: 'Windows 10',
-    version: 'latest'
+    version: 'stable'
   },
+  // SL_CHROME_BETA: {  // Chrome 71 Does not worked
+  //   base: 'SauceLabs',
+  //   browserName: 'chrome',
+  //   platform: 'Windows 10',
+  //   version: 'latest'
+  // },
   SL_FIREFOX: {
     base: 'SauceLabs',
     browserName: 'firefox',
