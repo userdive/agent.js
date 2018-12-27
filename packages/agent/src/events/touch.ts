@@ -38,6 +38,8 @@ export default class TouchEvents extends EventBase<TouchEvent> {
           return this.warning(`start is not defined`)
         }
         if (
+          Math.abs(this.start.clientX - t.clientX) < 10 &&
+          Math.abs(this.start.clientY - t.clientY) < 10 &&
           Math.abs(this.start.pageX - t.pageX) < 10 &&
           Math.abs(this.start.pageY - t.pageY) < 10 &&
           this.isTapEnable
