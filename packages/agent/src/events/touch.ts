@@ -15,9 +15,8 @@ export default class TouchEvents extends EventBase<TouchEvent> {
       (e: TouchEvent) => {
         this.isTapEnable = true
         this.start = getFirstTouch(e)
-        this.emit({ x: this.start.pageX, y: this.start.pageY })
-      },
-      'l'
+        this.emit({ type: 'l', x: this.start.pageX, y: this.start.pageY })
+      }
     )
 
     super.on(
@@ -25,9 +24,8 @@ export default class TouchEvents extends EventBase<TouchEvent> {
       (e: TouchEvent) => {
         this.isTapEnable = false
         const t = getFirstTouch(e)
-        this.emit({ x: t.pageX, y: t.pageY })
-      },
-      'l'
+        this.emit({ type: 'l', x: t.pageX, y: t.pageY })
+      }
     )
 
     super.on(
@@ -44,10 +42,9 @@ export default class TouchEvents extends EventBase<TouchEvent> {
           Math.abs(this.start.pageY - t.pageY) < 10 &&
           this.isTapEnable
         ) {
-          this.emit({ x: t.pageX, y: t.pageY })
+          this.emit({ type: 'a', x: t.pageX, y: t.pageY })
         }
-      },
-      'a'
+      }
     )
   }
   protected validate (): boolean {

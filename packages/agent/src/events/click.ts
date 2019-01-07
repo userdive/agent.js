@@ -6,9 +6,8 @@ export default class ClickEvents extends EventBase<MouseEvent> {
     super.on(
       'click',
       (e: MouseEvent) => {
-        this.emit({ x: e.pageX, y: e.pageY })
-      },
-      'a'
+        this.emit({ type: 'a', x: e.pageX, y: e.pageY })
+      }
     )
   }
   protected validate (): boolean {

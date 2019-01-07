@@ -1,11 +1,15 @@
 import { getOffset, validate } from '../browser'
 import { SCROLL, TOUCH } from '../constants'
 import EventBase from '../events'
-import { Point } from '../types'
+import { InteractionPoint } from '../types'
 
-function getPotision (w: Window): Point {
-  const { x, y } = getOffset(w)
-  return { x: x + w.innerWidth / 2, y: y + w.innerHeight / 2 }
+function getInterationPoint (w: Window): InteractionPoint {
+  const { left, top } = getOffset(w)
+  return {
+    type: 'l',
+    x: left + w.innerWidth / 2,
+    y: top + w.innerHeight / 2
+  }
 }
 
 const eventName = 'scroll'
@@ -15,9 +19,8 @@ export default class ScrollEvents extends EventBase<UIEvent> {
     super.on(
       eventName,
       () => {
-        this.emit(getPotision(window))
-      },
-      'l'
+        this.emit(getInterationPoint(window))
+      }
     )
   }
   protected validate (): boolean {
