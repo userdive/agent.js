@@ -5,7 +5,7 @@ import { spy as sinonSpy } from 'sinon'
 
 import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
-import { createEvent, getType } from './helpers/Event'
+import { createEvent } from './helpers/Event'
 
 import Events from '../src/events'
 import * as logger from '../src/logger'
@@ -47,7 +47,7 @@ describe('events', () => {
 
     const handler: any = 'function'
     assert.throws(
-      () => events.on('click', handler, getType('click')),
+      () => events.on('click', handler),
       ({ message }: Error) => {
         assert(message)
         return true
@@ -96,7 +96,7 @@ describe('events', () => {
     const handler: any = (e: any) => {
       data = e
     }
-    instance.on(eventName, handler, getType(eventName))
+    instance.on(eventName, handler)
     const e = createEvent(eventName)
     window.dispatchEvent(e)
     assert(data)
@@ -114,7 +114,7 @@ describe('events', () => {
     const handler: any = () => {
       throw new Error(error)
     }
-    instance.on(eventName, handler, getType(eventName))
+    instance.on(eventName, handler)
     const e = createEvent(eventName)
     window.dispatchEvent(e)
 
@@ -132,7 +132,7 @@ describe('events', () => {
       new EventEmitter(),
       new UIEventObserver()
     )
-    instance.on('click', handler, getType('click'))
+    instance.on('click', handler)
   })
 
   it('off', () => {

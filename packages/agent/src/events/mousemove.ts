@@ -6,9 +6,8 @@ export default class MouseMoveEvents extends EventBase<MouseEvent> {
     super.on(
       'mousemove',
       (e: MouseEvent) => {
-        this.emit({ x: e.pageX, y: e.pageY })
-      },
-      'l'
+        this.emit({ type: 'l', x: e.pageX, y: e.pageY })
+      }
     )
   }
   protected validate (): boolean {

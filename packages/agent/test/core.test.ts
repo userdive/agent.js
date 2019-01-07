@@ -14,24 +14,22 @@ import {
 import Agent from '../src/core'
 import Base from '../src/events'
 import { EventType } from '../src/types'
-import { getType } from './helpers/Event'
 
 describe('AgentCore', () => {
   const isUrl = require('is-url')
-  const eventFactory = (type: EventType, emitter: EventEmitter) =>
+  const eventFactory = (eventType: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base<UIEvent> {
       public validate () {
         return true
       }
       public on () {
         super.on(
-          type,
+          eventType,
           () => {
             //
-          },
-          getType(type)
+          }
         )
-        emitter.on(type, (data) => super.emit(data))
+        emitter.on(eventType, (data) => super.emit(data))
       }
     }
 
@@ -90,6 +88,7 @@ describe('AgentCore', () => {
     agent.pageview(location.href)
     assert(agent.emitter.listenerCount(agent.id) === 1)
     emitter.emit('click', {
+      type: 'a',
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
@@ -110,6 +109,7 @@ describe('AgentCore', () => {
   it('cache success looks', () => {
     agent.pageview(location.href)
     emitter.emit('scroll', {
+      type: 'l',
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
@@ -134,6 +134,7 @@ describe('AgentCore', () => {
 
     assert(agent.interacts.length === 0)
     emitter.emit('scroll', {
+      type: 'l',
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
@@ -144,6 +145,7 @@ describe('AgentCore', () => {
 
     for (let i = 0; i <= INTERACT; i++) {
       emitter.emit('scroll', {
+        type: 'l',
         x: random.number({ min: 1 }),
         y: random.number({ min: 1 })
       })

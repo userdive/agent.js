@@ -11,7 +11,10 @@ export interface SettingFieldsObject extends FieldsObject {
   Raven?: RavenStatic
 }
 
-export type Point = {
+export type InteractionType = 'l' | 'a'
+
+export type InteractionPoint = {
+  readonly type: InteractionType
   readonly x: number
   readonly y: number
 }
@@ -98,13 +101,11 @@ export type State = {
   custom: CustomData
 }
 
-export type InteractType = 'l' | 'a'
-
 export type Interact = {
   id: number
   readonly left: number
   readonly top: number
-  readonly type: InteractType
+  readonly type: InteractionType
   readonly x: number
   readonly y: number
 }

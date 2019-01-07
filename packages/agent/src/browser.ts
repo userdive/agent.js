@@ -31,8 +31,8 @@ export const getName = (d: Document) => {
 }
 
 export const getOffset = (w: Window) => ({
-  x: w.scrollX || w.pageXOffset,
-  y: w.scrollY || w.pageYOffset
+  left: w.scrollX || w.pageXOffset,
+  top: w.scrollY || w.pageYOffset
 })
 
 export const getEnv = (page: string): ClientEnvironmentsData | void => {
