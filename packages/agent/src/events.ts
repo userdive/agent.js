@@ -35,9 +35,6 @@ export default class Events<T> implements AgentEventBase<T> {
     eventName: EventType,
     handler: (event: T) => void
   ): void {
-    if (typeof handler !== 'function') {
-      return raise('please override on')
-    }
     if (!this.validate() || !validate(LISTENER.concat(SCROLL))) {
       return
     }
