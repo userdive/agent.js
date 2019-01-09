@@ -175,29 +175,33 @@ export default class AgentCore extends Store {
   }
 
   public send (query: string[], force?: boolean): void {
-    this.interacts.forEach((data) => {
-      const q = createInteractData(data)
-      if (q.length) {
-        query.push(`d=${q}`)
-      }
-    })
-
     if (
       this.baseUrl &&
-      (query.length >= MAX_INTERACT || (force && query.length > 0))
+      (force || this.interacts.length >= MAX_INTERACT)
     ) {
-      get(
-        `${this.baseUrl}/${this.loadTime}/int.gif`,
-        query.concat(obj2query(this.get('custom') as any /* TODO */)),
-        () => {
-          this.destroy()
+      // Copy and flush cached interacts to prevent double transmission
+      let interactsToSend: Interact[]
+      (interactsToSend = objectAssign([], this.interacts)) && (this.interacts.length = 0)
+
+      interactsToSend.forEach((data) => {
+        const q = createInteractData(data)
+        if (q.length) {
+          query.push(`d=${q}`)
         }
-      )
-      this.interacts.length = 0
+      })
+      if (query.length > 0) {
+        get(
+          `${this.baseUrl}/${this.loadTime}/int.gif`,
+          query.concat(obj2query(this.get('custom') as any /* TODO */)),
+          () => {
+            this.destroy()
+          }
+        )
+      }
     }
   }
 
-  private sendWithUpdate (): void {
+  public update (): void {
     Object.keys(this.cache).forEach((key) => {
       const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
@@ -205,7 +209,10 @@ export default class AgentCore extends Store {
         this.interacts.push(cache)
       }
     })
+  }
 
+  private sendWithUpdate (): void {
+    this.update()
     this.clear()
     this.send([])
 

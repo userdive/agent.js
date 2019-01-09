@@ -48,6 +48,7 @@ export default class Agent {
       window.addEventListener(
         'pagehide',
         () => {
+          this.core.update()
           this.core.send([], true)
         },
         false
