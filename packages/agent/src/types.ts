@@ -101,7 +101,7 @@ export type State = {
   custom: CustomData
 }
 
-export type Interact = {
+export type Interaction = {
   id: number
   readonly left: number
   readonly top: number

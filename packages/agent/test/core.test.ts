@@ -7,7 +7,7 @@ import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
 import { FieldsObject } from 'userdive/lib/types'
 
 import {
-  INTERACT,
+  INTERACTION,
   INTERVAL,
   SETTINGS as SETTINGS_DEFAULT
 } from '../src/constants'
@@ -134,11 +134,11 @@ describe('AgentCore', () => {
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
-    assert(agent.interacts.length === 0)
+    assert(agent.interactions.length === 0)
 
     agent.update()
-    assert(agent.interacts.length === 1)
-    assert(agent.interacts[0].type === 'a')
+    assert(agent.interactions.length === 1)
+    assert(agent.interactions[0].type === 'a')
   })
 
   it('send success', () => {
@@ -146,18 +146,18 @@ describe('AgentCore', () => {
 
     const spy = sinonSpy(require('../src/requests'), 'get')
 
-    assert(agent.interacts.length === 0)
+    assert(agent.interactions.length === 0)
     emitter.emit('scroll', {
       type: 'l',
       x: random.number({ min: 1 }),
       y: random.number({ min: 1 })
     })
     timer.tick(INTERVAL[1] * 1000)
-    assert(agent.interacts.length === 1)
+    assert(agent.interactions.length === 1)
     assert.deepEqual(agent.cache.a, {})
     assert.deepEqual(agent.cache.l, {})
 
-    for (let i = 0; i <= INTERACT; i++) {
+    for (let i = 0; i <= INTERACTION; i++) {
       emitter.emit('scroll', {
         type: 'l',
         x: random.number({ min: 1 }),
@@ -173,7 +173,7 @@ describe('AgentCore', () => {
     assert(url.split('/')[6] === 'int.gif')
     assert(isUrl(url))
 
-    assert(spy.getCall(0).args[1].length === INTERACT)
+    assert(spy.getCall(0).args[1].length === INTERACTION)
     assert(spy.getCall(0).args[1][1].split(',').length === 6)
 
     spy.restore()

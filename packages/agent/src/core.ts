@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid'
 
 import { getEnv, getLocation } from './browser'
 import {
-  INTERACT as MAX_INTERACT,
+  INTERACTION as MAX_INTERACTION,
   INTERVAL as INTERVAL_DEFAULT_SETTING,
   MAX_EVENT_SEQ
 } from './constants'
@@ -16,11 +16,11 @@ import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
-import { Interact, SettingFieldsObject } from './types'
+import { Interaction, SettingFieldsObject } from './types'
 
 const generateId = () => uuid().replace(/-/g, '')
 
-const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
+const cacheValidator = ({ x, y, type, left, top }: Interaction): boolean => {
   if (x > 0 && y > 0 && type && left >= 0 && top >= 0) {
     return true
   }
@@ -28,7 +28,7 @@ const cacheValidator = ({ x, y, type, left, top }: Interact): boolean => {
 }
 
 const toInt = (n: number) => Math.floor(n)
-const createInteractData = (d: Interact): string =>
+const createInteractionData = (d: Interaction): string =>
   cacheValidator(d)
     ? `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(
       d.top
@@ -80,9 +80,9 @@ export default class AgentCore extends Store {
   private cache: { a: object; l: object; [key: string]: object }
   private emitter: EventEmitter
   private events: AgentEvent[]
-  private interactId: number
+  private interactionId: number
   private eventId: number
-  private interacts: Interact[]
+  private interactions: Interaction[]
   private interval: number[]
   private loadTime: number
   private id: string
@@ -97,9 +97,9 @@ export default class AgentCore extends Store {
     this.id = generateId()
     this.clear()
     this.events = []
-    this.interacts = []
+    this.interactions = []
     this.interval = []
-    this.interactId = 0
+    this.interactionId = 0
     this.eventId = 0
     this.emitter = new EventEmitter()
     this.observer = new UIEventObserver() // singleton
@@ -111,7 +111,7 @@ export default class AgentCore extends Store {
       return
     }
     this.baseUrl = `${settings.baseUrl}/${id}/${clientId}`
-    this.emitter.on(this.id, this.updateInteractCache.bind(this))
+    this.emitter.on(this.id, this.updateInteractionCache.bind(this))
   }
 
   public pageview (page: string): void {
@@ -127,7 +127,7 @@ export default class AgentCore extends Store {
     this.merge({ type: 'env', data })
 
     this.interval = INTERVAL_DEFAULT_SETTING.concat()
-    this.interactId = 0
+    this.interactionId = 0
     this.eventId = 0
     this.loadTime = Date.now()
     this.sendWithUpdate()
@@ -177,13 +177,13 @@ export default class AgentCore extends Store {
   public send (query: string[], force?: boolean): void {
     if (
       this.baseUrl &&
-      (force || this.interacts.length >= MAX_INTERACT)
+      (force || this.interactions.length >= MAX_INTERACTION)
     ) {
-      const interactsToSend = this.interacts.slice()
-      this.interacts.length = 0
+      const interactionsToSend = this.interactions.slice()
+      this.interactions.length = 0
 
-      interactsToSend.forEach((data) => {
-        const q = createInteractData(data)
+      interactionsToSend.forEach((data) => {
+        const q = createInteractionData(data)
         if (q.length) {
           query.push(`d=${q}`)
         }
@@ -204,8 +204,8 @@ export default class AgentCore extends Store {
     Object.keys(this.cache).forEach((key) => {
       const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
-        cache.id = this.interactId
-        this.interacts.push(cache)
+        cache.id = this.interactionId
+        this.interactions.push(cache)
       }
     })
   }
@@ -220,7 +220,7 @@ export default class AgentCore extends Store {
       if (delay !== undefined && delay >= 0) {
         setTimeout(this.sendWithUpdate.bind(this), delay * 1000)
       }
-      this.interactId++
+      this.interactionId++
     }
   }
 
@@ -228,7 +228,7 @@ export default class AgentCore extends Store {
     this.events.forEach((e) => e.on())
   }
 
-  private updateInteractCache (data: Interact): void {
+  private updateInteractionCache (data: Interaction): void {
     if (cacheValidator(data) && this.loadTime) {
       this.cache[data.type] = data
     }

@@ -65,7 +65,7 @@ describe('agent', () => {
       page,
       dimension1
     })
-    assert(core.interactId === 1)
+    assert(core.interactionId === 1)
     const args = spy.getCall(0).args[1]
     assert(args[1] === `l=${encodeURIComponent(page)}`)
     assert(args[args.length - 1] === `cd1=${dimension1}`)
