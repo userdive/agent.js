@@ -179,9 +179,8 @@ export default class AgentCore extends Store {
       this.baseUrl &&
       (force || this.interacts.length >= MAX_INTERACT)
     ) {
-      // Copy and flush cached interacts to prevent double transmission
-      let interactsToSend: Interact[]
-      (interactsToSend = this.interacts.slice()) && (this.interacts.length = 0)
+      const interactsToSend = this.interacts.slice()
+      this.interacts.length = 0
 
       interactsToSend.forEach((data) => {
         const q = createInteractData(data)
