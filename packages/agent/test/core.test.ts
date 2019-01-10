@@ -127,6 +127,20 @@ describe('AgentCore', () => {
     assert.deepEqual(agent.cache.l, {})
   })
 
+  it('update', () => {
+    agent.pageview(location.href)
+    emitter.emit('click', {
+      type: 'a',
+      x: random.number({ min: 1 }),
+      y: random.number({ min: 1 })
+    })
+    assert(agent.interacts.length === 0)
+
+    agent.update()
+    assert(agent.interacts.length === 1)
+    assert(agent.interacts[0].type === 'a')
+  })
+
   it('send success', () => {
     agent.pageview(location.href)
 
