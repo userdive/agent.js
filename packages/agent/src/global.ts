@@ -63,7 +63,7 @@ export default function (
       const next = (window as any)[name].q.shift()
       const [cmd, ...args] = [].map.call(next, (x: any) => x)
 
-      const res = execute(Agent, agents)(cmd, ...args)
+      const res = execute(Agent, agents)(cmd as string, ...args)
       if (!res) {
         delay++
         if (delay > 10) {
