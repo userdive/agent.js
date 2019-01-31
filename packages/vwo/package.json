@@ -1,15 +1,15 @@
 {
   "name": "@userdive/vwo-plugin",
   "description": "a plugin to integrate Visual Website Optimizer",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0",
   "author": "UNCOVER TRUTH Inc.",
   "bugs": {
     "url": "https://github.com/userdive/agent.js/issues"
   },
   "dependencies": {
-    "@userdive/agent": "^3.0.0-beta.0",
-    "@userdive/provider": "^3.0.0-beta.0",
-    "userdive": "^3.0.0-beta.0"
+    "@userdive/agent": "^3.0.0",
+    "@userdive/provider": "^3.0.0",
+    "userdive": "^3.0.0"
   },
   "engine": {
     "node": "> 6"
