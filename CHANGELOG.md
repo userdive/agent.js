@@ -1,6 +1,6 @@
 ## v3.0.0 (2019-01-11)
 
-*Backward impompatible changes*
+*Backward incompatible changes*
 
 * [#931](https://github.com/userdive/agent.js/pull/931) Replace action interaction (dispatch a tap event, exclude touchmove).
 * [#938](https://github.com/userdive/agent.js/pull/938) Send interactions on pagehide forcely.
