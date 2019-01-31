@@ -173,7 +173,8 @@ describe('AgentCore', () => {
     assert(url.split('/')[6] === 'int.gif')
     assert(isUrl(url))
 
-    assert(spy.getCall(0).args[1].length === INTERACTION)
+    // send INTERACTION + VERSION
+    assert(spy.getCall(0).args[1].length === INTERACTION + 1)
     assert(spy.getCall(0).args[1][1].split(',').length === 6)
 
     spy.restore()

@@ -16,7 +16,7 @@ import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
-import { Interaction, SettingFieldsObject } from './types'
+import { ClientEnvironmentsData, Interaction, SettingFieldsObject } from './types'
 
 const generateId = () => uuid().replace(/-/g, '')
 
@@ -189,9 +189,13 @@ export default class AgentCore extends Store {
         }
       })
       if (query.length > 0) {
+        // TODO v(version) initialized after send pageview. it should be initialize on constructor.
+        const { v } = this.get('env') as ClientEnvironmentsData
         get(
           `${this.baseUrl}/${this.loadTime}/int.gif`,
-          query.concat(obj2query(this.get('custom') as any /* TODO */)),
+          query.concat(obj2query(
+            objectAssign({}, { v }, this.get('custom')) as any /* TODO */
+            )),
           () => {
             this.destroy()
           }
