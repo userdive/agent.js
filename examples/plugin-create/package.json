@@ -2,7 +2,7 @@
   "name": "plugin-create",
   "version": "3.0.0",
   "dependencies": {
-    "userdive": "^2.1.0"
+    "userdive": "^3.0.0"
   },
   "license": "MIT",
   "main": "index.js",

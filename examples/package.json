@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "devDependencies": {
     "@types/query-string": "6.1.0",
-    "gh-pages": "1.2.0",
+    "gh-pages": "2.0.1",
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
     "query-string": "6.1.0",
