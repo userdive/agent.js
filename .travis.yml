@@ -2,6 +2,7 @@ sudo: true
 language: node_js
 node_js: lts/*
 cache:
+  apt: true
   yarn: true
   directories:
   - node_modules
@@ -10,6 +11,18 @@ cache:
   - examples/with-react/node_modules
   - examples/with-angular/node_modules
   - packages/agent/node_modules
+addons:
+  apt:
+    sources:
+    - sourceline: "deb https://artifacts.crowdin.com/repo/deb/ /"
+      key_url: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
+    - sourceline: 'deb https://dl.yarnpkg.com/debian/ stable main'
+      key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    packages:
+    - crowdin
+    - default-jre
+    - rsync
+    - yarn
 env:
   global:
   - secure: mmnT2bR4F6fDEoBYC/6+8i5p16WkFDsXhz3ymTa9S6P7PkEnq2Y1yhgAjp01gZYimLlbR0RgATlXHsJFIkxXBcQ9UkWp7L7Y+FpeaJyYXJ0dvBD/v2JdDAKQcS3G7snAc6zYGHko3QxA+taOXU6eOwYTHzYZcVhUvf7k+AO4CcI4SX8+9ruoM6rYRp9Ql8AYV7GbquOcHYl/apImCrb5Eb0szX8OwR/R3PVnSXqBzaZgpvrBmqNOCa0Iyis2oTmo2ZSLJPjgrF5lbAkTneL/Mqk/nVAqInXeYOEI/VDngLAxrO/ANZB/kqjxTQHZlTpaz+mhKUY8cDb2KTXMb7HTmPeeq3dp/pv8ZmIgTInlPuE12A9oeGHfLSMqKoKwQQwYaIM4UNWJaTkJrByds+Qyc/QF6kG7RWklb9KynEFIUHmrynsbMuiSOG1vs/0c48qyNspL23khK4t0erd4NoOOVXc/ROXrgIr2gMpb4LzGz+f3ocEuidYGpVh7iUZ8b9CxcWG4mPWgzqvsFuKGrWhrH5LsC7B4KLvSMDslx36CnD1cBj27sbmylfFq8IHoZqiSEXsv7nZJyvM71ILbhm3i5OFpKn4RaRHfN5P8q7VMUyRjvxTe1ONnJXP4m2Ns1PThnHnaAMkDBQHRxhSBYJY6R7fKwx1M/fGa7Vwg6HLfqJ4=
@@ -23,15 +36,15 @@ stages:
   - name: deploy
   - name: pre-release
     if: branch =~ ^release
+before_install:
+- mkdir -p "$HOME/.yarn/bin"
+- ln -s /usr/bin/yarn "$HOME/.yarn/bin"
+- export PATH="$HOME/.yarn/bin:$PATH"
 jobs:
   include:
   - stage: test
     env: Build Size
-    before_install:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.15.2
-    - export PATH=$HOME/.yarn/bin:$PATH
     script:
-    - yarn install
     - yarn postbuild
     - yarn lint
     - yarn test
@@ -55,18 +68,6 @@ jobs:
         fi
         npm run ci:sauce
   - stage: deploy
-    addons:
-      apt:
-        sources:
-        - sourceline: "deb https://artifacts.crowdin.com/repo/deb/ /"
-          key_url: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
-        packages:
-        - crowdin
-        - default-jre
-        - rsync
-    before_install:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.15.2
-    - export PATH=$HOME/.yarn/bin:$PATH
     script:
     - npm run build
     deploy:
