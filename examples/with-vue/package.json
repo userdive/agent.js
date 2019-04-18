@@ -2,7 +2,7 @@
   "name": "with-vue",
   "version": "3.0.0",
   "dependencies": {
-    "userdive": "^2.1.0",
+    "userdive": "^3.0.0",
     "vue": "2.5.17",
     "vue-router": "3.0.1"
   },

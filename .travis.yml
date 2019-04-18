@@ -2,6 +2,7 @@ sudo: true
 language: node_js
 node_js: lts/*
 cache:
+  apt: true
   yarn: true
   directories:
   - node_modules
@@ -10,6 +11,18 @@ cache:
   - examples/with-react/node_modules
   - examples/with-angular/node_modules
   - packages/agent/node_modules
+addons:
+  apt:
+    sources:
+    - sourceline: "deb https://artifacts.crowdin.com/repo/deb/ /"
+      key_url: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
+    - sourceline: 'deb https://dl.yarnpkg.com/debian/ stable main'
+      key_url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    packages:
+    - crowdin
+    - default-jre
+    - rsync
+    - yarn
 env:
   global:
   - secure: mmnT2bR4F6fDEoBYC/6+8i5p16WkFDsXhz3ymTa9S6P7PkEnq2Y1yhgAjp01gZYimLlbR0RgATlXHsJFIkxXBcQ9UkWp7L7Y+FpeaJyYXJ0dvBD/v2JdDAKQcS3G7snAc6zYGHko3QxA+taOXU6eOwYTHzYZcVhUvf7k+AO4CcI4SX8+9ruoM6rYRp9Ql8AYV7GbquOcHYl/apImCrb5Eb0szX8OwR/R3PVnSXqBzaZgpvrBmqNOCa0Iyis2oTmo2ZSLJPjgrF5lbAkTneL/Mqk/nVAqInXeYOEI/VDngLAxrO/ANZB/kqjxTQHZlTpaz+mhKUY8cDb2KTXMb7HTmPeeq3dp/pv8ZmIgTInlPuE12A9oeGHfLSMqKoKwQQwYaIM4UNWJaTkJrByds+Qyc/QF6kG7RWklb9KynEFIUHmrynsbMuiSOG1vs/0c48qyNspL23khK4t0erd4NoOOVXc/ROXrgIr2gMpb4LzGz+f3ocEuidYGpVh7iUZ8b9CxcWG4mPWgzqvsFuKGrWhrH5LsC7B4KLvSMDslx36CnD1cBj27sbmylfFq8IHoZqiSEXsv7nZJyvM71ILbhm3i5OFpKn4RaRHfN5P8q7VMUyRjvxTe1ONnJXP4m2Ns1PThnHnaAMkDBQHRxhSBYJY6R7fKwx1M/fGa7Vwg6HLfqJ4=
@@ -17,31 +30,29 @@ env:
   - secure: PhV3zfO/MZSfnzaeJnw2sK2pcMy0OFQMy4Kmyt8+CEfF06nHtLPVAlvk3q3Rs5DQ3YSqmz1AYgrBw6oYWqYijsp3DdcUDS7GF4n8M7HqP0cOvgjEECDnzIk9Q4VyIVR+zqoqSQOV4ZTSySzuPCj3eRa+Dfp0vki/4tgWqL/5iVHaKGXnQL6y6v3xi//BwdLYPQDBlp/Il4MjXF9/+fXFtj81FhU9k+6bCIvYyP4AAdoOh+FZJUZP8bJkP1t18+AouH+XGvii5mUrWDyTcTiany3PyVvV5VRfIvAGb+WdHDTxOMO/zrypTokBibGLiJlsd2g0Roj3t9m7KSoLMVbkV7+40ApMUBfLJTfbuuRyJD5GKDBCkqxNwjHOuA9jBPqz2IZ18DMgk8UJ9C/KaEYduSinNcSzMSK1YZS+8qDTH6znFzB0Fb21Tf1lR+V8WL5M/h9kaUAbq9D+bZXaHVFO1Hyob3lzSu73CLhflKggUDOJDLussgyo0mR4QTa9jgDqp18YyXbascbNqcIZcCiq3q5LvJX8/DrxromvarK8AqIzxzRW3e84cYsbhLLLdID4GVfRPAZz0hdmA8RWcRBPGfzZNl+LjBkbdZHIcNAV9XjynIVDbnT+Jw6r9aGvjGAML4tWqX7xOUvz33nSrLk3reHe+4vmT1pGD0r4UXUorqA=
   - secure: WOeCng9yBvOTRBCryCuL7iNKXXR20t1urB88eIfJgIK/jQOHO536wuZRDuI4pKi5ZFLQ5HewgWaPzYUdpIv95D+S4j7+2BKM0rajmpAtw4i7QRRHSyQvmdqhppqstOsG8Y30VyVUPSRuMENlmMPKY4ExlmFv6pYconIjgMjylISY877s2ll121ZQGHRTQuIvi2m9hSpCRpXJ5XSoS7nVmwjqdE+78oWuLJ/AhNAr85RXWSTH1Rzq0dBOY5psQ0bbYpGmueSU/51WK4Nh8a2X8rl9GfAk5Z7fUORuWGhk45ReqiYVu2hEafdY3mg6e/i6lDkG+Ob5lgAcEK1j1Zj5b9RbP0hnU923D6EOmo7pVQamb+SPLjJmcRXO59Hy6s7gAn9qz+DJucuAirqAMivP3kuhq2+feHgBNzyA358ZpRzVcycRhubNWuBWsXa+9omgM5tzuaoummYaoHW5yyAA0MYXAT5119noTUG9uzK0SZMBaWHiIt5TUfQ2+/+htEdhDOAPEueEF+EVOloQUgnd1SR7KHDNPbiSWpZcYyWKh557v3+kSKvTDHZGAp8gwZD9ZeavQM52otqnxcnfhXSxtW77b0dMkH3dGoJKxW4uvtlEtvJCGM9rwSgowOcYRWGQ9wMV7VJweonN692k40aiBXxB3CAFnwbtttptABP8Gpc=
 stages:
-  - test
+  - name: test
   - name: cross-browser
     if: type = pull_request OR branch = master
-  - deploy
+  - name: deploy
   - name: pre-release
     if: branch =~ ^release
+before_install:
+- mkdir -p "$HOME/.yarn/bin"
+- ln -s /usr/bin/yarn "$HOME/.yarn/bin"
+- export PATH="$HOME/.yarn/bin:$PATH"
 jobs:
   include:
   - stage: test
     env: Build Size
     script:
-    - npm run postbuild
-  - stage: test
-    env: Lint
-    script:
-    - npm run lint
-  - stage: test
-    env: Test
-    script:
-    - npm run test
-    - npm run coverage
+    - yarn postbuild
+    - yarn lint
+    - yarn test
+    - yarn coverage
   - stage: pre-release
     env: Dry Run
     script:
-    - npm run dry-release
+    - yarn dry-release
   - stage: cross-browser
     env: Cross browser
     script:
@@ -57,15 +68,6 @@ jobs:
         fi
         npm run ci:sauce
   - stage: deploy
-    addons:
-      apt:
-        sources:
-        - sourceline: "deb https://artifacts.crowdin.com/repo/deb/ /"
-          key_url: https://artifacts.crowdin.com/repo/GPG-KEY-crowdin
-        packages:
-        - crowdin
-        - default-jre
-        - rsync
     script:
     - npm run build
     deploy:

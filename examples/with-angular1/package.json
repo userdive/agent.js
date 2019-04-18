@@ -5,7 +5,7 @@
     "@types/angular": "1.6.51",
     "@uirouter/angularjs": "1.0.20",
     "angular": "1.7.5",
-    "userdive": "^2.1.0"
+    "userdive": "^3.0.0"
   },
   "private": true
 }

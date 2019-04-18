@@ -2,8 +2,8 @@
   "name": "built-in",
   "version": "3.0.0",
   "dependencies": {
-    "@userdive/agent": "^2.1.0",
-    "@userdive/linker": "^2.1.0"
+    "@userdive/agent": "^3.0.0",
+    "@userdive/linker": "^3.0.0"
   },
   "license": "MIT",
   "main": "n/a",
