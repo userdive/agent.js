@@ -13,14 +13,14 @@ fixture('env specified page option').page(l)
 
 test.requestHooks(envLogger)('override location with click', async (t) => {
   await t.wait(2000)
-  assert.equal(envLogger.requests.length, 1)
+  assert.strictEqual(envLogger.requests.length, 1)
   const originalRecord = envLogger.requests[0]
-  assert.equal(query(originalRecord).l, l)
+  assert.strictEqual(query(originalRecord).l, l)
 
   await t
     .click(Selector('#page'))
     .wait(2000)
-  assert.equal(envLogger.requests.length, 2)
+  assert.strictEqual(envLogger.requests.length, 2)
   const overrideRecord = envLogger.requests[1]
-  assert.equal(query(overrideRecord).l, override)
+  assert.strictEqual(query(overrideRecord).l, override)
 })
