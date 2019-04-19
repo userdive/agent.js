@@ -96,7 +96,7 @@
     "lint:packages": "lerna run lint --stream",
     "lint:ts": "tslint 'packages/*/{src,test}/**/*.ts'",
     "lint:types": "tsc",
-    "postbuild": "webpack --mode production && size-limit && find cdn -type f | grep -v js | xargs rm && cp robots.txt ./cdn",
+    "postbuild": "webpack --mode production && size-limit && cp robots.txt ./cdn",
     "precommit": "lint-staged",
     "prepare": "lerna run build --scope userdive --scope @userdive/* --stream",
     "release": "lerna exec --no-bail -- 'can-npm-publish && npm publish --access public && echo done ; echo skip'",
