@@ -11,9 +11,9 @@ fixture('basic env').page(l)
 
 test.requestHooks(envLogger)('environment request', async (t) => {
   await t.wait(2000)
-  assert.equal(envLogger.requests.length, 1)
+  assert.strictEqual(envLogger.requests.length, 1)
   const envRecord = envLogger.requests[0]
-  assert.equal(envRecord.request.method, 'get')
+  assert.strictEqual(envRecord.request.method, 'get')
   const q = query(envRecord)
-  assert.equal(q.l, l)
+  assert.strictEqual(q.l, l)
 })

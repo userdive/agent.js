@@ -16,7 +16,7 @@ describe('agent', () => {
   it('constructor', () => {
     const agent: any = new Agent(random.uuid(), 'auto', {})
     assert(agent.core)
-    assert.equal(
+    assert.strictEqual(
       agent.get('linkerParam'),
       `${SETTINGS.linkerName}=${getCookie(SETTINGS.cookieName)}`
     )
@@ -27,7 +27,7 @@ describe('agent', () => {
       cookieName,
       cookieExpires: random.number()
     })
-    assert.equal(
+    assert.strictEqual(
       agent2.get('linkerParam'),
       `${SETTINGS.linkerName}=${getCookie(cookieName)}`
     )
@@ -43,13 +43,13 @@ describe('agent', () => {
     const agent3: any = new Agent(random.uuid(), 'auto', {
       allowLinker: true
     })
-    assert.equal(agent3.get('linkerParam'), `${SETTINGS.linkerName}=${before}`)
+    assert.strictEqual(agent3.get('linkerParam'), `${SETTINGS.linkerName}=${before}`)
     stub.restore()
   })
 
   it('get clientId', () => {
     const clientId = getCookie(SETTINGS.cookieName)
-    assert.equal(agent.get('clientId'), clientId)
+    assert.strictEqual(agent.get('clientId'), clientId)
   })
 
   it('get with undefined key', () => {
