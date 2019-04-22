@@ -138,7 +138,7 @@ The name of agent cookie.
 
 | Field Name | Type   | Default Value |
 | :--------- | :----- | :------------ |
-| cookieName | String | '\_ud'        |
+| cookieName | String | '\_ud2'       |
 
 **Usage**
 
