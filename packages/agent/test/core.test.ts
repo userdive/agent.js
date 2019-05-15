@@ -253,11 +253,12 @@ describe('AgentCore', () => {
 
   it('send fail', () => {
     const stub = sinonStub(require('../src/requests'), 'get')
-    stub.callsFake(
-      (url: any, query: any, onerror: (...args: any[]) => void) => {
-        onerror(url, query)
-      }
-    )
+    stub.callsFake((...args: unknown[]) => {
+      const url = args[0] as string
+      const query = args[1] as string[]
+      const onerror = args[2] as OnErrorEventHandler
+      return onerror && onerror(`${url}?${query.join('&')}`)
+    })
 
     agent.pageview(location.href)
     assert(agent.loadTime === 0)
