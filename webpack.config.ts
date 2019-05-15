@@ -1,6 +1,6 @@
 /* tslint:disable:no-var-requires */
 const webpack = require('webpack')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const path = require('path')
 const { author, license } = require('./package.json')
 const { version } = require('./lerna.json')
@@ -26,9 +26,9 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
+      new TerserPlugin({
         sourceMap: true,
-        uglifyOptions: {
+        terserOptions: {
           output: {
             comments: false
           }
@@ -43,7 +43,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
-  devtool: 'cheap-source-map',
   module: {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
