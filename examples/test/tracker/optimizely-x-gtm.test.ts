@@ -16,7 +16,8 @@ test.requestHooks(intLogger)('multiple test events', async (t) => {
   for (let i = 0; i < intLogger.requests.length; i++) {
     const intRecord = intLogger.requests[i]
     assert.strictEqual(intRecord.request.method, 'get')
-    const event = query(intRecord)['e'].split(',')
+    const data = query(intRecord) as {'e': string}
+    const event = data['e'].split(',')
     assert.strictEqual(event[0], `${i + 1}`)
     assert.strictEqual(event[1], 'optimizely')
     assert.ok(event[2])

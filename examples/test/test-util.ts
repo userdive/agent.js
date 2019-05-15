@@ -33,7 +33,7 @@ export const spaTest = (path: string) => {
 
 export const query = (record: Request) => {
   const query = record.request.url.split('?')[1]
-  return query ? qs.parse(query) : {}
+  return query ? qs.parse(query) : null
 }
 
 export const ABTestingTest = (expectText: string, wait: number = 500) => {
