@@ -2,9 +2,9 @@
   "name": "with-angular1",
   "version": "3.0.0",
   "dependencies": {
-    "@types/angular": "1.6.51",
-    "@uirouter/angularjs": "1.0.20",
-    "angular": "1.7.5",
+    "@types/angular": "1.6.54",
+    "@uirouter/angularjs": "1.0.22",
+    "angular": "1.7.8",
     "userdive": "^3.0.0"
   },
   "private": true
