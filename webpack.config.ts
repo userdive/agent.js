@@ -1,13 +1,13 @@
-/* tslint:disable:no-var-requires */
-const webpack = require('webpack')
-const TerserPlugin = require('terser-webpack-plugin')
-const path = require('path')
-const { author, license } = require('./package.json')
-const { version } = require('./lerna.json')
+import * as path from 'path'
+import * as TerserPlugin from 'terser-webpack-plugin'
+import { BannerPlugin, Configuration, DefinePlugin, optimize } from 'webpack'
+
+import { version } from './lerna.json'
+import { author, license } from './package.json'
 
 const date = new Date()
 
-module.exports = {
+const config: Configuration = {
   entry: {
     'agent.d': path.join(__dirname, 'packages/agent/src/entrypoint/debug.ts'),
     agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts'),
@@ -34,7 +34,7 @@ module.exports = {
           }
         }
       }),
-      new webpack.BannerPlugin({
+      new BannerPlugin({
         banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
       })
     ],
@@ -47,11 +47,13 @@ module.exports = {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.DefinePlugin({
+    new optimize.ModuleConcatenationPlugin(),
+    new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
       'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN)
     })
   ]
 }
+
+export default config
