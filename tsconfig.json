@@ -25,9 +25,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
+  "include": [
+    "packages/**/*.ts"
+  ],
   "exclude": [
-    "node_modules/**/*.ts",
-    "packages/**/*.test.ts",
+    "node_modules/**/*.ts"
   ],
   "types": [
     "./node_modules/@userdive/agent.js/lib",
