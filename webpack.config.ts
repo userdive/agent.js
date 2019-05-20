@@ -1,13 +1,13 @@
-/* tslint:disable:no-var-requires */
-const webpack = require('webpack')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const path = require('path')
-const { author, license } = require('./package.json')
-const { version } = require('./lerna.json')
+import * as path from 'path'
+import * as TerserPlugin from 'terser-webpack-plugin'
+import { BannerPlugin, Configuration, DefinePlugin } from 'webpack'
+
+import { version } from './lerna.json'
+import { author, license } from './package.json'
 
 const date = new Date()
 
-module.exports = {
+const config: Configuration = {
   entry: {
     'agent.d': path.join(__dirname, 'packages/agent/src/entrypoint/debug.ts'),
     agent: path.join(__dirname, 'packages/agent/src/entrypoint/index.ts'),
@@ -17,7 +17,10 @@ module.exports = {
       'packages/kaizenplatform/src/index.ts'
     ),
     'vwo-plugin': path.join(__dirname, 'packages/vwo/src/index.ts'),
-    'optimizely-x-plugin': path.join(__dirname, 'packages/optimizely_x/src/index.ts')
+    'optimizely-x-plugin': path.join(
+      __dirname,
+      'packages/optimizely_x/src/index.ts'
+    )
   },
   output: {
     path: path.join(__dirname, 'cdn'),
@@ -26,15 +29,15 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
+      new TerserPlugin({
         sourceMap: true,
-        uglifyOptions: {
+        terserOptions: {
           output: {
             comments: false
           }
         }
       }),
-      new webpack.BannerPlugin({
+      new BannerPlugin({
         banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
       })
     ],
@@ -43,16 +46,16 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
-  devtool: 'cheap-source-map',
   module: {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
       'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN)
     })
   ]
 }
+
+export default config
