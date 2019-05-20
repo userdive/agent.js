@@ -1,6 +1,6 @@
 import * as path from 'path'
 import * as TerserPlugin from 'terser-webpack-plugin'
-import { BannerPlugin, Configuration, DefinePlugin, optimize } from 'webpack'
+import { BannerPlugin, Configuration, DefinePlugin } from 'webpack'
 
 import { version } from './lerna.json'
 import { author, license } from './package.json'
@@ -17,7 +17,10 @@ const config: Configuration = {
       'packages/kaizenplatform/src/index.ts'
     ),
     'vwo-plugin': path.join(__dirname, 'packages/vwo/src/index.ts'),
-    'optimizely-x-plugin': path.join(__dirname, 'packages/optimizely_x/src/index.ts')
+    'optimizely-x-plugin': path.join(
+      __dirname,
+      'packages/optimizely_x/src/index.ts'
+    )
   },
   output: {
     path: path.join(__dirname, 'cdn'),
@@ -47,7 +50,6 @@ const config: Configuration = {
     rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   plugins: [
-    new optimize.ModuleConcatenationPlugin(),
     new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
