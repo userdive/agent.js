@@ -1,5 +1,6 @@
 import * as assert from 'assert'
 import { EventEmitter } from 'events'
+
 import { internet, lorem, random } from 'faker'
 import 'mocha'
 import * as objectAssign from 'object-assign'
@@ -9,27 +10,25 @@ import { FieldsObject } from 'userdive/lib/types'
 import {
   INTERACTION,
   INTERVAL,
-  SETTINGS as SETTINGS_DEFAULT
+  SETTINGS as SETTINGS_DEFAULT,
 } from '../src/constants'
 import Agent from '../src/core'
 import Base from '../src/events'
 import { EventType } from '../src/types'
 
 describe('AgentCore', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const isUrl = require('is-url')
   const eventFactory = (eventType: EventType, emitter: EventEmitter) =>
     class DummyEvents extends Base<UIEvent> {
-      public validate () {
+      public validate() {
         return true
       }
-      public on () {
-        super.on(
-          eventType,
-          () => {
-            //
-          }
-        )
-        emitter.on(eventType, (data) => super.emit(data))
+      public on() {
+        super.on(eventType, () => {
+          //
+        })
+        emitter.on(eventType, data => super.emit(data))
       }
     }
 
@@ -90,7 +89,7 @@ describe('AgentCore', () => {
     emitter.emit('click', {
       type: 'a',
       x: random.number({ min: 1 }),
-      y: random.number({ min: 1 })
+      y: random.number({ min: 1 }),
     })
 
     assert(agent.cache.a.type === 'a')
@@ -111,7 +110,7 @@ describe('AgentCore', () => {
     emitter.emit('scroll', {
       type: 'l',
       x: random.number({ min: 1 }),
-      y: random.number({ min: 1 })
+      y: random.number({ min: 1 }),
     })
 
     assert(agent.cache.l.type === 'l')
@@ -132,7 +131,7 @@ describe('AgentCore', () => {
     emitter.emit('click', {
       type: 'a',
       x: random.number({ min: 1 }),
-      y: random.number({ min: 1 })
+      y: random.number({ min: 1 }),
     })
     assert(agent.interactions.length === 0)
 
@@ -150,7 +149,7 @@ describe('AgentCore', () => {
     emitter.emit('scroll', {
       type: 'l',
       x: random.number({ min: 1 }),
-      y: random.number({ min: 1 })
+      y: random.number({ min: 1 }),
     })
     timer.tick(INTERVAL[1] * 1000)
     assert(agent.interactions.length === 1)
@@ -161,7 +160,7 @@ describe('AgentCore', () => {
       emitter.emit('scroll', {
         type: 'l',
         x: random.number({ min: 1 }),
-        y: random.number({ min: 1 })
+        y: random.number({ min: 1 }),
       })
       timer.tick(INTERVAL[1] * 1000)
     }
@@ -225,7 +224,7 @@ describe('AgentCore', () => {
       eventCategory: lorem.word(),
       eventAction: lorem.word(),
       eventLabel: lorem.word(),
-      eventValue: random.number()
+      eventValue: random.number(),
     })
     assert(eventParams.length === 5)
     assert(eventParams[0] === '1')
@@ -234,7 +233,7 @@ describe('AgentCore', () => {
     eventParams = sendEvent({
       eventCategory: lorem.word(),
       eventAction: lorem.word(),
-      eventLabel: lorem.word()
+      eventLabel: lorem.word(),
     })
     assert(eventParams.length === 4)
     assert(eventParams[0] === '2')
@@ -243,7 +242,7 @@ describe('AgentCore', () => {
     eventParams = sendEvent({
       eventCategory: lorem.word(),
       eventAction: lorem.word(),
-      eventValue: random.number()
+      eventValue: random.number(),
     })
     assert(eventParams.length === 5)
     assert(eventParams[0] === '3')

@@ -1,6 +1,8 @@
-import Agent from '@userdive/agent'
 import * as assert from 'assert'
+
+import Agent from '@userdive/agent'
 import { random } from 'faker'
+
 import 'mocha'
 import Linker from '../src/linker'
 

@@ -1,10 +1,11 @@
 import * as assert from 'assert'
+import { EventEmitter } from 'events'
+
 import { random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
-
-import { EventEmitter } from 'events'
 import { UIEventObserver } from 'ui-event-observer'
+
 import { createEvent } from './helpers/Event'
 
 import Events from '../src/events'
@@ -12,7 +13,7 @@ import * as logger from '../src/logger'
 
 describe('events', () => {
   class DummyEvents extends Events<UIEvent> {
-    public validate () {
+    public validate() {
       return true
     }
   }
@@ -122,7 +123,7 @@ describe('events', () => {
     spy.restore()
 
     class InValidDummyEvents extends DummyEvents {
-      public validate () {
+      public validate() {
         return false
       }
     }

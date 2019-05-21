@@ -1,5 +1,6 @@
-import { save as autoSave } from 'auto-cookie'
 import { EventEmitter } from 'events'
+
+import { save as autoSave } from 'auto-cookie'
 import { get as getCookie, set as setCookie } from 'js-cookie'
 import * as objectAssign from 'object-assign'
 import { UIEventObserver } from 'ui-event-observer'
@@ -10,13 +11,17 @@ import { getEnv, getLocation } from './browser'
 import {
   INTERACTION as MAX_INTERACTION,
   INTERVAL as INTERVAL_DEFAULT_SETTING,
-  MAX_EVENT_SEQ
+  MAX_EVENT_SEQ,
 } from './constants'
 import { AgentEvent } from './events'
 import { raise, warning } from './logger'
 import { get, obj2query } from './requests'
 import Store from './store'
-import { ClientEnvironmentsData, Interaction, SettingFieldsObject } from './types'
+import {
+  ClientEnvironmentsData,
+  Interaction,
+  SettingFieldsObject,
+} from './types'
 
 const generateId = () => uuid().replace(/-/g, '')
 
@@ -31,8 +36,8 @@ const toInt = (n: number) => Math.floor(n)
 const createInteractionData = (d: Interaction): string =>
   cacheValidator(d)
     ? `${d.type},${d.id},${toInt(d.x)},${toInt(d.y)},${toInt(d.left)},${toInt(
-      d.top
-    )}`
+        d.top
+      )}`
     : ''
 
 const findOrCreateClientId = (
@@ -42,7 +47,7 @@ const findOrCreateClientId = (
     cookieExpires: expires,
     cookieName,
     cookiePath: path,
-    linkerName
+    linkerName,
   }: SettingFieldsObject,
   { search }: Location
 ): string => {
@@ -51,7 +56,7 @@ const findOrCreateClientId = (
     const qs = search.trim().replace(/^[?#&]/, '')
     const [linkerParam] = qs
       .split('&')
-      .filter((s) => s.length && s.split('=')[0] === linkerName)
+      .filter(s => s.length && s.split('=')[0] === linkerName)
     const id = linkerParam ? linkerParam.split('=')[1] : undefined
     if (id && id.length === 32 && !id.match(/[^A-Za-z0-9]+/)) {
       clientId = id
@@ -63,7 +68,7 @@ const findOrCreateClientId = (
     writeCookie(cookieName, clientId, {
       domain: cookieDomain === 'auto' ? undefined : cookieDomain,
       expires,
-      path
+      path,
     })
   }
   return clientId
@@ -86,12 +91,14 @@ export default class AgentCore extends Store {
   private interval: number[]
   private loadTime: number
   private id: string
-  constructor (
+  public constructor(
     id: string,
     eventsClass: any[], // TODO
     settings: SettingFieldsObject
   ) {
-    const clientId = settings.clientId ? settings.clientId : findOrCreateClientId(settings, getLocation())
+    const clientId = settings.clientId
+      ? settings.clientId
+      : findOrCreateClientId(settings, getLocation())
     super(clientId)
 
     this.id = generateId()
@@ -103,7 +110,7 @@ export default class AgentCore extends Store {
     this.eventId = 0
     this.emitter = new EventEmitter()
     this.observer = new UIEventObserver() // singleton
-    eventsClass.forEach((Class) => {
+    eventsClass.forEach(Class => {
       this.events.push(new Class(this.id, this.emitter, this.observer))
     })
     if (!id || !clientId) {
@@ -114,7 +121,7 @@ export default class AgentCore extends Store {
     this.emitter.on(this.id, this.updateInteractionCache.bind(this))
   }
 
-  public pageview (page: string): void {
+  public pageview(page: string): void {
     this.send([], true)
     if (!this.loadTime) {
       this.bind()
@@ -143,11 +150,11 @@ export default class AgentCore extends Store {
     this.set('page', undefined) // remove locale cache
   }
 
-  public event ({
+  public event({
     eventCategory: category,
     eventLabel: label,
     eventAction: action,
-    eventValue: value
+    eventValue: value,
   }: EventFieldsObject): void {
     this.eventId++
     const isNumber = (n?: number): boolean => typeof n === 'number' && n >= 0
@@ -161,20 +168,20 @@ export default class AgentCore extends Store {
         [
           `e=${this.eventId},${category},${action},${label || ''}${
             isNumber(value) ? ',' + value : ''
-          }`
+          }`,
         ],
         true
       )
     }
   }
 
-  public destroy (): void {
+  public destroy(): void {
     this.emitter.removeAllListeners(this.id)
-    this.events.forEach((e) => e.off())
+    this.events.forEach(e => e.off())
     this.loadTime = 0
   }
 
-  public send (query: string[], force?: boolean): void {
+  public send(query: string[], force?: boolean): void {
     if (
       this.baseUrl &&
       (force || this.interactions.length >= MAX_INTERACTION)
@@ -182,7 +189,7 @@ export default class AgentCore extends Store {
       const interactionsToSend = this.interactions.slice()
       this.interactions.length = 0
 
-      interactionsToSend.forEach((data) => {
+      interactionsToSend.forEach(data => {
         const q = createInteractionData(data)
         if (q.length) {
           query.push(`d=${q}`)
@@ -193,9 +200,11 @@ export default class AgentCore extends Store {
         const { v } = this.get('env') as ClientEnvironmentsData
         get(
           `${this.baseUrl}/${this.loadTime}/int.gif`,
-          query.concat(obj2query(
-            objectAssign({}, { v }, this.get('custom')) as any /* TODO */
-            )),
+          query.concat(
+            obj2query(
+              objectAssign({}, { v }, this.get('custom')) as any /* TODO */
+            )
+          ),
           () => {
             this.destroy()
           }
@@ -204,8 +213,8 @@ export default class AgentCore extends Store {
     }
   }
 
-  public update (): void {
-    Object.keys(this.cache).forEach((key) => {
+  public update(): void {
+    Object.keys(this.cache).forEach(key => {
       const cache: any = this.cache[key] // TODO
       if (cacheValidator(cache)) {
         cache.id = this.interactionId
@@ -214,7 +223,7 @@ export default class AgentCore extends Store {
     })
   }
 
-  private sendWithUpdate (): void {
+  private sendWithUpdate(): void {
     this.update()
     this.clear()
     this.send([])
@@ -228,20 +237,20 @@ export default class AgentCore extends Store {
     }
   }
 
-  private bind () {
-    this.events.forEach((e) => e.on())
+  private bind() {
+    this.events.forEach(e => e.on())
   }
 
-  private updateInteractionCache (data: Interaction): void {
+  private updateInteractionCache(data: Interaction): void {
     if (cacheValidator(data) && this.loadTime) {
       this.cache[data.type] = data
     }
   }
 
-  private clear (): void {
+  private clear(): void {
     this.cache = {
       a: {},
-      l: {}
+      l: {},
     }
   }
 }

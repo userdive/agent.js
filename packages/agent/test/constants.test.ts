@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+
 import 'mocha'
 import { INTERVAL } from '../src/constants'
 

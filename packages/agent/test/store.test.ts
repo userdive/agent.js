@@ -1,5 +1,7 @@
 import * as assert from 'assert'
+
 import { internet, random } from 'faker'
+
 import 'mocha'
 import { CUSTOM_INDEX } from '../src/constants'
 
@@ -19,12 +21,12 @@ describe('store', () => {
       ww: random.number(),
       wh: random.number(),
       h: random.number(),
-      w: random.number()
+      w: random.number(),
     }
     assert(
       store.merge({
         type: 'env',
-        data: env
+        data: env,
       }).env.v === env.v
     )
     const before = env.uid
@@ -69,7 +71,7 @@ describe('store', () => {
       metric4: random.number({ min: 1, max: 99 }),
       metric5: random.number({ min: 1, max: 99 }),
       page: url,
-      undefined: random.word() // useless
+      undefined: random.word(), // useless
     })
     assert(state.env.l === url)
     assert(Object.keys(state.custom).length === 10)
