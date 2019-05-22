@@ -5,8 +5,11 @@
     "docusaurus": "1.9.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.6",
-    "crowdin-cli": "0.3.0"
+    "@uncovertruth/eslint-config": "4.5.0",
+    "@uncovertruth/eslint-config-react": "4.4.0",
+    "babel-eslint": "10.0.1",
+    "crowdin-cli": "0.3.0",
+    "eslint-plugin-react": "7.13.0"
   },
   "private": true,
   "scripts": {
@@ -16,7 +19,7 @@
     "docusaurus-build": "docusaurus-build",
     "lint": "run-p lint:*",
     "lint:css": "stylelint 'static/**/*.{css,scss}'",
-    "lint:js": "eslint -c .eslintrc.json .",
+    "lint:js": "eslint -c ./.eslintrc.js ./**/*.js",
     "prepare": "yarn write-translations",
     "rename-version": "docusaurus-rename-version",
     "start": "docusaurus-start",

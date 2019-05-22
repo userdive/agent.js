@@ -20,7 +20,7 @@
     "e2e": "testcafe 'chrome --no-sandobox' test/",
     "lint": "run-p lint:*",
     "lint:pug": "pug-lint ./**/*.pug",
-    "lint:ts": "eslint ./**/*.ts{,x}",
+    "lint:ts": "eslint -c ../.eslintrc.js ./**/*.ts{,x}",
     "prebuild": "npm run clean",
     "start": "concurrently -k 'yarn w:ts' 'yarn w:html'",
     "w:html": "pug . -o build/agent.js -P -s -w",

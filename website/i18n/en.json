@@ -4,22 +4,51 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "Knowing it, makes the world better.",
-    "command-queue": "Command Queue",
-    "custom-variables": "Custom Dimensions",
-    "events": "Event Tracking",
-    "field-reference": "Field reference",
-    "getting-started": "Getting started",
-    "integrations": "Integrations",
-    "kaizenplatform-plugin": "Kaizen Platform",
-    "linker-plugin": "Linker",
-    "optimizely_x-plugin": "Optimizely X",
-    "vwo-plugin": "Visual Website Optimizer",
-    "writing-plugins": "Plugins",
-    "Usage": "Usage",
-    "GitHub": "GitHub",
-    "Blog": "Blog",
-    "Plugins": "Plugins",
-    "Integrations": "Integrations"
+    "docs": {
+      "command-queue": {
+        "title": "Command Queue"
+      },
+      "custom-variables": {
+        "title": "Custom Dimensions"
+      },
+      "events": {
+        "title": "Event Tracking"
+      },
+      "field-reference": {
+        "title": "Field reference"
+      },
+      "getting-started": {
+        "title": "Getting started"
+      },
+      "integrations": {
+        "title": "Integrations"
+      },
+      "kaizenplatform-plugin": {
+        "title": "Kaizen Platform"
+      },
+      "linker-plugin": {
+        "title": "Linker"
+      },
+      "optimizely_x-plugin": {
+        "title": "Optimizely X"
+      },
+      "vwo-plugin": {
+        "title": "Visual Website Optimizer"
+      },
+      "writing-plugins": {
+        "title": "Plugins"
+      }
+    },
+    "links": {
+      "Usage": "Usage",
+      "GitHub": "GitHub",
+      "Blog": "Blog"
+    },
+    "categories": {
+      "Usage": "Usage",
+      "Plugins": "Plugins",
+      "Integrations": "Integrations"
+    }
   },
   "pages-strings": {
     "Need help?|no description given": "Need help?",

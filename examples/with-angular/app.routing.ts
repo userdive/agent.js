@@ -7,18 +7,18 @@ import { Sample2Component } from './components/sample2.component'
 const routes: Routes = [
   {
     component: Sample1Component,
-    path: 'sample1'
+    path: 'sample1',
   },
   {
     component: Sample2Component,
-    path: 'sample2'
+    path: 'sample2',
   },
   {
     path: '**',
-    redirectTo: 'sample1'
-  }
+    redirectTo: 'sample1',
+  },
 ]
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {
-  useHash: true
+  useHash: true,
 })

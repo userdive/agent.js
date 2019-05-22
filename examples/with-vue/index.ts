@@ -12,15 +12,15 @@ const router = new VueRouter({
   routes: [
     { path: '/sample1', name: 'sample1', component: sample1 },
     { path: '/sample2', name: 'sample2', component: sample2 },
-    { path: '/**', redirect: 'sample1' }
-  ]
+    { path: '/**', redirect: 'sample1' },
+  ],
 })
 
 new Vue({
-  mounted () {
+  mounted() {
     _ud('create', 'af57h6gb', 'auto')
   },
-  router
+  router,
 }).$mount('#app')
 
 router.afterEach(() => {
