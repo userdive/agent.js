@@ -5,6 +5,6 @@ import { RouterModule } from '@angular/router'
   providers: [RouterModule],
   template: `
     <a routerLink="/sample2">Sample2</a>
-  `
+  `,
 })
 export class Sample1Component {}

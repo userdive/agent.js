@@ -96,7 +96,7 @@
     "lint": "run-p lint:*",
     "lint:md": "textlint 'packages/*/*.md' README.md docs",
     "lint:packages": "lerna run lint --stream",
-    "lint:ts": "eslint -c ./.eslintrc.js 'packages/*/{src,test}/**/*.ts'",
+    "lint:ts": "eslint -c ./.eslintrc.js 'packages/*/{src,test}/**/*.ts' 'examples/**/*.ts{,x}'",
     "lint:types": "tsc",
     "postbuild": "webpack --mode production && size-limit && cp robots.txt ./cdn",
     "precommit": "lint-staged",
