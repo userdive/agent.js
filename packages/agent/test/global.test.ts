@@ -1,11 +1,12 @@
 import * as assert from 'assert'
+
 import { lorem, random } from 'faker'
 import { get as getCookie } from 'js-cookie'
 import 'mocha'
 import { spy as sinonSpy, stub as sinonStub, useFakeTimers } from 'sinon'
-
 import { inject, namespace, q } from 'userdive'
 import { USERDIVEApi } from 'userdive/lib/types'
+
 import { NAMESPACE, SETTINGS } from '../src/constants'
 
 const GLOBAL_NAME: string = lorem.word()
@@ -52,14 +53,14 @@ describe('global async', () => {
 
     let _core: any = factory()('send', 'event', {
       eventCategory: 'c1',
-      eventAction: 'a1'
+      eventAction: 'a1',
     })
     assert(_core.eventId === 1)
 
     _core = factory()('send', {
       hitType: 'event',
       eventCategory: 'c1',
-      eventAction: 'a1'
+      eventAction: 'a1',
     })
     assert(_core.eventId === 2)
 
@@ -72,7 +73,7 @@ describe('global async', () => {
     name = lorem.word()
     factory()('create', lorem.word(), 'auto', { name })
     const agent3 = (factory() as any)(`${name}.send`, {
-      hitType: 'pageview'
+      hitType: 'pageview',
     })
     assert(agent3.loadTime)
 
@@ -80,7 +81,7 @@ describe('global async', () => {
     const api = factory() as any
     api('create', lorem.word(), { auto: true, name }) // v0.x supported options
     const agent4 = (factory() as any)(`${name}.send`, 'pageview', {
-      dimension1: lorem.word()
+      dimension1: lorem.word(),
     })
     assert(agent4.loadTime)
 
@@ -103,10 +104,10 @@ describe('global async', () => {
     factory()('create', lorem.word(), 'auto')
     const name = lorem.word()
     class Plugin {
-      constructor (tracker: any) {
+      public constructor(tracker: any) {
         assert(tracker.plugins[name])
       }
-      public echo (value: string) {
+      public echo(value: string) {
         assert(value === 'hello')
       }
     }
@@ -125,10 +126,10 @@ describe('global async', () => {
     const name = lorem.word()
     const expected = lorem.word()
     class Plugin {
-      constructor (tracker: any) {
+      public constructor(tracker: any) {
         assert(tracker.plugins[name])
       }
-      public echo (value: string) {
+      public echo(value: string) {
         assert(value === expected)
       }
     }

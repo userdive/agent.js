@@ -1,5 +1,6 @@
-import { baseUrl } from '../testcafe-conf'
 import { spaTest as test } from './test-util'
+
+import { baseUrl } from '../testcafe-conf'
 
 const path = '/with-react/#/'
 

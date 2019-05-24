@@ -1,28 +1,33 @@
-import Agent from '@userdive/agent'
 import * as assert from 'assert'
+
+import Agent from '@userdive/agent'
 import { random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
+
 import { name, Plugin as Optimizely } from '../src/plugin'
 
 const emulate = (global = window as any, ready = false, match = true) => {
   if (!ready) {
     return
   }
-  const campaignId: string = `${random.number()}`
+  const campaignId = `${random.number()}`
   const getCampaignStates = () => {
     return {
-      campaignId : {
+      campaignId: {
         id: campaignId,
         experiment: { id: match ? `${random.number()}` : '', name: '' },
-        variation: { id: match ? `${random.number()}` : '' , name: `${random.word}` }
-      }
+        variation: {
+          id: match ? `${random.number()}` : '',
+          name: `${random.word}`,
+        },
+      },
     }
   }
   const optimizeObject: any = {
     get: () => {
       return { getCampaignStates }
-    }
+    },
   }
   global[name] = optimizeObject
 }

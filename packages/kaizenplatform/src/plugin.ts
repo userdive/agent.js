@@ -3,11 +3,11 @@ import { q } from 'userdive'
 
 export default class Plugin {
   private tracker: Agent
-  constructor (tracker: Agent) {
+  public constructor(tracker: Agent) {
     this.tracker = tracker
   }
-  public getVariation () {
-    (q('kzs', window) as any)(
+  public getVariation() {
+    ;(q('kzs', window) as any)(
       'getVariation',
       (
         data: { experimentType: string; variationId: string },
@@ -18,7 +18,7 @@ export default class Plugin {
             this.tracker.send('event', {
               eventCategory: 'kaizenplatform',
               eventAction: data.experimentType,
-              eventLabel: data.variationId
+              eventLabel: data.variationId,
             })
         } catch (e) {
           // Do nothing

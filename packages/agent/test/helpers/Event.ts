@@ -1,6 +1,6 @@
 import { EventType } from '../../src/types'
 
-export function createEvent (eventName: EventType): Event {
+export function createEvent(eventName: EventType): Event {
   let e
   if (typeof Event === 'function') {
     e = new Event(eventName)

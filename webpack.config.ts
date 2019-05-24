@@ -1,4 +1,5 @@
 import * as path from 'path'
+
 import * as TerserPlugin from 'terser-webpack-plugin'
 import { BannerPlugin, Configuration, DefinePlugin } from 'webpack'
 
@@ -20,12 +21,12 @@ const config: Configuration = {
     'optimizely-x-plugin': path.join(
       __dirname,
       'packages/optimizely_x/src/index.ts'
-    )
+    ),
   },
   output: {
     path: path.join(__dirname, 'cdn'),
     filename: '[name].js',
-    sourceMapFilename: '[name].js.map'
+    sourceMapFilename: '[name].js.map',
   },
   optimization: {
     minimizer: [
@@ -33,29 +34,29 @@ const config: Configuration = {
         sourceMap: true,
         terserOptions: {
           output: {
-            comments: false
-          }
-        }
+            comments: false,
+          },
+        },
       }),
       new BannerPlugin({
-        banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`
-      })
+        banner: `@userdive/[name] ${version} | Copyright (c) ${date.getFullYear()} ${author} | License ${license}`,
+      }),
     ],
-    concatenateModules: true
+    concatenateModules: true,
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
   module: {
-    rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
+    rules: [{ test: /\.ts$/, loader: 'ts-loader' }],
   },
   plugins: [
     new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.VERSION': JSON.stringify(version),
-      'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN)
-    })
-  ]
+      'process.env.RAVEN_DSN': JSON.stringify(process.env.RAVEN_DSN),
+    }),
+  ],
 }
 
 export default config

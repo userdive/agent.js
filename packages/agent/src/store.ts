@@ -8,7 +8,7 @@ import {
   CustomData,
   SetType,
   State,
-  StateKey
+  StateKey,
 } from './types'
 
 const parseCustomDataKey = (long: string, prefix: string): string => {
@@ -44,27 +44,25 @@ const initialState = (): State => ({
     sh: 0,
     sw: 0,
     wh: 0,
-    ww: 0
+    ww: 0,
   },
-  custom: {}
+  custom: {},
 })
 
 export default class Store {
   private state: State
-  constructor (id: string) {
+  public constructor(id: string) {
     this.reset()
     this.state.clientId = id
   }
-  public get (
-    key: StateKey
-  ): ClientEnvironmentsData | CustomData | string {
+  public get(key: StateKey): ClientEnvironmentsData | CustomData | string {
     const data = this.state[key]
     if (key === 'custom') {
       this.state[key] = {}
     }
     return data
   }
-  public set (type: SetType, data: any): State {
+  public set(type: SetType, data: any): State {
     switch (type) {
       case 'page':
         this.state.env.l = data
@@ -78,22 +76,22 @@ export default class Store {
     }
     return this.state
   }
-  public merge ({ type, data }: ClientEnvironments | Custom): State {
+  public merge({ type, data }: ClientEnvironments | Custom): State {
     const stateObj = initialState()
     this.state[type] = objectAssign({}, stateObj[type], this.state[type], data)
     return this.state
   }
-  public mergeDeep (obj: any): State {
+  public mergeDeep(obj: any): State {
     if (obj.page) {
       this.state.env.l = obj.page
     }
     let data = {}
-    Object.keys(obj).forEach((key) => {
+    Object.keys(obj).forEach(key => {
       data = objectAssign({}, data, parseCustomData(key, obj[key]))
     })
     return this.merge({ type: 'custom', data })
   }
-  protected reset (): void {
+  protected reset(): void {
     this.state = initialState()
   }
 }

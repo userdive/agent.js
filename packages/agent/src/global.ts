@@ -1,4 +1,5 @@
 import { FieldsObject } from 'userdive/lib/types'
+
 import { warning } from './logger'
 
 export type AgentClass = new (
@@ -48,7 +49,7 @@ const execute = (Agent: AgentClass, agents: { [key: string]: any }) => (
   }
 }
 
-export default function (
+export default function(
   Agent: any,
   agents: { [key: string]: any },
   name: string
@@ -56,7 +57,7 @@ export default function (
   const applyQueue = (delay: number) => {
     setTimeout(() => {
       if ((window as any)[name].q.length === 0) {
-        (window as any)[name] = execute(Agent, agents)
+        ;(window as any)[name] = execute(Agent, agents)
         return
       }
 
@@ -67,11 +68,11 @@ export default function (
       if (!res) {
         delay++
         if (delay > 10) {
-          (window as any)[name] = execute(Agent, agents)
+          ;(window as any)[name] = execute(Agent, agents)
           warning(`execute timeout: ${cmd}`)
           return
         }
-        (window as any)[name](...next)
+        ;(window as any)[name](...next)
       }
       applyQueue(delay)
     }, delay * 100)
@@ -80,6 +81,6 @@ export default function (
   if ((window as any)[name] && (window as any)[name].q) {
     applyQueue(0)
   } else {
-    (window as any)[name] = execute(Agent, agents)
+    ;(window as any)[name] = execute(Agent, agents)
   }
 }

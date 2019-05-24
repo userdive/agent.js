@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+
 import { internet, random } from 'faker/locale/ja'
 import 'mocha'
 
@@ -14,11 +15,11 @@ describe('requests', () => {
   })
 
   it('obj2query', () => {
-    function isASCII (str: string) {
+    function isASCII(str: string) {
       return /^[\x00-\x7F]*$/.test(str)
     }
     const queries = obj2query({ foo: random.word() })
-    queries.forEach((q) => {
+    queries.forEach(q => {
       assert(isASCII(q))
     })
 

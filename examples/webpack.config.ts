@@ -1,11 +1,11 @@
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
 
 module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     openPage: '/simple/',
-    publicPath: '/agent.js/'
+    publicPath: '/agent.js/',
   },
   devtool: 'cheap-source-map',
   entry: {
@@ -14,20 +14,20 @@ module.exports = {
     'built-in': path.join(__dirname, 'built-in/index.ts'),
     myPlugin: path.join(__dirname, 'plugin-create/plugin.ts'),
     react: path.join(__dirname, 'with-react/pages/index.tsx'),
-    vue: path.join(__dirname, 'with-vue/index.ts')
+    vue: path.join(__dirname, 'with-vue/index.ts'),
   },
   module: {
-    rules: [{ test: /\.tsx?$/, use: 'ts-loader' }]
+    rules: [{ test: /\.tsx?$/, use: 'ts-loader' }],
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, 'build/agent.js')
+    path: path.join(__dirname, 'build/agent.js'),
   },
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.common.js',
-      'vue-router$': 'vue-router/dist/vue-router.common.js'
+      'vue-router$': 'vue-router/dist/vue-router.common.js',
     },
-    extensions: ['.ts', '.tsx', '.js']
-  }
+    extensions: ['.ts', '.tsx', '.js'],
+  },
 }

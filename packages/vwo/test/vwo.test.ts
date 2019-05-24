@@ -1,20 +1,24 @@
-import Agent from '@userdive/agent'
 import * as assert from 'assert'
+
+import Agent from '@userdive/agent'
 import { random } from 'faker'
 import 'mocha'
 import { spy as sinonSpy } from 'sinon'
+
 import Vwo from '../src/plugin'
 
 const emulate = (global = window as any, ready = false) => {
-  const expId: string = `${random.number()}`
+  const expId = `${random.number()}`
   const combinationChosen = `${random.number()}`
   global._vis_opt_queue = []
   global._vwo_exp_ids = [expId]
-  global._vwo_exp = { [expId]: {
-    combination_chosen: combinationChosen,
-    comb_n: { [combinationChosen]: random.word },
-    ready
-  }}
+  global._vwo_exp = {
+    [expId]: {
+      combination_chosen: combinationChosen,
+      comb_n: { [combinationChosen]: random.word },
+      ready,
+    },
+  }
 }
 
 describe('vwo', () => {

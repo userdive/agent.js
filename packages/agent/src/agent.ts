@@ -22,7 +22,7 @@ export default class Agent {
   private linkerName: string
   private plugins: { [name: string]: any }
 
-  constructor (
+  public constructor(
     projectId: string,
     cookieDomain: string,
     fieldsObject?: FieldsObject
@@ -56,7 +56,10 @@ export default class Agent {
     }
   }
 
-  public send (type: HitType | FieldsObject, data?: FieldsObject | string): AgentCore {
+  public send(
+    type: HitType | FieldsObject,
+    data?: FieldsObject | string
+  ): AgentCore {
     if (typeof type === 'object') {
       data = type
       type = type.hitType as HitType
@@ -83,14 +86,14 @@ export default class Agent {
     return this.core
   }
 
-  public set (key: SetType | FieldsObject, value?: string | number): State {
+  public set(key: SetType | FieldsObject, value?: string | number): State {
     if (typeof key === 'string' && value) {
       return this.core.set(key, value)
     }
     return this.core.mergeDeep(key)
   }
 
-  public get (key: 'clientId' | 'linkerParam'): string {
+  public get(key: 'clientId' | 'linkerParam'): string {
     switch (key) {
       case 'linkerParam':
         return `${this.linkerName}=${this.core.get('clientId')}`
@@ -101,12 +104,12 @@ export default class Agent {
     }
   }
 
-  public provide (name: string, pluginConstructor: PluginConstructor) {
+  public provide(name: string, pluginConstructor: PluginConstructor) {
     this[PLUGINS][name] = pluginConstructor
     return this[PLUGINS][name]
   }
 
-  public require (pluginName: string, pluginOptions?: any): boolean {
+  public require(pluginName: string, pluginOptions?: any): boolean {
     if (this[PLUGINS][pluginName]) {
       this[PLUGINS][pluginName] = new this[PLUGINS][pluginName](
         this,
@@ -117,7 +120,7 @@ export default class Agent {
     return false
   }
 
-  public run (pluginName: string, methodName: string, ...args: any[]): boolean {
+  public run(pluginName: string, methodName: string, ...args: any[]): boolean {
     const p = this[PLUGINS][pluginName]
     if (p && p[methodName]) {
       const res = p[methodName](...args)
@@ -126,7 +129,7 @@ export default class Agent {
     return false
   }
 
-  public subscribe (
+  public subscribe(
     target: any,
     eventName: string,
     handler: (event: any) => void

@@ -2,7 +2,7 @@ export type Domain = string | RegExp
 
 type LinkElement = HTMLAnchorElement | HTMLAreaElement
 
-export function link (domains: Domain[], linkerParam: string, max: number) {
+export function link(domains: Domain[], linkerParam: string, max: number) {
   return ({ target, srcElement }: Event) => {
     let node = (target || srcElement) as Node
     for (let i = 0; i < max && node; i++) {
@@ -16,7 +16,7 @@ export function link (domains: Domain[], linkerParam: string, max: number) {
   }
 }
 
-export function submit (domains: Domain[], linkerParam: string) {
+export function submit(domains: Domain[], linkerParam: string) {
   return ({ target, srcElement }: Event) => {
     const form = (target || srcElement) as HTMLFormElement
     if (!addableForm(domains, form)) {
@@ -32,10 +32,7 @@ export function submit (domains: Domain[], linkerParam: string) {
   }
 }
 
-function linkable (
-  domains: Domain[],
-  node: Node
-): boolean {
+function linkable(domains: Domain[], node: Node): boolean {
   if (!((node as LinkElement).href && node.nodeName.match(/^a(?:rea)?$/i))) {
     return false
   }
@@ -50,7 +47,7 @@ function linkable (
 }
 
 const matchUrl = /^https?:\/\/([^\/:]+)/
-function addableForm (domains: Domain[], element: any) {
+function addableForm(domains: Domain[], element: any) {
   let match
   if (element instanceof HTMLFormElement && element.action) {
     match = element.action.match(matchUrl)
@@ -59,7 +56,7 @@ function addableForm (domains: Domain[], element: any) {
 }
 
 const re = new RegExp(location.hostname)
-function matchDomain (domains: Domain[], link: string): boolean {
+function matchDomain(domains: Domain[], link: string): boolean {
   if (link.match(re)) {
     return false
   }
@@ -69,7 +66,7 @@ function matchDomain (domains: Domain[], link: string): boolean {
   )
 }
 
-function linkUrl (href: string, linkerParam: string): string {
+function linkUrl(href: string, linkerParam: string): string {
   const e = document.createElement('a')
   e.href = href
   const qs = e.search.trim().replace(/^[?#&]/, '')
@@ -77,7 +74,7 @@ function linkUrl (href: string, linkerParam: string): string {
     !qs
       .split('&')
       .filter(
-        (link) => link.length && link.split('=')[0] === linkerParam.split('=')[0]
+        link => link.length && link.split('=')[0] === linkerParam.split('=')[0]
       ).length
   ) {
     e.search = e.search ? `${e.search}&${linkerParam}` : linkerParam
@@ -85,7 +82,7 @@ function linkUrl (href: string, linkerParam: string): string {
   return e.href
 }
 
-function addHiddenInput (form: HTMLFormElement, linkerParam: string) {
+function addHiddenInput(form: HTMLFormElement, linkerParam: string) {
   const [key, value]: string[] = linkerParam.split('=')
   const nodes: any = form.childNodes
 

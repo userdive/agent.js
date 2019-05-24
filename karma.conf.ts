@@ -1,5 +1,6 @@
 import * as objectAssign from 'object-assign'
 import * as puppeteer from 'puppeteer'
+
 import { customLaunchers } from './browser-providers.conf'
 
 let override = {}
@@ -19,7 +20,7 @@ if (
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         commandTimeout: 600,
         idleTimeout: 600,
-        maxDuration: 5400
+        maxDuration: 5400,
       },
       concurrency: 2,
       browserDisconnectTimeout: 300000,
@@ -27,7 +28,7 @@ if (
       browserNoActivityTimeout: 300000,
       customLaunchers,
       browsers: Object.keys(customLaunchers),
-      reporters: ['mocha', 'coverage-istanbul', 'saucelabs']
+      reporters: ['mocha', 'coverage-istanbul', 'saucelabs'],
     }
   )
 } else {
@@ -38,15 +39,13 @@ if (
       customLaunchers: {
         ChromeHeadlessNoSandbox: {
           base: 'ChromeHeadless',
-          flags: [
-            '--no-sandbox',
-            '--disable-web-security',
-            '--enable-gpu'
-          ]
-        }
+          flags: ['--no-sandbox', '--disable-web-security', '--enable-gpu'],
+        },
       },
-      browsers: [process.env.CI_MODE === 'IE' ? 'IE' : 'ChromeHeadlessNoSandbox'],
-      reporters: ['mocha', 'coverage-istanbul']
+      browsers: [
+        process.env.CI_MODE === 'IE' ? 'IE' : 'ChromeHeadlessNoSandbox',
+      ],
+      reporters: ['mocha', 'coverage-istanbul'],
     }
   )
 }
@@ -56,45 +55,45 @@ export const createSettings = (pattern: string = `test/**/*.test.ts`) =>
     {},
     {
       mime: {
-        'text/x-typescript': ['ts']
+        'text/x-typescript': ['ts'],
       },
       basePath: '',
       frameworks: ['mocha', 'fixture'],
       files: [{ pattern }],
       preprocessors: {
-        [pattern]: ['webpack']
+        [pattern]: ['webpack'],
       },
       webpack: {
         module: {
           rules: [
             {
               test: /\.ts$/,
-              use: ['webpack-espower-loader', 'ts-loader']
+              use: ['webpack-espower-loader', 'ts-loader'],
             },
             {
               test: /\.ts$/,
               enforce: 'post',
               use: { loader: 'istanbul-instrumenter-loader' },
-              exclude: [/node_modules/, /test/]
-            }
-          ]
+              exclude: [/node_modules/, /test/],
+            },
+          ],
         },
         resolve: {
-          extensions: ['.ts', '.js']
+          extensions: ['.ts', '.js'],
         },
         node: { fs: 'empty' },
-        mode: 'development'
+        mode: 'development',
       },
       coverageIstanbulReporter: {
-        reports: ['html', 'lcovonly', 'text-summary']
+        reports: ['html', 'lcovonly', 'text-summary'],
       },
       webpackMiddleware: {
-        stats: 'errors-only'
+        stats: 'errors-only',
       },
       mochaReporter: {
-        showDiff: true
+        showDiff: true,
       },
-      singleRun: true
+      singleRun: true,
     },
     override
   )

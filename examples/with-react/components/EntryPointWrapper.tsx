@@ -15,14 +15,14 @@ type Props = {
 
 class EntryPointWrapper extends React.PureComponent<Props> {
   public _ud: USERDIVEApi
-  constructor (props: Props) {
+  public constructor(props: Props) {
     super(props)
     this._ud = factory()
   }
-  public componentDidMount () {
+  public componentDidMount() {
     this._ud('send', 'pageview', this.props.location.pathname)
   }
-  public render () {
+  public render() {
     return this.props.children
   }
 }

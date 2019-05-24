@@ -7,20 +7,20 @@ const getWindowSize = (w: {
   innerWidth: number
 }): Size => ({
   h: w.innerHeight,
-  w: w.innerWidth
+  w: w.innerWidth,
 })
 
 const getResourceSize = (d: Document): Size => {
   const body = d.body as HTMLElement
   return {
     h: body.clientHeight,
-    w: body.clientWidth
+    w: body.clientWidth,
   }
 }
 
 const getScreenSize = (s: { height: number; width: number }): Size => ({
   h: s.height,
-  w: s.width
+  w: s.width,
 })
 
 export const getLocation = (): Location => location
@@ -32,7 +32,7 @@ export const getName = (d: Document) => {
 
 export const getOffset = (w: Window) => ({
   left: w.scrollX || w.pageXOffset,
-  top: w.scrollY || w.pageYOffset
+  top: w.scrollY || w.pageYOffset,
 })
 
 export const getEnv = (page: string): ClientEnvironmentsData | void => {
@@ -51,7 +51,7 @@ export const getEnv = (page: string): ClientEnvironmentsData | void => {
       wh: windowSize.h,
       ww: windowSize.w,
       h: resourceSize.h,
-      w: resourceSize.w
+      w: resourceSize.w,
     }
   } catch (err) {
     error(err)

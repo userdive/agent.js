@@ -9,6 +9,6 @@ import { Sample2Component } from './components/sample2.component'
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [AppComponent, Sample1Component, Sample2Component],
-  imports: [BrowserModule, routing]
+  imports: [BrowserModule, routing],
 })
 export class AppModule {}

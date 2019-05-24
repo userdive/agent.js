@@ -19,7 +19,7 @@ const siteConfig = {
     { doc: 'getting-started', label: 'Usage' },
     { href: repoUrl, label: 'GitHub' },
     { blog: true, label: 'Blog' },
-    { search: true }
+    { search: true },
   ],
   users,
   headerIcon: 'img/logo.svg',
@@ -27,18 +27,18 @@ const siteConfig = {
   favicon: 'img/favicon/favicon.ico',
   colors: {
     primaryColor: '#272e37',
-    secondaryColor: '#232930'
+    secondaryColor: '#232930',
   },
   copyright: 'Copyright © ' + new Date().getFullYear() + ' UNCOVER TRUTH',
   organizationName: 'userdive',
   highlight: {
-    theme: 'atom-one-dark'
+    theme: 'atom-one-dark',
   },
   scripts: [],
   repoUrl,
   scrollToTop: true,
   twitter: true,
-  onPageNav: 'separate'
+  onPageNav: 'separate',
 }
 
 module.exports = siteConfig

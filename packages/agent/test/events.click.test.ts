@@ -1,12 +1,14 @@
 import * as assert from 'assert'
+import { EventEmitter } from 'events'
+
 import { random } from 'faker'
 import 'mocha'
+import { UIEventObserver } from 'ui-event-observer'
 import { spy as sinonSpy } from 'sinon'
 
-import { EventEmitter } from 'events'
-import { UIEventObserver } from 'ui-event-observer'
-import ClickEvents from '../src/events/click'
 import { createEvent } from './helpers/Event'
+
+import ClickEvents from '../src/events/click'
 
 describe('click', () => {
   let instance: any

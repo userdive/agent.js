@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+
 import { random } from 'faker'
 import 'mocha'
 import * as Raven from 'raven-js'
@@ -8,7 +9,7 @@ import { error, raise, setup, warning } from '../src/logger'
 describe('logger', () => {
   const args = [`Logger Test / ${random.word()}`, new Error(random.word())]
 
-  function createDSN () {
+  function createDSN() {
     return `https://${random.alphaNumeric()}@${random.alphaNumeric()}/${random.number()}`
   }
 

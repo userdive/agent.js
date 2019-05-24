@@ -1,6 +1,8 @@
-import Agent from '@userdive/agent'
 import * as assert from 'assert'
+
+import Agent from '@userdive/agent'
 import { image, internet, random } from 'faker'
+
 import 'karma-fixture'
 import 'mocha'
 import { link, submit } from '../src/handler'
@@ -92,7 +94,7 @@ describe('handler', () => {
     fixture.set(`<a href="${l.href}"><img src="${image.imageUrl()}"></a>`)
 
     link([l.hostname], param, 10)({
-      target: document.getElementsByTagName('img')[0]
+      target: document.getElementsByTagName('img')[0],
     } as any)
     assert(`${l.href}?${param}` === document.getElementsByTagName('a')[0].href)
 
@@ -102,7 +104,7 @@ describe('handler', () => {
     )
 
     link([l.hostname], param, 1)({
-      target: document.getElementsByTagName('img')[0]
+      target: document.getElementsByTagName('img')[0],
     } as any)
     assert(
       l.href === document.getElementsByTagName('a')[0].href,

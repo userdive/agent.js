@@ -1,6 +1,7 @@
 import { SettingFieldsObject } from './types'
+
 const intervals: number[] = []
-function push (t: number, n: number) {
+function push(t: number, n: number) {
   for (let i = 0; i < n; i++) {
     intervals.push(t)
   }
@@ -23,6 +24,6 @@ export const SETTINGS: SettingFieldsObject = {
   cookieDomain: '',
   cookieExpires: 730, // TODO
   cookieName: '_ud2',
-  Raven: undefined
+  Raven: undefined,
 }
 export const MAX_EVENT_SEQ = 10

@@ -1,4 +1,5 @@
 import * as assert from 'assert'
+
 import { lorem, random } from 'faker'
 import 'mocha'
 import userdive from 'userdive'
@@ -9,7 +10,7 @@ describe('@userdive/provider', () => {
   it('plugin setting', () => {
     const name = lorem.word()
     class Plugin {
-      constructor (tracker: any) {
+      public constructor(tracker: any) {
         assert(tracker.plugins[name])
       }
     }

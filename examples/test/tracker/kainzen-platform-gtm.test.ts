@@ -1,6 +1,7 @@
-
 import * as assert from 'assert'
+
 import { RequestLogger } from 'testcafe'
+
 import { deployBaseUrl, intRegex } from '../../testcafe-conf'
 import { query } from '../test-util'
 
@@ -10,12 +11,12 @@ const l = `${deployBaseUrl}/kaizen-platform/`
 
 fixture('kaizen-platform event').page(l)
 
-test.requestHooks(intLogger)('tracking request', async (t) => {
+test.requestHooks(intLogger)('tracking request', async t => {
   await t.wait(5000)
   assert.ok(intLogger.requests.length > 0)
   const intRecord = intLogger.requests[0]
   assert.strictEqual(intRecord.request.method, 'get')
-  const data = query(intRecord) as {'e': string}
+  const data = query(intRecord) as { e: string }
   const event = data['e'].split(',')
   assert.strictEqual(event[0], '1')
   assert.strictEqual(event[1], 'kaizenplatform')

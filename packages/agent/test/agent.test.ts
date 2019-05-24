@@ -1,8 +1,10 @@
 import * as assert from 'assert'
+
 import { internet, lorem, random } from 'faker'
 import { get as getCookie } from 'js-cookie'
 import 'mocha'
 import { spy as sinonSpy, stub as sinonStub } from 'sinon'
+
 import Agent from '../src/agent'
 import { INTERVAL, SETTINGS } from '../src/constants'
 
@@ -25,7 +27,7 @@ describe('agent', () => {
     const agent2: any = new Agent(random.uuid(), 'auto', {
       allowLinker: true,
       cookieName,
-      cookieExpires: random.number()
+      cookieExpires: random.number(),
     })
     assert.strictEqual(
       agent2.get('linkerParam'),
@@ -41,9 +43,12 @@ describe('agent', () => {
       return link
     })
     const agent3: any = new Agent(random.uuid(), 'auto', {
-      allowLinker: true
+      allowLinker: true,
     })
-    assert.strictEqual(agent3.get('linkerParam'), `${SETTINGS.linkerName}=${before}`)
+    assert.strictEqual(
+      agent3.get('linkerParam'),
+      `${SETTINGS.linkerName}=${before}`
+    )
     stub.restore()
   })
 
@@ -63,7 +68,7 @@ describe('agent', () => {
     const dimension1 = lorem.word()
     const core = agent.send('pageview', {
       page,
-      dimension1
+      dimension1,
     })
     assert(core.interactionId === 1)
     const args = spy.getCall(0).args[1]
@@ -82,7 +87,7 @@ describe('agent', () => {
 
   it('subscribe', () => {
     assert(
-      agent.subscribe(window, random.word(), function () {
+      agent.subscribe(window, random.word(), function() {
         // nothing todo
       })
     )
@@ -91,10 +96,10 @@ describe('agent', () => {
   describe('plugin', () => {
     const pluginName = lorem.word()
     class Plugin {
-      constructor (tracker: any) {
+      public constructor(tracker: any) {
         assert(tracker.plugins[pluginName])
       }
-      public echo (value: 'hello') {
+      public echo(value: 'hello') {
         assert(value === 'hello')
       }
     }
