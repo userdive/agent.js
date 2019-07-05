@@ -16,12 +16,12 @@ test.requestHooks(envLogger)('override location with click', async t => {
   await t.wait(2000)
   assert.strictEqual(envLogger.requests.length, 1)
   const originalRecord = envLogger.requests[0]
-  const originalQuery = query(originalRecord) as { l: string }
+  const originalQuery = query(originalRecord.request) as { l: string }
   assert.strictEqual(originalQuery.l, l)
 
   await t.click(Selector('#page')).wait(2000)
   assert.strictEqual(envLogger.requests.length, 2)
   const overrideRecord = envLogger.requests[1]
-  const overrideQuery = query(overrideRecord) as { l: string }
+  const overrideQuery = query(overrideRecord.request) as { l: string }
   assert.strictEqual(overrideQuery.l, override)
 })

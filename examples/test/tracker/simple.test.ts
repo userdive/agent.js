@@ -15,6 +15,6 @@ test.requestHooks(envLogger)('environment request', async t => {
   assert.strictEqual(envLogger.requests.length, 1)
   const envRecord = envLogger.requests[0]
   assert.strictEqual(envRecord.request.method, 'get')
-  const q = query(envRecord) as { l: string }
+  const q = query(envRecord.request) as { l: string }
   assert.strictEqual(q.l, l)
 })

@@ -31,8 +31,8 @@ export const spaTest = (path: string) => {
   changeToSample2(path)
 }
 
-export const query = (record: Request) => {
-  const query = record.request.url.split('?')[1]
+export const query = (request: RequestData) => {
+  const query = request.url.split('?')[1]
   return query ? qs.parse(query) : null
 }
 
