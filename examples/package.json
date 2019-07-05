@@ -7,7 +7,7 @@
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
     "query-string": "6.5.0",
-    "testcafe": "1.1.4"
+    "testcafe": "1.2.1"
   },
   "license": "MIT",
   "main": "n/a",

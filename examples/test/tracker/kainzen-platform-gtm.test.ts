@@ -16,7 +16,7 @@ test.requestHooks(intLogger)('tracking request', async t => {
   assert.ok(intLogger.requests.length > 0)
   const intRecord = intLogger.requests[0]
   assert.strictEqual(intRecord.request.method, 'get')
-  const data = query(intRecord) as { e: string }
+  const data = query(intRecord.request) as { e: string }
   const event = data['e'].split(',')
   assert.strictEqual(event[0], '1')
   assert.strictEqual(event[1], 'kaizenplatform')
