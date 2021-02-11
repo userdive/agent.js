@@ -3,8 +3,8 @@
   "version": "3.0.0",
   "devDependencies": {
     "@types/query-string": "6.2.0",
-    "gh-pages": "2.0.1",
-    "pug": "2.0.3",
+    "gh-pages": "3.1.0",
+    "pug": "3.0.0",
     "pug-cli": "1.0.0-alpha6",
     "query-string": "6.5.0",
     "testcafe": "1.2.1"
