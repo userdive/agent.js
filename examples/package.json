@@ -4,7 +4,7 @@
   "devDependencies": {
     "@types/query-string": "6.2.0",
     "gh-pages": "2.0.1",
-    "pug": "2.0.3",
+    "pug": "3.0.1",
     "pug-cli": "1.0.0-alpha6",
     "query-string": "6.5.0",
     "testcafe": "1.2.1"
