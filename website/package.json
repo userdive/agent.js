@@ -2,7 +2,7 @@
   "name": "userdive-developers",
   "version": "3.0.0",
   "dependencies": {
-    "docusaurus": "1.9.0"
+    "docusaurus": "1.14.7"
   },
   "devDependencies": {
     "@uncovertruth/eslint-config": "4.5.0",
