@@ -6,8 +6,8 @@
     "gh-pages": "2.0.1",
     "pug": "2.0.3",
     "pug-cli": "1.0.0-alpha6",
-    "query-string": "6.5.0",
-    "testcafe": "1.2.1"
+    "query-string": "9.5.1",
+    "testcafe": "3.7.6"
   },
   "license": "MIT",
   "main": "n/a",
