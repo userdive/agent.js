@@ -16,8 +16,8 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "@types/js-cookie": "2.2.2",
-    "@types/uuid": "3.4.4"
+    "@types/js-cookie": "2.2.7",
+    "@types/uuid": "3.4.13"
   },
   "engine": {
     "node": "> 5"
